@@ -104,7 +104,7 @@
 <meta property="og:site_name" content="傅永德 | 个人博客">
 <meta property="og:description" content="Jenkins 是常见的 CI 平台 安装Windows 平台略 CentOS 平台更为详细的步骤及说明可查看官网 添加 jenkins 源命令如下： 12sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.reposudo rpm --import https://pkg.">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-03-20T02:51:24.836Z">
+<meta property="og:updated_time" content="2020-03-23T12:37:43.523Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Jenkins-手册">
 <meta name="twitter:description" content="Jenkins 是常见的 CI 平台 安装Windows 平台略 CentOS 平台更为详细的步骤及说明可查看官网 添加 jenkins 源命令如下： 12sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.reposudo rpm --import https://pkg.">
@@ -408,7 +408,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-03-20 10:51:24" itemprop="dateModified" datetime="2020-03-20T10:51:24+08:00">2020-03-20</time>
+                <time title="修改时间：2020-03-23 20:37:43" itemprop="dateModified" datetime="2020-03-23T20:37:43+08:00">2020-03-23</time>
               
             
           </span>
@@ -461,17 +461,17 @@
 
       
         <p>Jenkins 是常见的 CI 平台</p>
-<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><h2 id="Windows-平台"><a href="#Windows-平台" class="headerlink" title="Windows 平台"></a>Windows 平台</h2><p>略</p>
-<h2 id="CentOS-平台"><a href="#CentOS-平台" class="headerlink" title="CentOS 平台"></a>CentOS 平台</h2><p>更为详细的步骤及说明可查看<a href="https://pkg.jenkins.io/redhat-stable/" target="_blank" rel="noopener">官网</a></p>
-<h3 id="添加-jenkins-源"><a href="#添加-jenkins-源" class="headerlink" title="添加 jenkins 源"></a>添加 jenkins 源</h3><p>命令如下：</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="Windows-平台"><a href="#Windows-平台" class="headerlink" title="Windows 平台"></a>Windows 平台</h3><p>略</p>
+<h3 id="CentOS-平台"><a href="#CentOS-平台" class="headerlink" title="CentOS 平台"></a>CentOS 平台</h3><p>更为详细的步骤及说明可查看<a href="https://pkg.jenkins.io/redhat-stable/" target="_blank" rel="noopener">官网</a></p>
+<h4 id="添加-jenkins-源"><a href="#添加-jenkins-源" class="headerlink" title="添加 jenkins 源"></a>添加 jenkins 源</h4><p>命令如下：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo</span><br><span class="line">sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key</span><br></pre></td></tr></table></figure>
-<h3 id="yum-安装"><a href="#yum-安装" class="headerlink" title="yum 安装"></a>yum 安装</h3><p>命令如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 在线安装的方式</span></span><br><span class="line">yum install jenkins</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 离线安装的方式，由于国内连接 jenkins 网站较慢，可先行下载 rpm 文件格式的离线安装包，采用离线的方式安装</span></span><br><span class="line">yum install jenkins-2.204.2-1.1.noarch.rpm</span><br></pre></td></tr></table></figure>
-<h3 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h3><p>命令如下：</p>
+<h4 id="yum-安装"><a href="#yum-安装" class="headerlink" title="yum 安装"></a>yum 安装</h4><p>命令如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 在线安装的方式</span><br><span class="line">yum install jenkins</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> 离线安装的方式，由于国内连接 jenkins 网站较慢，可先行下载 rpm 文件格式的离线安装包，采用离线的方式安装</span><br><span class="line">yum install jenkins-2.204.2-1.1.noarch.rpm</span><br></pre></td></tr></table></figure>
+<h4 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h4><p>命令如下：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start jenkins</span><br></pre></td></tr></table></figure>
-<h3 id="解决插件中心安装慢的问题"><a href="#解决插件中心安装慢的问题" class="headerlink" title="解决插件中心安装慢的问题"></a>解决插件中心安装慢的问题</h3><p>第一次登陆 Jenkins 会出现初始化缓慢的问题，产生这个问题的原因有两个，一个是因为首次打开 Jenkins 会尝试连接 Google，另外一个原因是因为连接插件中心缓慢。</p>
-<h4 id="将-Google-的地址修改为-Baidu"><a href="#将-Google-的地址修改为-Baidu" class="headerlink" title="将 Google 的地址修改为 Baidu"></a>将 Google 的地址修改为 Baidu</h4><p>修改文件 <code>$JENKINS_HOME/updates/default.json</code>，将 <code>connectionCheckUrl</code> 的值修改为 <code>http://www.baidu.com/</code></p>
-<h4 id="将插件中心修改为清华的源"><a href="#将插件中心修改为清华的源" class="headerlink" title="将插件中心修改为清华的源"></a>将插件中心修改为清华的源</h4><p>修改文件 <code>$JENKINS_HOME/hudson.model.UpdateCenter.xml</code>，将 url 从 <code>https://updates.jenkins.io/update-center.json</code> 修改为 <code>https://mirrors.tuna.tsinghua.edu.cn/jenkins/updates/update-center.json</code></p>
+<h4 id="解决插件中心安装慢的问题"><a href="#解决插件中心安装慢的问题" class="headerlink" title="解决插件中心安装慢的问题"></a>解决插件中心安装慢的问题</h4><p>第一次登陆 Jenkins 会出现初始化缓慢的问题，产生这个问题的原因有两个，一个是因为首次打开 Jenkins 会尝试连接 Google，另外一个原因是因为连接插件中心缓慢。</p>
+<h5 id="将-Google-的地址修改为-Baidu"><a href="#将-Google-的地址修改为-Baidu" class="headerlink" title="将 Google 的地址修改为 Baidu"></a>将 Google 的地址修改为 Baidu</h5><p>修改文件 <code>$JENKINS_HOME/updates/default.json</code>，将 <code>connectionCheckUrl</code> 的值修改为 <code>http://www.baidu.com/</code></p>
+<h5 id="将插件中心修改为清华的源"><a href="#将插件中心修改为清华的源" class="headerlink" title="将插件中心修改为清华的源"></a>将插件中心修改为清华的源</h5><p>修改文件 <code>$JENKINS_HOME/hudson.model.UpdateCenter.xml</code>，将 url 从 <code>https://updates.jenkins.io/update-center.json</code> 修改为 <code>https://mirrors.tuna.tsinghua.edu.cn/jenkins/updates/update-center.json</code></p>
 <p>未完待续…</p>
 
       
@@ -622,7 +622,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">24</span>
+                    <span class="site-state-item-count">25</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -638,8 +638,6 @@
                     
                   
                     
-                    
-                      
                     
                       
                     
@@ -726,7 +724,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">32</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">34</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -808,7 +810,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#安装"><span class="nav-number">1.</span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Windows-平台"><span class="nav-number">1.1.</span> <span class="nav-text">Windows 平台</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CentOS-平台"><span class="nav-number">1.2.</span> <span class="nav-text">CentOS 平台</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#添加-jenkins-源"><span class="nav-number">1.2.1.</span> <span class="nav-text">添加 jenkins 源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#yum-安装"><span class="nav-number">1.2.2.</span> <span class="nav-text">yum 安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动"><span class="nav-number">1.2.3.</span> <span class="nav-text">启动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解决插件中心安装慢的问题"><span class="nav-number">1.2.4.</span> <span class="nav-text">解决插件中心安装慢的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#将-Google-的地址修改为-Baidu"><span class="nav-number">1.2.4.1.</span> <span class="nav-text">将 Google 的地址修改为 Baidu</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#将插件中心修改为清华的源"><span class="nav-number">1.2.4.2.</span> <span class="nav-text">将插件中心修改为清华的源</span></a></li></ol></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">1.</span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Windows-平台"><span class="nav-number">1.1.</span> <span class="nav-text">Windows 平台</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CentOS-平台"><span class="nav-number">1.2.</span> <span class="nav-text">CentOS 平台</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#添加-jenkins-源"><span class="nav-number">1.2.1.</span> <span class="nav-text">添加 jenkins 源</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#yum-安装"><span class="nav-number">1.2.2.</span> <span class="nav-text">yum 安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#启动"><span class="nav-number">1.2.3.</span> <span class="nav-text">启动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解决插件中心安装慢的问题"><span class="nav-number">1.2.4.</span> <span class="nav-text">解决插件中心安装慢的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#将-Google-的地址修改为-Baidu"><span class="nav-number">1.2.4.1.</span> <span class="nav-text">将 Google 的地址修改为 Baidu</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#将插件中心修改为清华的源"><span class="nav-number">1.2.4.2.</span> <span class="nav-text">将插件中心修改为清华的源</span></a></li></ol></li></ol></li></ol></li></ol></div>
             
 
           </div>

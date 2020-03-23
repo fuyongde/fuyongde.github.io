@@ -104,7 +104,7 @@
 <meta property="og:site_name" content="傅永德 | 个人博客">
 <meta property="og:description" content="镜像管理查询所需的镜像 Usage： docker search [OPTIONS] TERM  Options： -f --filter ：根据提供的条件过滤输出 --format ：使用Go模板进行漂亮的打印搜索 --limit ：最大搜索结果数（默认为25） --no-trunc：不要截断输出  Example：   1docker search mysql 安装镜像 Usage： dock">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-03-20T02:51:24.833Z">
+<meta property="og:updated_time" content="2020-03-23T12:29:19.697Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Docker 手册">
 <meta name="twitter:description" content="镜像管理查询所需的镜像 Usage： docker search [OPTIONS] TERM  Options： -f --filter ：根据提供的条件过滤输出 --format ：使用Go模板进行漂亮的打印搜索 --limit ：最大搜索结果数（默认为25） --no-trunc：不要截断输出  Example：   1docker search mysql 安装镜像 Usage： dock">
@@ -408,7 +408,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-03-20 10:51:24" itemprop="dateModified" datetime="2020-03-20T10:51:24+08:00">2020-03-20</time>
+                <time title="修改时间：2020-03-23 20:29:19" itemprop="dateModified" datetime="2020-03-23T20:29:19+08:00">2020-03-23</time>
               
             
           </span>
@@ -460,7 +460,7 @@
       
 
       
-        <h1 id="镜像管理"><a href="#镜像管理" class="headerlink" title="镜像管理"></a>镜像管理</h1><h2 id="查询所需的镜像"><a href="#查询所需的镜像" class="headerlink" title="查询所需的镜像"></a>查询所需的镜像</h2><ul>
+        <h2 id="镜像管理"><a href="#镜像管理" class="headerlink" title="镜像管理"></a>镜像管理</h2><h3 id="查询所需的镜像"><a href="#查询所需的镜像" class="headerlink" title="查询所需的镜像"></a>查询所需的镜像</h3><ul>
 <li><p>Usage：</p>
 <p><code>docker search [OPTIONS] TERM</code></p>
 </li>
@@ -474,7 +474,7 @@
 </li>
 </ul>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker search mysql</span><br></pre></td></tr></table></figure>
-<h2 id="安装镜像"><a href="#安装镜像" class="headerlink" title="安装镜像"></a>安装镜像</h2><ul>
+<h3 id="安装镜像"><a href="#安装镜像" class="headerlink" title="安装镜像"></a>安装镜像</h3><ul>
 <li><p>Usage：</p>
 <p><code>docker pull [OPTIONS] NAME[:TAG|@DIGEST]</code></p>
 </li>
@@ -486,34 +486,34 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 安装MySQL的5.7.24版本</span><br><span class="line">docker pull mysql:5.7.24</span><br><span class="line"><span class="meta">#</span> 缺省TAG时默认安装最新版本</span><br><span class="line">docker pull mysql</span><br><span class="line"><span class="meta">#</span> 安装所有版本</span><br><span class="line">docker pull -a mysql</span><br><span class="line"><span class="meta">#</span> 安装zookeeper</span><br><span class="line">docker pull zookeeper</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<h2 id="查看镜像信息"><a href="#查看镜像信息" class="headerlink" title="查看镜像信息"></a>查看镜像信息</h2><p>Usage：</p>
+<h3 id="查看镜像信息"><a href="#查看镜像信息" class="headerlink" title="查看镜像信息"></a>查看镜像信息</h3><p>Usage：</p>
 <p><code>docker images [OPTIONS] [REPOSITORY[:TAG]]</code></p>
 <p>Options:</p>
 <p><code>-a, --all</code>：展示全部镜像<br>​    <code>--digests</code>：展示镜像的哈希值<br><code>-f, --filter filter</code>：根据提供的条件过滤输出<br>​    <code>--format string</code>：使用Go模板的漂亮打印图像<br>​    <code>--no-trunc</code>：不要截断输出<br><code>-q, --quiet</code>：仅显示数字ID</p>
 <p>Example:</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 查看所有的进行信息</span><br><span class="line">docker images -a</span><br></pre></td></tr></table></figure>
-<h2 id="删除镜像"><a href="#删除镜像" class="headerlink" title="删除镜像"></a>删除镜像</h2><p>Usage：</p>
+<h3 id="删除镜像"><a href="#删除镜像" class="headerlink" title="删除镜像"></a>删除镜像</h3><p>Usage：</p>
 <p><code>docker rmi [OPTIONS] IMAGE [IMAGE...]</code></p>
 <p>Options:<br> <code>-f, --force</code>：强制删除某个镜像<br> <code>--no-prune</code> ：不删除未标记的父类</p>
 <p>Example：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 删除id为cd14cecfdb3a的镜像</span><br><span class="line">docker rmi cd14cecfdb3a</span><br><span class="line"><span class="meta">#</span> 删除jenkins镜像</span><br><span class="line">docker rmi jenkins</span><br></pre></td></tr></table></figure>
-<h1 id="容器管理"><a href="#容器管理" class="headerlink" title="容器管理"></a>容器管理</h1><h2 id="查看容器"><a href="#查看容器" class="headerlink" title="查看容器"></a>查看容器</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 查看所有正在运行的容器</span><br><span class="line">docker ps</span><br><span class="line"><span class="meta">#</span> 查看所有容器</span><br><span class="line">docker ps -a</span><br><span class="line">查看所有容器ID</span><br><span class="line">docker ps -a -q</span><br></pre></td></tr></table></figure>
-<h2 id="启动容器"><a href="#启动容器" class="headerlink" title="启动容器"></a>启动容器</h2><p><code>docker run IMG</code></p>
+<h2 id="容器管理"><a href="#容器管理" class="headerlink" title="容器管理"></a>容器管理</h2><h3 id="查看容器"><a href="#查看容器" class="headerlink" title="查看容器"></a>查看容器</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 查看所有正在运行的容器</span><br><span class="line">docker ps</span><br><span class="line"><span class="meta">#</span> 查看所有容器</span><br><span class="line">docker ps -a</span><br><span class="line">查看所有容器ID</span><br><span class="line">docker ps -a -q</span><br></pre></td></tr></table></figure>
+<h3 id="启动容器"><a href="#启动容器" class="headerlink" title="启动容器"></a>启动容器</h3><p><code>docker run IMG</code></p>
 <p>Example：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 启动MySQL</span><br><span class="line">docker run -p 3306:3306 --name MySQL -e MYSQL_ROOT_PASSWORD=fuyongde mysql:5.7.24</span><br><span class="line"><span class="meta">#</span> 启动zookeeper</span><br><span class="line">docker run -p 2181:2181 --name zookeeper zookeeper</span><br></pre></td></tr></table></figure>
-<h2 id="停止容器"><a href="#停止容器" class="headerlink" title="停止容器"></a>停止容器</h2><p><code>docker stop [containerId]</code>：停止容器</p>
+<h3 id="停止容器"><a href="#停止容器" class="headerlink" title="停止容器"></a>停止容器</h3><p><code>docker stop [containerId]</code>：停止容器</p>
 <p>Example:</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 删除id为8fcc3dad236a的容器</span><br><span class="line">docker rm 8fcc3dad236a</span><br></pre></td></tr></table></figure>
-<h2 id="重启容器"><a href="#重启容器" class="headerlink" title="重启容器"></a>重启容器</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 重启id为1e4b2a31028d的容器</span><br><span class="line">docker restart 1e4b2a31028d</span><br></pre></td></tr></table></figure>
-<h2 id="删除容器"><a href="#删除容器" class="headerlink" title="删除容器"></a>删除容器</h2><p><code>docker rm [containerId]</code></p>
+<h3 id="重启容器"><a href="#重启容器" class="headerlink" title="重启容器"></a>重启容器</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 重启id为1e4b2a31028d的容器</span><br><span class="line">docker restart 1e4b2a31028d</span><br></pre></td></tr></table></figure>
+<h3 id="删除容器"><a href="#删除容器" class="headerlink" title="删除容器"></a>删除容器</h3><p><code>docker rm [containerId]</code></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 删除id为1e4b2a31028d的容器</span><br><span class="line">docker rm 1e4b2a31028d</span><br></pre></td></tr></table></figure>
-<h2 id="重命名容器"><a href="#重命名容器" class="headerlink" title="重命名容器"></a>重命名容器</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 将docker-mysql重命名为mysql</span><br><span class="line">docker rename docker-mysql mysql</span><br></pre></td></tr></table></figure>
-<h1 id="其他命令"><a href="#其他命令" class="headerlink" title="其他命令"></a>其他命令</h1><h2 id="进入到一个容器"><a href="#进入到一个容器" class="headerlink" title="进入到一个容器"></a>进入到一个容器</h2><p>通常我们使用的docker镜像一般是基于<code>Linux</code>，则可以通过下面的方式进入到docker容器内:</p>
+<h3 id="重命名容器"><a href="#重命名容器" class="headerlink" title="重命名容器"></a>重命名容器</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 将docker-mysql重命名为mysql</span><br><span class="line">docker rename docker-mysql mysql</span><br></pre></td></tr></table></figure>
+<h2 id="其他命令"><a href="#其他命令" class="headerlink" title="其他命令"></a>其他命令</h2><h3 id="进入到一个容器"><a href="#进入到一个容器" class="headerlink" title="进入到一个容器"></a>进入到一个容器</h3><p>通常我们使用的docker镜像一般是基于<code>Linux</code>，则可以通过下面的方式进入到docker容器内:</p>
 <p><code>docker exec -it 063caee1d235 /bin/bash</code></p>
 <p>但是对于<code>Alpinelinux</code>，则需：</p>
 <p><code>docker exec -it 063caee1d235 sh</code></p>
-<h2 id="拷贝文件到一个容器"><a href="#拷贝文件到一个容器" class="headerlink" title="拷贝文件到一个容器"></a>拷贝文件到一个容器</h2><p><code>docker cp C:\Users\fuyon\Documents\repo\github\goku\atomikos-demo\zhifubao-server\src\main\resources\sql\zhifubao.sql 1e4b2a31028d:/tmp</code></p>
-<h2 id="从容器拷贝文件到主机"><a href="#从容器拷贝文件到主机" class="headerlink" title="从容器拷贝文件到主机"></a>从容器拷贝文件到主机</h2><p><code>docker cp 1e4b2a31028d:/tmp/zhifubao.sql C:\Users\fuyon\Documents</code></p>
+<h3 id="拷贝文件到一个容器"><a href="#拷贝文件到一个容器" class="headerlink" title="拷贝文件到一个容器"></a>拷贝文件到一个容器</h3><p><code>docker cp C:\Users\fuyon\Documents\repo\github\goku\atomikos-demo\zhifubao-server\src\main\resources\sql\zhifubao.sql 1e4b2a31028d:/tmp</code></p>
+<h3 id="从容器拷贝文件到主机"><a href="#从容器拷贝文件到主机" class="headerlink" title="从容器拷贝文件到主机"></a>从容器拷贝文件到主机</h3><p><code>docker cp 1e4b2a31028d:/tmp/zhifubao.sql C:\Users\fuyon\Documents</code></p>
 
       
     </div>
@@ -657,7 +657,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">24</span>
+                    <span class="site-state-item-count">25</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -673,8 +673,6 @@
                     
                   
                     
-                    
-                      
                     
                       
                     
@@ -761,7 +759,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">32</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">34</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -843,7 +845,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#镜像管理"><span class="nav-number">1.</span> <span class="nav-text">镜像管理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#查询所需的镜像"><span class="nav-number">1.1.</span> <span class="nav-text">查询所需的镜像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装镜像"><span class="nav-number">1.2.</span> <span class="nav-text">安装镜像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看镜像信息"><span class="nav-number">1.3.</span> <span class="nav-text">查看镜像信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#删除镜像"><span class="nav-number">1.4.</span> <span class="nav-text">删除镜像</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#容器管理"><span class="nav-number">2.</span> <span class="nav-text">容器管理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#查看容器"><span class="nav-number">2.1.</span> <span class="nav-text">查看容器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启动容器"><span class="nav-number">2.2.</span> <span class="nav-text">启动容器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#停止容器"><span class="nav-number">2.3.</span> <span class="nav-text">停止容器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重启容器"><span class="nav-number">2.4.</span> <span class="nav-text">重启容器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#删除容器"><span class="nav-number">2.5.</span> <span class="nav-text">删除容器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重命名容器"><span class="nav-number">2.6.</span> <span class="nav-text">重命名容器</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他命令"><span class="nav-number">3.</span> <span class="nav-text">其他命令</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#进入到一个容器"><span class="nav-number">3.1.</span> <span class="nav-text">进入到一个容器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#拷贝文件到一个容器"><span class="nav-number">3.2.</span> <span class="nav-text">拷贝文件到一个容器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#从容器拷贝文件到主机"><span class="nav-number">3.3.</span> <span class="nav-text">从容器拷贝文件到主机</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#镜像管理"><span class="nav-number">1.</span> <span class="nav-text">镜像管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#查询所需的镜像"><span class="nav-number">1.1.</span> <span class="nav-text">查询所需的镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装镜像"><span class="nav-number">1.2.</span> <span class="nav-text">安装镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看镜像信息"><span class="nav-number">1.3.</span> <span class="nav-text">查看镜像信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除镜像"><span class="nav-number">1.4.</span> <span class="nav-text">删除镜像</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#容器管理"><span class="nav-number">2.</span> <span class="nav-text">容器管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#查看容器"><span class="nav-number">2.1.</span> <span class="nav-text">查看容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动容器"><span class="nav-number">2.2.</span> <span class="nav-text">启动容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#停止容器"><span class="nav-number">2.3.</span> <span class="nav-text">停止容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重启容器"><span class="nav-number">2.4.</span> <span class="nav-text">重启容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除容器"><span class="nav-number">2.5.</span> <span class="nav-text">删除容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重命名容器"><span class="nav-number">2.6.</span> <span class="nav-text">重命名容器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他命令"><span class="nav-number">3.</span> <span class="nav-text">其他命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#进入到一个容器"><span class="nav-number">3.1.</span> <span class="nav-text">进入到一个容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#拷贝文件到一个容器"><span class="nav-number">3.2.</span> <span class="nav-text">拷贝文件到一个容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#从容器拷贝文件到主机"><span class="nav-number">3.3.</span> <span class="nav-text">从容器拷贝文件到主机</span></a></li></ol></li></ol></div>
             
 
           </div>

@@ -104,7 +104,7 @@
 <meta property="og:site_name" content="傅永德 | 个人博客">
 <meta property="og:description" content="在工作中，遇到一个很有意思的关于时间的问题，这里跟大家分享一下。 现象从数据库里取出用户的生日1990-05-22，接口返回时发现返回值变成了1990-05-21，而对于1992-05-22这样的日期却能正确返回。 网上很多对于相关问题的分析都是简单粗暴的认为是时区的问题，却没有讲明白问题出现的根本原因。 排查过程问题复现为了复现问题现象，我们先快速搭建一个 Spring Boot Applica">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-03-20T02:51:24.833Z">
+<meta property="og:updated_time" content="2020-03-23T12:28:29.875Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="夏令时问题">
 <meta name="twitter:description" content="在工作中，遇到一个很有意思的关于时间的问题，这里跟大家分享一下。 现象从数据库里取出用户的生日1990-05-22，接口返回时发现返回值变成了1990-05-21，而对于1992-05-22这样的日期却能正确返回。 网上很多对于相关问题的分析都是简单粗暴的认为是时区的问题，却没有讲明白问题出现的根本原因。 排查过程问题复现为了复现问题现象，我们先快速搭建一个 Spring Boot Applica">
@@ -408,7 +408,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-03-20 10:51:24" itemprop="dateModified" datetime="2020-03-20T10:51:24+08:00">2020-03-20</time>
+                <time title="修改时间：2020-03-23 20:28:29" itemprop="dateModified" datetime="2020-03-23T20:28:29+08:00">2020-03-23</time>
               
             
           </span>
@@ -443,9 +443,9 @@
 
       
         <p>在工作中，遇到一个很有意思的关于时间的问题，这里跟大家分享一下。</p>
-<h1 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h1><p>从数据库里取出用户的生日<code>1990-05-22</code>，接口返回时发现返回值变成了<code>1990-05-21</code>，而对于<code>1992-05-22</code>这样的日期却能正确返回。</p>
+<h2 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h2><p>从数据库里取出用户的生日<code>1990-05-22</code>，接口返回时发现返回值变成了<code>1990-05-21</code>，而对于<code>1992-05-22</code>这样的日期却能正确返回。</p>
 <p>网上很多对于相关问题的分析都是简单粗暴的认为是时区的问题，却没有讲明白问题出现的根本原因。</p>
-<h1 id="排查过程"><a href="#排查过程" class="headerlink" title="排查过程"></a>排查过程</h1><h2 id="问题复现"><a href="#问题复现" class="headerlink" title="问题复现"></a>问题复现</h2><p>为了复现问题现象，我们先快速搭建一个 Spring Boot Application。</p>
+<h2 id="排查过程"><a href="#排查过程" class="headerlink" title="排查过程"></a>排查过程</h2><h3 id="问题复现"><a href="#问题复现" class="headerlink" title="问题复现"></a>问题复现</h3><p>为了复现问题现象，我们先快速搭建一个 Spring Boot Application。</p>
 <p>先将配置文件中对日期类型的格式化配置为 <code>yyyy-MM-dd</code>，如下所示：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">spring.jackson.time-zone=GMT+8</span><br><span class="line">spring.jackson.date-format=yyyy-MM-dd</span><br></pre></td></tr></table></figure>
 <p>写一个接口，直接将有问题的日期输出，代码如下：</p>
@@ -459,23 +459,20 @@
 <p>发现服务端日志正确输出<code>1992-05-22</code>，此时接口的输出与服务端日志一致：</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="attr">"birthday"</span>: <span class="string">"1992-05-22"</span>&#125;</span><br></pre></td></tr></table></figure>
 <p>至此，我们复现了本文要讲解的问题。</p>
-<h2 id="输出对应的时间"><a href="#输出对应的时间" class="headerlink" title="输出对应的时间"></a>输出对应的时间</h2><p>为了更精确的知道这两个日期究竟有什么不同，我们更详细的输出这两个 <code>Date</code> 所对应的具体时间。</p>
+<h3 id="输出对应的时间"><a href="#输出对应的时间" class="headerlink" title="输出对应的时间"></a>输出对应的时间</h3><p>为了更精确的知道这两个日期究竟有什么不同，我们更详细的输出这两个 <code>Date</code> 所对应的具体时间。</p>
 <p>修改配置文件为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">spring.jackson.date-format=yyyy-MM-dd HH:mm:ss</span><br></pre></td></tr></table></figure>
 <p>重复以上请求，发现对于<code>1990-05-22</code>，服务端日志输出<code>1990-05-22 00:00:00</code>，而接口返回值则为<code>1990-05-21 23:00:00</code>，两者相差了一个小时。而对于<code>1992-05-22</code>，服务端日志与接口返回值完全一致。</p>
-<h2 id="输出系统的时区"><a href="#输出系统的时区" class="headerlink" title="输出系统的时区"></a>输出系统的时区</h2><p>通过上述的现象基本上可以定位问题出现在 <code>Jackson</code> 对日期的序列化上。</p>
+<h3 id="输出系统的时区"><a href="#输出系统的时区" class="headerlink" title="输出系统的时区"></a>输出系统的时区</h3><p>通过上述的现象基本上可以定位问题出现在 <code>Jackson</code> 对日期的序列化上。</p>
 <p>为了排查这个问题，我们在启动 Spring Boot Application 时，先输出当前系统的时区，发现系统时区为 <code>Asia/Shanghai</code>，而我们配置的 <code>Jackson</code> 时区为 <code>GMT+8</code>。</p>
 <p>难道 <code>Asia/Shanghai</code> 与 <code>GMT+8</code> 不是同一个时区？</p>
-<h2 id="求证"><a href="#求证" class="headerlink" title="求证"></a>求证</h2><p>为了证明我们的猜想是正确的，在启动 Spring Boot Application 时，将系统时区设置为 <code>GMT+8</code>。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DSTApplication</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		SpringApplication.run(DSTApplication<span class="class">.<span class="keyword">class</span>, <span class="title">args</span>)</span>;</span><br><span class="line">		TimeZone.setDefault(TimeZone.getTimeZone(<span class="string">"GMT+8"</span>));</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="求证"><a href="#求证" class="headerlink" title="求证"></a>求证</h3><p>为了证明我们的猜想是正确的，在启动 Spring Boot Application 时，将系统时区设置为 <code>GMT+8</code>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DSTApplication</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        SpringApplication.run(DSTApplication<span class="class">.<span class="keyword">class</span>, <span class="title">args</span>)</span>;</span><br><span class="line">        TimeZone.setDefault(TimeZone.getTimeZone(<span class="string">"GMT+8"</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>重复以上请求，发现对于<code>1990-05-22</code>，服务端日志和接口均正确输出 <code>1990-05-22 00:00:00</code>。</p>
 <p>若不设置默认时区为 <code>GMT+8</code>，而是将 <code>Jackson</code> 序列化的时区配置修改为 <code>Asia/Shanghai</code>，接口也能正确输出。</p>
 <p>那么 <code>Asia/Shanghai</code> 与 <code>GMT+8</code> 在什么情况下会导致相差一个小时的问题呢？</p>
-<h1 id="夏令时"><a href="#夏令时" class="headerlink" title="夏令时"></a>夏令时</h1><blockquote>
-<p>夏令时，表示为了节约能源，人为规定时间的意思。也叫夏时制，夏时令（Daylight Saving Time：DST），又称“日光节约时制”和“夏令时间”，在这一制度实行期间所采用的统一时间称为“夏令时间”。一般在天亮早的夏季人为将时间调快一小时，可以使人早起早睡，减少照明量，以充分利用光照资源，从而节约照明用电。各个采纳夏时制的国家具体规定不同。目前全世界有近110个国家每年要实行夏令时。</p>
-</blockquote>
-<blockquote>
-<p>1986年4月，中国中央有关部门发出“在全国范围内实行夏时制的通知”，具体作法是：每年从四月中旬第一个星期日的凌晨2时整（北京时间），将时钟拨快一小时，即将表针由2时拨至3时，夏令时开始；到九月中旬第一个星期日的凌晨2时整（北京夏令时），再将时钟拨回一小时，即将表针由2时拨至1时，夏令时结束。从1986年到1991年的六个年度，除1986年因是实行夏时制的第一年，从5月4日开始到9月14日结束外，其它年份均按规定的时段施行。在夏令时开始和结束前几天，新闻媒体均刊登有关部门的通告。1992年起，夏令时暂停实行。</p>
+<h2 id="夏令时"><a href="#夏令时" class="headerlink" title="夏令时"></a>夏令时</h2><blockquote>
+<p>夏令时，表示为了节约能源，人为规定时间的意思。也叫夏时制，夏时令（Daylight Saving Time：DST），又称“日光节约时制”和“夏令时间”，在这一制度实行期间所采用的统一时间称为“夏令时间”。一般在天亮早的夏季人为将时间调快一小时，可以使人早起早睡，减少照明量，以充分利用光照资源，从而节约照明用电。各个采纳夏时制的国家具体规定不同。目前全世界有近110个国家每年要实行夏令时。1986年4月，中国中央有关部门发出“在全国范围内实行夏时制的通知”，具体作法是：每年从四月中旬第一个星期日的凌晨2时整（北京时间），将时钟拨快一小时，即将表针由2时拨至3时，夏令时开始；到九月中旬第一个星期日的凌晨2时整（北京夏令时），再将时钟拨回一小时，即将表针由2时拨至1时，夏令时结束。从1986年到1991年的六个年度，除1986年因是实行夏时制的第一年，从5月4日开始到9月14日结束外，其它年份均按规定的时段施行。在夏令时开始和结束前几天，新闻媒体均刊登有关部门的通告。1992年起，夏令时暂停实行。</p>
 </blockquote>
 <p>以上内容摘抄自<a href="https://baike.baidu.com/item/%E5%A4%8F%E4%BB%A4%E6%97%B6" target="_blank" rel="noopener">百度百科</a>，这也就是为什么在上述例子中为什么<code>1992-05-22</code>即使在系统时区与 <code>Jackson</code> 序列化时区不一致的情况下，仍然能够正确返回，而<code>1990-05-22</code>就会出错。</p>
 
@@ -621,7 +618,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">24</span>
+                    <span class="site-state-item-count">25</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -637,8 +634,6 @@
                     
                   
                     
-                    
-                      
                     
                       
                     
@@ -725,7 +720,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">32</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">34</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -807,7 +806,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#现象"><span class="nav-number">1.</span> <span class="nav-text">现象</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#排查过程"><span class="nav-number">2.</span> <span class="nav-text">排查过程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题复现"><span class="nav-number">2.1.</span> <span class="nav-text">问题复现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#输出对应的时间"><span class="nav-number">2.2.</span> <span class="nav-text">输出对应的时间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#输出系统的时区"><span class="nav-number">2.3.</span> <span class="nav-text">输出系统的时区</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#求证"><span class="nav-number">2.4.</span> <span class="nav-text">求证</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#夏令时"><span class="nav-number">3.</span> <span class="nav-text">夏令时</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#现象"><span class="nav-number">1.</span> <span class="nav-text">现象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#排查过程"><span class="nav-number">2.</span> <span class="nav-text">排查过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题复现"><span class="nav-number">2.1.</span> <span class="nav-text">问题复现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#输出对应的时间"><span class="nav-number">2.2.</span> <span class="nav-text">输出对应的时间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#输出系统的时区"><span class="nav-number">2.3.</span> <span class="nav-text">输出系统的时区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#求证"><span class="nav-number">2.4.</span> <span class="nav-text">求证</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#夏令时"><span class="nav-number">3.</span> <span class="nav-text">夏令时</span></a></li></ol></div>
             
 
           </div>

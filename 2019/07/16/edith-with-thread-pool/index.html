@@ -104,7 +104,7 @@
 <meta property="og:site_name" content="傅永德 | 个人博客">
 <meta property="og:description" content="在 Rpc Introduction 中简单写了一个 RPC Framework。在本节中，对 Edith 新增采用线程池支持多线程的特性。 背景实际开发中，我们的应用程序是不能盲目的开辟线程的，这样会造成资源的极大浪费。若采用线程池，可以减少创建和销毁线程的次数，让每个线程可以多次使用，并且可以根据系统的承受能力，调整线程池中工作线程的数量，方式消耗过多的内存。 如有需要可以阅读 Dubbo 中">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-03-20T02:51:24.834Z">
+<meta property="og:updated_time" content="2020-03-23T12:35:55.736Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RPC 进阶 - 线程池">
 <meta name="twitter:description" content="在 Rpc Introduction 中简单写了一个 RPC Framework。在本节中，对 Edith 新增采用线程池支持多线程的特性。 背景实际开发中，我们的应用程序是不能盲目的开辟线程的，这样会造成资源的极大浪费。若采用线程池，可以减少创建和销毁线程的次数，让每个线程可以多次使用，并且可以根据系统的承受能力，调整线程池中工作线程的数量，方式消耗过多的内存。 如有需要可以阅读 Dubbo 中">
@@ -408,7 +408,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-03-20 10:51:24" itemprop="dateModified" datetime="2020-03-20T10:51:24+08:00">2020-03-20</time>
+                <time title="修改时间：2020-03-23 20:35:55" itemprop="dateModified" datetime="2020-03-23T20:35:55+08:00">2020-03-23</time>
               
             
           </span>
@@ -443,13 +443,13 @@
 
       
         <p>在 <a href="https://fuyongde.github.io/2019/07/11/rpc-introduction/">Rpc Introduction</a> 中简单写了一个 <code>RPC Framework</code>。在本节中，对 <code>Edith</code> 新增采用线程池支持多线程的特性。</p>
-<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>实际开发中，我们的应用程序是不能盲目的开辟线程的，这样会造成资源的极大浪费。若采用线程池，可以减少创建和销毁线程的次数，让每个线程可以多次使用，并且可以根据系统的承受能力，调整线程池中工作线程的数量，方式消耗过多的内存。</p>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>实际开发中，我们的应用程序是不能盲目的开辟线程的，这样会造成资源的极大浪费。若采用线程池，可以减少创建和销毁线程的次数，让每个线程可以多次使用，并且可以根据系统的承受能力，调整线程池中工作线程的数量，方式消耗过多的内存。</p>
 <p>如有需要可以阅读 <code>Dubbo</code> 中关于线程池的设计（位于 <code>org.apache.dubbo.common.threadpool</code> 包）。</p>
-<h1 id="开发"><a href="#开发" class="headerlink" title="开发"></a>开发</h1><h2 id="依赖"><a href="#依赖" class="headerlink" title="依赖"></a>依赖</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;com.google.guava&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;guava&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
-<h2 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h2><p>本文代码可以从<a href="https://github.com/fuyongde/edith/releases/tag/0.1.1" target="_blank" rel="noopener">这里</a>获取。</p>
-<h3 id="新增-ThreadUtils-java"><a href="#新增-ThreadUtils-java" class="headerlink" title="新增 ThreadUtils.java"></a>新增 ThreadUtils.java</h3><p>用于创建 <code>ExecutorService</code></p>
+<h2 id="开发"><a href="#开发" class="headerlink" title="开发"></a>开发</h2><h3 id="依赖"><a href="#依赖" class="headerlink" title="依赖"></a>依赖</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;com.google.guava&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;guava&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h3><p>本文代码可以从<a href="https://github.com/fuyongde/edith/releases/tag/0.1.1" target="_blank" rel="noopener">这里</a>获取。</p>
+<h4 id="新增-ThreadUtils-java"><a href="#新增-ThreadUtils-java" class="headerlink" title="新增 ThreadUtils.java"></a>新增 ThreadUtils.java</h4><p>用于创建 <code>ExecutorService</code></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadUtils</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 用于对线程分配一个名字，方便排查问题</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> format format</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> Edith-1</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> ThreadFactory <span class="title">buildThreadFactory</span><span class="params">(String format)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ThreadFactoryBuilder().setNameFormat(format).build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ExecutorService <span class="title">newCachedThreadPool</span><span class="params">(<span class="keyword">int</span> maximumPoolSize)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ThreadPoolExecutor(THREAD_CORE_POOL_SIZE, maximumPoolSize &gt; <span class="number">0</span> ? maximumPoolSize : THREAD_MAXIMUM_POOL_SIZE,</span><br><span class="line">                Long.MAX_VALUE, TimeUnit.MICROSECONDS, <span class="keyword">new</span> SynchronousQueue&lt;&gt;(), buildThreadFactory(THREAD_NAME), <span class="keyword">new</span> ThreadPoolExecutor.AbortPolicy());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="修改-RpcFramework-java"><a href="#修改-RpcFramework-java" class="headerlink" title="修改 RpcFramework.java"></a>修改 RpcFramework.java</h3><p>将原代码中 <code>new Thread()</code> 部分替换为线程池。</p>
+<h4 id="修改-RpcFramework-java"><a href="#修改-RpcFramework-java" class="headerlink" title="修改 RpcFramework.java"></a>修改 RpcFramework.java</h4><p>将原代码中 <code>new Thread()</code> 部分替换为线程池。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> ExecutorService executorService = ThreadUtils.newCachedThreadPool(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">export</span><span class="params">(<span class="keyword">final</span> Object service, <span class="keyword">int</span> port)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    Objects.requireNonNull(service, <span class="string">"Service instance is null!"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (port &lt;= PORT_MIN || port &gt; PORT_MAX) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Invalid port "</span> + port);</span><br><span class="line">    &#125;</span><br><span class="line">    System.out.println(<span class="string">"Export service "</span> + service.getClass().getName() + <span class="string">" on port "</span> + port);</span><br><span class="line">    ServerSocket server = <span class="keyword">new</span> ServerSocket(port);</span><br><span class="line">    <span class="keyword">for</span> (; ; ) &#123;</span><br><span class="line">        System.out.println(<span class="string">"application is running"</span>);</span><br><span class="line">        Socket socket = server.accept();</span><br><span class="line">        executorService.execute(() -&gt; &#123;</span><br><span class="line">            <span class="comment">// do something ...</span></span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>经过以上修改，我们在例子中的 <code>HelloServiceImpl</code> 打印一下线程名称</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">hello</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">    String result = <span class="string">"Hello "</span> + name;</span><br><span class="line">    System.out.println(Thread.currentThread().getName() + <span class="string">" "</span> + result);</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -599,7 +599,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">24</span>
+                    <span class="site-state-item-count">25</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -615,8 +615,6 @@
                     
                   
                     
-                    
-                      
                     
                       
                     
@@ -703,7 +701,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">32</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">34</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -785,7 +787,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#开发"><span class="nav-number">2.</span> <span class="nav-text">开发</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#依赖"><span class="nav-number">2.1.</span> <span class="nav-text">依赖</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Code"><span class="nav-number">2.2.</span> <span class="nav-text">Code</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#新增-ThreadUtils-java"><span class="nav-number">2.2.1.</span> <span class="nav-text">新增 ThreadUtils.java</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改-RpcFramework-java"><span class="nav-number">2.2.2.</span> <span class="nav-text">修改 RpcFramework.java</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开发"><span class="nav-number">2.</span> <span class="nav-text">开发</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#依赖"><span class="nav-number">2.1.</span> <span class="nav-text">依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Code"><span class="nav-number">2.2.</span> <span class="nav-text">Code</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#新增-ThreadUtils-java"><span class="nav-number">2.2.1.</span> <span class="nav-text">新增 ThreadUtils.java</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#修改-RpcFramework-java"><span class="nav-number">2.2.2.</span> <span class="nav-text">修改 RpcFramework.java</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>

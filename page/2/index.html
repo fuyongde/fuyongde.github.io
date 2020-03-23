@@ -347,6 +347,366 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://fuyongde.github.io/2019/11/14/mysql-手册/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="傅永德">
+      <meta itemprop="description" content="苟利国家生死以，岂因祸福避趋之">
+      <meta itemprop="image" content="/images/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="傅永德 | 个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/11/14/mysql-手册/" class="post-title-link" itemprop="url">MySQL 手册</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-11-14 17:20:42" itemprop="dateCreated datePublished" datetime="2019-11-14T17:20:42+08:00">2019-11-14</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-03-23 20:40:49" itemprop="dateModified" datetime="2020-03-23T20:40:49+08:00">2020-03-23</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/手册/" itemprop="url" rel="index"><span itemprop="name">手册</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="参数配置"><a href="#参数配置" class="headerlink" title="参数配置"></a>参数配置</h2><h3 id="查看所有参数"><a href="#查看所有参数" class="headerlink" title="查看所有参数"></a>查看所有参数</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SHOW VARIABLES;</span><br></pre></td></tr></table></figure>
+<h3 id="慢查询、索引相关的参数"><a href="#慢查询、索引相关的参数" class="headerlink" title="慢查询、索引相关的参数"></a>慢查询、索引相关的参数</h3><h4 id="查看慢查询日志是否打开"><a href="#查看慢查询日志是否打开" class="headerlink" title="查看慢查询日志是否打开"></a>查看慢查询日志是否打开</h4><p>Usage:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SHOW VARIABLES LIKE &apos;%slow_query_log%&apos;;</span><br></pre></td></tr></table></figure>
+<p>Result:</p>
+<table>
+<thead>
+<tr>
+<th>Variable_name</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>slow_query_log</td>
+<td>OFF</td>
+</tr>
+<tr>
+<td>slow_query_log_file</td>
+<td>/var/lib/mysql/17998065ff2d-slow.log</td>
+</tr>
+</tbody>
+</table>
+<h4 id="打开慢查询日志"><a href="#打开慢查询日志" class="headerlink" title="打开慢查询日志"></a>打开慢查询日志</h4><p>Usage:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-- 打开MySQL慢查询日志</span><br><span class="line">mysql&gt; SET GLOBAL slow_query_log = ON;</span><br><span class="line">-- 或者用这种方式</span><br><span class="line">mysql&gt; SET GLOBAL slow_query_log = 1;</span><br></pre></td></tr></table></figure>
+<h4 id="慢查询阈值"><a href="#慢查询阈值" class="headerlink" title="慢查询阈值"></a>慢查询阈值</h4><h5 id="查看慢查询阈值"><a href="#查看慢查询阈值" class="headerlink" title="查看慢查询阈值"></a>查看慢查询阈值</h5><p>Usage:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SHOW VARIABLES LIKE &apos;long_query_time&apos;;</span><br></pre></td></tr></table></figure>
+<p>Result:</p>
+<table>
+<thead>
+<tr>
+<th>Variable_name</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>long_query_time</td>
+<td>10.000000</td>
+</tr>
+</tbody>
+</table>
+<h5 id="设置慢查询阈值"><a href="#设置慢查询阈值" class="headerlink" title="设置慢查询阈值"></a>设置慢查询阈值</h5><p>Usage:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-- 设置完之后，在当前窗口查询，可能存在值不变的情况，重新打开窗口查询即可。</span><br><span class="line">mysql&gt; SET GLOBAL long_query_time = 0.1;</span><br></pre></td></tr></table></figure>
+<h4 id="未使用索引的情况"><a href="#未使用索引的情况" class="headerlink" title="未使用索引的情况"></a>未使用索引的情况</h4><h5 id="查看未使用索引的查询是否计入慢查询日志"><a href="#查看未使用索引的查询是否计入慢查询日志" class="headerlink" title="查看未使用索引的查询是否计入慢查询日志"></a>查看未使用索引的查询是否计入慢查询日志</h5><p>Usage:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SHOW VARIABLES LIKE &apos;%log_queries_not_using_indexes%&apos;;</span><br></pre></td></tr></table></figure>
+<p>Result:</p>
+<table>
+<thead>
+<tr>
+<th>Variable_name</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>log_queries_not_using_indexes</td>
+<td>OFF</td>
+</tr>
+</tbody>
+</table>
+<h5 id="打开未使用索引记入慢查询日志"><a href="#打开未使用索引记入慢查询日志" class="headerlink" title="打开未使用索引记入慢查询日志"></a>打开未使用索引记入慢查询日志</h5><p>Usage:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SET GLOBAL log_queries_not_using_indexes = ON;</span><br><span class="line">-- 或者</span><br><span class="line">mysql&gt; SET GLOBAL log_queries_not_using_indexes = 1;</span><br></pre></td></tr></table></figure>
+<h4 id="慢查询日志分析"><a href="#慢查询日志分析" class="headerlink" title="慢查询日志分析"></a>慢查询日志分析</h4><p><code>MySQL</code> 自带了 <code>mysqldumpslow</code> 可以帮助我们快速得分析慢查询日志。<code>pt-query-digest</code> 是一个非常优秀的第三方工具来版主我们分析 <code>MySQL</code> 的 binlog、generallog、slowlog。</p>
+<h5 id="mysqldumpslow"><a href="#mysqldumpslow" class="headerlink" title="mysqldumpslow"></a>mysqldumpslow</h5><p>Usage：</p>
+<p><code>mysqldumpslow [ OPTS... ] [ LOGS... ]</code></p>
+<p>具体的参数，可自行查看其对应的含义</p>
+<p>示例：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 得到返回记录集最多的10个SQL。</span><br><span class="line">mysqldumpslow -s r -t 10 /var/lib/mysql/izwz9ezwhlhq4hy1wzw9oqz-slow.log</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> 得到访问次数最多的10个SQL</span><br><span class="line">mysqldumpslow -s c -t 10 /var/lib/mysql/izwz9ezwhlhq4hy1wzw9oqz-slow.log</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> 得到按照时间排序的前10条里面含有左连接的查询语句。</span><br><span class="line">mysqldumpslow -s t -t 10 -g "left join" /var/lib/mysql/izwz9ezwhlhq4hy1wzw9oqz-slow.log</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> 另外建议在使用这些命令时结合 | 和more 使用 ，否则有可能出现刷屏的情况。</span><br><span class="line">mysqldumpslow -s r -t 20 /var/lib/mysql/izwz9ezwhlhq4hy1wzw9oqz-slow.log | more</span><br></pre></td></tr></table></figure>
+<h4 id="刨析-MySQL-查询"><a href="#刨析-MySQL-查询" class="headerlink" title="刨析 MySQL 查询"></a>刨析 MySQL 查询</h4><p>在实际项目中，我们通过慢查询日志，只是找到对应的慢查询，那么如何对慢查询进行刨析呢？</p>
+<p>MySQL 在5.1版本之后引入了 <code>SHOW PROFILE</code> 命令，默认是禁用的，但可以在会话级别动态的修改。</p>
+<h5 id="开启"><a href="#开启" class="headerlink" title="开启"></a>开启</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-- 设置为 ON 或 1 均可</span><br><span class="line">mysql&gt; SET PROFILING = ON;</span><br></pre></td></tr></table></figure>
+<h5 id="刨析查询耗时"><a href="#刨析查询耗时" class="headerlink" title="刨析查询耗时"></a>刨析查询耗时</h5><p>开启之后执行任意一个查询，然后在执行 <code>SHOW PROFILING</code>，观察对应的结果。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SHOW PROFILING;</span><br></pre></td></tr></table></figure>
+<p>其结果如下</p>
+<table>
+<thead>
+<tr>
+<th>Query_ID</th>
+<th>Duration</th>
+<th>Query</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>0.00060525</td>
+<td>SELECT * FROM <code>actor</code></td>
+</tr>
+</tbody>
+</table>
+<p>如果需要看更为详细的信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SHOW PROFILE FOR QUERY 1;</span><br></pre></td></tr></table></figure>
+<p>其结果如下，可以看到详细的记录了该次查询各个阶段的耗时情况</p>
+<table>
+<thead>
+<tr>
+<th>Status</th>
+<th>Duration</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>starting</td>
+<td>0.000069</td>
+</tr>
+<tr>
+<td>checking permissions</td>
+<td>0.000009</td>
+</tr>
+<tr>
+<td>Opening tables</td>
+<td>0.000021</td>
+</tr>
+<tr>
+<td>init</td>
+<td>0.000022</td>
+</tr>
+<tr>
+<td>System lock</td>
+<td>0.000010</td>
+</tr>
+<tr>
+<td>optimizing</td>
+<td>0.000006</td>
+</tr>
+<tr>
+<td>statistics</td>
+<td>0.000017</td>
+</tr>
+<tr>
+<td>preparing</td>
+<td>0.000015</td>
+</tr>
+<tr>
+<td>executing</td>
+<td>0.000004</td>
+</tr>
+<tr>
+<td>Sending data</td>
+<td>0.000298</td>
+</tr>
+<tr>
+<td>end</td>
+<td>0.000006</td>
+</tr>
+<tr>
+<td>query end</td>
+<td>0.000008</td>
+</tr>
+<tr>
+<td>closing tables</td>
+<td>0.000009</td>
+</tr>
+<tr>
+<td>freeing items</td>
+<td>0.000020</td>
+</tr>
+<tr>
+<td>logging slow query</td>
+<td>0.000074</td>
+</tr>
+<tr>
+<td>cleaning up</td>
+<td>0.000019</td>
+</tr>
+</tbody>
+</table>
+<h3 id="事务相关的参数"><a href="#事务相关的参数" class="headerlink" title="事务相关的参数"></a>事务相关的参数</h3><h4 id="事务隔离级别"><a href="#事务隔离级别" class="headerlink" title="事务隔离级别"></a>事务隔离级别</h4><h5 id="查看事务的隔离级别"><a href="#查看事务的隔离级别" class="headerlink" title="查看事务的隔离级别"></a>查看事务的隔离级别</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">-- 查看当前数据库事务隔离级别</span><br><span class="line">mysql&gt; SHOW VARIABLES LIKE &apos;%transaction_isolation%&apos;;</span><br><span class="line">-- 或者</span><br><span class="line">mysql&gt; SELECT @@transaction_isolation;</span><br><span class="line">-- 低版本的MySQL属性是不一样的</span><br><span class="line">mysql&gt; SHOW VARIABLES LIKE &apos;%tx_isolation%&apos;;</span><br><span class="line">-- 或者</span><br><span class="line">mysql&gt; SELECT @@tx_isolation;</span><br></pre></td></tr></table></figure>
+<h5 id="设置事务的隔离级别"><a href="#设置事务的隔离级别" class="headerlink" title="设置事务的隔离级别"></a>设置事务的隔离级别</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">-- 设置当前会话级别为`read-uncommitted`</span><br><span class="line">mysql&gt; SET SESSION TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;</span><br><span class="line">-- 设置当前会话级别为`read-committed`</span><br><span class="line">mysql&gt; SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED;</span><br><span class="line">-- 设置当前会话级别为`repeatable-read`</span><br><span class="line">mysql&gt; SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ;</span><br><span class="line">-- 设置当前会话级别为`serializable`</span><br><span class="line">mysql&gt; SET SESSION TRANSACTION ISOLATION LEVEL SERIALIZABLE;</span><br></pre></td></tr></table></figure>
+<h4 id="事务自动提交"><a href="#事务自动提交" class="headerlink" title="事务自动提交"></a>事务自动提交</h4><p><code>MySQL</code> 默认采用自动提交模式，也就是说如果不是显式地开始一个事务，则每个查询都被当做一个事务执行提交操作。另外还有一些命令，在执行之前会强制 <code>COMMIT</code> 提交当前活动地事务，典型的例子，<code>DDL</code> 语言中会导致大量数据改变的操作，比如 <code>ALTER TABLE</code> 等，此外还有 <code>LOCK TABLES</code> 等语句。</p>
+<h5 id="查看事务自动提交状态"><a href="#查看事务自动提交状态" class="headerlink" title="查看事务自动提交状态"></a>查看事务自动提交状态</h5><p>Useage:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-- 查看事务自动提交的参数</span><br><span class="line">mysql&gt; SHOW VARIABLES LIKE &apos;AUTOCOMMIT&apos;;</span><br></pre></td></tr></table></figure>
+<p>Result:</p>
+<table>
+<thead>
+<tr>
+<th>Variable_name</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>autocommit</td>
+<td>ON</td>
+</tr>
+</tbody>
+</table>
+<h5 id="关闭事务自动提交"><a href="#关闭事务自动提交" class="headerlink" title="关闭事务自动提交"></a>关闭事务自动提交</h5><p>Useage:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-- 关闭事务自动提交</span><br><span class="line">mysql&gt; SET AUTOCOMMIT = OFF;</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://fuyongde.github.io/2019/11/14/transaction-isolation/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -832,7 +1192,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-03-20 10:51:24" itemprop="dateModified" datetime="2020-03-20T10:51:24+08:00">2020-03-20</time>
+                <time title="修改时间：2020-03-23 20:42:10" itemprop="dateModified" datetime="2020-03-23T20:42:10+08:00">2020-03-23</time>
               
             
           </span>
@@ -868,21 +1228,21 @@
       
         
           
-            <h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><blockquote>
+            <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><blockquote>
 <p><code>Spring Cloud Alibaba</code> 致力于提供微服务开发的一站式解决方案。此项目包含开发分布式应用服务的必需组件（涵盖了服务治理、配置管理、限流降级以及阿里开源生态和商业生态的诸多组件），方便开发者通过 <code>Spring Cloud</code> 编程模型轻松使用这些组件来开发分布式应用服务。依托 <code>Spring Cloud Alibaba</code>，您只需要添加一些注解和少量配置，就可以将 <code>Spring Cloud</code> 应用接入阿里分布式应用解决方案，通过阿里中间件来迅速搭建分布式应用系统。</p>
 </blockquote>
-<h2 id="Spring-Cloud-是什么"><a href="#Spring-Cloud-是什么" class="headerlink" title="Spring Cloud 是什么"></a>Spring Cloud 是什么</h2><blockquote>
+<h3 id="Spring-Cloud-是什么"><a href="#Spring-Cloud-是什么" class="headerlink" title="Spring Cloud 是什么"></a>Spring Cloud 是什么</h3><blockquote>
 <p>Spring Cloud provides tools for developers to quickly build some of the common patterns in distributed systems .</p>
 </blockquote>
 <p><code>Spring Cloud</code> 为开发者提供了快速构建分布式系统的模型。<code>Spring Cloud</code> 除了抽象了分布式系统里的一些接口，并且提供了一系列开箱即用的组件。</p>
 <p><code>Spring Cloud</code> 更详细的介绍以及相关的组件，可以参考<a href="https://spring.io/projects/spring-cloud" target="_blank" rel="noopener">官网</a>。</p>
-<h2 id="Spring-Cloud-Alibaba-对-Spring-Cloud-的意义"><a href="#Spring-Cloud-Alibaba-对-Spring-Cloud-的意义" class="headerlink" title="Spring Cloud Alibaba 对 Spring Cloud 的意义"></a>Spring Cloud Alibaba 对 Spring Cloud 的意义</h2><ul>
+<h3 id="Spring-Cloud-Alibaba-对-Spring-Cloud-的意义"><a href="#Spring-Cloud-Alibaba-对-Spring-Cloud-的意义" class="headerlink" title="Spring Cloud Alibaba 对 Spring Cloud 的意义"></a>Spring Cloud Alibaba 对 Spring Cloud 的意义</h3><ul>
 <li><code>Spring Cloud Alibaba</code> 在 <code>Spring Cloud</code> 体系中是一个套件，类似于 <code>Netflix OSS</code>，为开发者提供了更多的选择。</li>
 <li>在 <code>Netflix OSS</code> 诸多重要组件先后宣布停止新功能开发的大背景下 <code>Spring Cloud Alibaba</code> 作为一个高速迭代中的新生项目无疑是更合适的选择。</li>
 <li>将国内非常流行的 <code>Dubbo</code>、<code>RocketMQ</code> 等融入 <code>Spring Cloud</code> 体系，使得应用的接入和改造的成本更低。</li>
 <li><code>Spring Cloud Alibaba</code> 是中文文档最全的 <code>Spring Cloud</code> 组件。</li>
 </ul>
-<h1 id="组件"><a href="#组件" class="headerlink" title="组件"></a>组件</h1><h2 id="开源组件"><a href="#开源组件" class="headerlink" title="开源组件"></a>开源组件</h2><ul>
+<h2 id="组件"><a href="#组件" class="headerlink" title="组件"></a>组件</h2><h3 id="开源组件"><a href="#开源组件" class="headerlink" title="开源组件"></a>开源组件</h3><ul>
 <li>Nacos Config：配置中心</li>
 <li>Nacos Discovery：服务发现（注册中心）</li>
 <li>Sentinel：把流量作为切入点，从流量控制、熔断降级、系统负载保护等多个维度保护服务的稳定性。</li>
@@ -890,14 +1250,14 @@
 <li>Dubbo Spring Cloud：<code>Apache Dubbo™</code> 是一款高性能 Java RPC 框架。</li>
 <li>Seata：阿里巴巴开源产品，一个易于使用的高性能微服务分布式事务解决方案。</li>
 </ul>
-<h2 id="商业化组件"><a href="#商业化组件" class="headerlink" title="商业化组件"></a>商业化组件</h2><ul>
+<h3 id="商业化组件"><a href="#商业化组件" class="headerlink" title="商业化组件"></a>商业化组件</h3><ul>
 <li>ANS：注册中心</li>
 <li>ACM：配置中心</li>
 <li>OSS：阿里云对象存储服务</li>
 <li>SchedulerX：阿里中间件团队开发的一款分布式任务调度产品，支持周期性的任务与固定时间点触发任务。</li>
 <li>SMS：覆盖全球的短信服务，友好、高效、智能的互联化通讯能力，帮助企业迅速搭建客户触达通道。</li>
 </ul>
-<h2 id="组件的版本关系"><a href="#组件的版本关系" class="headerlink" title="组件的版本关系"></a>组件的版本关系</h2><table>
+<h3 id="组件的版本关系"><a href="#组件的版本关系" class="headerlink" title="组件的版本关系"></a>组件的版本关系</h3><table>
 <thead>
 <tr>
 <th>Spring Cloud Alibaba Version</th>
@@ -943,7 +1303,7 @@
 </tr>
 </tbody>
 </table>
-<h2 id="与-Spring-Cloud-以及-Spring-Boot-的版本依赖关系"><a href="#与-Spring-Cloud-以及-Spring-Boot-的版本依赖关系" class="headerlink" title="与 Spring Cloud 以及 Spring Boot 的版本依赖关系"></a>与 Spring Cloud 以及 Spring Boot 的版本依赖关系</h2><table>
+<h3 id="与-Spring-Cloud-以及-Spring-Boot-的版本依赖关系"><a href="#与-Spring-Cloud-以及-Spring-Boot-的版本依赖关系" class="headerlink" title="与 Spring Cloud 以及 Spring Boot 的版本依赖关系"></a>与 Spring Cloud 以及 Spring Boot 的版本依赖关系</h3><table>
 <thead>
 <tr>
 <th>Spring Cloud Version</th>
@@ -970,8 +1330,8 @@
 </tbody>
 </table>
 <p>过老的版本不推荐</p>
-<h1 id="Spring-Cloud-Alibaba-VS-Dubbo"><a href="#Spring-Cloud-Alibaba-VS-Dubbo" class="headerlink" title="Spring Cloud Alibaba VS Dubbo"></a>Spring Cloud Alibaba VS Dubbo</h1><p><code>Dubbo Spring Cloud</code> (归属于 Spring Cloud Alibaba 项目)是基于 <code>Dubbo Spring Boot</code> (归属于 Dubbo 项目)和 <code>Spring Cloud</code>开发，使得 Dubbo 应用以一种更优雅的方式融入 <code>Spring Cloud</code> 体系。</p>
-<h2 id="功能对比"><a href="#功能对比" class="headerlink" title="功能对比"></a>功能对比</h2><p>由于 <code>Dubbo Spring Cloud</code> 构建在原生的 <code>Spring Cloud</code> 之上，其服务治理方面的能力可认为是 <code>Spring Cloud</code> 的加强版，不仅完全覆盖 <code>Spring Cloud</code> <a href="https://cloud.spring.io/spring-cloud-static/Greenwich.RELEASE/single/spring-cloud.html#_features" target="_blank" rel="noopener">原生特性</a>，而且提供更为稳定和成熟的实现，特性比对如下表所示：</p>
+<h2 id="Spring-Cloud-Alibaba-VS-Dubbo"><a href="#Spring-Cloud-Alibaba-VS-Dubbo" class="headerlink" title="Spring Cloud Alibaba VS Dubbo"></a>Spring Cloud Alibaba VS Dubbo</h2><p><code>Dubbo Spring Cloud</code> (归属于 Spring Cloud Alibaba 项目)是基于 <code>Dubbo Spring Boot</code> (归属于 Dubbo 项目)和 <code>Spring Cloud</code>开发，使得 Dubbo 应用以一种更优雅的方式融入 <code>Spring Cloud</code> 体系。</p>
+<h3 id="功能对比"><a href="#功能对比" class="headerlink" title="功能对比"></a>功能对比</h3><p>由于 <code>Dubbo Spring Cloud</code> 构建在原生的 <code>Spring Cloud</code> 之上，其服务治理方面的能力可认为是 <code>Spring Cloud</code> 的加强版，不仅完全覆盖 <code>Spring Cloud</code> <a href="https://cloud.spring.io/spring-cloud-static/Greenwich.RELEASE/single/spring-cloud.html#_features" target="_blank" rel="noopener">原生特性</a>，而且提供更为稳定和成熟的实现，特性比对如下表所示：</p>
 <table>
 <thead>
 <tr>
@@ -1023,7 +1383,7 @@
 <p>[1]: <code>Spring Cloud</code> 原生注册中心，除 <code>Eureka</code>、<code>Zookeeper</code>、<code>Consul</code> 之外，还包括 <code>Spring Cloud Alibaba</code> 中的 <code>Nacos</code></p>
 <p>[2]: <code>Dubbo Spring Cloud</code> 相对于单纯的 <code>Dubbo</code> 服务的一个坑：单纯的 <code>Dubbo</code> 是将每一个由 @org.apache.dubbo.config.annotation.Service 注解的服务作为单独的服务暴露的，<code>Dubbo Spring Cloud</code> 如果采用推荐的写法，是将所属的工程作为一个服务来暴露的，若同一个服务版本不一致，会导致消费者找不到服务的情况。</p>
 <p>[3]: <a href="https://github.com/alibaba/Sentinel/wiki/%E4%BB%8B%E7%BB%8D" target="_blank" rel="noopener">Alibaba Sentinel</a>：<code>Sentinel</code> 以流量为切入点，从流量控制、熔断降级、系统负载保护等多个维度保护服务的稳定性 - ，目前 <code>Sentinel</code> 已被 <code>Spring Cloud</code> 项目纳为<a href="https://spring.io/blog/2019/04/16/introducing-spring-cloud-circuit-breaker" target="_blank" rel="noopener">断路器的候选实现</a></p>
-<h2 id="写法对比"><a href="#写法对比" class="headerlink" title="写法对比"></a>写法对比</h2><p>从依赖上，<code>Dubbo Spring Boot</code> 的项目需要引入 <code>dubbo-spring-boot-starter</code> 相关依赖，<code>Dubbo Spring Cloud</code> 项目需要引入 <code>spring-cloud-starter-dubbo</code>相关依赖。</p>
+<h3 id="写法对比"><a href="#写法对比" class="headerlink" title="写法对比"></a>写法对比</h3><p>从依赖上，<code>Dubbo Spring Boot</code> 的项目需要引入 <code>dubbo-spring-boot-starter</code> 相关依赖，<code>Dubbo Spring Cloud</code> 项目需要引入 <code>spring-cloud-starter-dubbo</code>相关依赖。</p>
 <p>Example：</p>
 <p><code>Dubbo Spring Boot</code><br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.dubbo<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>dubbo-spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.dubbo<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>dubbo<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.dubbo<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>dubbo-registry-nacos<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba.nacos<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>nacos-client<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
 <p><code>Dubbo Spring Cloud</code><br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-dubbo<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-alibaba-nacos-discovery<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
@@ -1146,7 +1506,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-03-20 10:51:24" itemprop="dateModified" datetime="2020-03-20T10:51:24+08:00">2020-03-20</time>
+                <time title="修改时间：2020-03-23 20:28:29" itemprop="dateModified" datetime="2020-03-23T20:28:29+08:00">2020-03-23</time>
               
             
           </span>
@@ -1183,9 +1543,9 @@
         
           
             <p>在工作中，遇到一个很有意思的关于时间的问题，这里跟大家分享一下。</p>
-<h1 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h1><p>从数据库里取出用户的生日<code>1990-05-22</code>，接口返回时发现返回值变成了<code>1990-05-21</code>，而对于<code>1992-05-22</code>这样的日期却能正确返回。</p>
+<h2 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h2><p>从数据库里取出用户的生日<code>1990-05-22</code>，接口返回时发现返回值变成了<code>1990-05-21</code>，而对于<code>1992-05-22</code>这样的日期却能正确返回。</p>
 <p>网上很多对于相关问题的分析都是简单粗暴的认为是时区的问题，却没有讲明白问题出现的根本原因。</p>
-<h1 id="排查过程"><a href="#排查过程" class="headerlink" title="排查过程"></a>排查过程</h1><h2 id="问题复现"><a href="#问题复现" class="headerlink" title="问题复现"></a>问题复现</h2><p>为了复现问题现象，我们先快速搭建一个 Spring Boot Application。</p>
+<h2 id="排查过程"><a href="#排查过程" class="headerlink" title="排查过程"></a>排查过程</h2><h3 id="问题复现"><a href="#问题复现" class="headerlink" title="问题复现"></a>问题复现</h3><p>为了复现问题现象，我们先快速搭建一个 Spring Boot Application。</p>
 <p>先将配置文件中对日期类型的格式化配置为 <code>yyyy-MM-dd</code>，如下所示：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">spring.jackson.time-zone=GMT+8</span><br><span class="line">spring.jackson.date-format=yyyy-MM-dd</span><br></pre></td></tr></table></figure>
 <p>写一个接口，直接将有问题的日期输出，代码如下：</p>
@@ -1199,23 +1559,20 @@
 <p>发现服务端日志正确输出<code>1992-05-22</code>，此时接口的输出与服务端日志一致：</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="attr">"birthday"</span>: <span class="string">"1992-05-22"</span>&#125;</span><br></pre></td></tr></table></figure>
 <p>至此，我们复现了本文要讲解的问题。</p>
-<h2 id="输出对应的时间"><a href="#输出对应的时间" class="headerlink" title="输出对应的时间"></a>输出对应的时间</h2><p>为了更精确的知道这两个日期究竟有什么不同，我们更详细的输出这两个 <code>Date</code> 所对应的具体时间。</p>
+<h3 id="输出对应的时间"><a href="#输出对应的时间" class="headerlink" title="输出对应的时间"></a>输出对应的时间</h3><p>为了更精确的知道这两个日期究竟有什么不同，我们更详细的输出这两个 <code>Date</code> 所对应的具体时间。</p>
 <p>修改配置文件为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">spring.jackson.date-format=yyyy-MM-dd HH:mm:ss</span><br></pre></td></tr></table></figure>
 <p>重复以上请求，发现对于<code>1990-05-22</code>，服务端日志输出<code>1990-05-22 00:00:00</code>，而接口返回值则为<code>1990-05-21 23:00:00</code>，两者相差了一个小时。而对于<code>1992-05-22</code>，服务端日志与接口返回值完全一致。</p>
-<h2 id="输出系统的时区"><a href="#输出系统的时区" class="headerlink" title="输出系统的时区"></a>输出系统的时区</h2><p>通过上述的现象基本上可以定位问题出现在 <code>Jackson</code> 对日期的序列化上。</p>
+<h3 id="输出系统的时区"><a href="#输出系统的时区" class="headerlink" title="输出系统的时区"></a>输出系统的时区</h3><p>通过上述的现象基本上可以定位问题出现在 <code>Jackson</code> 对日期的序列化上。</p>
 <p>为了排查这个问题，我们在启动 Spring Boot Application 时，先输出当前系统的时区，发现系统时区为 <code>Asia/Shanghai</code>，而我们配置的 <code>Jackson</code> 时区为 <code>GMT+8</code>。</p>
 <p>难道 <code>Asia/Shanghai</code> 与 <code>GMT+8</code> 不是同一个时区？</p>
-<h2 id="求证"><a href="#求证" class="headerlink" title="求证"></a>求证</h2><p>为了证明我们的猜想是正确的，在启动 Spring Boot Application 时，将系统时区设置为 <code>GMT+8</code>。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DSTApplication</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		SpringApplication.run(DSTApplication<span class="class">.<span class="keyword">class</span>, <span class="title">args</span>)</span>;</span><br><span class="line">		TimeZone.setDefault(TimeZone.getTimeZone(<span class="string">"GMT+8"</span>));</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="求证"><a href="#求证" class="headerlink" title="求证"></a>求证</h3><p>为了证明我们的猜想是正确的，在启动 Spring Boot Application 时，将系统时区设置为 <code>GMT+8</code>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DSTApplication</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        SpringApplication.run(DSTApplication<span class="class">.<span class="keyword">class</span>, <span class="title">args</span>)</span>;</span><br><span class="line">        TimeZone.setDefault(TimeZone.getTimeZone(<span class="string">"GMT+8"</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>重复以上请求，发现对于<code>1990-05-22</code>，服务端日志和接口均正确输出 <code>1990-05-22 00:00:00</code>。</p>
 <p>若不设置默认时区为 <code>GMT+8</code>，而是将 <code>Jackson</code> 序列化的时区配置修改为 <code>Asia/Shanghai</code>，接口也能正确输出。</p>
 <p>那么 <code>Asia/Shanghai</code> 与 <code>GMT+8</code> 在什么情况下会导致相差一个小时的问题呢？</p>
-<h1 id="夏令时"><a href="#夏令时" class="headerlink" title="夏令时"></a>夏令时</h1><blockquote>
-<p>夏令时，表示为了节约能源，人为规定时间的意思。也叫夏时制，夏时令（Daylight Saving Time：DST），又称“日光节约时制”和“夏令时间”，在这一制度实行期间所采用的统一时间称为“夏令时间”。一般在天亮早的夏季人为将时间调快一小时，可以使人早起早睡，减少照明量，以充分利用光照资源，从而节约照明用电。各个采纳夏时制的国家具体规定不同。目前全世界有近110个国家每年要实行夏令时。</p>
-</blockquote>
-<blockquote>
-<p>1986年4月，中国中央有关部门发出“在全国范围内实行夏时制的通知”，具体作法是：每年从四月中旬第一个星期日的凌晨2时整（北京时间），将时钟拨快一小时，即将表针由2时拨至3时，夏令时开始；到九月中旬第一个星期日的凌晨2时整（北京夏令时），再将时钟拨回一小时，即将表针由2时拨至1时，夏令时结束。从1986年到1991年的六个年度，除1986年因是实行夏时制的第一年，从5月4日开始到9月14日结束外，其它年份均按规定的时段施行。在夏令时开始和结束前几天，新闻媒体均刊登有关部门的通告。1992年起，夏令时暂停实行。</p>
+<h2 id="夏令时"><a href="#夏令时" class="headerlink" title="夏令时"></a>夏令时</h2><blockquote>
+<p>夏令时，表示为了节约能源，人为规定时间的意思。也叫夏时制，夏时令（Daylight Saving Time：DST），又称“日光节约时制”和“夏令时间”，在这一制度实行期间所采用的统一时间称为“夏令时间”。一般在天亮早的夏季人为将时间调快一小时，可以使人早起早睡，减少照明量，以充分利用光照资源，从而节约照明用电。各个采纳夏时制的国家具体规定不同。目前全世界有近110个国家每年要实行夏令时。1986年4月，中国中央有关部门发出“在全国范围内实行夏时制的通知”，具体作法是：每年从四月中旬第一个星期日的凌晨2时整（北京时间），将时钟拨快一小时，即将表针由2时拨至3时，夏令时开始；到九月中旬第一个星期日的凌晨2时整（北京夏令时），再将时钟拨回一小时，即将表针由2时拨至1时，夏令时结束。从1986年到1991年的六个年度，除1986年因是实行夏时制的第一年，从5月4日开始到9月14日结束外，其它年份均按规定的时段施行。在夏令时开始和结束前几天，新闻媒体均刊登有关部门的通告。1992年起，夏令时暂停实行。</p>
 </blockquote>
 <p>以上内容摘抄自<a href="https://baike.baidu.com/item/%E5%A4%8F%E4%BB%A4%E6%97%B6" target="_blank" rel="noopener">百度百科</a>，这也就是为什么在上述例子中为什么<code>1992-05-22</code>即使在系统时区与 <code>Jackson</code> 序列化时区不一致的情况下，仍然能够正确返回，而<code>1990-05-22</code>就会出错。</p>
 
@@ -1336,7 +1693,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-03-20 20:14:37" itemprop="dateModified" datetime="2020-03-20T20:14:37+08:00">2020-03-20</time>
+                <time title="修改时间：2020-03-23 20:23:34" itemprop="dateModified" datetime="2020-03-23T20:23:34+08:00">2020-03-23</time>
               
             
           </span>
@@ -1391,16 +1748,16 @@
         
           
             <p>记录一些常见的 <code>Powershell</code> 的使用问题</p>
-<h3 id="别名命令"><a href="#别名命令" class="headerlink" title="别名命令"></a>别名命令</h3><p>在使用 Linux 系统时，我喜欢使用 <code>ll</code> 命令来查看当前目录的文件，但是 Windows 系统的 Powershell 没有这个命令，所以每次用的时候就很不习惯。我们可以通过对命令设置别名来让 Powershell 支持我们的使用习惯。</p>
-<h4 id="查看别名"><a href="#查看别名" class="headerlink" title="查看别名"></a>查看别名</h4><p><code>Get-Alias</code> 或者 <code>gal</code> 命令来查看我们系统命令的别名，如下</p>
+<h2 id="别名命令"><a href="#别名命令" class="headerlink" title="别名命令"></a>别名命令</h2><p>在使用 Linux 系统时，我喜欢使用 <code>ll</code> 命令来查看当前目录的文件，但是 Windows 系统的 Powershell 没有这个命令，所以每次用的时候就很不习惯。我们可以通过对命令设置别名来让 Powershell 支持我们的使用习惯。</p>
+<h3 id="查看别名"><a href="#查看别名" class="headerlink" title="查看别名"></a>查看别名</h3><p><code>Get-Alias</code> 或者 <code>gal</code> 命令来查看我们系统命令的别名，如下</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">PS C:\Users\fuyongde&gt; get-alias</span><br><span class="line"></span><br><span class="line">CommandType     Name                                               Version    Source</span><br><span class="line">-----------     ----                                               -------    ------</span><br><span class="line">Alias           % -&gt; ForEach-Object</span><br><span class="line">Alias           ? -&gt; Where-Object</span><br><span class="line">Alias           ac -&gt; Add-Content</span><br><span class="line">Alias           cat -&gt; Get-Content</span><br></pre></td></tr></table></figure>
 <ul>
 <li>查看某别名的原命令，如 <code>ls</code> 的原命令：<code>Get-Alias ls</code></li>
 <li>查看某原命令的别名，如 <code>Get-ChildItem</code> 的别名：<code>Get-Alias -Definition Get-ChildItem</code></li>
 </ul>
-<h4 id="临时创建或更改别名"><a href="#临时创建或更改别名" class="headerlink" title="临时创建或更改别名"></a>临时创建或更改别名</h4><p>使用 <code>Set-Alias</code> 命令来创建或更改别名，但是改命令只在当前的的 PowerShell Session 中生效。另外还有一个 <code>New-Alias</code> 命令用法类似。</p>
-<h5 id="创建不带参数的别名"><a href="#创建不带参数的别名" class="headerlink" title="创建不带参数的别名"></a>创建不带参数的别名</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">PS C:\Users\fuyongde&gt; Set-Alias -Name ll -Value get-childitem</span><br><span class="line"><span class="meta">#</span> 或者简单一些</span><br><span class="line">PS C:\Users\fuyongde&gt; Set-Alias ll get-childitem</span><br></pre></td></tr></table></figure>
-<h5 id="创建带参数的别名"><a href="#创建带参数的别名" class="headerlink" title="创建带参数的别名"></a>创建带参数的别名</h5><p>如果命令带参数如想为 <code>Get-ChildItem -Name</code> 设定别名为 <code>ll</code> 则我们需要两步，第一步为这个带参数原命令设定一个中间 <code>function</code>，第二步为这个 <code>function</code> 指定别名</p>
+<h3 id="临时创建或更改别名"><a href="#临时创建或更改别名" class="headerlink" title="临时创建或更改别名"></a>临时创建或更改别名</h3><p>使用 <code>Set-Alias</code> 命令来创建或更改别名，但是改命令只在当前的的 PowerShell Session 中生效。另外还有一个 <code>New-Alias</code> 命令用法类似。</p>
+<h4 id="创建不带参数的别名"><a href="#创建不带参数的别名" class="headerlink" title="创建不带参数的别名"></a>创建不带参数的别名</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">PS C:\Users\fuyongde&gt; Set-Alias -Name ll -Value get-childitem</span><br><span class="line"><span class="meta">#</span> 或者简单一些</span><br><span class="line">PS C:\Users\fuyongde&gt; Set-Alias ll get-childitem</span><br></pre></td></tr></table></figure>
+<h4 id="创建带参数的别名"><a href="#创建带参数的别名" class="headerlink" title="创建带参数的别名"></a>创建带参数的别名</h4><p>如果命令带参数如想为 <code>Get-ChildItem -Name</code> 设定别名为 <code>ll</code> 则我们需要两步，第一步为这个带参数原命令设定一个中间 <code>function</code>，第二步为这个 <code>function</code> 指定别名</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PS C:\Users\fuyongde&gt; function getlist &#123;Get-ChildItem -Name&#125;</span><br><span class="line">PS C:\Users\fuyongde&gt; Set-Alias ll getlist</span><br></pre></td></tr></table></figure>
 <h4 id="创建永久的别名"><a href="#创建永久的别名" class="headerlink" title="创建永久的别名"></a>创建永久的别名</h4><p>在 PowerShell 中直接使用 <code>Set-Alias</code> 或 <code>New-Alias</code> 命令创建的别名在关闭此 Session 后即会失效，防止此现象的方法是将此命令写入 Windows PowerShell profile 文件。</p>
 <p>查看此文件在计算机中的位置：</p>
@@ -1419,10 +1776,10 @@
 <li><code>Unrestricted</code>：可以运行未签名的脚本，这种策略也是最危险的。</li>
 </ul>
 <p>通过 <code>Get-ExecutionPolicy</code> 命令可查看当前配置的执行策略，通过管理员运行 PowerShell 并执行 <code>Set-ExecutionPolicy RemoteSigned</code> 可更改执行策略。</p>
-<h4 id="删除别名"><a href="#删除别名" class="headerlink" title="删除别名"></a>删除别名</h4><p>使用 <code>Remove-Item alias</code> 命令删除已设定的别名。</p>
-<p>如删除别名ll：</p>
+<h3 id="删除别名"><a href="#删除别名" class="headerlink" title="删除别名"></a>删除别名</h3><p>使用 <code>Remove-Item alias</code> 命令删除已设定的别名。</p>
+<p>如删除别名 ll ：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PS C:\Users\fuyongde&gt; Remove-Item alias:\ll</span><br></pre></td></tr></table></figure>
-<h3 id="环境变量命令"><a href="#环境变量命令" class="headerlink" title="环境变量命令"></a>环境变量命令</h3><h4 id="切换-PowerShell-的-page-为-UTF-8-代码页"><a href="#切换-PowerShell-的-page-为-UTF-8-代码页" class="headerlink" title="切换 PowerShell 的 page 为 UTF-8 代码页"></a>切换 PowerShell 的 page 为 UTF-8 代码页</h4><p>常见的代码页：</p>
+<h2 id="环境变量命令"><a href="#环境变量命令" class="headerlink" title="环境变量命令"></a>环境变量命令</h2><h3 id="切换-PowerShell-的-page-为-UTF-8-代码页"><a href="#切换-PowerShell-的-page-为-UTF-8-代码页" class="headerlink" title="切换 PowerShell 的 page 为 UTF-8 代码页"></a>切换 PowerShell 的 page 为 UTF-8 代码页</h3><p>常见的代码页：</p>
 <ul>
 <li><p><code>65001</code>：UTF-8 代码页</p>
 </li>
@@ -1553,7 +1910,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-03-20 20:22:28" itemprop="dateModified" datetime="2020-03-20T20:22:28+08:00">2020-03-20</time>
+                <time title="修改时间：2020-03-23 20:38:12" itemprop="dateModified" datetime="2020-03-23T20:38:12+08:00">2020-03-23</time>
               
             
           </span>
@@ -1773,7 +2130,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-03-20 10:51:24" itemprop="dateModified" datetime="2020-03-20T10:51:24+08:00">2020-03-20</time>
+                <time title="修改时间：2020-03-23 20:35:55" itemprop="dateModified" datetime="2020-03-23T20:35:55+08:00">2020-03-23</time>
               
             
           </span>
@@ -1810,13 +2167,13 @@
         
           
             <p>在 <a href="https://fuyongde.github.io/2019/07/11/rpc-introduction/">Rpc Introduction</a> 中简单写了一个 <code>RPC Framework</code>。在本节中，对 <code>Edith</code> 新增采用线程池支持多线程的特性。</p>
-<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>实际开发中，我们的应用程序是不能盲目的开辟线程的，这样会造成资源的极大浪费。若采用线程池，可以减少创建和销毁线程的次数，让每个线程可以多次使用，并且可以根据系统的承受能力，调整线程池中工作线程的数量，方式消耗过多的内存。</p>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>实际开发中，我们的应用程序是不能盲目的开辟线程的，这样会造成资源的极大浪费。若采用线程池，可以减少创建和销毁线程的次数，让每个线程可以多次使用，并且可以根据系统的承受能力，调整线程池中工作线程的数量，方式消耗过多的内存。</p>
 <p>如有需要可以阅读 <code>Dubbo</code> 中关于线程池的设计（位于 <code>org.apache.dubbo.common.threadpool</code> 包）。</p>
-<h1 id="开发"><a href="#开发" class="headerlink" title="开发"></a>开发</h1><h2 id="依赖"><a href="#依赖" class="headerlink" title="依赖"></a>依赖</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;com.google.guava&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;guava&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
-<h2 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h2><p>本文代码可以从<a href="https://github.com/fuyongde/edith/releases/tag/0.1.1" target="_blank" rel="noopener">这里</a>获取。</p>
-<h3 id="新增-ThreadUtils-java"><a href="#新增-ThreadUtils-java" class="headerlink" title="新增 ThreadUtils.java"></a>新增 ThreadUtils.java</h3><p>用于创建 <code>ExecutorService</code></p>
+<h2 id="开发"><a href="#开发" class="headerlink" title="开发"></a>开发</h2><h3 id="依赖"><a href="#依赖" class="headerlink" title="依赖"></a>依赖</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;com.google.guava&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;guava&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h3><p>本文代码可以从<a href="https://github.com/fuyongde/edith/releases/tag/0.1.1" target="_blank" rel="noopener">这里</a>获取。</p>
+<h4 id="新增-ThreadUtils-java"><a href="#新增-ThreadUtils-java" class="headerlink" title="新增 ThreadUtils.java"></a>新增 ThreadUtils.java</h4><p>用于创建 <code>ExecutorService</code></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadUtils</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 用于对线程分配一个名字，方便排查问题</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> format format</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> Edith-1</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> ThreadFactory <span class="title">buildThreadFactory</span><span class="params">(String format)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ThreadFactoryBuilder().setNameFormat(format).build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ExecutorService <span class="title">newCachedThreadPool</span><span class="params">(<span class="keyword">int</span> maximumPoolSize)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ThreadPoolExecutor(THREAD_CORE_POOL_SIZE, maximumPoolSize &gt; <span class="number">0</span> ? maximumPoolSize : THREAD_MAXIMUM_POOL_SIZE,</span><br><span class="line">                Long.MAX_VALUE, TimeUnit.MICROSECONDS, <span class="keyword">new</span> SynchronousQueue&lt;&gt;(), buildThreadFactory(THREAD_NAME), <span class="keyword">new</span> ThreadPoolExecutor.AbortPolicy());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="修改-RpcFramework-java"><a href="#修改-RpcFramework-java" class="headerlink" title="修改 RpcFramework.java"></a>修改 RpcFramework.java</h3><p>将原代码中 <code>new Thread()</code> 部分替换为线程池。</p>
+<h4 id="修改-RpcFramework-java"><a href="#修改-RpcFramework-java" class="headerlink" title="修改 RpcFramework.java"></a>修改 RpcFramework.java</h4><p>将原代码中 <code>new Thread()</code> 部分替换为线程池。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> ExecutorService executorService = ThreadUtils.newCachedThreadPool(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">export</span><span class="params">(<span class="keyword">final</span> Object service, <span class="keyword">int</span> port)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    Objects.requireNonNull(service, <span class="string">"Service instance is null!"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (port &lt;= PORT_MIN || port &gt; PORT_MAX) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Invalid port "</span> + port);</span><br><span class="line">    &#125;</span><br><span class="line">    System.out.println(<span class="string">"Export service "</span> + service.getClass().getName() + <span class="string">" on port "</span> + port);</span><br><span class="line">    ServerSocket server = <span class="keyword">new</span> ServerSocket(port);</span><br><span class="line">    <span class="keyword">for</span> (; ; ) &#123;</span><br><span class="line">        System.out.println(<span class="string">"application is running"</span>);</span><br><span class="line">        Socket socket = server.accept();</span><br><span class="line">        executorService.execute(() -&gt; &#123;</span><br><span class="line">            <span class="comment">// do something ...</span></span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>经过以上修改，我们在例子中的 <code>HelloServiceImpl</code> 打印一下线程名称</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">hello</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">    String result = <span class="string">"Hello "</span> + name;</span><br><span class="line">    System.out.println(Thread.currentThread().getName() + <span class="string">" "</span> + result);</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -1941,7 +2298,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-03-20 10:51:24" itemprop="dateModified" datetime="2020-03-20T10:51:24+08:00">2020-03-20</time>
+                <time title="修改时间：2020-03-23 20:41:41" itemprop="dateModified" datetime="2020-03-23T20:41:41+08:00">2020-03-23</time>
               
             
           </span>
@@ -1977,27 +2334,27 @@
       
         
           
-            <h1 id="What-is-RPC"><a href="#What-is-RPC" class="headerlink" title="What is RPC?"></a>What is RPC?</h1><blockquote>
+            <h2 id="What-is-RPC"><a href="#What-is-RPC" class="headerlink" title="What is RPC?"></a>What is RPC?</h2><blockquote>
 <p>Remote Procedure Call (RPC) is a protocol that one program can use to request a service from a program located in another computer on a network without having to understand the network’s details. A procedure call is also sometimes known as a function call or a subroutine call. A procedure call is also sometimes known as a function call or a subroutine call.</p>
 </blockquote>
 <p><code>RPC</code> 是一种远程过程调用协议，一个程序可以使用该协议从位于网络上另一台计算机中的程序请求服务，而无需了解网络的详细信息。<code>RPC</code> 有时也称为函数调用或子程序调用。<code>RPC</code> 是进程间通信的一种方式。</p>
-<h1 id="Why-is-RPC"><a href="#Why-is-RPC" class="headerlink" title="Why is RPC?"></a>Why is RPC?</h1><p>网上很多关于 <code>RPC</code> 的优点，笔者都不太赞同。不能将那些成熟的 <code>RPC</code> 框架解决的问题全部归结为 <code>RPC</code> 的优点。比如 <code>RPC</code> 的概念中并没有提到服务治理等问题，但是常见的 <code>RPC</code> 框架（如 <a href="http://dubbo.apache.org" target="_blank" rel="noopener">DUBBO</a>）均解决了服务治理的相关问题，这显然不能作为 <code>RPC</code> 的优点。要解释“Why is RPC?”的问题，还是要回归到 <code>RPC</code> 的概念上来。</p>
+<h2 id="Why-is-RPC"><a href="#Why-is-RPC" class="headerlink" title="Why is RPC?"></a>Why is RPC?</h2><p>网上很多关于 <code>RPC</code> 的优点，笔者都不太赞同。不能将那些成熟的 <code>RPC</code> 框架解决的问题全部归结为 <code>RPC</code> 的优点。比如 <code>RPC</code> 的概念中并没有提到服务治理等问题，但是常见的 <code>RPC</code> 框架（如 <a href="http://dubbo.apache.org" target="_blank" rel="noopener">DUBBO</a>）均解决了服务治理的相关问题，这显然不能作为 <code>RPC</code> 的优点。要解释“Why is RPC?”的问题，还是要回归到 <code>RPC</code> 的概念上来。</p>
 <ul>
 <li><code>RPC</code> 可以使<em>远程过程调用</em>变得像本地调用一样简单。</li>
 <li>方便计算能力的横向扩展。</li>
 </ul>
 <p>有兴趣可以阅读 <a href="http://dubbo.apache.org/zh-cn/docs/user/preface/background.html" target="_blank" rel="noopener">dubbo 诞生的背景</a> 以及<a href="http://dubbo.apache.org/zh-cn/docs/user/preface/requirements.html" target="_blank" rel="noopener">dubbo 解决了哪些需求</a>。</p>
-<h2 id="RPC-vs-HTTP"><a href="#RPC-vs-HTTP" class="headerlink" title="RPC vs HTTP"></a>RPC vs HTTP</h2><p>其实这两者不是同一个维度的概念。从 <code>RPC</code> 的概念上来讲，<code>HTTP</code> 其实就是 <code>RPC</code> 的一种实现。</p>
-<h2 id="RPC-vs-RMI"><a href="#RPC-vs-RMI" class="headerlink" title="RPC vs RMI"></a>RPC vs RMI</h2><p>这两者也不是同一个维度的概念。</p>
+<h3 id="RPC-vs-HTTP"><a href="#RPC-vs-HTTP" class="headerlink" title="RPC vs HTTP"></a>RPC vs HTTP</h3><p>其实这两者不是同一个维度的概念。从 <code>RPC</code> 的概念上来讲，<code>HTTP</code> 其实就是 <code>RPC</code> 的一种实现。</p>
+<h3 id="RPC-vs-RMI"><a href="#RPC-vs-RMI" class="headerlink" title="RPC vs RMI"></a>RPC vs RMI</h3><p>这两者也不是同一个维度的概念。</p>
 <p><code>RMI</code> 是 <code>JAVA</code> 提供的一种<em>远程方法调用</em>，而 <code>RPC</code> 的变成模型是<em>远程过程调用</em>，<code>RPC</code> 并没有规定采用哪种编程语言实现，<strong>我们甚至可以使用 <code>JAVA</code> 语言实现一个具体的 <code>RPC</code> 协议，内部采用 <code>RMI</code> 来实现数据的传输</strong>，例如 <a href="http://dubbo.apache.org/zh-cn/docs/user/references/protocol/rmi.html" target="_blank" rel="noopener">dubbo 中就可以采用 rmi 协议</a>。</p>
-<h1 id="How-to-implement-RPC"><a href="#How-to-implement-RPC" class="headerlink" title="How to implement RPC?"></a>How to implement RPC?</h1><p>我们先思考这么一个问题：要怎么去调用远程的服务呢？</p>
+<h2 id="How-to-implement-RPC"><a href="#How-to-implement-RPC" class="headerlink" title="How to implement RPC?"></a>How to implement RPC?</h2><p>我们先思考这么一个问题：要怎么去调用远程的服务呢？</p>
 <ol>
 <li>要知道ip和端口，以确定远程唯一的一个进程。</li>
 <li>要知道调用远程的进程中的什么服务，以确定方法和参数</li>
 <li>调用远程的服务之后，要返回结果。</li>
 </ol>
 <p>根据上述的三点，我们来看一下如何实现一个 <code>RPC</code> 框架。</p>
-<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>在一个 <code>RPC</code> 的架构中包含 4 个组件：</p>
+<h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>在一个 <code>RPC</code> 的架构中包含 4 个组件：</p>
 <ol>
 <li><code>Client</code>：即客户端，服务调用方</li>
 <li><code>Client Stub</code>：客户端存根，用于存方服务端地址信息，将客户端的信息打包成网络消息，再通过网络发送给服务提供者</li>
@@ -2019,23 +2376,23 @@
 </ol>
 <p>一图顶千言</p>
 <img src="/2019/07/11/rpc-introduction/theory.jpg" title="RPC 原理">
-<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><p>我们简单的采用 <code>Java</code> 语言来实现一个 <code>RPC</code> 框架。</p>
-<h3 id="命名"><a href="#命名" class="headerlink" title="命名"></a>命名</h3><p>作为钢铁侠粉丝，这里我们将项目命名为 <a href="https://github.com/fuyongde/edith/releases/tag/0.1.0" target="_blank" rel="noopener">Edith</a>。</p>
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><p>我们简单的采用 <code>Java</code> 语言来实现一个 <code>RPC</code> 框架。</p>
+<h4 id="命名"><a href="#命名" class="headerlink" title="命名"></a>命名</h4><p>作为钢铁侠粉丝，这里我们将项目命名为 <a href="https://github.com/fuyongde/edith/releases/tag/0.1.0" target="_blank" rel="noopener">Edith</a>。</p>
 <blockquote>
 <p>Even dead,I am hero. -<em>Tony Stark</em></p>
 </blockquote>
 <p>伊人已逝，仍是英雄。永远纪念 <em>Tony Stark</em>。</p>
-<h3 id="暴露服务"><a href="#暴露服务" class="headerlink" title="暴露服务"></a>暴露服务</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RpcFramework</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">export</span><span class="params">(<span class="keyword">final</span> Object service, <span class="keyword">int</span> port)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (service == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Service instance is null"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (port &lt;= <span class="number">0</span> || port &gt; <span class="number">65535</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Invalid port "</span> + port);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"Export service "</span> + service.getClass().getName() + <span class="string">" on port "</span> + port);</span><br><span class="line">        ServerSocket server = <span class="keyword">new</span> ServerSocket(port);</span><br><span class="line">        <span class="keyword">for</span> (; ; ) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="keyword">final</span> Socket socket = server.accept();</span><br><span class="line">                <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">                    <span class="keyword">try</span> &#123;</span><br><span class="line">                        <span class="keyword">try</span> &#123;</span><br><span class="line">                            ObjectInputStream input = <span class="keyword">new</span> ObjectInputStream(socket.getInputStream());</span><br><span class="line">                            <span class="keyword">try</span> &#123;</span><br><span class="line">                                String methodName = input.readUTF();</span><br><span class="line">                                Class&lt;?&gt;[] parameterTypes = (Class&lt;?&gt;[]) input.readObject();</span><br><span class="line">                                Object[] arguments = (Object[]) input.readObject();</span><br><span class="line">                                ObjectOutputStream output = <span class="keyword">new</span> ObjectOutputStream(socket.getOutputStream());</span><br><span class="line">                                <span class="keyword">try</span> &#123;</span><br><span class="line">                                    Method method = service.getClass().getMethod(methodName, parameterTypes);</span><br><span class="line">                                    Object result = method.invoke(service, arguments);</span><br><span class="line">                                    output.writeObject(result);</span><br><span class="line">                                &#125; <span class="keyword">catch</span> (Throwable t) &#123;</span><br><span class="line">                                    output.writeObject(t);</span><br><span class="line">                                &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                                    output.close();</span><br><span class="line">                                &#125;</span><br><span class="line">                            &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                                input.close();</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                            socket.close();</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                        e.printStackTrace();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;).start();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="引用服务"><a href="#引用服务" class="headerlink" title="引用服务"></a>引用服务</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RpcFramework</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">T <span class="title">refer</span><span class="params">(<span class="keyword">final</span> Class&lt;T&gt; interfaceClass, <span class="keyword">final</span> String host, <span class="keyword">final</span> <span class="keyword">int</span> port)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (interfaceClass == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Interface class is null"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (!interfaceClass.isInterface()) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"The "</span> + interfaceClass.getName() + <span class="string">" must be interface class!"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (host == <span class="keyword">null</span> || host.length() == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Host is null!"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (port &lt;= PORT_MIN || port &gt; PORT_MAX) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Invalid port "</span> + port);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">"Get remote service "</span> + interfaceClass.getName() + <span class="string">" from server "</span> + host + <span class="string">":"</span> + port);</span><br><span class="line">        <span class="keyword">return</span> (T) Proxy.newProxyInstance(interfaceClass.getClassLoader(), <span class="keyword">new</span> Class&lt;?&gt;[]&#123;interfaceClass&#125;, (proxy, method, arguments) -&gt; &#123;</span><br><span class="line">            Socket socket = <span class="keyword">new</span> Socket(host, port);</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                ObjectOutputStream output = <span class="keyword">new</span> ObjectOutputStream(socket.getOutputStream());</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    output.writeUTF(method.getName());</span><br><span class="line">                    output.writeObject(method.getParameterTypes());</span><br><span class="line">                    output.writeObject(arguments);</span><br><span class="line">                    ObjectInputStream input = <span class="keyword">new</span> ObjectInputStream(socket.getInputStream());</span><br><span class="line">                    <span class="keyword">try</span> &#123;</span><br><span class="line">                        Object result = input.readObject();</span><br><span class="line">                        <span class="keyword">if</span> (result <span class="keyword">instanceof</span> Throwable) &#123;</span><br><span class="line">                            <span class="keyword">throw</span> (Throwable) result;</span><br><span class="line">                        &#125;</span><br><span class="line">                        <span class="keyword">return</span> result;</span><br><span class="line">                    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                        input.close();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                    output.close();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                socket.close();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="定义接口"><a href="#定义接口" class="headerlink" title="定义接口"></a>定义接口</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">HelloService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 返回一个字符串</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> name name</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> Hello name</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function">String <span class="title">hello</span><span class="params">(String name)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="编写服务提供者"><a href="#编写服务提供者" class="headerlink" title="编写服务提供者"></a>编写服务提供者</h3><p>先实现 <code>HelloService</code></p>
+<h4 id="暴露服务"><a href="#暴露服务" class="headerlink" title="暴露服务"></a>暴露服务</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RpcFramework</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">export</span><span class="params">(<span class="keyword">final</span> Object service, <span class="keyword">int</span> port)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (service == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Service instance is null"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (port &lt;= <span class="number">0</span> || port &gt; <span class="number">65535</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Invalid port "</span> + port);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"Export service "</span> + service.getClass().getName() + <span class="string">" on port "</span> + port);</span><br><span class="line">        ServerSocket server = <span class="keyword">new</span> ServerSocket(port);</span><br><span class="line">        <span class="keyword">for</span> (; ; ) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="keyword">final</span> Socket socket = server.accept();</span><br><span class="line">                <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">                    <span class="keyword">try</span> &#123;</span><br><span class="line">                        <span class="keyword">try</span> &#123;</span><br><span class="line">                            ObjectInputStream input = <span class="keyword">new</span> ObjectInputStream(socket.getInputStream());</span><br><span class="line">                            <span class="keyword">try</span> &#123;</span><br><span class="line">                                String methodName = input.readUTF();</span><br><span class="line">                                Class&lt;?&gt;[] parameterTypes = (Class&lt;?&gt;[]) input.readObject();</span><br><span class="line">                                Object[] arguments = (Object[]) input.readObject();</span><br><span class="line">                                ObjectOutputStream output = <span class="keyword">new</span> ObjectOutputStream(socket.getOutputStream());</span><br><span class="line">                                <span class="keyword">try</span> &#123;</span><br><span class="line">                                    Method method = service.getClass().getMethod(methodName, parameterTypes);</span><br><span class="line">                                    Object result = method.invoke(service, arguments);</span><br><span class="line">                                    output.writeObject(result);</span><br><span class="line">                                &#125; <span class="keyword">catch</span> (Throwable t) &#123;</span><br><span class="line">                                    output.writeObject(t);</span><br><span class="line">                                &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                                    output.close();</span><br><span class="line">                                &#125;</span><br><span class="line">                            &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                                input.close();</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                            socket.close();</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                        e.printStackTrace();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;).start();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="引用服务"><a href="#引用服务" class="headerlink" title="引用服务"></a>引用服务</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RpcFramework</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">T <span class="title">refer</span><span class="params">(<span class="keyword">final</span> Class&lt;T&gt; interfaceClass, <span class="keyword">final</span> String host, <span class="keyword">final</span> <span class="keyword">int</span> port)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (interfaceClass == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Interface class is null"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (!interfaceClass.isInterface()) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"The "</span> + interfaceClass.getName() + <span class="string">" must be interface class!"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (host == <span class="keyword">null</span> || host.length() == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Host is null!"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (port &lt;= PORT_MIN || port &gt; PORT_MAX) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Invalid port "</span> + port);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">"Get remote service "</span> + interfaceClass.getName() + <span class="string">" from server "</span> + host + <span class="string">":"</span> + port);</span><br><span class="line">        <span class="keyword">return</span> (T) Proxy.newProxyInstance(interfaceClass.getClassLoader(), <span class="keyword">new</span> Class&lt;?&gt;[]&#123;interfaceClass&#125;, (proxy, method, arguments) -&gt; &#123;</span><br><span class="line">            Socket socket = <span class="keyword">new</span> Socket(host, port);</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                ObjectOutputStream output = <span class="keyword">new</span> ObjectOutputStream(socket.getOutputStream());</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    output.writeUTF(method.getName());</span><br><span class="line">                    output.writeObject(method.getParameterTypes());</span><br><span class="line">                    output.writeObject(arguments);</span><br><span class="line">                    ObjectInputStream input = <span class="keyword">new</span> ObjectInputStream(socket.getInputStream());</span><br><span class="line">                    <span class="keyword">try</span> &#123;</span><br><span class="line">                        Object result = input.readObject();</span><br><span class="line">                        <span class="keyword">if</span> (result <span class="keyword">instanceof</span> Throwable) &#123;</span><br><span class="line">                            <span class="keyword">throw</span> (Throwable) result;</span><br><span class="line">                        &#125;</span><br><span class="line">                        <span class="keyword">return</span> result;</span><br><span class="line">                    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                        input.close();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                    output.close();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                socket.close();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="定义接口"><a href="#定义接口" class="headerlink" title="定义接口"></a>定义接口</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">HelloService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 返回一个字符串</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> name name</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> Hello name</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function">String <span class="title">hello</span><span class="params">(String name)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="编写服务提供者"><a href="#编写服务提供者" class="headerlink" title="编写服务提供者"></a>编写服务提供者</h4><p>先实现 <code>HelloService</code></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloServiceImpl</span> <span class="keyword">implements</span> <span class="title">HelloService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">hello</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        String result = <span class="string">"Hello "</span> + name;</span><br><span class="line">        System.out.println(Thread.currentThread().getName() + <span class="string">" "</span> + result);</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>启动并暴漏服务</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Provider</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        HelloService helloService = <span class="keyword">new</span> HelloServiceImpl();</span><br><span class="line">        RpcFramework.export(helloService, <span class="number">8888</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="编写服务调用者"><a href="#编写服务调用者" class="headerlink" title="编写服务调用者"></a>编写服务调用者</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Consumer</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        HelloService helloService = RpcFramework.refer(HelloService.class, "127.0.0.1", 8888);</span><br><span class="line">        String name = <span class="string">"Peter Parker"</span>;</span><br><span class="line">        System.out.println(helloService.hello(name));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="编写服务调用者"><a href="#编写服务调用者" class="headerlink" title="编写服务调用者"></a>编写服务调用者</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Consumer</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        HelloService helloService = RpcFramework.refer(HelloService.class, "127.0.0.1", 8888);</span><br><span class="line">        String name = <span class="string">"Peter Parker"</span>;</span><br><span class="line">        System.out.println(helloService.hello(name));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>执行 <code>Consumer</code>，查看控制台输出：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello Peter Parker</span><br></pre></td></tr></table></figure>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>本文的例子，采用了阻塞的 Socket IO 流来进行 Client 和 Server 之间的端对端通信。方法的远程调用采用了 <code>Java</code> 的动态代理，参数的序列化与反序列化采用 <code>ObjectStream</code>。成熟的 <code>RPC</code> 框架会对上述的实现方式进行替换，比如采用 <code>Netty</code> 的 <code>NIO</code> 来实现非阻塞通信，采用成熟的注册中心来统一管理服务的注册与发现，采用 <code>hession2</code>，<code>fastjson</code> 等序列化方式等等。成熟的 <code>RPC</code> 框架还会考虑调用过程中的诸多问题，比如重试机制、超时配置等等。</p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>本文的例子，采用了阻塞的 Socket IO 流来进行 Client 和 Server 之间的端对端通信。方法的远程调用采用了 <code>Java</code> 的动态代理，参数的序列化与反序列化采用 <code>ObjectStream</code>。成熟的 <code>RPC</code> 框架会对上述的实现方式进行替换，比如采用 <code>Netty</code> 的 <code>NIO</code> 来实现非阻塞通信，采用成熟的注册中心来统一管理服务的注册与发现，采用 <code>hession2</code>，<code>fastjson</code> 等序列化方式等等。成熟的 <code>RPC</code> 框架还会考虑调用过程中的诸多问题，比如重试机制、超时配置等等。</p>
 <p>本文参考了 <a href="https://www.cnkirito.moe/easy-know-rpc/" target="_blank" rel="noopener">徐靖峰的博客</a>。</p>
 
           
@@ -2155,7 +2512,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-03-20 10:51:24" itemprop="dateModified" datetime="2020-03-20T10:51:24+08:00">2020-03-20</time>
+                <time title="修改时间：2020-03-23 20:38:02" itemprop="dateModified" datetime="2020-03-23T20:38:02+08:00">2020-03-23</time>
               
             
           </span>
@@ -2192,7 +2549,7 @@
         
           
             <p>在 <a href="https://fuyongde.github.io/2019/06/25/Dockerizing-Spring-Boot-Application/">使用 Docker 构建 Spring Boot Application</a> 中简单介绍了如何使用 <code>Docker</code> 构建 <code>Spring Boot Application</code>。本文探讨如何更简单的构建 <code>Docker</code> 镜像。</p>
-<h1 id="jib-简介"><a href="#jib-简介" class="headerlink" title="jib 简介"></a>jib 简介</h1><blockquote>
+<h2 id="jib-简介"><a href="#jib-简介" class="headerlink" title="jib 简介"></a>jib 简介</h2><blockquote>
 <p>Make America Great Again. – Donald Trump</p>
 </blockquote>
 <p>大概是受 <code>Donald Trump</code> 的启发🙄，Google 发布的 <code>jib</code> 让原本已经很简单的 <code>Docker</code> 镜像构建过程变得更加简单。</p>
@@ -2200,9 +2557,9 @@
 <img src="/2019/06/26/jib-make-docker-simple-again/docker_process.jpg" title="Docker 构建容器镜像的流程">
 <p>再看 <code>Jib</code> 构建容器镜像流程</p>
 <img src="/2019/06/26/jib-make-docker-simple-again/jib_process.jpg" title="Jib 构建容器镜像的流程">
-<h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><p>下面来介绍以下如何使用 <code>Jib</code></p>
-<h2 id="编写-Spring-Boot-Application"><a href="#编写-Spring-Boot-Application" class="headerlink" title="编写 Spring Boot Application"></a>编写 Spring Boot Application</h2><p>略</p>
-<h2 id="配置-Jib-插件"><a href="#配置-Jib-插件" class="headerlink" title="配置 Jib 插件"></a>配置 Jib 插件</h2><p>在项目的 <code>pom.xml</code> 文件中，新增如下配置</p>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>下面来介绍以下如何使用 <code>Jib</code></p>
+<h3 id="编写-Spring-Boot-Application"><a href="#编写-Spring-Boot-Application" class="headerlink" title="编写 Spring Boot Application"></a>编写 Spring Boot Application</h3><p>略</p>
+<h3 id="配置-Jib-插件"><a href="#配置-Jib-插件" class="headerlink" title="配置 Jib 插件"></a>配置 Jib 插件</h3><p>在项目的 <code>pom.xml</code> 文件中，新增如下配置</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.google.cloud.tools<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jib-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.3.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">from</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">image</span>&gt;</span>openjdk:8u212-jdk-alpine<span class="tag">&lt;/<span class="name">image</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">from</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">to</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">image</span>&gt;</span>registry.cn-hangzhou.aliyuncs.com/fuyongde/ebony-maw:$&#123;project.version&#125;<span class="tag">&lt;/<span class="name">image</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">to</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">container</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">jvmFlags</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">jvmFlag</span>&gt;</span>-Xms128m<span class="tag">&lt;/<span class="name">jvmFlag</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">jvmFlag</span>&gt;</span>-Xmx128m<span class="tag">&lt;/<span class="name">jvmFlag</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">jvmFlags</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">container</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">executions</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">execution</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">phase</span>&gt;</span>package<span class="tag">&lt;/<span class="name">phase</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">goals</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">goal</span>&gt;</span>build<span class="tag">&lt;/<span class="name">goal</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">goals</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">execution</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">executions</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>其中</p>
 <ul>
@@ -2210,220 +2567,9 @@
 <li>to：镜像容器服务的地址以及对应的 <code>tag</code>，这里我采用的是阿里云的地址</li>
 <li>jvmFlag：容器启动时的 <code>JVM</code> 参数</li>
 </ul>
-<h2 id="构建"><a href="#构建" class="headerlink" title="构建"></a>构建</h2><p>在终端执行 <code>maven package</code> 命令，<code>Docker</code> 镜像就打包并上传好了✌。</p>
+<h3 id="构建"><a href="#构建" class="headerlink" title="构建"></a>构建</h3><p>在终端执行 <code>maven package</code> 命令，<code>Docker</code> 镜像就打包并上传好了✌。</p>
 <p>至此，整个构建过程已经完成，我们甚至连 <code>Dockerfile</code> 都不用写，是不是超级简单🤪。</p>
 <p>如有需要，可参考本文中的 <a href="https://github.com/fuyongde/marvel/tree/master/ebony-maw" target="_blank" rel="noopener">Demo</a> 。</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://fuyongde.github.io/2019/06/25/dockerizing-spring-boot-application/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="傅永德">
-      <meta itemprop="description" content="苟利国家生死以，岂因祸福避趋之">
-      <meta itemprop="image" content="/images/header.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="傅永德 | 个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/06/25/dockerizing-spring-boot-application/" class="post-title-link" itemprop="url">使用 Docker 构建 Spring Boot Application</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-06-25 17:39:17" itemprop="dateCreated datePublished" datetime="2019-06-25T17:39:17+08:00">2019-06-25</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2020-03-20 10:51:24" itemprop="dateModified" datetime="2020-03-20T10:51:24+08:00">2020-03-20</time>
-              
-            
-          </span>
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Docker-amp-Spring-Boot"><a href="#Docker-amp-Spring-Boot" class="headerlink" title="Docker &amp; Spring Boot"></a>Docker &amp; Spring Boot</h1><p><code>Docker</code> 是一种 <code>Linux</code> 容器的实现，具有进程的轻量级资源隔离的特点，每一个容器对应操作系统中的一个进程，但是它又会有自己的网络空间、文件系统、PID 等。<code>Docker</code> 除了实现 <code>Linux</code> 容器，还使得容器具有“社会化”的属性，用户可以将容器镜像发布在 <code>Docker Hub</code> 与其他开发者共享、协作，类似于 <code>Maven</code>。</p>
-<p><code>Spring Boot</code> 简化了 Spring 应用程序的开发过程，遵循约定优先配置的原则提供了各类 <em>开箱即用（out-of-the-box）</em> 的框架配置。另一方面，<code>Spring Boot</code> 还具备将代码直接构建为可执行 jar 包的能力，这个 jar 包是一个可以独立运行的部署单元。基于以上特性，现在普遍认为 <code>Spring Boot</code> 提供了一种快速构造<strong>微服务（Micro-Service）</strong>的能力。</p>
-<p><code>Spring Boot</code> 的运行环境非常简单，将 Spring Boot Application 打包为 <code>Docker</code> 镜像，对于自动化部署、运维都非常方便。</p>
-<h1 id="Dockerizing-Spring-Boot-Application"><a href="#Dockerizing-Spring-Boot-Application" class="headerlink" title="Dockerizing Spring Boot Application"></a>Dockerizing Spring Boot Application</h1><p>使用 Docker 发布 Spring Boot Application，需要经历简单的几步，即可实现。</p>
-<p>如有需要，可参考本文所涉及 <a href="https://github.com/fuyongde/marvel/tree/master/thanos" target="_blank" rel="noopener">Demo</a>。</p>
-<h2 id="常规操作"><a href="#常规操作" class="headerlink" title="常规操作"></a>常规操作</h2><h3 id="编写-Spring-Boot-Application"><a href="#编写-Spring-Boot-Application" class="headerlink" title="编写 Spring Boot Application"></a>编写 Spring Boot Application</h3><p>本文不是为了讲解如何编写 Spring Boot Application，故建议读者直接采用脚手架快速构建出一个 Spring Boot Application。</p>
-<h3 id="编写-Dockerfile"><a href="#编写-Dockerfile" class="headerlink" title="编写 Dockerfile"></a>编写 Dockerfile</h3><p><code>Dockerfile</code> 对于 <code>Docker</code> 的意义如同 <code>POM</code> 之于 <code>Maven</code>。</p>
-<p>在 <code>pom.xml</code> 同级目录新建文件 <code>Dockerfile</code>。</p>
-<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 基础运行环境，建议采用 openjdk alpine 作为基础的镜像</span></span><br><span class="line"><span class="keyword">FROM</span> openjdk:<span class="number">8</span>-jdk-alpine</span><br><span class="line"></span><br><span class="line"><span class="comment"># 标记作者</span></span><br><span class="line"><span class="keyword">LABEL</span> maintainer="fuyongde@foxmail.com"</span><br><span class="line"></span><br><span class="line"><span class="comment"># 挂载 /tmp 目录，因为 Spring Boot 内嵌的 Tomcat 默认使用 /tmp 作为工作目录</span></span><br><span class="line"><span class="keyword">VOLUME</span> [ "/tmp" ]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 容器对外映射 8080 端口</span></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">8080</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义要打包的 jar</span></span><br><span class="line"><span class="keyword">ARG</span> JAR_FILE=target/thanos-<span class="number">0.0</span>.<span class="number">1</span>-SNAPSHOT.jar</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将指定的 jar 添加到目标镜像并重命名</span></span><br><span class="line"><span class="keyword">ADD</span> $&#123;JAR_FILE&#125; thanos-0.0.1.jar</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用 java -jar 命令运行目标程序</span></span><br><span class="line"><span class="keyword">ENTRYPOINT</span> [ "java", "-jar", "/thanos-0.0.1.jar" ]</span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>FROM</code>：指定一个构建镜像的基础源镜像，如果本地没有就会从公共库中拉取，没有指定镜像的标签会使用默认的latest标签，如果需要在一个 <code>Dockerfile</code> 中构建多个镜像，该选项可以出现多次。</li>
-<li><code>LABEL</code>：为镜像指定标签</li>
-<li><code>VOLUME</code>：可实现挂载功能，可以将内地文件夹或者其他容器种得文件夹挂在到这个容器种</li>
-<li><code>EXPOSE</code>：暴漏容器运行时的监听端口给外部，但是 EXPOSE 并不会使容器访问主机的端口，如果想使得容器与主机的端口有映射关系，必须在容器启动的时候加上 <code>-p</code> 参数</li>
-<li><code>ARG</code>：设置变量</li>
-<li><code>ADD</code>：将文件添加到目标镜像中</li>
-<li><code>ENTRYPOINT</code>：启动时的默认命令</li>
-</ul>
-<h3 id="构建-Docker-镜像"><a href="#构建-Docker-镜像" class="headerlink" title="构建 Docker 镜像"></a>构建 Docker 镜像</h3><p>由于 <code>Docker</code> 依赖我们程序编译的结果，故在构建 <code>Docker</code> 镜像之前，需要先构建我们的工程。</p>
-<p>如本文所讲例子，需要依次执行</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 采用 Maven 构建 Spring Boot Application</span><br><span class="line">mvnw install</span><br><span class="line"><span class="meta">#</span> 构建 Docker Image</span><br><span class="line">docker build -t thanos .</span><br></pre></td></tr></table></figure>
-<p>构建完成之后，可以通过 <code>docker image ls</code> 查看。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">REPOSITORY    TAG       IMAGE ID        CREATED              SIZE </span><br><span class="line">thanos        latest    5f30b11b5088    About an hour ago    122MB</span><br></pre></td></tr></table></figure>
-<h3 id="运行-Docker-镜像"><a href="#运行-Docker-镜像" class="headerlink" title="运行 Docker 镜像"></a>运行 Docker 镜像</h3><p>和正常的运行 Docker 镜像的命令一致。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker run -p 8080:8080 thanos</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> 也可以采用后台运行的方式运行容器</span><br><span class="line">docker run -d -p 8080:8080 thanos</span><br></pre></td></tr></table></figure>
-<p>运行之后，通过 <code>docker ps</code> 命令来查看当前运行的容器。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CONTAINER ID   IMAGE    COMMAND                  CREATED             STATUS             PORTS                    NAMES</span><br><span class="line">9f20a76e22fa   thanos   &quot;java -jar /thanos-0…&quot;   About an hour ago   Up About an hour   0.0.0.0:8080-&gt;8080/tcp   xenodochial_noyce</span><br></pre></td></tr></table></figure>
-<h3 id="将-Docker-镜像推送到镜像仓库"><a href="#将-Docker-镜像推送到镜像仓库" class="headerlink" title="将 Docker 镜像推送到镜像仓库"></a>将 Docker 镜像推送到镜像仓库</h3><p>由于众所周知的原因，我们访问 <code>docker hub</code> 并不稳定，而且速度比较慢，本文采用阿里云的容器镜像服务。</p>
-<ol>
-<li>登录到阿里云容器镜像服务</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 登录</span><br><span class="line">docker login --username=fuyongde@foxmail.com registry.cn-hangzhou.aliyuncs.com</span><br><span class="line"><span class="meta">#</span> 输入密码，当看到 Login Succeeded 表示登录成功</span><br></pre></td></tr></table></figure>
-<ol start="2">
-<li>为当前镜像打 <code>tag</code></li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker tag thanos registry.cn-hangzhou.aliyuncs.com/fuyongde/thanos:v1</span><br></pre></td></tr></table></figure>
-<ol start="3">
-<li>推送到容器镜像服务</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker push registry.cn-hangzhou.aliyuncs.com/fuyongde/thanos:v1</span><br></pre></td></tr></table></figure>
-<p>按照上述步骤操作完成之后，登录到阿里云的<code>控制台</code> &gt; <code>容器镜像服务</code> &gt; <code>镜像仓库</code> 即可查看已经推送好的镜像。</p>
-<h2 id="dockerfile-maven-plugin"><a href="#dockerfile-maven-plugin" class="headerlink" title="dockerfile-maven-plugin"></a>dockerfile-maven-plugin</h2><p>经过上述的操作我们发现，要将我们的 Spring Boot Application 打包为 Docker 镜像，必须先将我们的工程构建，然后才能执行 Docker 的 <code>build</code>、<code>push</code>。那么能否将工程的构建与 Docker 的操作合二为一呢？</p>
-<p>答案是肯定的，这就需要用到 <code>dockerfile-maven-plugin</code>。</p>
-<h3 id="引入-dockerfile-maven-plugin"><a href="#引入-dockerfile-maven-plugin" class="headerlink" title="引入 dockerfile-maven-plugin"></a>引入 dockerfile-maven-plugin</h3><p>基于上述工程，在 <code>pom.xml</code> 中添加插件：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.spotify<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>dockerfile-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.4.10<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">repository</span>&gt;</span>registry.cn-hangzhou.aliyuncs.com/fuyongde/thanos<span class="tag">&lt;/<span class="name">repository</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">tag</span>&gt;</span>$&#123;project.version&#125;<span class="tag">&lt;/<span class="name">tag</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">useMavenSettingsForAuth</span>&gt;</span>true<span class="tag">&lt;/<span class="name">useMavenSettingsForAuth</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">executions</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">execution</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">id</span>&gt;</span>default<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">phase</span>&gt;</span>install<span class="tag">&lt;/<span class="name">phase</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">goals</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">goal</span>&gt;</span>build<span class="tag">&lt;/<span class="name">goal</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">goal</span>&gt;</span>push<span class="tag">&lt;/<span class="name">goal</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">goals</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">execution</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">executions</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>其中：</p>
-<ul>
-<li>repository：表示要上传的容器镜像服务，可以是阿里云、Docker Hub等</li>
-<li>tag：镜像打包的tag</li>
-<li>execution：这个标签下的配置表示，在 <code>Maven</code> 的 <code>install</code> 阶段，进行 <code>Docker</code> 的 <code>build</code>、<code>push</code> 操作</li>
-<li>useMavenSettingsForAuth：表示使用 <code>Maven</code> 的配置的账号密码来认证 <code>Docker</code> 容器镜像服务，需要在 <code>Maven</code> 的 <code>settings.xml</code> 文件中加入以下配置：</li>
-</ul>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">servers</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">server</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">id</span>&gt;</span>registry.cn-hangzhou.aliyuncs.com<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">username</span>&gt;</span>username<span class="tag">&lt;/<span class="name">username</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">password</span>&gt;</span>password<span class="tag">&lt;/<span class="name">password</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">server</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servers</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h3 id="构建"><a href="#构建" class="headerlink" title="构建"></a>构建</h3><p>执行 <code>mvn install</code> 命令，<code>Docker</code> 镜像就打包并上传好了✌。</p>
-<h1 id="One-more-thing"><a href="#One-more-thing" class="headerlink" title="One more thing"></a>One more thing</h1><p>你以为上述构建 <code>Docker</code> 镜像方法就非常方便了吗？</p>
-<p>Too young!</p>
-<p>下一篇，带你了解 <code>Jib</code>。Make docker simple again✨!</p>
 
           
         
@@ -2513,7 +2659,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">24</span>
+                    <span class="site-state-item-count">25</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -2529,8 +2675,6 @@
                     
                   
                     
-                    
-                      
                     
                       
                     
@@ -2617,7 +2761,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">32</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">34</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
