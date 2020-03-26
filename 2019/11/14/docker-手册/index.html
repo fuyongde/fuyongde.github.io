@@ -104,7 +104,7 @@
 <meta property="og:site_name" content="傅永德 | 个人博客">
 <meta property="og:description" content="镜像管理查询所需的镜像 Usage： docker search [OPTIONS] TERM  Options： -f --filter ：根据提供的条件过滤输出 --format ：使用Go模板进行漂亮的打印搜索 --limit ：最大搜索结果数（默认为25） --no-trunc：不要截断输出  Example：   1docker search mysql 安装镜像 Usage： dock">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-03-23T12:29:19.697Z">
+<meta property="og:updated_time" content="2020-03-24T13:54:49.927Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Docker 手册">
 <meta name="twitter:description" content="镜像管理查询所需的镜像 Usage： docker search [OPTIONS] TERM  Options： -f --filter ：根据提供的条件过滤输出 --format ：使用Go模板进行漂亮的打印搜索 --limit ：最大搜索结果数（默认为25） --no-trunc：不要截断输出  Example：   1docker search mysql 安装镜像 Usage： dock">
@@ -408,7 +408,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-03-23 20:29:19" itemprop="dateModified" datetime="2020-03-23T20:29:19+08:00">2020-03-23</time>
+                <time title="修改时间：2020-03-24 21:54:49" itemprop="dateModified" datetime="2020-03-24T21:54:49+08:00">2020-03-24</time>
               
             
           </span>
@@ -508,10 +508,12 @@
 <h3 id="删除容器"><a href="#删除容器" class="headerlink" title="删除容器"></a>删除容器</h3><p><code>docker rm [containerId]</code></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 删除id为1e4b2a31028d的容器</span><br><span class="line">docker rm 1e4b2a31028d</span><br></pre></td></tr></table></figure>
 <h3 id="重命名容器"><a href="#重命名容器" class="headerlink" title="重命名容器"></a>重命名容器</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 将docker-mysql重命名为mysql</span><br><span class="line">docker rename docker-mysql mysql</span><br></pre></td></tr></table></figure>
-<h2 id="其他命令"><a href="#其他命令" class="headerlink" title="其他命令"></a>其他命令</h2><h3 id="进入到一个容器"><a href="#进入到一个容器" class="headerlink" title="进入到一个容器"></a>进入到一个容器</h3><p>通常我们使用的docker镜像一般是基于<code>Linux</code>，则可以通过下面的方式进入到docker容器内:</p>
+<h2 id="其他命令"><a href="#其他命令" class="headerlink" title="其他命令"></a>其他命令</h2><h3 id="进入到一个容器"><a href="#进入到一个容器" class="headerlink" title="进入到一个容器"></a>进入到一个容器</h3><p>通常我们使用的docker镜像一般是基于 <code>Linux</code>，则可以通过下面的方式进入到 docker 容器内:</p>
 <p><code>docker exec -it 063caee1d235 /bin/bash</code></p>
 <p>但是对于<code>Alpinelinux</code>，则需：</p>
 <p><code>docker exec -it 063caee1d235 sh</code></p>
+<p>对于部分镜像默认用户不是 <code>root</code> 的（比如 <code>Jenkins</code> 官方提供的 docker 镜像），但我们又需要使用 <code>root</code> 账户的，可以通过添加 <code>-u root</code> 参数来使用 <code>root</code> 账户登录 docker 容器：</p>
+<p><code>docker exec -it -u root a07fe9b55ade bash</code></p>
 <h3 id="拷贝文件到一个容器"><a href="#拷贝文件到一个容器" class="headerlink" title="拷贝文件到一个容器"></a>拷贝文件到一个容器</h3><p><code>docker cp C:\Users\fuyon\Documents\repo\github\goku\atomikos-demo\zhifubao-server\src\main\resources\sql\zhifubao.sql 1e4b2a31028d:/tmp</code></p>
 <h3 id="从容器拷贝文件到主机"><a href="#从容器拷贝文件到主机" class="headerlink" title="从容器拷贝文件到主机"></a>从容器拷贝文件到主机</h3><p><code>docker cp 1e4b2a31028d:/tmp/zhifubao.sql C:\Users\fuyon\Documents</code></p>
 
@@ -657,7 +659,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-count">27</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -763,7 +765,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">34</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">36</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

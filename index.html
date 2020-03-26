@@ -347,6 +347,315 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://fuyongde.github.io/2020/03/26/git-恢复删除的分支/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="傅永德">
+      <meta itemprop="description" content="苟利国家生死以，岂因祸福避趋之">
+      <meta itemprop="image" content="/images/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="傅永德 | 个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2020/03/26/git-恢复删除的分支/" class="post-title-link" itemprop="url">git 恢复删除的分支</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-03-26 17:52:01 / 修改时间：19:51:52" itemprop="dateCreated datePublished" datetime="2020-03-26T17:52:01+08:00">2020-03-26</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>在日常开发中，如果我们一不小心删除了某个分支，又想重新使用这个分支，该怎么找回该分支上的代码呢？</p>
+<h2 id="场景还原"><a href="#场景还原" class="headerlink" title="场景还原"></a>场景还原</h2><ol>
+<li>有一个 git 仓库，从 <code>master</code> 分支新建 <code>feature/delete_branch</code> 分支，并进行一次提交，如下：</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 新建一个 feature/delete_branch 分支</span><br><span class="line">git branch feature/delete_branch</span><br><span class="line"><span class="meta">#</span> 切换到 feature/delete_branch 分支</span><br><span class="line">git checkout feature/delete_branch</span><br><span class="line"><span class="meta">#</span> 新建一个文件，进行一次提交并推送至远程分支</span><br><span class="line">git add delete-file.md</span><br><span class="line">git commit -m ':sparkles: add a delete-file.md file'</span><br><span class="line">git push origin feature/delete_branch:feature/delete_branch</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> 查看当前分支图</span><br><span class="line">git log --all --decorate --oneline --graph</span><br><span class="line">* 88ac246 (HEAD -&gt; feature/delete_branch, origin/feature/delete_branch) :sparkles: add a delete-file.md file</span><br><span class="line">* 8693480 (origin/master, master) :sparkles: add a hello-git.md file</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>切换到 <code>master</code> 分支，并删除 <code>feature/delete_branch</code> 分支</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 切换到 master 分支</span><br><span class="line">git checkout master</span><br><span class="line"><span class="meta">#</span> 删除 feature/delete_branch 分支</span><br><span class="line">git branch -d feature/delete_branch</span><br><span class="line"><span class="meta">#</span> 将删除的分支同步只至远程</span><br><span class="line">git push origin --delete feature/delete_branch</span><br><span class="line"><span class="meta">#</span> 此时无论是本地还是远程都已经删除了 feature/delete_branch</span><br><span class="line">git log --all --decorate --oneline --graph</span><br><span class="line">* 8693480 (HEAD -&gt; master, origin/master) :sparkles: add a hello-git.md file</span><br></pre></td></tr></table></figure>
+<h2 id="还原删除的分支"><a href="#还原删除的分支" class="headerlink" title="还原删除的分支"></a>还原删除的分支</h2><ol>
+<li>通过 <code>git reflog</code> 或 <code>git log</code> 命令找到我们需要恢复的 <code>commit id</code></li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 这里演示 git reflog 命令展示出来的提交</span><br><span class="line">git reflog</span><br><span class="line">8693480 (HEAD -&gt; master, origin/master) HEAD@&#123;0&#125;: checkout: moving from feature/delete_branch to master</span><br><span class="line">88ac246 (feature/delete_branch) HEAD@&#123;1&#125;: commit: :sparkles: add a delete-file.md file</span><br><span class="line">8693480 (HEAD -&gt; master, origin/master) HEAD@&#123;2&#125;: checkout: moving from master to feature/delete_branch</span><br><span class="line">8693480 (HEAD -&gt; master, origin/master) HEAD@&#123;3&#125;: commit (initial): :sparkles: add a hello-git.md file</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> 这里演示 git log 命令 展示出来的提交</span><br><span class="line">git log -g</span><br><span class="line">commit 86934803092ae7ae7266f9ebff3429437e423b80 (HEAD -&gt; master, origin/master)</span><br><span class="line">Reflog: HEAD@&#123;0&#125; (fuyongde &lt;fuyongde@foxmail.com&gt;)</span><br><span class="line">Reflog message: checkout: moving from feature/delete_branch to master</span><br><span class="line">Author: fuyongde &lt;fuyongde@foxmail.com&gt;</span><br><span class="line">Date:   Thu Mar 26 18:36:35 2020 +0800</span><br><span class="line"></span><br><span class="line">    :sparkles: add a hello-git.md file</span><br><span class="line"></span><br><span class="line">commit 88ac246020a0cc25071fb7fd3ac88363f4bf2beb (feature/delete_branch)</span><br><span class="line">Reflog: HEAD@&#123;1&#125; (fuyongde &lt;fuyongde@foxmail.com&gt;)</span><br><span class="line">Reflog message: commit: :sparkles: add a delete-file.md file</span><br><span class="line">Author: fuyongde &lt;fuyongde@foxmail.com&gt;</span><br><span class="line">Date:   Thu Mar 26 18:44:01 2020 +0800</span><br><span class="line"></span><br><span class="line">    :sparkles: add a delete-file.md file</span><br><span class="line"></span><br><span class="line">commit 86934803092ae7ae7266f9ebff3429437e423b80 (HEAD -&gt; master, origin/master)</span><br><span class="line">Reflog: HEAD@&#123;2&#125; (fuyongde &lt;fuyongde@foxmail.com&gt;)</span><br><span class="line">Reflog message: checkout: moving from master to feature/delete_branch</span><br><span class="line">Author: fuyongde &lt;fuyongde@foxmail.com&gt;</span><br><span class="line">Date:   Thu Mar 26 18:36:35 2020 +0800</span><br><span class="line"></span><br><span class="line">    :sparkles: add a hello-git.md file</span><br><span class="line"></span><br><span class="line">commit 86934803092ae7ae7266f9ebff3429437e423b80 (HEAD -&gt; master, origin/master)</span><br><span class="line">Reflog: HEAD@&#123;3&#125; (fuyongde &lt;fuyongde@foxmail.com&gt;)</span><br><span class="line">Reflog message: commit (initial): :sparkles: add a hello-git.md file</span><br><span class="line">Author: fuyongde &lt;fuyongde@foxmail.com&gt;</span><br><span class="line">Date:   Thu Mar 26 18:36:35 2020 +0800</span><br><span class="line"></span><br><span class="line">    :sparkles: add a hello-git.md file</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>通过 <code>git branch [branch name] [commit id]</code> 命令来恢复删除的分支</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 恢复 feature/delete_branch 分支到 88ac246 版本</span><br><span class="line">git branch feature/delete_branch 88ac246</span><br><span class="line"><span class="meta">#</span> 检出 feature/delete_branch 分支</span><br><span class="line">git checkout feature/delete_branch</span><br><span class="line"><span class="meta">#</span> 此时可以看到已经删除的分支都找回来了</span><br></pre></td></tr></table></figure>
+<h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><p>当我们删除一个分支时，git 只是删除了指向相关提交的指针，但该提交对象依然会留在版本库中，因此，如果我们知道删除分支时的 <code>commit id</code>，就可以将某个删除的分支恢复过来。</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://fuyongde.github.io/2020/03/24/android-command-line-安装时的坑/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="傅永德">
+      <meta itemprop="description" content="苟利国家生死以，岂因祸福避趋之">
+      <meta itemprop="image" content="/images/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="傅永德 | 个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2020/03/24/android-command-line-安装时的坑/" class="post-title-link" itemprop="url">android command line 安装时的坑</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-03-24 11:38:28 / 修改时间：11:39:39" itemprop="dateCreated datePublished" datetime="2020-03-24T11:38:28+08:00">2020-03-24</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ol>
+<li>Download latest Command line tools from android i.e. commandlinetools-win-6200805_latest.zip</li>
+<li>Unzip the downloaded file</li>
+<li>Create directory for storing commandline tools somewhere on your disk, with following path included: android/cmdline-tools/latest Basically when You unzip this Cmd line tools, just rename tools directory to latest and make sure You put this latest folder in android/cmdline-tools directory somewhere on your disk</li>
+<li>Create ANDROID_HOME environment variable for directory that stores the cmdline tools directory location like: <code>C:\YourLocationWhereYouStoreTheDirectory\android\cmdline-tools\latest</code></li>
+<li>Create new entry in Path environment variable as %ANDROID_HOME%\bin</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://fuyongde.github.io/2020/03/20/pip-手册/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -785,7 +1094,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-03-23 20:37:43" itemprop="dateModified" datetime="2020-03-23T20:37:43+08:00">2020-03-23</time>
+                <time title="修改时间：2020-03-26 19:52:36" itemprop="dateModified" datetime="2020-03-26T19:52:36+08:00">2020-03-26</time>
               
             
           </span>
@@ -849,8 +1158,12 @@
 <h4 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h4><p>命令如下：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start jenkins</span><br></pre></td></tr></table></figure>
 <h4 id="解决插件中心安装慢的问题"><a href="#解决插件中心安装慢的问题" class="headerlink" title="解决插件中心安装慢的问题"></a>解决插件中心安装慢的问题</h4><p>第一次登陆 Jenkins 会出现初始化缓慢的问题，产生这个问题的原因有两个，一个是因为首次打开 Jenkins 会尝试连接 Google，另外一个原因是因为连接插件中心缓慢。</p>
-<h5 id="将-Google-的地址修改为-Baidu"><a href="#将-Google-的地址修改为-Baidu" class="headerlink" title="将 Google 的地址修改为 Baidu"></a>将 Google 的地址修改为 Baidu</h5><p>修改文件 <code>$JENKINS_HOME/updates/default.json</code>，将 <code>connectionCheckUrl</code> 的值修改为 <code>http://www.baidu.com/</code></p>
 <h5 id="将插件中心修改为清华的源"><a href="#将插件中心修改为清华的源" class="headerlink" title="将插件中心修改为清华的源"></a>将插件中心修改为清华的源</h5><p>修改文件 <code>$JENKINS_HOME/hudson.model.UpdateCenter.xml</code>，将 url 从 <code>https://updates.jenkins.io/update-center.json</code> 修改为 <code>https://mirrors.tuna.tsinghua.edu.cn/jenkins/updates/update-center.json</code></p>
+<h5 id="将-Google-的地址修改为-Baidu"><a href="#将-Google-的地址修改为-Baidu" class="headerlink" title="将 Google 的地址修改为 Baidu"></a>将 Google 的地址修改为 Baidu</h5><p>修改文件 <code>$JENKINS_HOME/updates/default.json</code></p>
+<ul>
+<li>将 <code>connectionCheckUrl</code> 的值修改为 <code>http://www.baidu.com/</code></li>
+<li>替换文件中 <code>updates.jenkins-ci.org/download</code> 为 <code>mirrors.tuna.tsinghua.edu.cn/jenkins</code></li>
+</ul>
 <p>未完待续…</p>
 
           
@@ -1565,7 +1878,7 @@
 <p>Useage：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">USAGE:</span><br><span class="line">   thread [-h] [-b] [-i &lt;value&gt;] [-n &lt;value&gt;] [id]</span><br><span class="line"></span><br><span class="line"> SUMMARY:</span><br><span class="line">   Display thread info, thread stack</span><br><span class="line"></span><br><span class="line"> EXAMPLES:</span><br><span class="line">   thread</span><br><span class="line">   thread 51</span><br><span class="line">   thread -n -1</span><br><span class="line">   thread -n 5</span><br><span class="line">   thread -b</span><br><span class="line">   thread -i 2000</span><br><span class="line"></span><br><span class="line"> WIKI:</span><br><span class="line">   https://alibaba.github.io/arthas/thread</span><br><span class="line"></span><br><span class="line"> OPTIONS:</span><br><span class="line"> -h, --help                                                                     this help</span><br><span class="line"> -b, --include-blocking-thread                                                  Find the thread who is holding a lock that blocks the most number of threads.</span><br><span class="line"> -i, --sample-interval &lt;value&gt;                                                  Specify the sampling interval (in ms) when calculating cpu usage.</span><br><span class="line"> -n, --top-n-threads &lt;value&gt;                                                    The number of thread(s) to show, ordered by cpu utilization, -1 to show all.</span><br><span class="line"> &lt;id&gt;                                                                           Show thread stack</span><br></pre></td></tr></table></figure>
 <p>从帮助信息中可知 <code>thread -b</code> 可以帮我们查询阻塞时间最长的线程。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">[arthas@664776]$</span> thread -b</span><br><span class="line">"Thread-0" Id=13 BLOCKED on java.lang.String@45db1404 owned by "Thread-1" Id=14</span><br><span class="line">    at com.exp.App$1.run(App.java:19)</span><br><span class="line">    -  blocked on java.lang.String@45db1404</span><br><span class="line">    -  locked java.lang.String@2fa93a25 &lt;---- but blocks 1 other threads!</span><br><span class="line">    at java.lang.Thread.run(Thread.java:748)</span><br><span class="line"></span><br><span class="line">Affect(row-cnt:0) cost in 22 ms.</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">[arthas@664776]$</span><span class="bash"> thread -b</span></span><br><span class="line">"Thread-0" Id=13 BLOCKED on java.lang.String@45db1404 owned by "Thread-1" Id=14</span><br><span class="line">    at com.exp.App$1.run(App.java:19)</span><br><span class="line">    -  blocked on java.lang.String@45db1404</span><br><span class="line">    -  locked java.lang.String@2fa93a25 &lt;---- but blocks 1 other threads!</span><br><span class="line">    at java.lang.Thread.run(Thread.java:748)</span><br><span class="line"></span><br><span class="line">Affect(row-cnt:0) cost in 22 ms.</span><br></pre></td></tr></table></figure>
 <p>通过观察输出可以发现，相比 jstack，arthas 可以更加快速的定位到阻塞线程。</p>
 
           
@@ -1810,415 +2123,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://fuyongde.github.io/2019/11/15/database-deadlock/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="傅永德">
-      <meta itemprop="description" content="苟利国家生死以，岂因祸福避趋之">
-      <meta itemprop="image" content="/images/header.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="傅永德 | 个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/11/15/database-deadlock/" class="post-title-link" itemprop="url">数据库死锁</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-11-15 14:05:13" itemprop="dateCreated datePublished" datetime="2019-11-15T14:05:13+08:00">2019-11-15</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2020-03-23 20:26:40" itemprop="dateModified" datetime="2020-03-23T20:26:40+08:00">2020-03-23</time>
-              
-            
-          </span>
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>死锁是指两个或者多个事务在同一个资源上相互占用，并请求锁定对方占用的资源，从而导致恶性循环的现象</p>
-</blockquote>
-<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><p>先用一个示例来演示一下数据库死锁的情况。本示例基于 <code>MySQL</code> 的 <code>InnoDB</code> 存储引擎。</p>
-<h3 id="表结构"><a href="#表结构" class="headerlink" title="表结构"></a>表结构</h3><p>我们先建一个 wallet 表，表结构如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; DESC wallet;</span><br><span class="line">+---------+---------------------+------+-----+---------+-------+</span><br><span class="line">| Field   | Type                | Null | Key | Default | Extra |</span><br><span class="line">+---------+---------------------+------+-----+---------+-------+</span><br><span class="line">| id      | bigint(20) unsigned | NO   | PRI | NULL    |       |</span><br><span class="line">| user_id | bigint(20) unsigned | NO   | UNI | 0       |       |</span><br><span class="line">| balance | bigint(20)          | NO   |     | 0       |       |</span><br><span class="line">+---------+---------------------+------+-----+---------+-------+</span><br></pre></td></tr></table></figure>
-<h3 id="开启事务-A，并修改-id-为-1-的记录"><a href="#开启事务-A，并修改-id-为-1-的记录" class="headerlink" title="开启事务 A，并修改 id 为 1 的记录"></a>开启事务 A，并修改 id 为 1 的记录</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; START TRANSACTION;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; UPDATE wallet SET balance = balance + 100 WHERE id = 1;</span><br><span class="line">Query OK, 1 row affected (0.00 sec)</span><br></pre></td></tr></table></figure>
-<h3 id="开启事务-B，并修改-id-为-2-的记录"><a href="#开启事务-B，并修改-id-为-2-的记录" class="headerlink" title="开启事务 B，并修改 id 为 2 的记录"></a>开启事务 B，并修改 id 为 2 的记录</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; START TRANSACTION;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; UPDATE wallet SET balance = balance + 100 WHERE id = 2;</span><br><span class="line">Query OK, 1 row affected (0.00 sec)</span><br><span class="line">Rows matched: 1  Changed: 1  Warnings: 0</span><br></pre></td></tr></table></figure>
-<h3 id="事务-A-修改-id-为-2-的记录"><a href="#事务-A-修改-id-为-2-的记录" class="headerlink" title="事务 A 修改 id 为 2 的记录"></a>事务 A 修改 id 为 2 的记录</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; UPDATE wallet SET balance = balance + 100 WHERE id = 2;</span><br></pre></td></tr></table></figure>
-<p>此时发现该修改并未马上成功，而是陷入的等待状态，原因是事务 A 此时要锁定 id 为 2 的记录，但该记录已经被事务B锁定了。</p>
-<h3 id="事务-B-修改-id-为-3-的记录"><a href="#事务-B-修改-id-为-3-的记录" class="headerlink" title="事务 B 修改 id 为 3 的记录"></a>事务 B 修改 id 为 3 的记录</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; UPDATE wallet SET balance = balance + 100 WHERE id = 1;</span><br><span class="line">ERROR 1213 (40001): Deadlock found when trying to get lock; try restarting transaction</span><br></pre></td></tr></table></figure>
-<p>此时事务 B 报错，错误原因很明确是发生了死锁问题，通过查询操作也可以发现事务 B 的操作已经回滚，于此同时事务 A 对 id 为 2 的记录的修改已经成功，后续的 <code>COMMIT</code> 操作就不展示了。</p>
-<h2 id="如何解决死锁问题"><a href="#如何解决死锁问题" class="headerlink" title="如何解决死锁问题"></a>如何解决死锁问题</h2><h3 id="死锁产生的原因"><a href="#死锁产生的原因" class="headerlink" title="死锁产生的原因"></a>死锁产生的原因</h3><p>锁的行为和顺序是和存储引擎相关的，同样的顺序执行语句，有些存储引擎会产生死锁，有的则不会。故死锁的产生有两重原因：有些是因为真正的数据冲突，有些则完全是由于存储引擎的实现方式导致的。</p>
-<p>死锁发生以后，只有部分或者完全回滚其中一个事务，才能打破死锁。对于事务性的系统，死锁问题是无法避免的，设计对应的应用程序时必须考虑如何处理死锁。大部分情况只需要重新执行因死锁导致回滚的事务即可。</p>
-<h3 id="解决死锁问题"><a href="#解决死锁问题" class="headerlink" title="解决死锁问题"></a>解决死锁问题</h3><p>常见的数据库都实现了个中死锁检测和死锁超时机制。</p>
-<ul>
-<li><p>死锁检测：比如上述例子中，检测到死锁问题，数据库立马报错，这种解决方式非常有效，否则死锁会导致非常慢的查询。</p>
-</li>
-<li><p>超时机制：超时机制就是当查询时间达到锁等待超时的设定后放弃锁的请求。</p>
-</li>
-</ul>
-<p><code>InnoDB</code> 目前处理死锁的方式是将最少行级排他锁的事务进行回滚。</p>
-<h3 id="InnoDB-显式和隐式锁定"><a href="#InnoDB-显式和隐式锁定" class="headerlink" title="InnoDB 显式和隐式锁定"></a>InnoDB 显式和隐式锁定</h3><p><code>InnoDB</code> 采用的时两端锁定协议（two-phase locking protocol）。在事务执行过程中，随时都可以执行锁定，锁只有在执行 <code>COMMIT</code> 或者 <code>ROLLBACK</code> 的时候才会被释放，并且所有的锁是在同一时刻被释放。<code>InnoDB</code> 会根据隔离级别在需要的的时候自动加锁。</p>
-<p><code>InnoDB</code> 也支持通过特定的语句进行显式的锁定，这些语句不属于 <code>SQL</code> 规范。</p>
-<ul>
-<li><code>SELECT ... LOCK IN SHARE MODE</code></li>
-<li><code>SELECT ... FOR UPDATE</code></li>
-</ul>
-<p><code>MySQL</code> 也支持 <code>LOCK TABLES</code> 和 <code>UNLOCK TABLES</code> 语句，这是在服务器层面实现的，跟存储引擎无关，不能用于代替事务处理。</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://fuyongde.github.io/2019/11/14/docker-手册/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="傅永德">
-      <meta itemprop="description" content="苟利国家生死以，岂因祸福避趋之">
-      <meta itemprop="image" content="/images/header.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="傅永德 | 个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/11/14/docker-手册/" class="post-title-link" itemprop="url">Docker 手册</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-11-14 17:31:52" itemprop="dateCreated datePublished" datetime="2019-11-14T17:31:52+08:00">2019-11-14</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2020-03-23 20:29:19" itemprop="dateModified" datetime="2020-03-23T20:29:19+08:00">2020-03-23</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/手册/" itemprop="url" rel="index"><span itemprop="name">手册</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="镜像管理"><a href="#镜像管理" class="headerlink" title="镜像管理"></a>镜像管理</h2><h3 id="查询所需的镜像"><a href="#查询所需的镜像" class="headerlink" title="查询所需的镜像"></a>查询所需的镜像</h3><ul>
-<li><p>Usage：</p>
-<p><code>docker search [OPTIONS] TERM</code></p>
-</li>
-<li><p>Options：</p>
-<p><code>-f --filter</code> ：根据提供的条件过滤输出</p>
-<p><code>--format</code> ：使用Go模板进行漂亮的打印搜索</p>
-<p><code>--limit</code> ：最大搜索结果数（默认为25）</p>
-<p><code>--no-trunc</code>：不要截断输出</p>
-</li>
-<li><p>Example：</p>
-</li>
-</ul>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker search mysql</span><br></pre></td></tr></table></figure>
-<h3 id="安装镜像"><a href="#安装镜像" class="headerlink" title="安装镜像"></a>安装镜像</h3><ul>
-<li><p>Usage：</p>
-<p><code>docker pull [OPTIONS] NAME[:TAG|@DIGEST]</code></p>
-</li>
-<li><p>Options：</p>
-<p><code>-a --all-tags</code>：下载存储库中的所有标记镜像</p>
-<p><code>--disable-content-trust</code>：跳过图像验证（默认为true）</p>
-</li>
-<li><p>Example：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 安装MySQL的5.7.24版本</span><br><span class="line">docker pull mysql:5.7.24</span><br><span class="line"><span class="meta">#</span> 缺省TAG时默认安装最新版本</span><br><span class="line">docker pull mysql</span><br><span class="line"><span class="meta">#</span> 安装所有版本</span><br><span class="line">docker pull -a mysql</span><br><span class="line"><span class="meta">#</span> 安装zookeeper</span><br><span class="line">docker pull zookeeper</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h3 id="查看镜像信息"><a href="#查看镜像信息" class="headerlink" title="查看镜像信息"></a>查看镜像信息</h3><p>Usage：</p>
-<p><code>docker images [OPTIONS] [REPOSITORY[:TAG]]</code></p>
-<p>Options:</p>
-<p><code>-a, --all</code>：展示全部镜像<br>​    <code>--digests</code>：展示镜像的哈希值<br><code>-f, --filter filter</code>：根据提供的条件过滤输出<br>​    <code>--format string</code>：使用Go模板的漂亮打印图像<br>​    <code>--no-trunc</code>：不要截断输出<br><code>-q, --quiet</code>：仅显示数字ID</p>
-<p>Example:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 查看所有的进行信息</span><br><span class="line">docker images -a</span><br></pre></td></tr></table></figure>
-<h3 id="删除镜像"><a href="#删除镜像" class="headerlink" title="删除镜像"></a>删除镜像</h3><p>Usage：</p>
-<p><code>docker rmi [OPTIONS] IMAGE [IMAGE...]</code></p>
-<p>Options:<br> <code>-f, --force</code>：强制删除某个镜像<br> <code>--no-prune</code> ：不删除未标记的父类</p>
-<p>Example：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 删除id为cd14cecfdb3a的镜像</span><br><span class="line">docker rmi cd14cecfdb3a</span><br><span class="line"><span class="meta">#</span> 删除jenkins镜像</span><br><span class="line">docker rmi jenkins</span><br></pre></td></tr></table></figure>
-<h2 id="容器管理"><a href="#容器管理" class="headerlink" title="容器管理"></a>容器管理</h2><h3 id="查看容器"><a href="#查看容器" class="headerlink" title="查看容器"></a>查看容器</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 查看所有正在运行的容器</span><br><span class="line">docker ps</span><br><span class="line"><span class="meta">#</span> 查看所有容器</span><br><span class="line">docker ps -a</span><br><span class="line">查看所有容器ID</span><br><span class="line">docker ps -a -q</span><br></pre></td></tr></table></figure>
-<h3 id="启动容器"><a href="#启动容器" class="headerlink" title="启动容器"></a>启动容器</h3><p><code>docker run IMG</code></p>
-<p>Example：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 启动MySQL</span><br><span class="line">docker run -p 3306:3306 --name MySQL -e MYSQL_ROOT_PASSWORD=fuyongde mysql:5.7.24</span><br><span class="line"><span class="meta">#</span> 启动zookeeper</span><br><span class="line">docker run -p 2181:2181 --name zookeeper zookeeper</span><br></pre></td></tr></table></figure>
-<h3 id="停止容器"><a href="#停止容器" class="headerlink" title="停止容器"></a>停止容器</h3><p><code>docker stop [containerId]</code>：停止容器</p>
-<p>Example:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 删除id为8fcc3dad236a的容器</span><br><span class="line">docker rm 8fcc3dad236a</span><br></pre></td></tr></table></figure>
-<h3 id="重启容器"><a href="#重启容器" class="headerlink" title="重启容器"></a>重启容器</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 重启id为1e4b2a31028d的容器</span><br><span class="line">docker restart 1e4b2a31028d</span><br></pre></td></tr></table></figure>
-<h3 id="删除容器"><a href="#删除容器" class="headerlink" title="删除容器"></a>删除容器</h3><p><code>docker rm [containerId]</code></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 删除id为1e4b2a31028d的容器</span><br><span class="line">docker rm 1e4b2a31028d</span><br></pre></td></tr></table></figure>
-<h3 id="重命名容器"><a href="#重命名容器" class="headerlink" title="重命名容器"></a>重命名容器</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 将docker-mysql重命名为mysql</span><br><span class="line">docker rename docker-mysql mysql</span><br></pre></td></tr></table></figure>
-<h2 id="其他命令"><a href="#其他命令" class="headerlink" title="其他命令"></a>其他命令</h2><h3 id="进入到一个容器"><a href="#进入到一个容器" class="headerlink" title="进入到一个容器"></a>进入到一个容器</h3><p>通常我们使用的docker镜像一般是基于<code>Linux</code>，则可以通过下面的方式进入到docker容器内:</p>
-<p><code>docker exec -it 063caee1d235 /bin/bash</code></p>
-<p>但是对于<code>Alpinelinux</code>，则需：</p>
-<p><code>docker exec -it 063caee1d235 sh</code></p>
-<h3 id="拷贝文件到一个容器"><a href="#拷贝文件到一个容器" class="headerlink" title="拷贝文件到一个容器"></a>拷贝文件到一个容器</h3><p><code>docker cp C:\Users\fuyon\Documents\repo\github\goku\atomikos-demo\zhifubao-server\src\main\resources\sql\zhifubao.sql 1e4b2a31028d:/tmp</code></p>
-<h3 id="从容器拷贝文件到主机"><a href="#从容器拷贝文件到主机" class="headerlink" title="从容器拷贝文件到主机"></a>从容器拷贝文件到主机</h3><p><code>docker cp 1e4b2a31028d:/tmp/zhifubao.sql C:\Users\fuyon\Documents</code></p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2267,7 +2171,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-count">27</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -2373,7 +2277,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">34</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">36</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

@@ -347,6 +347,417 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://fuyongde.github.io/2019/11/15/database-deadlock/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="傅永德">
+      <meta itemprop="description" content="苟利国家生死以，岂因祸福避趋之">
+      <meta itemprop="image" content="/images/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="傅永德 | 个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/11/15/database-deadlock/" class="post-title-link" itemprop="url">数据库死锁</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-11-15 14:05:13" itemprop="dateCreated datePublished" datetime="2019-11-15T14:05:13+08:00">2019-11-15</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-03-23 20:26:40" itemprop="dateModified" datetime="2020-03-23T20:26:40+08:00">2020-03-23</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>死锁是指两个或者多个事务在同一个资源上相互占用，并请求锁定对方占用的资源，从而导致恶性循环的现象</p>
+</blockquote>
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><p>先用一个示例来演示一下数据库死锁的情况。本示例基于 <code>MySQL</code> 的 <code>InnoDB</code> 存储引擎。</p>
+<h3 id="表结构"><a href="#表结构" class="headerlink" title="表结构"></a>表结构</h3><p>我们先建一个 wallet 表，表结构如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; DESC wallet;</span><br><span class="line">+---------+---------------------+------+-----+---------+-------+</span><br><span class="line">| Field   | Type                | Null | Key | Default | Extra |</span><br><span class="line">+---------+---------------------+------+-----+---------+-------+</span><br><span class="line">| id      | bigint(20) unsigned | NO   | PRI | NULL    |       |</span><br><span class="line">| user_id | bigint(20) unsigned | NO   | UNI | 0       |       |</span><br><span class="line">| balance | bigint(20)          | NO   |     | 0       |       |</span><br><span class="line">+---------+---------------------+------+-----+---------+-------+</span><br></pre></td></tr></table></figure>
+<h3 id="开启事务-A，并修改-id-为-1-的记录"><a href="#开启事务-A，并修改-id-为-1-的记录" class="headerlink" title="开启事务 A，并修改 id 为 1 的记录"></a>开启事务 A，并修改 id 为 1 的记录</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; START TRANSACTION;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; UPDATE wallet SET balance = balance + 100 WHERE id = 1;</span><br><span class="line">Query OK, 1 row affected (0.00 sec)</span><br></pre></td></tr></table></figure>
+<h3 id="开启事务-B，并修改-id-为-2-的记录"><a href="#开启事务-B，并修改-id-为-2-的记录" class="headerlink" title="开启事务 B，并修改 id 为 2 的记录"></a>开启事务 B，并修改 id 为 2 的记录</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; START TRANSACTION;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; UPDATE wallet SET balance = balance + 100 WHERE id = 2;</span><br><span class="line">Query OK, 1 row affected (0.00 sec)</span><br><span class="line">Rows matched: 1  Changed: 1  Warnings: 0</span><br></pre></td></tr></table></figure>
+<h3 id="事务-A-修改-id-为-2-的记录"><a href="#事务-A-修改-id-为-2-的记录" class="headerlink" title="事务 A 修改 id 为 2 的记录"></a>事务 A 修改 id 为 2 的记录</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; UPDATE wallet SET balance = balance + 100 WHERE id = 2;</span><br></pre></td></tr></table></figure>
+<p>此时发现该修改并未马上成功，而是陷入的等待状态，原因是事务 A 此时要锁定 id 为 2 的记录，但该记录已经被事务B锁定了。</p>
+<h3 id="事务-B-修改-id-为-3-的记录"><a href="#事务-B-修改-id-为-3-的记录" class="headerlink" title="事务 B 修改 id 为 3 的记录"></a>事务 B 修改 id 为 3 的记录</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; UPDATE wallet SET balance = balance + 100 WHERE id = 1;</span><br><span class="line">ERROR 1213 (40001): Deadlock found when trying to get lock; try restarting transaction</span><br></pre></td></tr></table></figure>
+<p>此时事务 B 报错，错误原因很明确是发生了死锁问题，通过查询操作也可以发现事务 B 的操作已经回滚，于此同时事务 A 对 id 为 2 的记录的修改已经成功，后续的 <code>COMMIT</code> 操作就不展示了。</p>
+<h2 id="如何解决死锁问题"><a href="#如何解决死锁问题" class="headerlink" title="如何解决死锁问题"></a>如何解决死锁问题</h2><h3 id="死锁产生的原因"><a href="#死锁产生的原因" class="headerlink" title="死锁产生的原因"></a>死锁产生的原因</h3><p>锁的行为和顺序是和存储引擎相关的，同样的顺序执行语句，有些存储引擎会产生死锁，有的则不会。故死锁的产生有两重原因：有些是因为真正的数据冲突，有些则完全是由于存储引擎的实现方式导致的。</p>
+<p>死锁发生以后，只有部分或者完全回滚其中一个事务，才能打破死锁。对于事务性的系统，死锁问题是无法避免的，设计对应的应用程序时必须考虑如何处理死锁。大部分情况只需要重新执行因死锁导致回滚的事务即可。</p>
+<h3 id="解决死锁问题"><a href="#解决死锁问题" class="headerlink" title="解决死锁问题"></a>解决死锁问题</h3><p>常见的数据库都实现了个中死锁检测和死锁超时机制。</p>
+<ul>
+<li><p>死锁检测：比如上述例子中，检测到死锁问题，数据库立马报错，这种解决方式非常有效，否则死锁会导致非常慢的查询。</p>
+</li>
+<li><p>超时机制：超时机制就是当查询时间达到锁等待超时的设定后放弃锁的请求。</p>
+</li>
+</ul>
+<p><code>InnoDB</code> 目前处理死锁的方式是将最少行级排他锁的事务进行回滚。</p>
+<h3 id="InnoDB-显式和隐式锁定"><a href="#InnoDB-显式和隐式锁定" class="headerlink" title="InnoDB 显式和隐式锁定"></a>InnoDB 显式和隐式锁定</h3><p><code>InnoDB</code> 采用的时两端锁定协议（two-phase locking protocol）。在事务执行过程中，随时都可以执行锁定，锁只有在执行 <code>COMMIT</code> 或者 <code>ROLLBACK</code> 的时候才会被释放，并且所有的锁是在同一时刻被释放。<code>InnoDB</code> 会根据隔离级别在需要的的时候自动加锁。</p>
+<p><code>InnoDB</code> 也支持通过特定的语句进行显式的锁定，这些语句不属于 <code>SQL</code> 规范。</p>
+<ul>
+<li><code>SELECT ... LOCK IN SHARE MODE</code></li>
+<li><code>SELECT ... FOR UPDATE</code></li>
+</ul>
+<p><code>MySQL</code> 也支持 <code>LOCK TABLES</code> 和 <code>UNLOCK TABLES</code> 语句，这是在服务器层面实现的，跟存储引擎无关，不能用于代替事务处理。</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://fuyongde.github.io/2019/11/14/docker-手册/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="傅永德">
+      <meta itemprop="description" content="苟利国家生死以，岂因祸福避趋之">
+      <meta itemprop="image" content="/images/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="傅永德 | 个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/11/14/docker-手册/" class="post-title-link" itemprop="url">Docker 手册</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-11-14 17:31:52" itemprop="dateCreated datePublished" datetime="2019-11-14T17:31:52+08:00">2019-11-14</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-03-24 21:54:49" itemprop="dateModified" datetime="2020-03-24T21:54:49+08:00">2020-03-24</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/手册/" itemprop="url" rel="index"><span itemprop="name">手册</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="镜像管理"><a href="#镜像管理" class="headerlink" title="镜像管理"></a>镜像管理</h2><h3 id="查询所需的镜像"><a href="#查询所需的镜像" class="headerlink" title="查询所需的镜像"></a>查询所需的镜像</h3><ul>
+<li><p>Usage：</p>
+<p><code>docker search [OPTIONS] TERM</code></p>
+</li>
+<li><p>Options：</p>
+<p><code>-f --filter</code> ：根据提供的条件过滤输出</p>
+<p><code>--format</code> ：使用Go模板进行漂亮的打印搜索</p>
+<p><code>--limit</code> ：最大搜索结果数（默认为25）</p>
+<p><code>--no-trunc</code>：不要截断输出</p>
+</li>
+<li><p>Example：</p>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker search mysql</span><br></pre></td></tr></table></figure>
+<h3 id="安装镜像"><a href="#安装镜像" class="headerlink" title="安装镜像"></a>安装镜像</h3><ul>
+<li><p>Usage：</p>
+<p><code>docker pull [OPTIONS] NAME[:TAG|@DIGEST]</code></p>
+</li>
+<li><p>Options：</p>
+<p><code>-a --all-tags</code>：下载存储库中的所有标记镜像</p>
+<p><code>--disable-content-trust</code>：跳过图像验证（默认为true）</p>
+</li>
+<li><p>Example：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 安装MySQL的5.7.24版本</span><br><span class="line">docker pull mysql:5.7.24</span><br><span class="line"><span class="meta">#</span> 缺省TAG时默认安装最新版本</span><br><span class="line">docker pull mysql</span><br><span class="line"><span class="meta">#</span> 安装所有版本</span><br><span class="line">docker pull -a mysql</span><br><span class="line"><span class="meta">#</span> 安装zookeeper</span><br><span class="line">docker pull zookeeper</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="查看镜像信息"><a href="#查看镜像信息" class="headerlink" title="查看镜像信息"></a>查看镜像信息</h3><p>Usage：</p>
+<p><code>docker images [OPTIONS] [REPOSITORY[:TAG]]</code></p>
+<p>Options:</p>
+<p><code>-a, --all</code>：展示全部镜像<br>​    <code>--digests</code>：展示镜像的哈希值<br><code>-f, --filter filter</code>：根据提供的条件过滤输出<br>​    <code>--format string</code>：使用Go模板的漂亮打印图像<br>​    <code>--no-trunc</code>：不要截断输出<br><code>-q, --quiet</code>：仅显示数字ID</p>
+<p>Example:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 查看所有的进行信息</span><br><span class="line">docker images -a</span><br></pre></td></tr></table></figure>
+<h3 id="删除镜像"><a href="#删除镜像" class="headerlink" title="删除镜像"></a>删除镜像</h3><p>Usage：</p>
+<p><code>docker rmi [OPTIONS] IMAGE [IMAGE...]</code></p>
+<p>Options:<br> <code>-f, --force</code>：强制删除某个镜像<br> <code>--no-prune</code> ：不删除未标记的父类</p>
+<p>Example：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 删除id为cd14cecfdb3a的镜像</span><br><span class="line">docker rmi cd14cecfdb3a</span><br><span class="line"><span class="meta">#</span> 删除jenkins镜像</span><br><span class="line">docker rmi jenkins</span><br></pre></td></tr></table></figure>
+<h2 id="容器管理"><a href="#容器管理" class="headerlink" title="容器管理"></a>容器管理</h2><h3 id="查看容器"><a href="#查看容器" class="headerlink" title="查看容器"></a>查看容器</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 查看所有正在运行的容器</span><br><span class="line">docker ps</span><br><span class="line"><span class="meta">#</span> 查看所有容器</span><br><span class="line">docker ps -a</span><br><span class="line">查看所有容器ID</span><br><span class="line">docker ps -a -q</span><br></pre></td></tr></table></figure>
+<h3 id="启动容器"><a href="#启动容器" class="headerlink" title="启动容器"></a>启动容器</h3><p><code>docker run IMG</code></p>
+<p>Example：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 启动MySQL</span><br><span class="line">docker run -p 3306:3306 --name MySQL -e MYSQL_ROOT_PASSWORD=fuyongde mysql:5.7.24</span><br><span class="line"><span class="meta">#</span> 启动zookeeper</span><br><span class="line">docker run -p 2181:2181 --name zookeeper zookeeper</span><br></pre></td></tr></table></figure>
+<h3 id="停止容器"><a href="#停止容器" class="headerlink" title="停止容器"></a>停止容器</h3><p><code>docker stop [containerId]</code>：停止容器</p>
+<p>Example:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 删除id为8fcc3dad236a的容器</span><br><span class="line">docker rm 8fcc3dad236a</span><br></pre></td></tr></table></figure>
+<h3 id="重启容器"><a href="#重启容器" class="headerlink" title="重启容器"></a>重启容器</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 重启id为1e4b2a31028d的容器</span><br><span class="line">docker restart 1e4b2a31028d</span><br></pre></td></tr></table></figure>
+<h3 id="删除容器"><a href="#删除容器" class="headerlink" title="删除容器"></a>删除容器</h3><p><code>docker rm [containerId]</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 删除id为1e4b2a31028d的容器</span><br><span class="line">docker rm 1e4b2a31028d</span><br></pre></td></tr></table></figure>
+<h3 id="重命名容器"><a href="#重命名容器" class="headerlink" title="重命名容器"></a>重命名容器</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 将docker-mysql重命名为mysql</span><br><span class="line">docker rename docker-mysql mysql</span><br></pre></td></tr></table></figure>
+<h2 id="其他命令"><a href="#其他命令" class="headerlink" title="其他命令"></a>其他命令</h2><h3 id="进入到一个容器"><a href="#进入到一个容器" class="headerlink" title="进入到一个容器"></a>进入到一个容器</h3><p>通常我们使用的docker镜像一般是基于 <code>Linux</code>，则可以通过下面的方式进入到 docker 容器内:</p>
+<p><code>docker exec -it 063caee1d235 /bin/bash</code></p>
+<p>但是对于<code>Alpinelinux</code>，则需：</p>
+<p><code>docker exec -it 063caee1d235 sh</code></p>
+<p>对于部分镜像默认用户不是 <code>root</code> 的（比如 <code>Jenkins</code> 官方提供的 docker 镜像），但我们又需要使用 <code>root</code> 账户的，可以通过添加 <code>-u root</code> 参数来使用 <code>root</code> 账户登录 docker 容器：</p>
+<p><code>docker exec -it -u root a07fe9b55ade bash</code></p>
+<h3 id="拷贝文件到一个容器"><a href="#拷贝文件到一个容器" class="headerlink" title="拷贝文件到一个容器"></a>拷贝文件到一个容器</h3><p><code>docker cp C:\Users\fuyon\Documents\repo\github\goku\atomikos-demo\zhifubao-server\src\main\resources\sql\zhifubao.sql 1e4b2a31028d:/tmp</code></p>
+<h3 id="从容器拷贝文件到主机"><a href="#从容器拷贝文件到主机" class="headerlink" title="从容器拷贝文件到主机"></a>从容器拷贝文件到主机</h3><p><code>docker cp 1e4b2a31028d:/tmp/zhifubao.sql C:\Users\fuyon\Documents</code></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://fuyongde.github.io/2019/11/14/mysql-手册/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -530,7 +941,7 @@
 <p><code>mysqldumpslow [ OPTS... ] [ LOGS... ]</code></p>
 <p>具体的参数，可自行查看其对应的含义</p>
 <p>示例：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 得到返回记录集最多的10个SQL。</span><br><span class="line">mysqldumpslow -s r -t 10 /var/lib/mysql/izwz9ezwhlhq4hy1wzw9oqz-slow.log</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> 得到访问次数最多的10个SQL</span><br><span class="line">mysqldumpslow -s c -t 10 /var/lib/mysql/izwz9ezwhlhq4hy1wzw9oqz-slow.log</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> 得到按照时间排序的前10条里面含有左连接的查询语句。</span><br><span class="line">mysqldumpslow -s t -t 10 -g "left join" /var/lib/mysql/izwz9ezwhlhq4hy1wzw9oqz-slow.log</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> 另外建议在使用这些命令时结合 | 和more 使用 ，否则有可能出现刷屏的情况。</span><br><span class="line">mysqldumpslow -s r -t 20 /var/lib/mysql/izwz9ezwhlhq4hy1wzw9oqz-slow.log | more</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 得到返回记录集最多的10个SQL。</span></span><br><span class="line">mysqldumpslow -s r -t 10 /var/lib/mysql/izwz9ezwhlhq4hy1wzw9oqz-slow.log</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 得到访问次数最多的10个SQL</span></span><br><span class="line">mysqldumpslow -s c -t 10 /var/lib/mysql/izwz9ezwhlhq4hy1wzw9oqz-slow.log</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 得到按照时间排序的前10条里面含有左连接的查询语句。</span></span><br><span class="line">mysqldumpslow -s t -t 10 -g "left join" /var/lib/mysql/izwz9ezwhlhq4hy1wzw9oqz-slow.log</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 另外建议在使用这些命令时结合 | 和more 使用 ，否则有可能出现刷屏的情况。</span></span><br><span class="line">mysqldumpslow -s r -t 20 /var/lib/mysql/izwz9ezwhlhq4hy1wzw9oqz-slow.log | more</span><br></pre></td></tr></table></figure>
 <h4 id="刨析-MySQL-查询"><a href="#刨析-MySQL-查询" class="headerlink" title="刨析 MySQL 查询"></a>刨析 MySQL 查询</h4><p>在实际项目中，我们通过慢查询日志，只是找到对应的慢查询，那么如何对慢查询进行刨析呢？</p>
 <p>MySQL 在5.1版本之后引入了 <code>SHOW PROFILE</code> 命令，默认是禁用的，但可以在会话级别动态的修改。</p>
 <h5 id="开启"><a href="#开启" class="headerlink" title="开启"></a>开启</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-- 设置为 ON 或 1 均可</span><br><span class="line">mysql&gt; SET PROFILING = ON;</span><br></pre></td></tr></table></figure>
@@ -1756,7 +2167,7 @@
 <li>查看某原命令的别名，如 <code>Get-ChildItem</code> 的别名：<code>Get-Alias -Definition Get-ChildItem</code></li>
 </ul>
 <h3 id="临时创建或更改别名"><a href="#临时创建或更改别名" class="headerlink" title="临时创建或更改别名"></a>临时创建或更改别名</h3><p>使用 <code>Set-Alias</code> 命令来创建或更改别名，但是改命令只在当前的的 PowerShell Session 中生效。另外还有一个 <code>New-Alias</code> 命令用法类似。</p>
-<h4 id="创建不带参数的别名"><a href="#创建不带参数的别名" class="headerlink" title="创建不带参数的别名"></a>创建不带参数的别名</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">PS C:\Users\fuyongde&gt; Set-Alias -Name ll -Value get-childitem</span><br><span class="line"><span class="meta">#</span> 或者简单一些</span><br><span class="line">PS C:\Users\fuyongde&gt; Set-Alias ll get-childitem</span><br></pre></td></tr></table></figure>
+<h4 id="创建不带参数的别名"><a href="#创建不带参数的别名" class="headerlink" title="创建不带参数的别名"></a>创建不带参数的别名</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">PS C:\Users\fuyongde&gt; Set-Alias -Name ll -Value get-childitem</span><br><span class="line"><span class="meta">#</span><span class="bash"> 或者简单一些</span></span><br><span class="line">PS C:\Users\fuyongde&gt; Set-Alias ll get-childitem</span><br></pre></td></tr></table></figure>
 <h4 id="创建带参数的别名"><a href="#创建带参数的别名" class="headerlink" title="创建带参数的别名"></a>创建带参数的别名</h4><p>如果命令带参数如想为 <code>Get-ChildItem -Name</code> 设定别名为 <code>ll</code> 则我们需要两步，第一步为这个带参数原命令设定一个中间 <code>function</code>，第二步为这个 <code>function</code> 指定别名</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PS C:\Users\fuyongde&gt; function getlist &#123;Get-ChildItem -Name&#125;</span><br><span class="line">PS C:\Users\fuyongde&gt; Set-Alias ll getlist</span><br></pre></td></tr></table></figure>
 <h4 id="创建永久的别名"><a href="#创建永久的别名" class="headerlink" title="创建永久的别名"></a>创建永久的别名</h4><p>在 PowerShell 中直接使用 <code>Set-Alias</code> 或 <code>New-Alias</code> 命令创建的别名在关闭此 Session 后即会失效，防止此现象的方法是将此命令写入 Windows PowerShell profile 文件。</p>
@@ -2001,7 +2412,7 @@
 <h4 id="CentOS"><a href="#CentOS" class="headerlink" title="CentOS"></a>CentOS</h4><p><code>CentOS</code> 的源文件位于 <code>/etc/yum.repos.d/CentOS-Base.repo</code>，清华大学开源镜像站 <a href="https://mirror.tuna.tsinghua.edu.cn/help/centos/" target="_blank" rel="noopener">CentOS 系统的帮助页面</a> 详细列举了常用版本的源的信息。</p>
 <p>与 Debian 的不同，CentOS 替换源之后，需要运行 <code>yum makecache</code> 生成缓存。</p>
 <p>此外阿里云提供了更为简单的方式，直接下载阿里云的 <code>CentOS-Base.repo</code> 文件到对应目录即可，命令如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> CentOS 6</span><br><span class="line">wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-6.repo</span><br><span class="line"><span class="meta">#</span> 或者</span><br><span class="line">curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-6.repo</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> CentOS 7</span><br><span class="line">wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo</span><br><span class="line"><span class="meta">#</span> 或者</span><br><span class="line">curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> 由于非阿里云ECS用户会出现 Couldn't resolve host 'mirrors.cloud.aliyuncs.com' 信息，不影响使用。用户也可自行修改相关配置: eg:</span><br><span class="line">sed -i -e '/mirrors.cloud.aliyuncs.com/d' -e '/mirrors.aliyuncs.com/d' /etc/yum.repos.d/CentOS-Base.repo</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> CentOS 6</span></span><br><span class="line">wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-6.repo</span><br><span class="line"><span class="meta">#</span><span class="bash"> 或者</span></span><br><span class="line">curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-6.repo</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> CentOS 7</span></span><br><span class="line">wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo</span><br><span class="line"><span class="meta">#</span><span class="bash"> 或者</span></span><br><span class="line">curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 由于非阿里云ECS用户会出现 Couldn<span class="string">'t resolve host '</span>mirrors.cloud.aliyuncs.com<span class="string">' 信息，不影响使用。用户也可自行修改相关配置: eg:</span></span></span><br><span class="line">sed -i -e '/mirrors.cloud.aliyuncs.com/d' -e '/mirrors.aliyuncs.com/d' /etc/yum.repos.d/CentOS-Base.repo</span><br></pre></td></tr></table></figure>
 <p>CentOS 7 版本的清华大学源信息如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"># CentOS-Base.repo</span><br><span class="line">#</span><br><span class="line"># The mirror system uses the connecting IP address of the client and the</span><br><span class="line"># update status of each mirror to pick mirrors that are updated to and</span><br><span class="line"># geographically close to the client.  You should use this for CentOS updates</span><br><span class="line"># unless you are manually picking other mirrors.</span><br><span class="line">#</span><br><span class="line"># If the mirrorlist= does not work for you, as a fall back you can try the</span><br><span class="line"># remarked out baseurl= line instead.</span><br><span class="line">#</span><br><span class="line">#</span><br><span class="line"></span><br><span class="line">[base]</span><br><span class="line">name=CentOS-$releasever - Base</span><br><span class="line">baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos/$releasever/os/$basearch/</span><br><span class="line">#mirrorlist=http://mirrorlist.centos.org/?release=$releasever&amp;arch=$basearch&amp;repo=os</span><br><span class="line">gpgcheck=1</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7</span><br><span class="line"></span><br><span class="line">#released updates</span><br><span class="line">[updates]</span><br><span class="line">name=CentOS-$releasever - Updates</span><br><span class="line">baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos/$releasever/updates/$basearch/</span><br><span class="line">#mirrorlist=http://mirrorlist.centos.org/?release=$releasever&amp;arch=$basearch&amp;repo=updates</span><br><span class="line">gpgcheck=1</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7</span><br><span class="line"></span><br><span class="line">#additional packages that may be useful</span><br><span class="line">[extras]</span><br><span class="line">name=CentOS-$releasever - Extras</span><br><span class="line">baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos/$releasever/extras/$basearch/</span><br><span class="line">#mirrorlist=http://mirrorlist.centos.org/?release=$releasever&amp;arch=$basearch&amp;repo=extras</span><br><span class="line">gpgcheck=1</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7</span><br><span class="line"></span><br><span class="line">#additional packages that extend functionality of existing packages</span><br><span class="line">[centosplus]</span><br><span class="line">name=CentOS-$releasever - Plus</span><br><span class="line">baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos/$releasever/centosplus/$basearch/</span><br><span class="line">#mirrorlist=http://mirrorlist.centos.org/?release=$releasever&amp;arch=$basearch&amp;repo=centosplus</span><br><span class="line">gpgcheck=1</span><br><span class="line">enabled=0</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7</span><br></pre></td></tr></table></figure>
 <h3 id="配置免密登录"><a href="#配置免密登录" class="headerlink" title="配置免密登录"></a>配置免密登录</h3><p>场景：A 主机实现免密登录 B 主机</p>
@@ -2221,396 +2632,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://fuyongde.github.io/2019/07/11/rpc-introduction/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="傅永德">
-      <meta itemprop="description" content="苟利国家生死以，岂因祸福避趋之">
-      <meta itemprop="image" content="/images/header.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="傅永德 | 个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/07/11/rpc-introduction/" class="post-title-link" itemprop="url">RPC Introduction</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-07-11 15:36:43" itemprop="dateCreated datePublished" datetime="2019-07-11T15:36:43+08:00">2019-07-11</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2020-03-23 20:41:41" itemprop="dateModified" datetime="2020-03-23T20:41:41+08:00">2020-03-23</time>
-              
-            
-          </span>
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="What-is-RPC"><a href="#What-is-RPC" class="headerlink" title="What is RPC?"></a>What is RPC?</h2><blockquote>
-<p>Remote Procedure Call (RPC) is a protocol that one program can use to request a service from a program located in another computer on a network without having to understand the network’s details. A procedure call is also sometimes known as a function call or a subroutine call. A procedure call is also sometimes known as a function call or a subroutine call.</p>
-</blockquote>
-<p><code>RPC</code> 是一种远程过程调用协议，一个程序可以使用该协议从位于网络上另一台计算机中的程序请求服务，而无需了解网络的详细信息。<code>RPC</code> 有时也称为函数调用或子程序调用。<code>RPC</code> 是进程间通信的一种方式。</p>
-<h2 id="Why-is-RPC"><a href="#Why-is-RPC" class="headerlink" title="Why is RPC?"></a>Why is RPC?</h2><p>网上很多关于 <code>RPC</code> 的优点，笔者都不太赞同。不能将那些成熟的 <code>RPC</code> 框架解决的问题全部归结为 <code>RPC</code> 的优点。比如 <code>RPC</code> 的概念中并没有提到服务治理等问题，但是常见的 <code>RPC</code> 框架（如 <a href="http://dubbo.apache.org" target="_blank" rel="noopener">DUBBO</a>）均解决了服务治理的相关问题，这显然不能作为 <code>RPC</code> 的优点。要解释“Why is RPC?”的问题，还是要回归到 <code>RPC</code> 的概念上来。</p>
-<ul>
-<li><code>RPC</code> 可以使<em>远程过程调用</em>变得像本地调用一样简单。</li>
-<li>方便计算能力的横向扩展。</li>
-</ul>
-<p>有兴趣可以阅读 <a href="http://dubbo.apache.org/zh-cn/docs/user/preface/background.html" target="_blank" rel="noopener">dubbo 诞生的背景</a> 以及<a href="http://dubbo.apache.org/zh-cn/docs/user/preface/requirements.html" target="_blank" rel="noopener">dubbo 解决了哪些需求</a>。</p>
-<h3 id="RPC-vs-HTTP"><a href="#RPC-vs-HTTP" class="headerlink" title="RPC vs HTTP"></a>RPC vs HTTP</h3><p>其实这两者不是同一个维度的概念。从 <code>RPC</code> 的概念上来讲，<code>HTTP</code> 其实就是 <code>RPC</code> 的一种实现。</p>
-<h3 id="RPC-vs-RMI"><a href="#RPC-vs-RMI" class="headerlink" title="RPC vs RMI"></a>RPC vs RMI</h3><p>这两者也不是同一个维度的概念。</p>
-<p><code>RMI</code> 是 <code>JAVA</code> 提供的一种<em>远程方法调用</em>，而 <code>RPC</code> 的变成模型是<em>远程过程调用</em>，<code>RPC</code> 并没有规定采用哪种编程语言实现，<strong>我们甚至可以使用 <code>JAVA</code> 语言实现一个具体的 <code>RPC</code> 协议，内部采用 <code>RMI</code> 来实现数据的传输</strong>，例如 <a href="http://dubbo.apache.org/zh-cn/docs/user/references/protocol/rmi.html" target="_blank" rel="noopener">dubbo 中就可以采用 rmi 协议</a>。</p>
-<h2 id="How-to-implement-RPC"><a href="#How-to-implement-RPC" class="headerlink" title="How to implement RPC?"></a>How to implement RPC?</h2><p>我们先思考这么一个问题：要怎么去调用远程的服务呢？</p>
-<ol>
-<li>要知道ip和端口，以确定远程唯一的一个进程。</li>
-<li>要知道调用远程的进程中的什么服务，以确定方法和参数</li>
-<li>调用远程的服务之后，要返回结果。</li>
-</ol>
-<p>根据上述的三点，我们来看一下如何实现一个 <code>RPC</code> 框架。</p>
-<h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>在一个 <code>RPC</code> 的架构中包含 4 个组件：</p>
-<ol>
-<li><code>Client</code>：即客户端，服务调用方</li>
-<li><code>Client Stub</code>：客户端存根，用于存方服务端地址信息，将客户端的信息打包成网络消息，再通过网络发送给服务提供者</li>
-<li><code>Server Stub</code>：服务端存根，接收客户端发送过来的消息，并调用本地服务</li>
-<li><code>Server</code>：服务提供者</li>
-</ol>
-<p>一个 <code>RPC</code> 的调用过程：</p>
-<ol>
-<li><code>Client</code> 调用以本地调用方式调用服务；</li>
-<li><code>Client Stub</code> 接收到调用后负责将方法、参数等组装成能够进行网络传输的消息体（在 <code>Java</code> 中是序列化的过程）；</li>
-<li><code>Client Stub</code> 找到服务地址，并将消息体通过网络发送到服务端；</li>
-<li><code>Server Stub</code> 收到消息后进行解码（在 <code>Java</code> 中是反序列化的过程）；</li>
-<li><code>Server Stub</code> 根据解码结果调用 <code>Server</code> 处理；</li>
-<li><code>Server</code> 将结果返回给 <code>Server Stub</code>；</li>
-<li><code>Server Stub</code> 将返回结果打包成消息体（在 <code>Java</code> 中是序列化的过程）；</li>
-<li><code>Server Stub</code> 将打包后的消息通过网络并发送至消费方；</li>
-<li><code>Client Stub</code> 接收到消息，并进行解码（在 <code>Java</code> 中是反序列化的过程）；</li>
-<li><code>Client</code> 得到最终结果。</li>
-</ol>
-<p>一图顶千言</p>
-<img src="/2019/07/11/rpc-introduction/theory.jpg" title="RPC 原理">
-<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><p>我们简单的采用 <code>Java</code> 语言来实现一个 <code>RPC</code> 框架。</p>
-<h4 id="命名"><a href="#命名" class="headerlink" title="命名"></a>命名</h4><p>作为钢铁侠粉丝，这里我们将项目命名为 <a href="https://github.com/fuyongde/edith/releases/tag/0.1.0" target="_blank" rel="noopener">Edith</a>。</p>
-<blockquote>
-<p>Even dead,I am hero. -<em>Tony Stark</em></p>
-</blockquote>
-<p>伊人已逝，仍是英雄。永远纪念 <em>Tony Stark</em>。</p>
-<h4 id="暴露服务"><a href="#暴露服务" class="headerlink" title="暴露服务"></a>暴露服务</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RpcFramework</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">export</span><span class="params">(<span class="keyword">final</span> Object service, <span class="keyword">int</span> port)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (service == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Service instance is null"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (port &lt;= <span class="number">0</span> || port &gt; <span class="number">65535</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Invalid port "</span> + port);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"Export service "</span> + service.getClass().getName() + <span class="string">" on port "</span> + port);</span><br><span class="line">        ServerSocket server = <span class="keyword">new</span> ServerSocket(port);</span><br><span class="line">        <span class="keyword">for</span> (; ; ) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="keyword">final</span> Socket socket = server.accept();</span><br><span class="line">                <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">                    <span class="keyword">try</span> &#123;</span><br><span class="line">                        <span class="keyword">try</span> &#123;</span><br><span class="line">                            ObjectInputStream input = <span class="keyword">new</span> ObjectInputStream(socket.getInputStream());</span><br><span class="line">                            <span class="keyword">try</span> &#123;</span><br><span class="line">                                String methodName = input.readUTF();</span><br><span class="line">                                Class&lt;?&gt;[] parameterTypes = (Class&lt;?&gt;[]) input.readObject();</span><br><span class="line">                                Object[] arguments = (Object[]) input.readObject();</span><br><span class="line">                                ObjectOutputStream output = <span class="keyword">new</span> ObjectOutputStream(socket.getOutputStream());</span><br><span class="line">                                <span class="keyword">try</span> &#123;</span><br><span class="line">                                    Method method = service.getClass().getMethod(methodName, parameterTypes);</span><br><span class="line">                                    Object result = method.invoke(service, arguments);</span><br><span class="line">                                    output.writeObject(result);</span><br><span class="line">                                &#125; <span class="keyword">catch</span> (Throwable t) &#123;</span><br><span class="line">                                    output.writeObject(t);</span><br><span class="line">                                &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                                    output.close();</span><br><span class="line">                                &#125;</span><br><span class="line">                            &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                                input.close();</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                            socket.close();</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                        e.printStackTrace();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;).start();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="引用服务"><a href="#引用服务" class="headerlink" title="引用服务"></a>引用服务</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RpcFramework</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">T <span class="title">refer</span><span class="params">(<span class="keyword">final</span> Class&lt;T&gt; interfaceClass, <span class="keyword">final</span> String host, <span class="keyword">final</span> <span class="keyword">int</span> port)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (interfaceClass == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Interface class is null"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (!interfaceClass.isInterface()) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"The "</span> + interfaceClass.getName() + <span class="string">" must be interface class!"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (host == <span class="keyword">null</span> || host.length() == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Host is null!"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (port &lt;= PORT_MIN || port &gt; PORT_MAX) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Invalid port "</span> + port);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">"Get remote service "</span> + interfaceClass.getName() + <span class="string">" from server "</span> + host + <span class="string">":"</span> + port);</span><br><span class="line">        <span class="keyword">return</span> (T) Proxy.newProxyInstance(interfaceClass.getClassLoader(), <span class="keyword">new</span> Class&lt;?&gt;[]&#123;interfaceClass&#125;, (proxy, method, arguments) -&gt; &#123;</span><br><span class="line">            Socket socket = <span class="keyword">new</span> Socket(host, port);</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                ObjectOutputStream output = <span class="keyword">new</span> ObjectOutputStream(socket.getOutputStream());</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    output.writeUTF(method.getName());</span><br><span class="line">                    output.writeObject(method.getParameterTypes());</span><br><span class="line">                    output.writeObject(arguments);</span><br><span class="line">                    ObjectInputStream input = <span class="keyword">new</span> ObjectInputStream(socket.getInputStream());</span><br><span class="line">                    <span class="keyword">try</span> &#123;</span><br><span class="line">                        Object result = input.readObject();</span><br><span class="line">                        <span class="keyword">if</span> (result <span class="keyword">instanceof</span> Throwable) &#123;</span><br><span class="line">                            <span class="keyword">throw</span> (Throwable) result;</span><br><span class="line">                        &#125;</span><br><span class="line">                        <span class="keyword">return</span> result;</span><br><span class="line">                    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                        input.close();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                    output.close();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                socket.close();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="定义接口"><a href="#定义接口" class="headerlink" title="定义接口"></a>定义接口</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">HelloService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 返回一个字符串</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> name name</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> Hello name</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function">String <span class="title">hello</span><span class="params">(String name)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="编写服务提供者"><a href="#编写服务提供者" class="headerlink" title="编写服务提供者"></a>编写服务提供者</h4><p>先实现 <code>HelloService</code></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloServiceImpl</span> <span class="keyword">implements</span> <span class="title">HelloService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">hello</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        String result = <span class="string">"Hello "</span> + name;</span><br><span class="line">        System.out.println(Thread.currentThread().getName() + <span class="string">" "</span> + result);</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>启动并暴漏服务</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Provider</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        HelloService helloService = <span class="keyword">new</span> HelloServiceImpl();</span><br><span class="line">        RpcFramework.export(helloService, <span class="number">8888</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="编写服务调用者"><a href="#编写服务调用者" class="headerlink" title="编写服务调用者"></a>编写服务调用者</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Consumer</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        HelloService helloService = RpcFramework.refer(HelloService.class, "127.0.0.1", 8888);</span><br><span class="line">        String name = <span class="string">"Peter Parker"</span>;</span><br><span class="line">        System.out.println(helloService.hello(name));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>执行 <code>Consumer</code>，查看控制台输出：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello Peter Parker</span><br></pre></td></tr></table></figure>
-<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>本文的例子，采用了阻塞的 Socket IO 流来进行 Client 和 Server 之间的端对端通信。方法的远程调用采用了 <code>Java</code> 的动态代理，参数的序列化与反序列化采用 <code>ObjectStream</code>。成熟的 <code>RPC</code> 框架会对上述的实现方式进行替换，比如采用 <code>Netty</code> 的 <code>NIO</code> 来实现非阻塞通信，采用成熟的注册中心来统一管理服务的注册与发现，采用 <code>hession2</code>，<code>fastjson</code> 等序列化方式等等。成熟的 <code>RPC</code> 框架还会考虑调用过程中的诸多问题，比如重试机制、超时配置等等。</p>
-<p>本文参考了 <a href="https://www.cnkirito.moe/easy-know-rpc/" target="_blank" rel="noopener">徐靖峰的博客</a>。</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://fuyongde.github.io/2019/06/26/jib-make-docker-simple-again/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="傅永德">
-      <meta itemprop="description" content="苟利国家生死以，岂因祸福避趋之">
-      <meta itemprop="image" content="/images/header.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="傅永德 | 个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/06/26/jib-make-docker-simple-again/" class="post-title-link" itemprop="url">Jib - Make docker simple again</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-06-26 17:03:45" itemprop="dateCreated datePublished" datetime="2019-06-26T17:03:45+08:00">2019-06-26</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2020-03-23 20:38:02" itemprop="dateModified" datetime="2020-03-23T20:38:02+08:00">2020-03-23</time>
-              
-            
-          </span>
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>在 <a href="https://fuyongde.github.io/2019/06/25/Dockerizing-Spring-Boot-Application/">使用 Docker 构建 Spring Boot Application</a> 中简单介绍了如何使用 <code>Docker</code> 构建 <code>Spring Boot Application</code>。本文探讨如何更简单的构建 <code>Docker</code> 镜像。</p>
-<h2 id="jib-简介"><a href="#jib-简介" class="headerlink" title="jib 简介"></a>jib 简介</h2><blockquote>
-<p>Make America Great Again. – Donald Trump</p>
-</blockquote>
-<p>大概是受 <code>Donald Trump</code> 的启发🙄，Google 发布的 <code>jib</code> 让原本已经很简单的 <code>Docker</code> 镜像构建过程变得更加简单。</p>
-<p>一图顶千言，先看 <code>Docker</code> 构建镜像流程</p>
-<img src="/2019/06/26/jib-make-docker-simple-again/docker_process.jpg" title="Docker 构建容器镜像的流程">
-<p>再看 <code>Jib</code> 构建容器镜像流程</p>
-<img src="/2019/06/26/jib-make-docker-simple-again/jib_process.jpg" title="Jib 构建容器镜像的流程">
-<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>下面来介绍以下如何使用 <code>Jib</code></p>
-<h3 id="编写-Spring-Boot-Application"><a href="#编写-Spring-Boot-Application" class="headerlink" title="编写 Spring Boot Application"></a>编写 Spring Boot Application</h3><p>略</p>
-<h3 id="配置-Jib-插件"><a href="#配置-Jib-插件" class="headerlink" title="配置 Jib 插件"></a>配置 Jib 插件</h3><p>在项目的 <code>pom.xml</code> 文件中，新增如下配置</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.google.cloud.tools<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jib-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.3.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">from</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">image</span>&gt;</span>openjdk:8u212-jdk-alpine<span class="tag">&lt;/<span class="name">image</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">from</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">to</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">image</span>&gt;</span>registry.cn-hangzhou.aliyuncs.com/fuyongde/ebony-maw:$&#123;project.version&#125;<span class="tag">&lt;/<span class="name">image</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">to</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">container</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">jvmFlags</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">jvmFlag</span>&gt;</span>-Xms128m<span class="tag">&lt;/<span class="name">jvmFlag</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">jvmFlag</span>&gt;</span>-Xmx128m<span class="tag">&lt;/<span class="name">jvmFlag</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">jvmFlags</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">container</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">executions</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">execution</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">phase</span>&gt;</span>package<span class="tag">&lt;/<span class="name">phase</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">goals</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">goal</span>&gt;</span>build<span class="tag">&lt;/<span class="name">goal</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">goals</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">execution</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">executions</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>其中</p>
-<ul>
-<li>from：等同于 <code>Dockerfile</code> 中的 <code>FROM</code></li>
-<li>to：镜像容器服务的地址以及对应的 <code>tag</code>，这里我采用的是阿里云的地址</li>
-<li>jvmFlag：容器启动时的 <code>JVM</code> 参数</li>
-</ul>
-<h3 id="构建"><a href="#构建" class="headerlink" title="构建"></a>构建</h3><p>在终端执行 <code>maven package</code> 命令，<code>Docker</code> 镜像就打包并上传好了✌。</p>
-<p>至此，整个构建过程已经完成，我们甚至连 <code>Dockerfile</code> 都不用写，是不是超级简单🤪。</p>
-<p>如有需要，可参考本文中的 <a href="https://github.com/fuyongde/marvel/tree/master/ebony-maw" target="_blank" rel="noopener">Demo</a> 。</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2659,7 +2680,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-count">27</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -2765,7 +2786,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">34</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">36</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

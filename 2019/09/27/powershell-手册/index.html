@@ -469,7 +469,7 @@
 <li>查看某原命令的别名，如 <code>Get-ChildItem</code> 的别名：<code>Get-Alias -Definition Get-ChildItem</code></li>
 </ul>
 <h3 id="临时创建或更改别名"><a href="#临时创建或更改别名" class="headerlink" title="临时创建或更改别名"></a>临时创建或更改别名</h3><p>使用 <code>Set-Alias</code> 命令来创建或更改别名，但是改命令只在当前的的 PowerShell Session 中生效。另外还有一个 <code>New-Alias</code> 命令用法类似。</p>
-<h4 id="创建不带参数的别名"><a href="#创建不带参数的别名" class="headerlink" title="创建不带参数的别名"></a>创建不带参数的别名</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">PS C:\Users\fuyongde&gt; Set-Alias -Name ll -Value get-childitem</span><br><span class="line"><span class="meta">#</span> 或者简单一些</span><br><span class="line">PS C:\Users\fuyongde&gt; Set-Alias ll get-childitem</span><br></pre></td></tr></table></figure>
+<h4 id="创建不带参数的别名"><a href="#创建不带参数的别名" class="headerlink" title="创建不带参数的别名"></a>创建不带参数的别名</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">PS C:\Users\fuyongde&gt; Set-Alias -Name ll -Value get-childitem</span><br><span class="line"><span class="meta">#</span><span class="bash"> 或者简单一些</span></span><br><span class="line">PS C:\Users\fuyongde&gt; Set-Alias ll get-childitem</span><br></pre></td></tr></table></figure>
 <h4 id="创建带参数的别名"><a href="#创建带参数的别名" class="headerlink" title="创建带参数的别名"></a>创建带参数的别名</h4><p>如果命令带参数如想为 <code>Get-ChildItem -Name</code> 设定别名为 <code>ll</code> 则我们需要两步，第一步为这个带参数原命令设定一个中间 <code>function</code>，第二步为这个 <code>function</code> 指定别名</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PS C:\Users\fuyongde&gt; function getlist &#123;Get-ChildItem -Name&#125;</span><br><span class="line">PS C:\Users\fuyongde&gt; Set-Alias ll getlist</span><br></pre></td></tr></table></figure>
 <h4 id="创建永久的别名"><a href="#创建永久的别名" class="headerlink" title="创建永久的别名"></a>创建永久的别名</h4><p>在 PowerShell 中直接使用 <code>Set-Alias</code> 或 <code>New-Alias</code> 命令创建的别名在关闭此 Session 后即会失效，防止此现象的方法是将此命令写入 Windows PowerShell profile 文件。</p>
@@ -650,7 +650,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-count">27</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -756,7 +756,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">34</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">36</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
