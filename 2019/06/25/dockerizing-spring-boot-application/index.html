@@ -104,7 +104,7 @@
 <meta property="og:site_name" content="傅永德 | 个人博客">
 <meta property="og:description" content="Docker &amp;amp; Spring BootDocker 是一种 Linux 容器的实现，具有进程的轻量级资源隔离的特点，每一个容器对应操作系统中的一个进程，但是它又会有自己的网络空间、文件系统、PID 等。Docker 除了实现 Linux 容器，还使得容器具有“社会化”的属性，用户可以将容器镜像发布在 Docker Hub 与其他开发者共享、协作，类似于 Maven。 Spring Boo">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-03-23T12:31:39.269Z">
+<meta property="og:updated_time" content="2020-08-23T13:34:18.707Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用 Docker 构建 Spring Boot Application">
 <meta name="twitter:description" content="Docker &amp;amp; Spring BootDocker 是一种 Linux 容器的实现，具有进程的轻量级资源隔离的特点，每一个容器对应操作系统中的一个进程，但是它又会有自己的网络空间、文件系统、PID 等。Docker 除了实现 Linux 容器，还使得容器具有“社会化”的属性，用户可以将容器镜像发布在 Docker Hub 与其他开发者共享、协作，类似于 Maven。 Spring Boo">
@@ -408,7 +408,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-03-23 20:31:39" itemprop="dateModified" datetime="2020-03-23T20:31:39+08:00">2020-03-23</time>
+                <time title="修改时间：2020-08-23 21:34:18" itemprop="dateModified" datetime="2020-08-23T21:34:18+08:00">2020-08-23</time>
               
             
           </span>
@@ -452,7 +452,7 @@
 <p>在 <code>pom.xml</code> 同级目录新建文件 <code>Dockerfile</code>。</p>
 <figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 基础运行环境，建议采用 openjdk alpine 作为基础的镜像</span></span><br><span class="line"><span class="keyword">FROM</span> openjdk:<span class="number">8</span>-jdk-alpine</span><br><span class="line"></span><br><span class="line"><span class="comment"># 标记作者</span></span><br><span class="line"><span class="keyword">LABEL</span> maintainer="fuyongde@foxmail.com"</span><br><span class="line"></span><br><span class="line"><span class="comment"># 挂载 /tmp 目录，因为 Spring Boot 内嵌的 Tomcat 默认使用 /tmp 作为工作目录</span></span><br><span class="line"><span class="keyword">VOLUME</span> [ "/tmp" ]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 容器对外映射 8080 端口</span></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">8080</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义要打包的 jar</span></span><br><span class="line"><span class="keyword">ARG</span> JAR_FILE=target/thanos-<span class="number">0.0</span>.<span class="number">1</span>-SNAPSHOT.jar</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将指定的 jar 添加到目标镜像并重命名</span></span><br><span class="line"><span class="keyword">ADD</span> $&#123;JAR_FILE&#125; thanos-0.0.1.jar</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用 java -jar 命令运行目标程序</span></span><br><span class="line"><span class="keyword">ENTRYPOINT</span> [ "java", "-jar", "/thanos-0.0.1.jar" ]</span><br></pre></td></tr></table></figure>
 <ul>
-<li><code>FROM</code>：指定一个构建镜像的基础源镜像，如果本地没有就会从公共库中拉取，没有指定镜像的标签会使用默认的latest标签，如果需要在一个 <code>Dockerfile</code> 中构建多个镜像，该选项可以出现多次。</li>
+<li><code>FROM</code>：指定一个构建镜像的基础源镜像，如果本地没有就会从公共库中拉取，没有指定镜像的标签会使用默认的 latest 标签，如果需要在一个 <code>Dockerfile</code> 中构建多个镜像，该选项可以出现多次。</li>
 <li><code>LABEL</code>：为镜像指定标签</li>
 <li><code>VOLUME</code>：可实现挂载功能，可以将内地文件夹或者其他容器种得文件夹挂在到这个容器种</li>
 <li><code>EXPOSE</code>：暴漏容器运行时的监听端口给外部，但是 EXPOSE 并不会使容器访问主机的端口，如果想使得容器与主机的端口有映射关系，必须在容器启动的时候加上 <code>-p</code> 参数</li>
@@ -464,7 +464,7 @@
 <p>如本文所讲例子，需要依次执行</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 采用 Maven 构建 Spring Boot Application</span><br><span class="line">mvnw install</span><br><span class="line"><span class="meta">#</span> 构建 Docker Image</span><br><span class="line">docker build -t thanos .</span><br></pre></td></tr></table></figure>
 <p>构建完成之后，可以通过 <code>docker image ls</code> 查看。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">REPOSITORY    TAG       IMAGE ID        CREATED              SIZE </span><br><span class="line">thanos        latest    5f30b11b5088    About an hour ago    122MB</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">REPOSITORY    TAG       IMAGE ID        CREATED              SIZE</span><br><span class="line">thanos        latest    5f30b11b5088    About an hour ago    122MB</span><br></pre></td></tr></table></figure>
 <h4 id="运行-Docker-镜像"><a href="#运行-Docker-镜像" class="headerlink" title="运行 Docker 镜像"></a>运行 Docker 镜像</h4><p>和正常的运行 Docker 镜像的命令一致。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker run -p 8080:8080 thanos</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> 也可以采用后台运行的方式运行容器</span><br><span class="line">docker run -d -p 8080:8080 thanos</span><br></pre></td></tr></table></figure>
 <p>运行之后，通过 <code>docker ps</code> 命令来查看当前运行的容器。</p>
@@ -489,13 +489,13 @@
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.spotify<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>dockerfile-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.4.10<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">repository</span>&gt;</span>registry.cn-hangzhou.aliyuncs.com/fuyongde/thanos<span class="tag">&lt;/<span class="name">repository</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">tag</span>&gt;</span>$&#123;project.version&#125;<span class="tag">&lt;/<span class="name">tag</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">useMavenSettingsForAuth</span>&gt;</span>true<span class="tag">&lt;/<span class="name">useMavenSettingsForAuth</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">executions</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">execution</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">id</span>&gt;</span>default<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">phase</span>&gt;</span>install<span class="tag">&lt;/<span class="name">phase</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">goals</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">goal</span>&gt;</span>build<span class="tag">&lt;/<span class="name">goal</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">goal</span>&gt;</span>push<span class="tag">&lt;/<span class="name">goal</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">goals</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">execution</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">executions</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>其中：</p>
 <ul>
-<li>repository：表示要上传的容器镜像服务，可以是阿里云、Docker Hub等</li>
-<li>tag：镜像打包的tag</li>
+<li>repository：表示要上传的容器镜像服务，可以是阿里云、Docker Hub 等</li>
+<li>tag：镜像打包的 tag</li>
 <li>execution：这个标签下的配置表示，在 <code>Maven</code> 的 <code>install</code> 阶段，进行 <code>Docker</code> 的 <code>build</code>、<code>push</code> 操作</li>
 <li>useMavenSettingsForAuth：表示使用 <code>Maven</code> 的配置的账号密码来认证 <code>Docker</code> 容器镜像服务，需要在 <code>Maven</code> 的 <code>settings.xml</code> 文件中加入以下配置：</li>
 </ul>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">servers</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">server</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">id</span>&gt;</span>registry.cn-hangzhou.aliyuncs.com<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">username</span>&gt;</span>username<span class="tag">&lt;/<span class="name">username</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">password</span>&gt;</span>password<span class="tag">&lt;/<span class="name">password</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">server</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servers</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h4 id="构建"><a href="#构建" class="headerlink" title="构建"></a>构建</h4><p>执行 <code>mvn install</code> 命令，<code>Docker</code> 镜像就打包并上传好了✌。</p>
+<h4 id="构建"><a href="#构建" class="headerlink" title="构建"></a>构建</h4><p>执行 <code>mvn install</code> 命令，<code>Docker</code> 镜像就打包并上传好了 ✌。</p>
 <h2 id="One-more-thing"><a href="#One-more-thing" class="headerlink" title="One more thing"></a>One more thing</h2><p>你以为上述构建 <code>Docker</code> 镜像方法就非常方便了吗？</p>
 <p>Too young!</p>
 <p><a href="https://fuyongde.github.io/2019/06/26/jib-make-docker-simple-again/">下一篇</a>，带你了解 <code>Jib</code>，Make docker simple again✨!</p>
@@ -644,7 +644,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">26</span>
+                    <span class="site-state-item-count">29</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -754,7 +754,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">36</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">39</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

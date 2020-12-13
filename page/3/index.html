@@ -347,6 +347,610 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://fuyongde.github.io/2019/09/24/linux-手册/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="傅永德">
+      <meta itemprop="description" content="苟利国家生死以，岂因祸福避趋之">
+      <meta itemprop="image" content="/images/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="傅永德 | 个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/09/24/linux-手册/" class="post-title-link" itemprop="url">Linux 手册</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-09-24 10:40:15" itemprop="dateCreated datePublished" datetime="2019-09-24T10:40:15+08:00">2019-09-24</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-08-23 21:34:18" itemprop="dateModified" datetime="2020-08-23T21:34:18+08:00">2020-08-23</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/手册/" itemprop="url" rel="index"><span itemprop="name">手册</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>记录一些常用的 Linux 操作，持续更新 …</p>
+<h3 id="查看系统版本"><a href="#查看系统版本" class="headerlink" title="查看系统版本"></a>查看系统版本</h3><p>常用的查看系统版本有以下命令</p>
+<ul>
+<li><code>cat /etc/os-release</code></li>
+<li><code>uname -a</code></li>
+<li><code>cat /proc/version</code></li>
+<li><code>cat /etc/issue</code></li>
+</ul>
+<p>下面演示一下 <code>cat /etc/os-release</code>，其他不详细说明。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /etc/os-release</span><br></pre></td></tr></table></figure>
+<p>输出如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">PRETTY_NAME=&quot;Debian GNU/Linux 9 (stretch)&quot;</span><br><span class="line">NAME=&quot;Debian GNU/Linux&quot;</span><br><span class="line">VERSION_ID=&quot;9&quot;</span><br><span class="line">VERSION=&quot;9 (stretch)&quot;</span><br><span class="line">ID=debian</span><br><span class="line">HOME_URL=&quot;https://www.debian.org/&quot;</span><br><span class="line">SUPPORT_URL=&quot;https://www.debian.org/support&quot;</span><br><span class="line">BUG_REPORT_URL=&quot;https://bugs.debian.org/&quot;</span><br></pre></td></tr></table></figure>
+<h3 id="替换源"><a href="#替换源" class="headerlink" title="替换源"></a>替换源</h3><p>由于网络的原因，国内部分 Linux 在安装软件时非常缓慢，将源替换为国内的镜像可以方便很多。</p>
+<p>国内常见的镜像如清华大学、阿里云、163 等等，大家可自行选择。由于大部分网络上的博客，只写了具体源的地址，对很多没有基础的同学来说，由于系统版本的差异，反而会适得其反。</p>
+<p>替换源一定要遵循下面的步骤：</p>
+<ol>
+<li>确认操作系统版本。如何查看可参考上文。</li>
+<li>备份默认的源。不同的操作系统版本，源的文件位置各不一样，直接采用备份文件的方式备份即可。</li>
+<li>选择对应版本的源并替换。</li>
+</ol>
+<p>下面针对常见的 <code>Debian</code>、<code>Ubuntu</code>、<code>CentOS</code>，这里以说明一下如何正确的查找并替换源。</p>
+<h4 id="Debian"><a href="#Debian" class="headerlink" title="Debian"></a>Debian</h4><p><code>Debian</code> 系统的源文件目录位于 <code>/etc/apt/sources.list</code>，这里我们以清华大学的镜像为例。清华大学开源镜像站 <a href="https://mirror.tuna.tsinghua.edu.cn/help/debian/" target="_blank" rel="noopener">Debian 系统的帮助页面</a> 详细列举了常用版本的源的信息。</p>
+<p>例如，我们系统的版本是 <code>9 (stretch)</code>，则选择 <code>stretch</code>，替换掉对应的源即可。</p>
+<p>stretch 版本的源信息如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/debian/ stretch main contrib non-free</span><br><span class="line"># deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ stretch main contrib non-free</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/debian/ stretch-updates main contrib non-free</span><br><span class="line"># deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ stretch-updates main contrib non-free</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/debian/ stretch-backports main contrib non-free</span><br><span class="line"># deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ stretch-backports main contrib non-free</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/debian-security stretch/updates main contrib non-free</span><br><span class="line"># deb-src https://mirrors.tuna.tsinghua.edu.cn/debian-security stretch/updates main contrib non-free</span><br></pre></td></tr></table></figure>
+<p>buster 版本的源信息如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/debian/ buster main contrib non-free</span><br><span class="line"># deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ buster main contrib non-free</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/debian/ buster-updates main contrib non-free</span><br><span class="line"># deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ buster-updates main contrib non-free</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/debian/ buster-backports main contrib non-free</span><br><span class="line"># deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ buster-backports main contrib non-free</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/debian-security buster/updates main contrib non-free</span><br><span class="line"># deb-src https://mirrors.tuna.tsinghua.edu.cn/debian-security buster/updates main contrib non-free</span><br></pre></td></tr></table></figure>
+<p>其他版本不一一列举。</p>
+<h4 id="Ubuntu"><a href="#Ubuntu" class="headerlink" title="Ubuntu"></a>Ubuntu</h4><p><code>Ubuntu</code> 也是基于 <code>Debian</code> 的，故源的目录位置也是 <code>/etc/apt/sources.list</code>。清华大学开源镜像站 <a href="https://mirror.tuna.tsinghua.edu.cn/help/ubuntu/" target="_blank" rel="noopener">Ubuntu 系统的帮助页面</a> 详细列举了常用版本的源的信息。</p>
+<p>例如，我们系统的版本是 <code>18.04 LTS</code>，则选择 <code>18.04 LTS</code>，替换掉对应的源即可。</p>
+<p>18.04 LTS 版本的源信息如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"># 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic main restricted universe multiverse</span><br><span class="line"># deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic main restricted universe multiverse</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-updates main restricted universe multiverse</span><br><span class="line"># deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-updates main restricted universe multiverse</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-backports main restricted universe multiverse</span><br><span class="line"># deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-backports main restricted universe multiverse</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-security main restricted universe multiverse</span><br><span class="line"># deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-security main restricted universe multiverse</span><br><span class="line"></span><br><span class="line"># 预发布软件源，不建议启用</span><br><span class="line"># deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-proposed main restricted universe multiverse</span><br><span class="line"># deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-proposed main restricted universe multiverse</span><br></pre></td></tr></table></figure>
+<p><code>Ubuntu</code> 若安装了图形界面，也可以采用图形界面的方式。</p>
+<h5 id="图形界面配置"><a href="#图形界面配置" class="headerlink" title="图形界面配置"></a>图形界面配置</h5><p>新手推荐使用图形界面配置： 系统设置 -&gt; 软件和更新 选择下载服务器 -&gt; “mirrors.aliyun.com”</p>
+<h4 id="CentOS"><a href="#CentOS" class="headerlink" title="CentOS"></a>CentOS</h4><p><code>CentOS</code> 的源文件位于 <code>/etc/yum.repos.d/CentOS-Base.repo</code>，清华大学开源镜像站 <a href="https://mirror.tuna.tsinghua.edu.cn/help/centos/" target="_blank" rel="noopener">CentOS 系统的帮助页面</a> 详细列举了常用版本的源的信息。</p>
+<p>与 Debian 的不同，CentOS 替换源之后，需要运行 <code>yum makecache</code> 生成缓存。</p>
+<p>此外阿里云提供了更为简单的方式，直接下载阿里云的 <code>CentOS-Base.repo</code> 文件到对应目录即可，命令如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> CentOS 6</span></span><br><span class="line">wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-6.repo</span><br><span class="line"><span class="meta">#</span><span class="bash"> 或者</span></span><br><span class="line">curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-6.repo</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> CentOS 7</span></span><br><span class="line">wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo</span><br><span class="line"><span class="meta">#</span><span class="bash"> 或者</span></span><br><span class="line">curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 由于非阿里云ECS用户会出现 Couldn<span class="string">'t resolve host '</span>mirrors.cloud.aliyuncs.com<span class="string">' 信息，不影响使用。用户也可自行修改相关配置: eg:</span></span></span><br><span class="line">sed -i -e '/mirrors.cloud.aliyuncs.com/d' -e '/mirrors.aliyuncs.com/d' /etc/yum.repos.d/CentOS-Base.repo</span><br></pre></td></tr></table></figure>
+<p>CentOS 7 版本的清华大学源信息如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"># CentOS-Base.repo</span><br><span class="line">#</span><br><span class="line"># The mirror system uses the connecting IP address of the client and the</span><br><span class="line"># update status of each mirror to pick mirrors that are updated to and</span><br><span class="line"># geographically close to the client.  You should use this for CentOS updates</span><br><span class="line"># unless you are manually picking other mirrors.</span><br><span class="line">#</span><br><span class="line"># If the mirrorlist= does not work for you, as a fall back you can try the</span><br><span class="line"># remarked out baseurl= line instead.</span><br><span class="line">#</span><br><span class="line">#</span><br><span class="line"></span><br><span class="line">[base]</span><br><span class="line">name=CentOS-$releasever - Base</span><br><span class="line">baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos/$releasever/os/$basearch/</span><br><span class="line">#mirrorlist=http://mirrorlist.centos.org/?release=$releasever&amp;arch=$basearch&amp;repo=os</span><br><span class="line">gpgcheck=1</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7</span><br><span class="line"></span><br><span class="line">#released updates</span><br><span class="line">[updates]</span><br><span class="line">name=CentOS-$releasever - Updates</span><br><span class="line">baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos/$releasever/updates/$basearch/</span><br><span class="line">#mirrorlist=http://mirrorlist.centos.org/?release=$releasever&amp;arch=$basearch&amp;repo=updates</span><br><span class="line">gpgcheck=1</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7</span><br><span class="line"></span><br><span class="line">#additional packages that may be useful</span><br><span class="line">[extras]</span><br><span class="line">name=CentOS-$releasever - Extras</span><br><span class="line">baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos/$releasever/extras/$basearch/</span><br><span class="line">#mirrorlist=http://mirrorlist.centos.org/?release=$releasever&amp;arch=$basearch&amp;repo=extras</span><br><span class="line">gpgcheck=1</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7</span><br><span class="line"></span><br><span class="line">#additional packages that extend functionality of existing packages</span><br><span class="line">[centosplus]</span><br><span class="line">name=CentOS-$releasever - Plus</span><br><span class="line">baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos/$releasever/centosplus/$basearch/</span><br><span class="line">#mirrorlist=http://mirrorlist.centos.org/?release=$releasever&amp;arch=$basearch&amp;repo=centosplus</span><br><span class="line">gpgcheck=1</span><br><span class="line">enabled=0</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7</span><br></pre></td></tr></table></figure>
+<h3 id="配置免密登录"><a href="#配置免密登录" class="headerlink" title="配置免密登录"></a>配置免密登录</h3><p>场景：A 主机实现免密登录 B 主机</p>
+<ol>
+<li>A 主机生成公私钥对 <code>ssh-keygen</code>；</li>
+<li>将生成的公钥传输给 B 机器 <code>scp /root/.ssh/id_rsp.pub remoteUser@remoteIp:remoteFolder</code>；</li>
+<li>登录 B 机器，将 A 机器的公钥追加到 B 主机用户目录下的 <code>.ssh/authorized_keys</code> 文件，执行 <code>cat id_rsa.pub &gt;&gt; .ssh/.ssh/authorized_keys</code> 命令即可。若没有<code>authorized_keys</code>文件，则需要创建，且其权限要为 <code>600</code>。</li>
+</ol>
+<h3 id="查看系统负载"><a href="#查看系统负载" class="headerlink" title="查看系统负载"></a>查看系统负载</h3><p><code>top</code>：重点关注 CPU、内存的使用率，以及 average（平均负载，三个值分别是 CPU 最近 1 分钟、5 分钟、15 分钟的平均负载）</p>
+<p><code>vmstat</code>：</p>
+<h3 id="Linux-子系统"><a href="#Linux-子系统" class="headerlink" title="Linux 子系统"></a>Linux 子系统</h3><p>在 <code>Windows 10</code> 中使用 Linux 子系统时，经常会需要用到 <code>root</code> 账号，初始情况下，该账号时没有设定密码的，需要设定之后才能正常使用。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 设置 root 账户的密码</span></span><br><span class="line">sudo passwd</span><br><span class="line"><span class="meta">#</span><span class="bash"> 切换 root 账户</span></span><br><span class="line">su</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://fuyongde.github.io/2019/07/16/edith-with-thread-pool/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="傅永德">
+      <meta itemprop="description" content="苟利国家生死以，岂因祸福避趋之">
+      <meta itemprop="image" content="/images/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="傅永德 | 个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/07/16/edith-with-thread-pool/" class="post-title-link" itemprop="url">RPC 进阶 - 线程池</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-07-16 17:33:29" itemprop="dateCreated datePublished" datetime="2019-07-16T17:33:29+08:00">2019-07-16</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-08-23 21:34:18" itemprop="dateModified" datetime="2020-08-23T21:34:18+08:00">2020-08-23</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>在 <a href="https://fuyongde.github.io/2019/07/11/rpc-introduction/">Rpc Introduction</a> 中简单写了一个 <code>RPC Framework</code>。在本节中，对 <code>Edith</code> 新增采用线程池支持多线程的特性。</p>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>实际开发中，我们的应用程序是不能盲目的开辟线程的，这样会造成资源的极大浪费。若采用线程池，可以减少创建和销毁线程的次数，让每个线程可以多次使用，并且可以根据系统的承受能力，调整线程池中工作线程的数量，方式消耗过多的内存。</p>
+<p>如有需要可以阅读 <code>Dubbo</code> 中关于线程池的设计（位于 <code>org.apache.dubbo.common.threadpool</code> 包）。</p>
+<h2 id="开发"><a href="#开发" class="headerlink" title="开发"></a>开发</h2><h3 id="依赖"><a href="#依赖" class="headerlink" title="依赖"></a>依赖</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;com.google.guava&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;guava&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h3><p>本文代码可以从<a href="https://github.com/fuyongde/edith/releases/tag/0.1.1" target="_blank" rel="noopener">这里</a>获取。</p>
+<h4 id="新增-ThreadUtils-java"><a href="#新增-ThreadUtils-java" class="headerlink" title="新增 ThreadUtils.java"></a>新增 ThreadUtils.java</h4><p>用于创建 <code>ExecutorService</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadUtils</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 用于对线程分配一个名字，方便排查问题</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> format format</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> Edith-1</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> ThreadFactory <span class="title">buildThreadFactory</span><span class="params">(String format)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ThreadFactoryBuilder().setNameFormat(format).build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ExecutorService <span class="title">newCachedThreadPool</span><span class="params">(<span class="keyword">int</span> maximumPoolSize)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ThreadPoolExecutor(THREAD_CORE_POOL_SIZE, maximumPoolSize &gt; <span class="number">0</span> ? maximumPoolSize : THREAD_MAXIMUM_POOL_SIZE,</span><br><span class="line">                Long.MAX_VALUE, TimeUnit.MICROSECONDS, <span class="keyword">new</span> SynchronousQueue&lt;&gt;(), buildThreadFactory(THREAD_NAME), <span class="keyword">new</span> ThreadPoolExecutor.AbortPolicy());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="修改-RpcFramework-java"><a href="#修改-RpcFramework-java" class="headerlink" title="修改 RpcFramework.java"></a>修改 RpcFramework.java</h4><p>将原代码中 <code>new Thread()</code> 部分替换为线程池。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> ExecutorService executorService = ThreadUtils.newCachedThreadPool(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">export</span><span class="params">(<span class="keyword">final</span> Object service, <span class="keyword">int</span> port)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    Objects.requireNonNull(service, <span class="string">"Service instance is null!"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (port &lt;= PORT_MIN || port &gt; PORT_MAX) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Invalid port "</span> + port);</span><br><span class="line">    &#125;</span><br><span class="line">    System.out.println(<span class="string">"Export service "</span> + service.getClass().getName() + <span class="string">" on port "</span> + port);</span><br><span class="line">    ServerSocket server = <span class="keyword">new</span> ServerSocket(port);</span><br><span class="line">    <span class="keyword">for</span> (; ; ) &#123;</span><br><span class="line">        System.out.println(<span class="string">"application is running"</span>);</span><br><span class="line">        Socket socket = server.accept();</span><br><span class="line">        executorService.execute(() -&gt; &#123;</span><br><span class="line">            <span class="comment">// do something ...</span></span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>经过以上修改，我们在例子中的 <code>HelloServiceImpl</code> 打印一下线程名称</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">hello</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">    String result = <span class="string">"Hello "</span> + name;</span><br><span class="line">    System.out.println(Thread.currentThread().getName() + <span class="string">" "</span> + result);</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>启动 <code>provider</code>，然后用 <code>consumer</code> 调用一次，观察 <code>provider</code> 的控制台输出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Edith-0 Hello Peter Parker</span><br></pre></td></tr></table></figure>
+<p>Done.</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://fuyongde.github.io/2019/07/11/rpc-introduction/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="傅永德">
+      <meta itemprop="description" content="苟利国家生死以，岂因祸福避趋之">
+      <meta itemprop="image" content="/images/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="傅永德 | 个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/07/11/rpc-introduction/" class="post-title-link" itemprop="url">RPC Introduction</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-07-11 15:36:43" itemprop="dateCreated datePublished" datetime="2019-07-11T15:36:43+08:00">2019-07-11</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-08-23 21:34:18" itemprop="dateModified" datetime="2020-08-23T21:34:18+08:00">2020-08-23</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="What-is-RPC"><a href="#What-is-RPC" class="headerlink" title="What is RPC"></a>What is RPC</h2><blockquote>
+<p>Remote Procedure Call (RPC) is a protocol that one program can use to request a service from a program located in another computer on a network without having to understand the network’s details. A procedure call is also sometimes known as a function call or a subroutine call. A procedure call is also sometimes known as a function call or a subroutine call.</p>
+</blockquote>
+<p><code>RPC</code> 是一种远程过程调用协议，一个程序可以使用该协议从位于网络上另一台计算机中的程序请求服务，而无需了解网络的详细信息。<code>RPC</code> 有时也称为函数调用或子程序调用。<code>RPC</code> 是进程间通信的一种方式。</p>
+<h2 id="Why-is-RPC"><a href="#Why-is-RPC" class="headerlink" title="Why is RPC"></a>Why is RPC</h2><p>网上很多关于 <code>RPC</code> 的优点，笔者都不太赞同。不能将那些成熟的 <code>RPC</code> 框架解决的问题全部归结为 <code>RPC</code> 的优点。比如 <code>RPC</code> 的概念中并没有提到服务治理等问题，但是常见的 <code>RPC</code> 框架（如 <a href="http://dubbo.apache.org" target="_blank" rel="noopener">DUBBO</a>）均解决了服务治理的相关问题，这显然不能作为 <code>RPC</code> 的优点。要解释“Why is RPC?”的问题，还是要回归到 <code>RPC</code> 的概念上来。</p>
+<ul>
+<li><code>RPC</code> 可以使<em>远程过程调用</em>变得像本地调用一样简单。</li>
+<li>方便计算能力的横向扩展。</li>
+</ul>
+<p>有兴趣可以阅读 <a href="http://dubbo.apache.org/zh-cn/docs/user/preface/background.html" target="_blank" rel="noopener">dubbo 诞生的背景</a> 以及<a href="http://dubbo.apache.org/zh-cn/docs/user/preface/requirements.html" target="_blank" rel="noopener">dubbo 解决了哪些需求</a>。</p>
+<h3 id="RPC-vs-HTTP"><a href="#RPC-vs-HTTP" class="headerlink" title="RPC vs HTTP"></a>RPC vs HTTP</h3><p>其实这两者不是同一个维度的概念。从 <code>RPC</code> 的概念上来讲，<code>HTTP</code> 其实就是 <code>RPC</code> 的一种实现。</p>
+<h3 id="RPC-vs-RMI"><a href="#RPC-vs-RMI" class="headerlink" title="RPC vs RMI"></a>RPC vs RMI</h3><p>这两者也不是同一个维度的概念。</p>
+<p><code>RMI</code> 是 <code>JAVA</code> 提供的一种<em>远程方法调用</em>，而 <code>RPC</code> 的变成模型是<em>远程过程调用</em>，<code>RPC</code> 并没有规定采用哪种编程语言实现，<strong>我们甚至可以使用 <code>JAVA</code> 语言实现一个具体的 <code>RPC</code> 协议，内部采用 <code>RMI</code> 来实现数据的传输</strong>，例如 <a href="http://dubbo.apache.org/zh-cn/docs/user/references/protocol/rmi.html" target="_blank" rel="noopener">dubbo 中就可以采用 rmi 协议</a>。</p>
+<h2 id="How-to-implement-RPC"><a href="#How-to-implement-RPC" class="headerlink" title="How to implement RPC"></a>How to implement RPC</h2><p>我们先思考这么一个问题：要怎么去调用远程的服务呢？</p>
+<ol>
+<li>要知道 ip 和端口，以确定远程唯一的一个进程。</li>
+<li>要知道调用远程的进程中的什么服务，以确定方法和参数</li>
+<li>调用远程的服务之后，要返回结果。</li>
+</ol>
+<p>根据上述的三点，我们来看一下如何实现一个 <code>RPC</code> 框架。</p>
+<h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>在一个 <code>RPC</code> 的架构中包含 4 个组件：</p>
+<ol>
+<li><code>Client</code>：即客户端，服务调用方</li>
+<li><code>Client Stub</code>：客户端存根，用于存方服务端地址信息，将客户端的信息打包成网络消息，再通过网络发送给服务提供者</li>
+<li><code>Server Stub</code>：服务端存根，接收客户端发送过来的消息，并调用本地服务</li>
+<li><code>Server</code>：服务提供者</li>
+</ol>
+<p>一个 <code>RPC</code> 的调用过程：</p>
+<ol>
+<li><code>Client</code> 调用以本地调用方式调用服务；</li>
+<li><code>Client Stub</code> 接收到调用后负责将方法、参数等组装成能够进行网络传输的消息体（在 <code>Java</code> 中是序列化的过程）；</li>
+<li><code>Client Stub</code> 找到服务地址，并将消息体通过网络发送到服务端；</li>
+<li><code>Server Stub</code> 收到消息后进行解码（在 <code>Java</code> 中是反序列化的过程）；</li>
+<li><code>Server Stub</code> 根据解码结果调用 <code>Server</code> 处理；</li>
+<li><code>Server</code> 将结果返回给 <code>Server Stub</code>；</li>
+<li><code>Server Stub</code> 将返回结果打包成消息体（在 <code>Java</code> 中是序列化的过程）；</li>
+<li><code>Server Stub</code> 将打包后的消息通过网络并发送至消费方；</li>
+<li><code>Client Stub</code> 接收到消息，并进行解码（在 <code>Java</code> 中是反序列化的过程）；</li>
+<li><code>Client</code> 得到最终结果。</li>
+</ol>
+<p>一图顶千言</p>
+<img src="/2019/07/11/rpc-introduction/theory.jpg" title="RPC 原理">
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><p>我们简单的采用 <code>Java</code> 语言来实现一个 <code>RPC</code> 框架。</p>
+<h4 id="命名"><a href="#命名" class="headerlink" title="命名"></a>命名</h4><p>作为钢铁侠粉丝，这里我们将项目命名为 <a href="https://github.com/fuyongde/edith/releases/tag/0.1.0" target="_blank" rel="noopener">Edith</a>。</p>
+<blockquote>
+<p>Even dead,I am hero. -<em>Tony Stark</em></p>
+</blockquote>
+<p>伊人已逝，仍是英雄。永远纪念 <em>Tony Stark</em>。</p>
+<h4 id="暴露服务"><a href="#暴露服务" class="headerlink" title="暴露服务"></a>暴露服务</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RpcFramework</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">export</span><span class="params">(<span class="keyword">final</span> Object service, <span class="keyword">int</span> port)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (service == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Service instance is null"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (port &lt;= <span class="number">0</span> || port &gt; <span class="number">65535</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Invalid port "</span> + port);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"Export service "</span> + service.getClass().getName() + <span class="string">" on port "</span> + port);</span><br><span class="line">        ServerSocket server = <span class="keyword">new</span> ServerSocket(port);</span><br><span class="line">        <span class="keyword">for</span> (; ; ) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="keyword">final</span> Socket socket = server.accept();</span><br><span class="line">                <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">                    <span class="keyword">try</span> &#123;</span><br><span class="line">                        <span class="keyword">try</span> &#123;</span><br><span class="line">                            ObjectInputStream input = <span class="keyword">new</span> ObjectInputStream(socket.getInputStream());</span><br><span class="line">                            <span class="keyword">try</span> &#123;</span><br><span class="line">                                String methodName = input.readUTF();</span><br><span class="line">                                Class&lt;?&gt;[] parameterTypes = (Class&lt;?&gt;[]) input.readObject();</span><br><span class="line">                                Object[] arguments = (Object[]) input.readObject();</span><br><span class="line">                                ObjectOutputStream output = <span class="keyword">new</span> ObjectOutputStream(socket.getOutputStream());</span><br><span class="line">                                <span class="keyword">try</span> &#123;</span><br><span class="line">                                    Method method = service.getClass().getMethod(methodName, parameterTypes);</span><br><span class="line">                                    Object result = method.invoke(service, arguments);</span><br><span class="line">                                    output.writeObject(result);</span><br><span class="line">                                &#125; <span class="keyword">catch</span> (Throwable t) &#123;</span><br><span class="line">                                    output.writeObject(t);</span><br><span class="line">                                &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                                    output.close();</span><br><span class="line">                                &#125;</span><br><span class="line">                            &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                                input.close();</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                            socket.close();</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                        e.printStackTrace();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;).start();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="引用服务"><a href="#引用服务" class="headerlink" title="引用服务"></a>引用服务</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RpcFramework</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">T <span class="title">refer</span><span class="params">(<span class="keyword">final</span> Class&lt;T&gt; interfaceClass, <span class="keyword">final</span> String host, <span class="keyword">final</span> <span class="keyword">int</span> port)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (interfaceClass == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Interface class is null"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (!interfaceClass.isInterface()) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"The "</span> + interfaceClass.getName() + <span class="string">" must be interface class!"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (host == <span class="keyword">null</span> || host.length() == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Host is null!"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (port &lt;= PORT_MIN || port &gt; PORT_MAX) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Invalid port "</span> + port);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">"Get remote service "</span> + interfaceClass.getName() + <span class="string">" from server "</span> + host + <span class="string">":"</span> + port);</span><br><span class="line">        <span class="keyword">return</span> (T) Proxy.newProxyInstance(interfaceClass.getClassLoader(), <span class="keyword">new</span> Class&lt;?&gt;[]&#123;interfaceClass&#125;, (proxy, method, arguments) -&gt; &#123;</span><br><span class="line">            Socket socket = <span class="keyword">new</span> Socket(host, port);</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                ObjectOutputStream output = <span class="keyword">new</span> ObjectOutputStream(socket.getOutputStream());</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    output.writeUTF(method.getName());</span><br><span class="line">                    output.writeObject(method.getParameterTypes());</span><br><span class="line">                    output.writeObject(arguments);</span><br><span class="line">                    ObjectInputStream input = <span class="keyword">new</span> ObjectInputStream(socket.getInputStream());</span><br><span class="line">                    <span class="keyword">try</span> &#123;</span><br><span class="line">                        Object result = input.readObject();</span><br><span class="line">                        <span class="keyword">if</span> (result <span class="keyword">instanceof</span> Throwable) &#123;</span><br><span class="line">                            <span class="keyword">throw</span> (Throwable) result;</span><br><span class="line">                        &#125;</span><br><span class="line">                        <span class="keyword">return</span> result;</span><br><span class="line">                    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                        input.close();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                    output.close();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                socket.close();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="定义接口"><a href="#定义接口" class="headerlink" title="定义接口"></a>定义接口</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">HelloService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 返回一个字符串</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> name name</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> Hello name</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function">String <span class="title">hello</span><span class="params">(String name)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="编写服务提供者"><a href="#编写服务提供者" class="headerlink" title="编写服务提供者"></a>编写服务提供者</h4><p>先实现 <code>HelloService</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloServiceImpl</span> <span class="keyword">implements</span> <span class="title">HelloService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">hello</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        String result = <span class="string">"Hello "</span> + name;</span><br><span class="line">        System.out.println(Thread.currentThread().getName() + <span class="string">" "</span> + result);</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>启动并暴漏服务</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Provider</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        HelloService helloService = <span class="keyword">new</span> HelloServiceImpl();</span><br><span class="line">        RpcFramework.export(helloService, <span class="number">8888</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="编写服务调用者"><a href="#编写服务调用者" class="headerlink" title="编写服务调用者"></a>编写服务调用者</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Consumer</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        HelloService helloService = RpcFramework.refer(HelloService.class, "127.0.0.1", 8888);</span><br><span class="line">        String name = <span class="string">"Peter Parker"</span>;</span><br><span class="line">        System.out.println(helloService.hello(name));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>执行 <code>Consumer</code>，查看控制台输出：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello Peter Parker</span><br></pre></td></tr></table></figure>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>本文的例子，采用了阻塞的 Socket IO 流来进行 Client 和 Server 之间的端对端通信。方法的远程调用采用了 <code>Java</code> 的动态代理，参数的序列化与反序列化采用 <code>ObjectStream</code>。成熟的 <code>RPC</code> 框架会对上述的实现方式进行替换，比如采用 <code>Netty</code> 的 <code>NIO</code> 来实现非阻塞通信，采用成熟的注册中心来统一管理服务的注册与发现，采用 <code>hession2</code>，<code>fastjson</code> 等序列化方式等等。成熟的 <code>RPC</code> 框架还会考虑调用过程中的诸多问题，比如重试机制、超时配置等等。</p>
+<p>本文参考了 <a href="https://www.cnkirito.moe/easy-know-rpc/" target="_blank" rel="noopener">徐靖峰的博客</a>。</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://fuyongde.github.io/2019/06/26/jib-make-docker-simple-again/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -409,7 +1013,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-03-23 20:38:02" itemprop="dateModified" datetime="2020-03-23T20:38:02+08:00">2020-03-23</time>
+                <time title="修改时间：2020-08-23 21:34:18" itemprop="dateModified" datetime="2020-08-23T21:34:18+08:00">2020-08-23</time>
               
             
           </span>
@@ -449,7 +1053,7 @@
 <h2 id="jib-简介"><a href="#jib-简介" class="headerlink" title="jib 简介"></a>jib 简介</h2><blockquote>
 <p>Make America Great Again. – Donald Trump</p>
 </blockquote>
-<p>大概是受 <code>Donald Trump</code> 的启发🙄，Google 发布的 <code>jib</code> 让原本已经很简单的 <code>Docker</code> 镜像构建过程变得更加简单。</p>
+<p>大概是受 <code>Donald Trump</code> 的启发 🙄，Google 发布的 <code>jib</code> 让原本已经很简单的 <code>Docker</code> 镜像构建过程变得更加简单。</p>
 <p>一图顶千言，先看 <code>Docker</code> 构建镜像流程</p>
 <img src="/2019/06/26/jib-make-docker-simple-again/docker_process.jpg" title="Docker 构建容器镜像的流程">
 <p>再看 <code>Jib</code> 构建容器镜像流程</p>
@@ -464,8 +1068,8 @@
 <li>to：镜像容器服务的地址以及对应的 <code>tag</code>，这里我采用的是阿里云的地址</li>
 <li>jvmFlag：容器启动时的 <code>JVM</code> 参数</li>
 </ul>
-<h3 id="构建"><a href="#构建" class="headerlink" title="构建"></a>构建</h3><p>在终端执行 <code>maven package</code> 命令，<code>Docker</code> 镜像就打包并上传好了✌。</p>
-<p>至此，整个构建过程已经完成，我们甚至连 <code>Dockerfile</code> 都不用写，是不是超级简单🤪。</p>
+<h3 id="构建"><a href="#构建" class="headerlink" title="构建"></a>构建</h3><p>在终端执行 <code>maven package</code> 命令，<code>Docker</code> 镜像就打包并上传好了 ✌。</p>
+<p>至此，整个构建过程已经完成，我们甚至连 <code>Dockerfile</code> 都不用写，是不是超级简单 🤪。</p>
 <p>如有需要，可参考本文中的 <a href="https://github.com/fuyongde/marvel/tree/master/ebony-maw" target="_blank" rel="noopener">Demo</a> 。</p>
 
           
@@ -585,7 +1189,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-03-23 20:31:39" itemprop="dateModified" datetime="2020-03-23T20:31:39+08:00">2020-03-23</time>
+                <time title="修改时间：2020-08-23 21:34:18" itemprop="dateModified" datetime="2020-08-23T21:34:18+08:00">2020-08-23</time>
               
             
           </span>
@@ -631,7 +1235,7 @@
 <p>在 <code>pom.xml</code> 同级目录新建文件 <code>Dockerfile</code>。</p>
 <figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 基础运行环境，建议采用 openjdk alpine 作为基础的镜像</span></span><br><span class="line"><span class="keyword">FROM</span> openjdk:<span class="number">8</span>-jdk-alpine</span><br><span class="line"></span><br><span class="line"><span class="comment"># 标记作者</span></span><br><span class="line"><span class="keyword">LABEL</span> maintainer="fuyongde@foxmail.com"</span><br><span class="line"></span><br><span class="line"><span class="comment"># 挂载 /tmp 目录，因为 Spring Boot 内嵌的 Tomcat 默认使用 /tmp 作为工作目录</span></span><br><span class="line"><span class="keyword">VOLUME</span> [ "/tmp" ]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 容器对外映射 8080 端口</span></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">8080</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义要打包的 jar</span></span><br><span class="line"><span class="keyword">ARG</span> JAR_FILE=target/thanos-<span class="number">0.0</span>.<span class="number">1</span>-SNAPSHOT.jar</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将指定的 jar 添加到目标镜像并重命名</span></span><br><span class="line"><span class="keyword">ADD</span> $&#123;JAR_FILE&#125; thanos-0.0.1.jar</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用 java -jar 命令运行目标程序</span></span><br><span class="line"><span class="keyword">ENTRYPOINT</span> [ "java", "-jar", "/thanos-0.0.1.jar" ]</span><br></pre></td></tr></table></figure>
 <ul>
-<li><code>FROM</code>：指定一个构建镜像的基础源镜像，如果本地没有就会从公共库中拉取，没有指定镜像的标签会使用默认的latest标签，如果需要在一个 <code>Dockerfile</code> 中构建多个镜像，该选项可以出现多次。</li>
+<li><code>FROM</code>：指定一个构建镜像的基础源镜像，如果本地没有就会从公共库中拉取，没有指定镜像的标签会使用默认的 latest 标签，如果需要在一个 <code>Dockerfile</code> 中构建多个镜像，该选项可以出现多次。</li>
 <li><code>LABEL</code>：为镜像指定标签</li>
 <li><code>VOLUME</code>：可实现挂载功能，可以将内地文件夹或者其他容器种得文件夹挂在到这个容器种</li>
 <li><code>EXPOSE</code>：暴漏容器运行时的监听端口给外部，但是 EXPOSE 并不会使容器访问主机的端口，如果想使得容器与主机的端口有映射关系，必须在容器启动的时候加上 <code>-p</code> 参数</li>
@@ -643,7 +1247,7 @@
 <p>如本文所讲例子，需要依次执行</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 采用 Maven 构建 Spring Boot Application</span><br><span class="line">mvnw install</span><br><span class="line"><span class="meta">#</span> 构建 Docker Image</span><br><span class="line">docker build -t thanos .</span><br></pre></td></tr></table></figure>
 <p>构建完成之后，可以通过 <code>docker image ls</code> 查看。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">REPOSITORY    TAG       IMAGE ID        CREATED              SIZE </span><br><span class="line">thanos        latest    5f30b11b5088    About an hour ago    122MB</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">REPOSITORY    TAG       IMAGE ID        CREATED              SIZE</span><br><span class="line">thanos        latest    5f30b11b5088    About an hour ago    122MB</span><br></pre></td></tr></table></figure>
 <h4 id="运行-Docker-镜像"><a href="#运行-Docker-镜像" class="headerlink" title="运行 Docker 镜像"></a>运行 Docker 镜像</h4><p>和正常的运行 Docker 镜像的命令一致。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker run -p 8080:8080 thanos</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> 也可以采用后台运行的方式运行容器</span><br><span class="line">docker run -d -p 8080:8080 thanos</span><br></pre></td></tr></table></figure>
 <p>运行之后，通过 <code>docker ps</code> 命令来查看当前运行的容器。</p>
@@ -668,13 +1272,13 @@
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.spotify<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>dockerfile-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.4.10<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">repository</span>&gt;</span>registry.cn-hangzhou.aliyuncs.com/fuyongde/thanos<span class="tag">&lt;/<span class="name">repository</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">tag</span>&gt;</span>$&#123;project.version&#125;<span class="tag">&lt;/<span class="name">tag</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">useMavenSettingsForAuth</span>&gt;</span>true<span class="tag">&lt;/<span class="name">useMavenSettingsForAuth</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">executions</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">execution</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">id</span>&gt;</span>default<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">phase</span>&gt;</span>install<span class="tag">&lt;/<span class="name">phase</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">goals</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">goal</span>&gt;</span>build<span class="tag">&lt;/<span class="name">goal</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">goal</span>&gt;</span>push<span class="tag">&lt;/<span class="name">goal</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">goals</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">execution</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">executions</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>其中：</p>
 <ul>
-<li>repository：表示要上传的容器镜像服务，可以是阿里云、Docker Hub等</li>
-<li>tag：镜像打包的tag</li>
+<li>repository：表示要上传的容器镜像服务，可以是阿里云、Docker Hub 等</li>
+<li>tag：镜像打包的 tag</li>
 <li>execution：这个标签下的配置表示，在 <code>Maven</code> 的 <code>install</code> 阶段，进行 <code>Docker</code> 的 <code>build</code>、<code>push</code> 操作</li>
 <li>useMavenSettingsForAuth：表示使用 <code>Maven</code> 的配置的账号密码来认证 <code>Docker</code> 容器镜像服务，需要在 <code>Maven</code> 的 <code>settings.xml</code> 文件中加入以下配置：</li>
 </ul>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">servers</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">server</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">id</span>&gt;</span>registry.cn-hangzhou.aliyuncs.com<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">username</span>&gt;</span>username<span class="tag">&lt;/<span class="name">username</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">password</span>&gt;</span>password<span class="tag">&lt;/<span class="name">password</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">server</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servers</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h4 id="构建"><a href="#构建" class="headerlink" title="构建"></a>构建</h4><p>执行 <code>mvn install</code> 命令，<code>Docker</code> 镜像就打包并上传好了✌。</p>
+<h4 id="构建"><a href="#构建" class="headerlink" title="构建"></a>构建</h4><p>执行 <code>mvn install</code> 命令，<code>Docker</code> 镜像就打包并上传好了 ✌。</p>
 <h2 id="One-more-thing"><a href="#One-more-thing" class="headerlink" title="One more thing"></a>One more thing</h2><p>你以为上述构建 <code>Docker</code> 镜像方法就非常方便了吗？</p>
 <p>Too young!</p>
 <p><a href="https://fuyongde.github.io/2019/06/26/jib-make-docker-simple-again/">下一篇</a>，带你了解 <code>Jib</code>，Make docker simple again✨!</p>
@@ -796,7 +1400,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-03-23 20:40:01" itemprop="dateModified" datetime="2020-03-23T20:40:01+08:00">2020-03-23</time>
+                <time title="修改时间：2020-08-23 21:34:18" itemprop="dateModified" datetime="2020-08-23T21:34:18+08:00">2020-08-23</time>
               
             
           </span>
@@ -852,11 +1456,11 @@
           
             <p>我们使用 Maven 时，基本上只会用到 <code>mvn</code> 这一个命令。有些童鞋可能听说过 <code>mvnw</code>，这个是啥？</p>
 <p>mvnw 是 Maven Wrapper 的缩写，我们安装 Maven 时，默认情况下，系统所有项目都会使用全局安装的这个 Maven 版本。但是，对于某些项目来说，它可能必须使用某个特定的 Maven 版本，这个时候，就可以使用 Maven Wrapper，它可以负责给这个特定的项目安装指定版本的 Maven，而其他项目不受影响。</p>
-<p>简单地说，Maven Wrapper就是给一个项目提供一个独立的，指定版本的Maven给它使用。</p>
-<h2 id="安装-Maven-Wrapper"><a href="#安装-Maven-Wrapper" class="headerlink" title="安装 Maven Wrapper"></a>安装 Maven Wrapper</h2><p>安装Maven Wrapper最简单的方式是在项目的根目录（即pom.xml所在的目录）下运行安装命令：</p>
+<p>简单地说，Maven Wrapper 就是给一个项目提供一个独立的，指定版本的 Maven 给它使用。</p>
+<h2 id="安装-Maven-Wrapper"><a href="#安装-Maven-Wrapper" class="headerlink" title="安装 Maven Wrapper"></a>安装 Maven Wrapper</h2><p>安装 Maven Wrapper 最简单的方式是在项目的根目录（即 pom.xml 所在的目录）下运行安装命令：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn -N io.takari:maven:0.7.7:wrapper</span><br></pre></td></tr></table></figure>
-<p>它会自动使用最新版本的 Maven。注意0.7.7是 Maven Wrapper 的版本。最新的 Maven Wrapper 版本可以去<a href="https://github.com/takari/maven-wrapper" target="_blank" rel="noopener">官方网站</a>查看。</p>
-<p>如果要指定使用的 Maven 版本，使用下面的安装命令指定版本，例如3.6.0：</p>
+<p>它会自动使用最新版本的 Maven。注意 0.7.7 是 Maven Wrapper 的版本。最新的 Maven Wrapper 版本可以去<a href="https://github.com/takari/maven-wrapper" target="_blank" rel="noopener">官方网站</a>查看。</p>
+<p>如果要指定使用的 Maven 版本，使用下面的安装命令指定版本，例如 3.6.0：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn -N io.takari:maven:0.7.7:wrapper -Dmaven=3.6.0</span><br></pre></td></tr></table></figure>
 <p>安装后，查看项目结构：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Hello-World</span><br><span class="line">├── .mvn</span><br><span class="line">│   └── wrapper</span><br><span class="line">│       ├── MavenWrapperDownloader.java</span><br><span class="line">│       ├── maven-wrapper.jar</span><br><span class="line">│       └── maven-wrapper.properties</span><br><span class="line">├── mvnw</span><br><span class="line">├── mvnw.cmd</span><br><span class="line">├── pom.xml</span><br><span class="line">└── src</span><br><span class="line">    ├── main</span><br><span class="line">    │   ├── java</span><br><span class="line">    │   └── resources</span><br><span class="line">    └── test</span><br><span class="line">        ├── java</span><br><span class="line">        └── resources</span><br></pre></td></tr></table></figure>
@@ -982,7 +1586,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-03-23 20:39:49" itemprop="dateModified" datetime="2020-03-23T20:39:49+08:00">2020-03-23</time>
+                <time title="修改时间：2020-08-23 21:34:18" itemprop="dateModified" datetime="2020-08-23T21:34:18+08:00">2020-08-23</time>
               
             
           </span>
@@ -1036,7 +1640,7 @@
       
         
           
-            <h2 id="什么是-Maven"><a href="#什么是-Maven" class="headerlink" title="什么是 Maven?"></a>什么是 Maven?</h2><blockquote>
+            <h2 id="什么是-Maven"><a href="#什么是-Maven" class="headerlink" title="什么是 Maven"></a>什么是 Maven</h2><blockquote>
 <p>Apache Maven is a software project management and comprehension tool. Based on the concept of a project object model (POM), Maven can manage a project’s build, reporting and documentation from a central piece of information.</p>
 </blockquote>
 <p>Apache Maven 本质是一个软件项目管理和理解工具，它提供了一种项目管理的方法，涵盖了了项目管理中常见的阶段：</p>
@@ -1056,15 +1660,15 @@
 <h3 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h3><h4 id="解压"><a href="#解压" class="headerlink" title="解压"></a>解压</h4><p>将下载好的安装包 <code>apache-maven-3.6.1-bin.zip</code> 解压至 <code>C:\</code>（或其他路径）。</p>
 <h3 id="配置环境变量"><a href="#配置环境变量" class="headerlink" title="配置环境变量"></a>配置环境变量</h3><p>打开 <code>控制面板</code> &gt; <code>系统和安全</code> &gt; <code>系统</code> &gt; <code>高级系统设置</code> &gt; <code>环境变量</code> &gt; <code>系统变量</code></p>
 <ol>
-<li>新建一个<code>变量名</code>为 <code>M2_HOME</code>，变量值为 <code>C:\apache-maven-3.6.1</code> (即Maven的安装路径)。</li>
+<li>新建一个<code>变量名</code>为 <code>M2_HOME</code>，变量值为 <code>C:\apache-maven-3.6.1</code> (即 Maven 的安装路径)。</li>
 <li>选中<code>系统变量</code>中的 <code>Path</code>，并新增 <code>%M2_HOME%\bin\</code></li>
 </ol>
 <h4 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h4><p>打开终端，输入 <code>mvn --version</code>，输出</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">PS C:\Users\fuyongde&gt; mvn --version</span><br><span class="line">Apache Maven 3.5.2 (138edd61fd100ec658bfa2d307c43b76940a5d7d; 2017-10-18T15:58:13+08:00)</span><br><span class="line">Maven home: C:\apache-maven-3.5.2\bin\..</span><br><span class="line">Java version: 1.8.0_162, vendor: Oracle Corporation</span><br><span class="line">Java home: C:\Program Files\Java\jdk1.8.0_162\jre</span><br><span class="line">Default locale: zh_CN, platform encoding: GBK</span><br><span class="line">OS name: &quot;windows 10&quot;, version: &quot;10.0&quot;, arch: &quot;amd64&quot;, family: &quot;windows&quot;</span><br></pre></td></tr></table></figure>
 <p>表示安装成功</p>
-<h3 id="Linux-amp-Mac-OS"><a href="#Linux-amp-Mac-OS" class="headerlink" title="Linux &amp; Mac OS"></a>Linux &amp; Mac OS</h3><p>你都用这操作系统了，那肯定会安装吧🤣。</p>
+<h3 id="Linux-amp-Mac-OS"><a href="#Linux-amp-Mac-OS" class="headerlink" title="Linux &amp; Mac OS"></a>Linux &amp; Mac OS</h3><p>你都用这操作系统了，那肯定会安装吧 🤣。</p>
 <h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h3 id="快速开始"><a href="#快速开始" class="headerlink" title="快速开始"></a>快速开始</h3><p>Maven 提供了丰富的模板，以供我们快速创建一个工程。其命令如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mvn archetype:generate</span><br><span class="line">	-DgroupId=com.demo</span><br><span class="line">	-DartifactId=hello-maven</span><br><span class="line">	-DarchetypeArtifactId=maven-archetype-quickstart</span><br><span class="line">	-DinteractiveMode=false</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mvn archetype:generate</span><br><span class="line"> -DgroupId=com.demo</span><br><span class="line"> -DartifactId=hello-maven</span><br><span class="line"> -DarchetypeArtifactId=maven-archetype-quickstart</span><br><span class="line"> -DinteractiveMode=false</span><br></pre></td></tr></table></figure>
 <p>其中各个参数的含义：</p>
 <ul>
 <li><code>-DgroupId</code>：组织的唯一标识符</li>
@@ -1074,16 +1678,16 @@
 </ul>
 <h3 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h3><p>不同的模板创建出来的项目目录可能会有差异，常见的 Maven 目录结构如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">├── src</span><br><span class="line">│   ├── main</span><br><span class="line">│   │   ├── java # 源码目录</span><br><span class="line">│   │   └── resources # 资源目录</span><br><span class="line">│   └── test</span><br><span class="line">│       ├── java # 单元测试源码目录</span><br><span class="line">│       └── resources # 单元测试资源目录</span><br><span class="line">├── target # 项目编译输出的目录</span><br><span class="line">├── pom.xml</span><br></pre></td></tr></table></figure>
-<h3 id="Maven生命周期"><a href="#Maven生命周期" class="headerlink" title="Maven生命周期"></a>Maven生命周期</h3><p>Maven 默认的生命周期包括：</p>
+<h3 id="Maven-生命周期"><a href="#Maven-生命周期" class="headerlink" title="Maven 生命周期"></a>Maven 生命周期</h3><p>Maven 默认的生命周期包括：</p>
 <ol>
 <li><code>validate</code>: 验证项目是否正确，并提供所有必要的信息</li>
 <li><code>compile</code>: 编译源码</li>
 <li><code>test</code>: 使用合适的单元测试框架测试编译的源代码，单元测试的代码并不会被打包。</li>
-<li><code>package</code>: 获取已编译的代码并将其打包为可分发的格式，例如JAR。</li>
+<li><code>package</code>: 获取已编译的代码并将其打包为可分发的格式，例如 JAR。</li>
 <li><code>integration-test</code>: 如有必要，将程序包处理并部署到可以运行集成测试的环境中</li>
 <li><code>verify</code>: 验证打包文件是否有效并符合质量标准</li>
 <li><code>install</code>: 将项目打包安装到本地存储库中，以便在本地用作其他项目的依赖项</li>
-<li><code>deploy</code>: 将项目打包并推送到Maven私服或中央仓库</li>
+<li><code>deploy</code>: 将项目打包并推送到 Maven 私服或中央仓库</li>
 </ol>
 <p>此外还有两个生命周期的阶段</p>
 <ul>
@@ -1093,10 +1697,10 @@
 <h3 id="POM"><a href="#POM" class="headerlink" title="POM"></a>POM</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">POM stands for &quot;Project Object Model&quot;. It is an XML representation of a Maven project held in a file named pom.xml.</span><br></pre></td></tr></table></figure>
 <p><code>POM</code> 表示“项目对象模型”，在 Maven 项目中以一个 <code>pom.xml</code> 文件的形式存在。</p>
 <h4 id="最基本的构成"><a href="#最基本的构成" class="headerlink" title="最基本的构成"></a>最基本的构成</h4><p>一个 <code>pom.xml</code> 最基本的构成如下：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">"http://maven.apache.org/POM/4.0.0"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://maven.apache.org/POM/4.0.0</span></span></span><br><span class="line"><span class="tag"><span class="string">                      http://maven.apache.org/xsd/maven-4.0.0.xsd"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></span><br><span class="line"> </span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.codehaus.mojo<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>my-project<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">"http://maven.apache.org/POM/4.0.0"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://maven.apache.org/POM/4.0.0</span></span></span><br><span class="line"><span class="tag"><span class="string">                      http://maven.apache.org/xsd/maven-4.0.0.xsd"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.codehaus.mojo<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>my-project<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>其中</p>
 <ul>
-<li><code>modelVersion</code>：<code>Maven2 &amp; 3</code>只支持4.0.0</li>
+<li><code>modelVersion</code>：<code>Maven2 &amp; 3</code>只支持 4.0.0</li>
 <li><code>groupId</code>：组织的唯一标识符</li>
 <li><code>artifactId</code>：项目的唯一标识符</li>
 <li><code>version</code>：版本号</li>
@@ -1108,9 +1712,10 @@
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">"http://maven.apache.org/POM/4.0.0"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://maven.apache.org/POM/4.0.0</span></span></span><br><span class="line"><span class="tag"><span class="string">                      https://maven.apache.org/xsd/maven-4.0.0.xsd"</span>&gt;</span></span><br><span class="line">  ...</span><br><span class="line">  <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>4.12<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">type</span>&gt;</span>jar<span class="tag">&lt;/<span class="name">type</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">optional</span>&gt;</span>true<span class="tag">&lt;/<span class="name">optional</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">      ...</span><br><span class="line">  <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line">  ...</span><br><span class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <h5 id="groupId、artifactId"><a href="#groupId、artifactId" class="headerlink" title="groupId、artifactId"></a>groupId、artifactId</h5><p>表示依赖项的坐标。由于依赖项都是由 Maven 坐标，意味着我们的项目只能依赖于同样是 Maven 管理的其他项目。但是很多时候，项目可能会依赖一些具有闭源许可的 <code>jar</code>，这些 <code>jar</code> 并不存在于<code>中央仓库</code>，有三种办法可以解决这个问题。</p>
 <ul>
-<li><p>使用 <code>install</code> 插件在本地安装依赖项，这是最简单也是最推荐的方式。例如：</p>
+<li>使用 <code>install</code> 插件在本地安装依赖项，这是最简单也是最推荐的方式。例如：</li>
+</ul>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn install:install-file -Dfile=non-maven-proj.jar -DgroupId=some.group -DartifactId=non-maven-proj -Dversion=1 -Dpackaging=jar</span><br></pre></td></tr></table></figure>
-</li>
+<ul>
 <li><p>将依赖部署到私服</p>
 </li>
 <li><p>将依赖的 <code>scope</code> 设置为 <code>system</code> 并且定义 <code>systemPath</code>，强烈不推荐这种方式。</p>
@@ -1118,14 +1723,14 @@
 </ul>
 <h5 id="version"><a href="#version" class="headerlink" title="version"></a>version</h5><p>表示依赖的版本，关于 <code>version</code> 语法如下：</p>
 <ul>
-<li><code>1.0</code>：若匹配到了1.0版本，则使用1.0版本</li>
-<li><code>[1.0]</code>: 强制配依赖项的1.0版本</li>
+<li><code>1.0</code>：若匹配到了 1.0 版本，则使用 1.0 版本</li>
+<li><code>[1.0]</code>: 强制配依赖项的 1.0 版本</li>
 <li><code>(,1.0]</code>: x &lt;= 1.0</li>
 <li><code>[1.2,1.3]</code>: 1.2 &lt;= x &lt;= 1.3</li>
 <li><code>[1.0,2.0)</code>: 1.0 &lt;= x &lt; 2.0</li>
 <li><code>[1.5,)</code>: x &gt;= 1.5</li>
 <li><code>(,1.0],[1.2,)</code>: x &lt;= 1.0 or x &gt;= 1.2，多个版本集合的情况以逗号分隔</li>
-<li><code>(,1.1),(1.1,)</code>: 排除1.1版本</li>
+<li><code>(,1.1),(1.1,)</code>: 排除 1.1 版本</li>
 </ul>
 <p>此外，<code>version</code> 的不同写发也存在优先级，详情可参考<a href="https://maven.apache.org/pom.html#Version_Order_Specification" target="_blank" rel="noopener">官网</a></p>
 <h5 id="type"><a href="#type" class="headerlink" title="type"></a>type</h5><p>依赖项的类型，缺省值是 <code>jar</code>。除此之外还有<code>ejb-client</code>、<code>test-jar</code>，但都不常用</p>
@@ -1181,13 +1786,13 @@
 </ul>
 <p>看一个列子</p>
 <p>父工程：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">"http://maven.apache.org/POM/4.0.0"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://maven.apache.org/POM/4.0.0</span></span></span><br><span class="line"><span class="tag"><span class="string">                      https://maven.apache.org/xsd/maven-4.0.0.xsd"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></span><br><span class="line"> </span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.codehaus.mojo<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>my-parent<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">packaging</span>&gt;</span>pom<span class="tag">&lt;/<span class="name">packaging</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">"http://maven.apache.org/POM/4.0.0"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://maven.apache.org/POM/4.0.0</span></span></span><br><span class="line"><span class="tag"><span class="string">                      https://maven.apache.org/xsd/maven-4.0.0.xsd"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.codehaus.mojo<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>my-parent<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">packaging</span>&gt;</span>pom<span class="tag">&lt;/<span class="name">packaging</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>子工程</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">"http://maven.apache.org/POM/4.0.0"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://maven.apache.org/POM/4.0.0</span></span></span><br><span class="line"><span class="tag"><span class="string">                      https://maven.apache.org/xsd/maven-4.0.0.xsd"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></span><br><span class="line"> </span><br><span class="line">  <span class="tag">&lt;<span class="name">parent</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.codehaus.mojo<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>my-parent<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">relativePath</span>&gt;</span>../my-parent<span class="tag">&lt;/<span class="name">relativePath</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">parent</span>&gt;</span></span><br><span class="line"> </span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>my-project<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">"http://maven.apache.org/POM/4.0.0"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://maven.apache.org/POM/4.0.0</span></span></span><br><span class="line"><span class="tag"><span class="string">                      https://maven.apache.org/xsd/maven-4.0.0.xsd"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">parent</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.codehaus.mojo<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>my-parent<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">relativePath</span>&gt;</span>../my-parent<span class="tag">&lt;/<span class="name">relativePath</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">parent</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>my-project<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>其中 <code>relativePath</code> 不是必需的，但如果指定了，该路径则会作为搜索父工程的首选项。</p>
 <h5 id="Dependency-Management"><a href="#Dependency-Management" class="headerlink" title="Dependency Management"></a>Dependency Management</h5><p>在存在多个项目的情况下，在在父项目中定义 <code>dependencyManagement</code> 来帮住管理所有子项目的依赖项。如果在父项目中的 <code>dependencyManagement</code> 标签下定义了某个依赖项的信息，则在子项目中只需要填写该依赖项的 <code>groupId</code> 和 <code>artifactId</code> 即可。好处是可以避免不同的子项目，引入不同版本的依赖项。</p>
 <h4 id="聚合"><a href="#聚合" class="headerlink" title="聚合"></a>聚合</h4><p>聚合可以将不同的模块，聚合在一起进行构建。</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">"http://maven.apache.org/POM/4.0.0"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://maven.apache.org/POM/4.0.0</span></span></span><br><span class="line"><span class="tag"><span class="string">                      https://maven.apache.org/xsd/maven-4.0.0.xsd"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></span><br><span class="line"> </span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.codehaus.mojo<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>my-parent<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">packaging</span>&gt;</span>pom<span class="tag">&lt;/<span class="name">packaging</span>&gt;</span></span><br><span class="line"> </span><br><span class="line">  <span class="tag">&lt;<span class="name">modules</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">module</span>&gt;</span>my-project<span class="tag">&lt;/<span class="name">module</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">module</span>&gt;</span>another-project<span class="tag">&lt;/<span class="name">module</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">module</span>&gt;</span>third-project/pom-example.xml<span class="tag">&lt;/<span class="name">module</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">modules</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">"http://maven.apache.org/POM/4.0.0"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://maven.apache.org/POM/4.0.0</span></span></span><br><span class="line"><span class="tag"><span class="string">                      https://maven.apache.org/xsd/maven-4.0.0.xsd"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.codehaus.mojo<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>my-parent<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">packaging</span>&gt;</span>pom<span class="tag">&lt;/<span class="name">packaging</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">modules</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">module</span>&gt;</span>my-project<span class="tag">&lt;/<span class="name">module</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">module</span>&gt;</span>another-project<span class="tag">&lt;/<span class="name">module</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">module</span>&gt;</span>third-project/pom-example.xml<span class="tag">&lt;/<span class="name">module</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">modules</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>未完待续…</p>
 
           
@@ -1307,7 +1912,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-03-20 20:40:43" itemprop="dateModified" datetime="2020-03-20T20:40:43+08:00">2020-03-20</time>
+                <time title="修改时间：2020-08-23 21:34:18" itemprop="dateModified" datetime="2020-08-23T21:34:18+08:00">2020-08-23</time>
               
             
           </span>
@@ -1369,18 +1974,19 @@
 <li>Stream 是一组元素的集合</li>
 <li>Stream 支持顺序和并行地对元素进行操作</li>
 </ul>
-<h1 id="How-it-work？"><a href="#How-it-work？" class="headerlink" title="How it work？"></a>How it work？</h1><p>先看示例：</p>
+<h1 id="How-it-work"><a href="#How-it-work" class="headerlink" title="How it work"></a>How it work</h1><p>先看示例：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    List&lt;String&gt; list = Stream.of(<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line">            .peek(System.out::print)</span><br><span class="line">            .map(String::valueOf)</span><br><span class="line">            .sorted()</span><br><span class="line">            .collect(Collectors.toList());</span><br><span class="line">    System.out.println(<span class="string">"\n"</span> + JSON.toJSONString(list));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>上述程序输出结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">abc123</span><br><span class="line">[&quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;a&quot;,&quot;b&quot;,&quot;c&quot;]</span><br></pre></td></tr></table></figure></p>
+<p>上述程序输出结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">abc123</span><br><span class="line">[&quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;a&quot;,&quot;b&quot;,&quot;c&quot;]</span><br></pre></td></tr></table></figure>
 <p>通过上述例子：</p>
 <ol>
 <li><code>Stream.of()</code> 产生一个流；</li>
 <li><code>peek</code> 将所有元素进行打印；</li>
-<li><code>map</code> 将所有元素转化为String；</li>
+<li><code>map</code> 将所有元素转化为 String；</li>
 <li><code>sorted</code> 将所有元素进行排需；</li>
-<li><code>collect</code> 将所有元素聚合为一个List。</li>
+<li><code>collect</code> 将所有元素聚合为一个 List。</li>
 </ol>
-<p>由此总结对流的操作可分为3个阶段</p>
+<p>由此总结对流的操作可分为 3 个阶段</p>
 <ol>
 <li>创建流</li>
 <li>转化流（每次转化，原有的 Stream 不变，产生一个新的 Stream 对象，可以对流进行多次转化）</li>
@@ -1427,18 +2033,19 @@
 </tr>
 </tbody>
 </table>
-<h2 id="有什么优点？"><a href="#有什么优点？" class="headerlink" title="有什么优点？"></a>有什么优点？</h2><p>一般来说，Java8 之前的编程方式，对数组、集合中元素遍历是显示的在外部进行，我们称之为 <em>外部迭代</em>，而 <code>Stream</code> 的方式叫做<em>内部迭代</em>，采用了 <em>访问者模式（Visitor）</em> 实现。<code>外部迭代</code>我们的关注点是怎么做，<code>内部迭代</code>我们的关注点是做什么。通过 <code>Stream</code> 对元素的 <em>内部迭代</em> 我们更容易清晰的看到一个方法对元素做了什么操作。</p>
+<h2 id="有什么优点"><a href="#有什么优点" class="headerlink" title="有什么优点"></a>有什么优点</h2><p>一般来说，Java8 之前的编程方式，对数组、集合中元素遍历是显示的在外部进行，我们称之为 <em>外部迭代</em>，而 <code>Stream</code> 的方式叫做<em>内部迭代</em>，采用了 <em>访问者模式（Visitor）</em> 实现。<code>外部迭代</code>我们的关注点是怎么做，<code>内部迭代</code>我们的关注点是做什么。通过 <code>Stream</code> 对元素的 <em>内部迭代</em> 我们更容易清晰的看到一个方法对元素做了什么操作。</p>
 <h2 id="元素执行顺序"><a href="#元素执行顺序" class="headerlink" title="元素执行顺序"></a>元素执行顺序</h2><p>在 <code>Stream</code> 编程中，元素的执行顺序非常重要。</p>
 <p>还是先看例子</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method3</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Stream.of(<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>)</span><br><span class="line">            .peek(s -&gt; System.out.println(<span class="string">"peek -&gt; "</span> + s))</span><br><span class="line">            .map(s -&gt; &#123;</span><br><span class="line">                System.out.println(<span class="string">"map -&gt; "</span> + s);</span><br><span class="line">                <span class="keyword">return</span> s.toUpperCase();</span><br><span class="line">            &#125;)</span><br><span class="line">            .forEach(s -&gt; System.out.println(<span class="string">"forEach -&gt; "</span> + s));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>直接看这段程序的输出<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">peek -&gt; a</span><br><span class="line">map -&gt; a</span><br><span class="line">forEach -&gt; A</span><br><span class="line">peek -&gt; b</span><br><span class="line">map -&gt; b</span><br><span class="line">forEach -&gt; B</span><br><span class="line">peek -&gt; c</span><br><span class="line">map -&gt; c</span><br><span class="line">forEach -&gt; C</span><br></pre></td></tr></table></figure></p>
+<p>直接看这段程序的输出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">peek -&gt; a</span><br><span class="line">map -&gt; a</span><br><span class="line">forEach -&gt; A</span><br><span class="line">peek -&gt; b</span><br><span class="line">map -&gt; b</span><br><span class="line">forEach -&gt; B</span><br><span class="line">peek -&gt; c</span><br><span class="line">map -&gt; c</span><br><span class="line">forEach -&gt; C</span><br></pre></td></tr></table></figure>
 <p>是不是与想象中的不一样？</p>
 <p><code>Stream</code> 对元素的操作是一个元素执行完所有的操作在执行下一个元素，而不是一个操作执行完所有的元素再进行下一个操作。这就更加证明了 <code>Stream</code> 对元素的操作是像流水线那样。</p>
 <h3 id="为什么执行顺序如此重要"><a href="#为什么执行顺序如此重要" class="headerlink" title="为什么执行顺序如此重要"></a>为什么执行顺序如此重要</h3><p>通过上文，还不足以说明执行顺序为什么非常重要。</p>
 <p>再看一个例子</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method4</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Stream.of(<span class="number">2</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">3</span>, <span class="number">1</span>)</span><br><span class="line">            .sorted((i1, i2)-&gt;&#123;</span><br><span class="line">                System.out.format(<span class="string">"sorted -&gt; %d %d \n"</span>, i1, i2);</span><br><span class="line">                <span class="keyword">return</span> i1.compareTo(i2);</span><br><span class="line">            &#125;)</span><br><span class="line">            .map(i -&gt; &#123;</span><br><span class="line">                System.out.println(<span class="string">"map -&gt; "</span> + i);</span><br><span class="line">                <span class="keyword">return</span> i * <span class="number">2</span>;</span><br><span class="line">            &#125;)</span><br><span class="line">            .filter(i -&gt; &#123;</span><br><span class="line">                System.out.println(<span class="string">"filter -&gt; "</span> + i);</span><br><span class="line">                <span class="keyword">return</span> i &gt; <span class="number">8</span>;</span><br><span class="line">            &#125;)</span><br><span class="line">            .forEach(i -&gt; System.out.println(<span class="string">"forEach -&gt; "</span> + i));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>输出如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">sorted -&gt; 4 2 </span><br><span class="line">sorted -&gt; 5 4 </span><br><span class="line">sorted -&gt; 3 5 </span><br><span class="line">sorted -&gt; 3 4 </span><br><span class="line">sorted -&gt; 3 2 </span><br><span class="line">sorted -&gt; 1 4 </span><br><span class="line">sorted -&gt; 1 3 </span><br><span class="line">sorted -&gt; 1 2 </span><br><span class="line">map -&gt; 1</span><br><span class="line">filter -&gt; 2</span><br><span class="line">map -&gt; 2</span><br><span class="line">filter -&gt; 4</span><br><span class="line">map -&gt; 3</span><br><span class="line">filter -&gt; 6</span><br><span class="line">map -&gt; 4</span><br><span class="line">filter -&gt; 8</span><br><span class="line">map -&gt; 5</span><br><span class="line">filter -&gt; 10</span><br><span class="line">forEach -&gt; 10</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">sorted -&gt; 4 2</span><br><span class="line">sorted -&gt; 5 4</span><br><span class="line">sorted -&gt; 3 5</span><br><span class="line">sorted -&gt; 3 4</span><br><span class="line">sorted -&gt; 3 2</span><br><span class="line">sorted -&gt; 1 4</span><br><span class="line">sorted -&gt; 1 3</span><br><span class="line">sorted -&gt; 1 2</span><br><span class="line">map -&gt; 1</span><br><span class="line">filter -&gt; 2</span><br><span class="line">map -&gt; 2</span><br><span class="line">filter -&gt; 4</span><br><span class="line">map -&gt; 3</span><br><span class="line">filter -&gt; 6</span><br><span class="line">map -&gt; 4</span><br><span class="line">filter -&gt; 8</span><br><span class="line">map -&gt; 5</span><br><span class="line">filter -&gt; 10</span><br><span class="line">forEach -&gt; 10</span><br></pre></td></tr></table></figure>
 <p>从上述输出可以看出，每个元素都进行了 <code>sorted</code>、<code>map</code> 操作，那么我们对上述程序做一个变形，如下</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method4</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Stream.of(<span class="number">2</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">3</span>, <span class="number">1</span>)</span><br><span class="line">            .filter(i -&gt; &#123;</span><br><span class="line">                System.out.println(<span class="string">"filter -&gt; "</span> + i);</span><br><span class="line">                <span class="keyword">return</span> i * <span class="number">2</span> &gt; <span class="number">8</span>;</span><br><span class="line">            &#125;)</span><br><span class="line">            .map(i -&gt; &#123;</span><br><span class="line">                System.out.println(<span class="string">"map -&gt; "</span> + i);</span><br><span class="line">                <span class="keyword">return</span> i * <span class="number">2</span>;</span><br><span class="line">            &#125;)</span><br><span class="line">            .sorted((i1, i2)-&gt;&#123;</span><br><span class="line">                System.out.format(<span class="string">"sorted -&gt; %d %d \n"</span>, i1, i2);</span><br><span class="line">                <span class="keyword">return</span> i1.compareTo(i2);</span><br><span class="line">            &#125;)</span><br><span class="line">            .forEach(i -&gt; System.out.println(<span class="string">"forEach -&gt; "</span> + i));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>变形之后该段程序输出为：</p>
@@ -1447,9 +2054,10 @@
 <p>所以在使用<code>Stream</code>对元素进行操作时，<strong>合理的调整操作顺序，可以提升性能</strong>。</p>
 <h2 id="延时性"><a href="#延时性" class="headerlink" title="延时性"></a>延时性</h2><p><code>Stream</code> 对元素的操作有一个非常重要的特性：延时性。为了更加直观的看到这个特性，我们先看一个例子</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method5</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Stream.of(<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>).peek(System.out::print);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>按照我们的预期，上述程序应该输出<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">abc</span><br></pre></td></tr></table></figure></p>
+<p>按照我们的预期，上述程序应该输出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">abc</span><br></pre></td></tr></table></figure>
 <p>可是在实际执行过程中却发现并没有任何输出，这是为什么？</p>
-<p>这是因为<strong>在对stream操作过程中，没有调用结束操作的时候，所有的中间操作都不会执行。</strong></p>
+<p>这是因为<strong>在对 stream 操作过程中，没有调用结束操作的时候，所有的中间操作都不会执行。</strong></p>
 <h2 id="高阶操作"><a href="#高阶操作" class="headerlink" title="高阶操作"></a>高阶操作</h2><h3 id="短路操作"><a href="#短路操作" class="headerlink" title="短路操作"></a>短路操作</h3><p>在遇到 <em>短路操作</em> 时，一旦满足 <em>短路操作</em> 的条件时，<code>Stream</code> 会马上终止。例如：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method6</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Stream.of(<span class="string">"x"</span>, <span class="string">"y"</span>, <span class="string">"z"</span>)</span><br><span class="line">        .map(s -&gt; &#123;</span><br><span class="line">            System.out.println(<span class="string">"map -&gt; "</span> + s);</span><br><span class="line">            <span class="keyword">return</span> s.toUpperCase();</span><br><span class="line">        &#125;)</span><br><span class="line">        .anyMatch(s -&gt; &#123;</span><br><span class="line">            System.out.println(<span class="string">"anyMatch -&gt; "</span> + s);</span><br><span class="line">            <span class="keyword">return</span> s.startsWith(<span class="string">"X"</span>);</span><br><span class="line">        &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>输出：</p>
@@ -1462,7 +2070,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method8</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    List&lt;Foo&gt; foos = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    IntStream.range(<span class="number">1</span>, <span class="number">4</span>).forEach(i -&gt; foos.add(<span class="keyword">new</span> Foo(<span class="string">"Foo"</span> + <span class="string">" -&gt; "</span> + i)));</span><br><span class="line">    foos.forEach(foo -&gt; IntStream.range(<span class="number">1</span>, <span class="number">4</span>).forEach(i -&gt; foo.bars.add(<span class="keyword">new</span> Bar(foo.name + <span class="string">" -&gt; "</span> + <span class="string">"Bar"</span> + <span class="string">" -&gt; "</span> + i))));</span><br><span class="line">    List&lt;Bar&gt; bars = foos.stream()</span><br><span class="line">            .flatMap(foo -&gt; foo.bars.stream())</span><br><span class="line">            .collect(Collectors.toList());</span><br><span class="line">    bars.forEach(bar -&gt; System.out.println(bar.name));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span> </span>&#123;</span><br><span class="line">    String name;</span><br><span class="line">    List&lt;Bar&gt; bars = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Foo</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Bar</span> </span>&#123;</span><br><span class="line">    String name;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Bar</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>输出：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Foo -&gt; 1 -&gt; Bar -&gt; 1</span><br><span class="line">Foo -&gt; 1 -&gt; Bar -&gt; 2</span><br><span class="line">Foo -&gt; 1 -&gt; Bar -&gt; 3</span><br><span class="line">Foo -&gt; 2 -&gt; Bar -&gt; 1</span><br><span class="line">Foo -&gt; 2 -&gt; Bar -&gt; 2</span><br><span class="line">Foo -&gt; 2 -&gt; Bar -&gt; 3</span><br><span class="line">Foo -&gt; 3 -&gt; Bar -&gt; 1</span><br><span class="line">Foo -&gt; 3 -&gt; Bar -&gt; 2</span><br><span class="line">Foo -&gt; 3 -&gt; Bar -&gt; 3</span><br></pre></td></tr></table></figure>
-<p>可以看出，上述例子通过 <code>flatMap</code> 操作，我们成功地将一个含有3个 foo 元素的流转化为了含有9个 bar 元素的流。</p>
+<p>可以看出，上述例子通过 <code>flatMap</code> 操作，我们成功地将一个含有 3 个 foo 元素的流转化为了含有 9 个 bar 元素的流。</p>
 <h3 id="reduce"><a href="#reduce" class="headerlink" title="reduce"></a>reduce</h3><p><code>reduce</code> 操作是将所有流中的元素组合为单一结果。</p>
 <p>下面例子演示了两种常见的规约操作。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method9</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    List&lt;Foo&gt; foos = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    IntStream.range(<span class="number">1</span>, <span class="number">4</span>).forEach(i -&gt; foos.add(<span class="keyword">new</span> Foo(<span class="string">"Foo"</span> + <span class="string">" -&gt; "</span> + i)));</span><br><span class="line">    foos.forEach(foo -&gt; IntStream.range(<span class="number">1</span>, <span class="number">4</span>).forEach(i -&gt; foo.bars.add(<span class="keyword">new</span> Bar(foo.name + <span class="string">" -&gt; "</span> + <span class="string">"Bar"</span> + <span class="string">" -&gt; "</span> + i))));</span><br><span class="line">    System.out.println(<span class="string">"---foos中的元素---"</span>);</span><br><span class="line">    foos.forEach(o -&gt; System.out.println(JSON.toJSONString(o)));</span><br><span class="line">    System.out.println(<span class="string">"---foos进行规约之后---"</span>);</span><br><span class="line">    foos.stream()</span><br><span class="line">            .reduce((foo1, foo2) -&gt; foo1.name.hashCode() &gt; foo2.name.hashCode() ? foo1 : foo2)</span><br><span class="line">            .ifPresent(foo -&gt; System.out.println(JSON.toJSONString(foo)));</span><br><span class="line"></span><br><span class="line">    System.out.println(<span class="string">"---foos将元素规约成一个新的对象---"</span>);</span><br><span class="line">    Foo foo = foos.stream()</span><br><span class="line">            .reduce(<span class="keyword">new</span> Foo(<span class="string">""</span>), (foo1, foo2) -&gt; &#123;</span><br><span class="line">                foo1.name += foo2.name;</span><br><span class="line">                <span class="keyword">return</span> foo1;</span><br><span class="line">            &#125;);</span><br><span class="line">    System.out.println(JSON.toJSONString(foo));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -1479,7 +2087,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method11</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    System.out.println(<span class="string">"\n-----"</span>);</span><br><span class="line">    Arrays.asList(<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>, <span class="string">"d"</span>)</span><br><span class="line">            .parallelStream()</span><br><span class="line">            .filter(s -&gt; &#123;</span><br><span class="line">                System.out.format(<span class="string">"filter: %s [%s]\n"</span>, s, Thread.currentThread().getName());</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    Thread.sleep(<span class="number">10</span>);</span><br><span class="line">                &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">            &#125;)</span><br><span class="line">            .map(s -&gt; &#123;</span><br><span class="line">                System.out.format(<span class="string">"map: %s [%s]\n"</span>, s, Thread.currentThread().getName());</span><br><span class="line">                <span class="keyword">return</span> s.toUpperCase();</span><br><span class="line">            &#125;)</span><br><span class="line">            .sorted((s1, s2) -&gt; &#123;</span><br><span class="line">                System.out.format(<span class="string">"sort: %s &lt;&gt; %s [%s]\n"</span>, s1, s2, Thread.currentThread().getName());</span><br><span class="line">                <span class="keyword">return</span> s1.compareTo(s2);</span><br><span class="line">            &#125;)</span><br><span class="line">            .collect(Collectors.toList()).forEach(System.out::print);</span><br><span class="line">    System.out.println(<span class="string">"\n"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>输出：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">filter: d [ForkJoinPool.commonPool-worker-1]</span><br><span class="line">filter: c [main]</span><br><span class="line">filter: b [ForkJoinPool.commonPool-worker-3]</span><br><span class="line">filter: a [ForkJoinPool.commonPool-worker-2]</span><br><span class="line">map: c [main]</span><br><span class="line">map: d [ForkJoinPool.commonPool-worker-1]</span><br><span class="line">map: a [ForkJoinPool.commonPool-worker-2]</span><br><span class="line">map: b [ForkJoinPool.commonPool-worker-3]</span><br><span class="line">sort: B &lt;&gt; A [main]</span><br><span class="line">sort: C &lt;&gt; B [main]</span><br><span class="line">sort: D &lt;&gt; C [main]</span><br><span class="line">ABCD</span><br></pre></td></tr></table></figure>
-<p>我们发现在经经过 <code>sorted</code> 操作时，全部元素都在 <code>main</code> 线程中执行了。实际上，并行流上的 <code>sorted</code> 在背后使用了Java8中新的方法 <code>Arrays.parallelSort()</code>，这个方法会根据流中元素的长度来决定是以串行还是并行的方式来执行。</p>
+<p>我们发现在经经过 <code>sorted</code> 操作时，全部元素都在 <code>main</code> 线程中执行了。实际上，并行流上的 <code>sorted</code> 在背后使用了 Java8 中新的方法 <code>Arrays.parallelSort()</code>，这个方法会根据流中元素的长度来决定是以串行还是并行的方式来执行。</p>
 
           
         
@@ -1598,7 +2206,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-03-20 20:39:30" itemprop="dateModified" datetime="2020-03-20T20:39:30+08:00">2020-03-20</time>
+                <time title="修改时间：2020-08-23 21:34:18" itemprop="dateModified" datetime="2020-08-23T21:34:18+08:00">2020-08-23</time>
               
             
           </span>
@@ -1635,13 +2243,13 @@
         
           
             <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
 <p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo server</span><br></pre></td></tr></table></figure>
 <p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo generate</span><br></pre></td></tr></table></figure>
 <p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo deploy</span><br></pre></td></tr></table></figure>
 <p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
 
           
@@ -1732,7 +2340,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">26</span>
+                    <span class="site-state-item-count">29</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1842,7 +2450,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">36</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">39</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

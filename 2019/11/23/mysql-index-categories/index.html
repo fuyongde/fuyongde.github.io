@@ -105,7 +105,7 @@
 <meta property="og:description" content="本文粗略说以下 MySQL 中常见的索引分类。 物理存储角度 聚簇索引 非聚簇索引  聚簇索引将数据存储与索引放到了一起，找到索引也就找到了数据。非聚簇索引将数据存储与索引分开，索引结构的叶子结点指向了数据对应的行。 在 InnoDB 中，在聚簇索引之上创建的索引，称之为辅助索引，辅助索引叶子结点存储的不是行的物理位置，而是主键值，因此辅助索引访问数据总是需要二次查找的。 一图顶千言，如下图所示：">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://fuyongde.github.io/2019/11/23/mysql-index-categories/聚簇索引与非聚簇索引.jpg">
-<meta property="og:updated_time" content="2020-03-23T12:41:08.038Z">
+<meta property="og:updated_time" content="2020-08-23T13:34:18.719Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySQL 索引">
 <meta name="twitter:description" content="本文粗略说以下 MySQL 中常见的索引分类。 物理存储角度 聚簇索引 非聚簇索引  聚簇索引将数据存储与索引放到了一起，找到索引也就找到了数据。非聚簇索引将数据存储与索引分开，索引结构的叶子结点指向了数据对应的行。 在 InnoDB 中，在聚簇索引之上创建的索引，称之为辅助索引，辅助索引叶子结点存储的不是行的物理位置，而是主键值，因此辅助索引访问数据总是需要二次查找的。 一图顶千言，如下图所示：">
@@ -410,7 +410,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-03-23 20:41:08" itemprop="dateModified" datetime="2020-03-23T20:41:08+08:00">2020-03-23</time>
+                <time title="修改时间：2020-08-23 21:34:18" itemprop="dateModified" datetime="2020-08-23T21:34:18+08:00">2020-08-23</time>
               
             
           </span>
@@ -456,14 +456,14 @@
 <p>由于聚簇索引是将数据跟索引结构放在一起的，因此一个表仅有一个聚簇索引。</p>
 <p><strong>聚簇索引默认是主键</strong>，如果表中没有定义主键，<code>InnoDB</code> 会选择一个<strong>唯一非空索引</strong>，如果没有这样的索引，<code>InnoDB</code> 会隐式定义一个主键来作为聚簇索引。</p>
 <h2 id="数据结构角度"><a href="#数据结构角度" class="headerlink" title="数据结构角度"></a>数据结构角度</h2><ul>
-<li>B-Tree 索引（技术上来说是B+树）</li>
+<li>B-Tree 索引（技术上来说是 B+树）</li>
 <li>hash 索引</li>
 <li>FULLTEXT 索引（全文索引）</li>
 <li>R-Tree 索引</li>
 </ul>
 <p>这里着重说以下 B-Tree 索引，B-Tree 索引之所以能加快访问数据的速度，是因为存储引擎不在需要进行全表扫描来获取数据，而是从索引的跟结点开始进行搜索，根节点的槽中存放了指向子节点的指针，存储引擎根据这些指针向下层查找，通过比较节点页的值和要查找的值找到合适的指针进入下层子节点，这些指针定义了子节点页中值的上限和下限。最终存储引擎要么找到对应的值，要么对应的记录不存在。</p>
-<p><strong>叶子结点</strong>比较特别，它们的指针指向的是被索引的数据，而不是其他的结点页。同时所有的叶子结点到根节点的距离相同，所以B-Tree的查询效率非常的稳定。</p>
-<p>相较于二叉查找树，B-Tree 在比较次数上并不占优，但是把磁盘里数据加载到内存的时候，是以<strong>页</strong>为单位来加载的，节点与节点之间的数据是不连续的，所以不同的节点，有可能分布在不同的磁盘页中。B-Tree 的每一个节点可以存放多个元素，所以磁盘寻址加载次数会比较少。所以总体来说B-Tree 还是比二叉查找树快。</p>
+<p><strong>叶子结点</strong>比较特别，它们的指针指向的是被索引的数据，而不是其他的结点页。同时所有的叶子结点到根节点的距离相同，所以 B-Tree 的查询效率非常的稳定。</p>
+<p>相较于二叉查找树，B-Tree 在比较次数上并不占优，但是把磁盘里数据加载到内存的时候，是以<strong>页</strong>为单位来加载的，节点与节点之间的数据是不连续的，所以不同的节点，有可能分布在不同的磁盘页中。B-Tree 的每一个节点可以存放多个元素，所以磁盘寻址加载次数会比较少。所以总体来说 B-Tree 还是比二叉查找树快。</p>
 <p>B-Tree 适用于全键值、键值范围或建前缀查找（只适用于最左前缀查找）。</p>
 <h2 id="逻辑角度"><a href="#逻辑角度" class="headerlink" title="逻辑角度"></a>逻辑角度</h2><ul>
 <li>主键索引</li>
@@ -616,7 +616,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">26</span>
+                    <span class="site-state-item-count">29</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -726,7 +726,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">36</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">39</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

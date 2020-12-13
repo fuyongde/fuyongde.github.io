@@ -96,17 +96,17 @@
 
 
 
-  <meta name="description" content="本文探讨一下 MySQL5.7版本中 优化器的代价模型。相关内容也可查看官网 MySQL 优化器成本模型由两个表组成，分别位于 mysql.server_cost 和 mysql.engine_cost 中。  server_cost: 针对服务器操作的优化器成本估算 engine_cose: 针对特定存储引擎的特定操作的优化器成本估算  server_costserver_cost 包含以下值：">
+  <meta name="description" content="本文探讨一下 MySQL5.7 版本中 优化器的代价模型。相关内容也可查看官网 MySQL 优化器成本模型由两个表组成，分别位于 mysql.server_cost 和 mysql.engine_cost 中。  server_cost: 针对服务器操作的优化器成本估算 engine_cose: 针对特定存储引擎的特定操作的优化器成本估算  server_costserver_cost 包含以下值">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MySQL 优化器成本模型">
 <meta property="og:url" content="https://fuyongde.github.io/2019/12/04/mysql-optimizer-cost-model/index.html">
 <meta property="og:site_name" content="傅永德 | 个人博客">
-<meta property="og:description" content="本文探讨一下 MySQL5.7版本中 优化器的代价模型。相关内容也可查看官网 MySQL 优化器成本模型由两个表组成，分别位于 mysql.server_cost 和 mysql.engine_cost 中。  server_cost: 针对服务器操作的优化器成本估算 engine_cose: 针对特定存储引擎的特定操作的优化器成本估算  server_costserver_cost 包含以下值：">
+<meta property="og:description" content="本文探讨一下 MySQL5.7 版本中 优化器的代价模型。相关内容也可查看官网 MySQL 优化器成本模型由两个表组成，分别位于 mysql.server_cost 和 mysql.engine_cost 中。  server_cost: 针对服务器操作的优化器成本估算 engine_cose: 针对特定存储引擎的特定操作的优化器成本估算  server_costserver_cost 包含以下值">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-03-20T02:51:24.840Z">
+<meta property="og:updated_time" content="2020-08-23T13:34:18.719Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySQL 优化器成本模型">
-<meta name="twitter:description" content="本文探讨一下 MySQL5.7版本中 优化器的代价模型。相关内容也可查看官网 MySQL 优化器成本模型由两个表组成，分别位于 mysql.server_cost 和 mysql.engine_cost 中。  server_cost: 针对服务器操作的优化器成本估算 engine_cose: 针对特定存储引擎的特定操作的优化器成本估算  server_costserver_cost 包含以下值：">
+<meta name="twitter:description" content="本文探讨一下 MySQL5.7 版本中 优化器的代价模型。相关内容也可查看官网 MySQL 优化器成本模型由两个表组成，分别位于 mysql.server_cost 和 mysql.engine_cost 中。  server_cost: 针对服务器操作的优化器成本估算 engine_cose: 针对特定存储引擎的特定操作的优化器成本估算  server_costserver_cost 包含以下值">
 
 
 
@@ -407,7 +407,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-03-20 10:51:24" itemprop="dateModified" datetime="2020-03-20T10:51:24+08:00">2020-03-20</time>
+                <time title="修改时间：2020-08-23 21:34:18" itemprop="dateModified" datetime="2020-08-23T21:34:18+08:00">2020-08-23</time>
               
             
           </span>
@@ -441,7 +441,7 @@
       
 
       
-        <p>本文探讨一下 MySQL5.7版本中 优化器的代价模型。相关内容也可查看<a href="https://dev.mysql.com/doc/refman/5.7/en/cost-model.html" target="_blank" rel="noopener">官网</a></p>
+        <p>本文探讨一下 MySQL5.7 版本中 优化器的代价模型。相关内容也可查看<a href="https://dev.mysql.com/doc/refman/5.7/en/cost-model.html" target="_blank" rel="noopener">官网</a></p>
 <p>MySQL 优化器成本模型由两个表组成，分别位于 mysql.server_cost 和 mysql.engine_cost 中。</p>
 <ul>
 <li>server_cost: 针对服务器操作的优化器成本估算</li>
@@ -449,16 +449,16 @@
 </ul>
 <h2 id="server-cost"><a href="#server-cost" class="headerlink" title="server_cost"></a>server_cost</h2><p>server_cost 包含以下值：</p>
 <ul>
-<li>disk_temptable_create_cost：缺省值40.0，该字段标识基于磁盘的存储引擎（InnoDB 和 MyISAM）中创建临时表的成本估算。从缺省值也可以看出，默认情况下创建临时表的代价是非常昂贵的。</li>
-<li>disk_temptable_row_cost：缺省值1.0，该字段标识基于磁盘的存储引擎（InnoDB 和 MyISAM）中创建临时行的成本估算。</li>
-<li>key_compare_cost：缺省值0.1，该字段表示比较记录的成本。</li>
-<li>memory_temptable_create_cost：缺省值2.0，MEMORY 存储引擎创建临时表的成本，从与 disk_temptable_create_cost 的对比中可以看出，默认情况下 MEMORY 存储引擎创建临时表的成本是远小于 InnoDB 和 MyISAM 存储引擎的。</li>
-<li>memory_temptable_row_cost：缺省值0.2，MEMORY 存储引擎创建临时行的成本。</li>
-<li>row_evaluate_cost：缺省值0.2，行评估成本，即扫描了多少行的成本。</li>
+<li>disk_temptable_create_cost：缺省值 40.0，该字段标识基于磁盘的存储引擎（InnoDB 和 MyISAM）中创建临时表的成本估算。从缺省值也可以看出，默认情况下创建临时表的代价是非常昂贵的。</li>
+<li>disk_temptable_row_cost：缺省值 1.0，该字段标识基于磁盘的存储引擎（InnoDB 和 MyISAM）中创建临时行的成本估算。</li>
+<li>key_compare_cost：缺省值 0.1，该字段表示比较记录的成本。</li>
+<li>memory_temptable_create_cost：缺省值 2.0，MEMORY 存储引擎创建临时表的成本，从与 disk_temptable_create_cost 的对比中可以看出，默认情况下 MEMORY 存储引擎创建临时表的成本是远小于 InnoDB 和 MyISAM 存储引擎的。</li>
+<li>memory_temptable_row_cost：缺省值 0.2，MEMORY 存储引擎创建临时行的成本。</li>
+<li>row_evaluate_cost：缺省值 0.2，行评估成本，即扫描了多少行的成本。</li>
 </ul>
 <h2 id="engine-cost"><a href="#engine-cost" class="headerlink" title="engine_cost"></a>engine_cost</h2><ul>
-<li>io_block_read_cost：缺省值1.0，从磁盘读取索引或数据块的成本。</li>
-<li>memory_block_read_cost：缺省值1.0，从内存数据库缓冲区读取索引说数据块的成本。</li>
+<li>io_block_read_cost：缺省值 1.0，从磁盘读取索引或数据块的成本。</li>
+<li>memory_block_read_cost：缺省值 1.0，从内存数据库缓冲区读取索引说数据块的成本。</li>
 </ul>
 <h3 id="修改成本模型"><a href="#修改成本模型" class="headerlink" title="修改成本模型"></a>修改成本模型</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">-- 修改所有的 io_block_read_cost 成本</span><br><span class="line">UPDATE mysql.engine_cost</span><br><span class="line">  SET cost_value = 2.0</span><br><span class="line">  WHERE cost_name = &apos;io_block_read_cost&apos;;</span><br><span class="line">FLUSH OPTIMIZER_COSTS;</span><br><span class="line"></span><br><span class="line">-- 仅修改 InnoDB 存储引擎的成本</span><br><span class="line">INSERT INTO mysql.engine_cost</span><br><span class="line">  VALUES (&apos;InnoDB&apos;, 0, &apos;io_block_read_cost&apos;, 3.0,</span><br><span class="line">  CURRENT_TIMESTAMP, &apos;Using a slower disk for InnoDB&apos;);</span><br><span class="line">FLUSH OPTIMIZER_COSTS;</span><br></pre></td></tr></table></figure>
 <h2 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h2><h3 id="打开优化器跟踪"><a href="#打开优化器跟踪" class="headerlink" title="打开优化器跟踪"></a>打开优化器跟踪</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-- 查看优化器跟踪的开关</span><br><span class="line">SHOW VARIABLES LIKE &apos;%optimizer_trace%&apos;;</span><br><span class="line">-- 打开优化器跟踪</span><br><span class="line">SET GLOBAL optimizer_trace = &apos;enabled=on,one_line=on&apos;;</span><br></pre></td></tr></table></figure>
@@ -600,7 +600,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">26</span>
+                    <span class="site-state-item-count">29</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -710,7 +710,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">36</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">39</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

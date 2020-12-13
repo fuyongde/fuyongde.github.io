@@ -96,19 +96,19 @@
 
 
 
-  <meta name="description" content="What is RPC? Remote Procedure Call (RPC) is a protocol that one program can use to request a service from a program located in another computer on a network without having to understand the network’s">
+  <meta name="description" content="What is RPC Remote Procedure Call (RPC) is a protocol that one program can use to request a service from a program located in another computer on a network without having to understand the network’s d">
 <meta name="keywords" content="RPC">
 <meta property="og:type" content="article">
 <meta property="og:title" content="RPC Introduction">
 <meta property="og:url" content="https://fuyongde.github.io/2019/07/11/rpc-introduction/index.html">
 <meta property="og:site_name" content="傅永德 | 个人博客">
-<meta property="og:description" content="What is RPC? Remote Procedure Call (RPC) is a protocol that one program can use to request a service from a program located in another computer on a network without having to understand the network’s">
+<meta property="og:description" content="What is RPC Remote Procedure Call (RPC) is a protocol that one program can use to request a service from a program located in another computer on a network without having to understand the network’s d">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://fuyongde.github.io/2019/07/11/rpc-introduction/theory.jpg">
-<meta property="og:updated_time" content="2020-03-23T12:41:41.372Z">
+<meta property="og:updated_time" content="2020-08-23T13:34:18.722Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RPC Introduction">
-<meta name="twitter:description" content="What is RPC? Remote Procedure Call (RPC) is a protocol that one program can use to request a service from a program located in another computer on a network without having to understand the network’s">
+<meta name="twitter:description" content="What is RPC Remote Procedure Call (RPC) is a protocol that one program can use to request a service from a program located in another computer on a network without having to understand the network’s d">
 <meta name="twitter:image" content="https://fuyongde.github.io/2019/07/11/rpc-introduction/theory.jpg">
 
 
@@ -410,7 +410,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-03-23 20:41:41" itemprop="dateModified" datetime="2020-03-23T20:41:41+08:00">2020-03-23</time>
+                <time title="修改时间：2020-08-23 21:34:18" itemprop="dateModified" datetime="2020-08-23T21:34:18+08:00">2020-08-23</time>
               
             
           </span>
@@ -444,11 +444,11 @@
       
 
       
-        <h2 id="What-is-RPC"><a href="#What-is-RPC" class="headerlink" title="What is RPC?"></a>What is RPC?</h2><blockquote>
+        <h2 id="What-is-RPC"><a href="#What-is-RPC" class="headerlink" title="What is RPC"></a>What is RPC</h2><blockquote>
 <p>Remote Procedure Call (RPC) is a protocol that one program can use to request a service from a program located in another computer on a network without having to understand the network’s details. A procedure call is also sometimes known as a function call or a subroutine call. A procedure call is also sometimes known as a function call or a subroutine call.</p>
 </blockquote>
 <p><code>RPC</code> 是一种远程过程调用协议，一个程序可以使用该协议从位于网络上另一台计算机中的程序请求服务，而无需了解网络的详细信息。<code>RPC</code> 有时也称为函数调用或子程序调用。<code>RPC</code> 是进程间通信的一种方式。</p>
-<h2 id="Why-is-RPC"><a href="#Why-is-RPC" class="headerlink" title="Why is RPC?"></a>Why is RPC?</h2><p>网上很多关于 <code>RPC</code> 的优点，笔者都不太赞同。不能将那些成熟的 <code>RPC</code> 框架解决的问题全部归结为 <code>RPC</code> 的优点。比如 <code>RPC</code> 的概念中并没有提到服务治理等问题，但是常见的 <code>RPC</code> 框架（如 <a href="http://dubbo.apache.org" target="_blank" rel="noopener">DUBBO</a>）均解决了服务治理的相关问题，这显然不能作为 <code>RPC</code> 的优点。要解释“Why is RPC?”的问题，还是要回归到 <code>RPC</code> 的概念上来。</p>
+<h2 id="Why-is-RPC"><a href="#Why-is-RPC" class="headerlink" title="Why is RPC"></a>Why is RPC</h2><p>网上很多关于 <code>RPC</code> 的优点，笔者都不太赞同。不能将那些成熟的 <code>RPC</code> 框架解决的问题全部归结为 <code>RPC</code> 的优点。比如 <code>RPC</code> 的概念中并没有提到服务治理等问题，但是常见的 <code>RPC</code> 框架（如 <a href="http://dubbo.apache.org" target="_blank" rel="noopener">DUBBO</a>）均解决了服务治理的相关问题，这显然不能作为 <code>RPC</code> 的优点。要解释“Why is RPC?”的问题，还是要回归到 <code>RPC</code> 的概念上来。</p>
 <ul>
 <li><code>RPC</code> 可以使<em>远程过程调用</em>变得像本地调用一样简单。</li>
 <li>方便计算能力的横向扩展。</li>
@@ -457,9 +457,9 @@
 <h3 id="RPC-vs-HTTP"><a href="#RPC-vs-HTTP" class="headerlink" title="RPC vs HTTP"></a>RPC vs HTTP</h3><p>其实这两者不是同一个维度的概念。从 <code>RPC</code> 的概念上来讲，<code>HTTP</code> 其实就是 <code>RPC</code> 的一种实现。</p>
 <h3 id="RPC-vs-RMI"><a href="#RPC-vs-RMI" class="headerlink" title="RPC vs RMI"></a>RPC vs RMI</h3><p>这两者也不是同一个维度的概念。</p>
 <p><code>RMI</code> 是 <code>JAVA</code> 提供的一种<em>远程方法调用</em>，而 <code>RPC</code> 的变成模型是<em>远程过程调用</em>，<code>RPC</code> 并没有规定采用哪种编程语言实现，<strong>我们甚至可以使用 <code>JAVA</code> 语言实现一个具体的 <code>RPC</code> 协议，内部采用 <code>RMI</code> 来实现数据的传输</strong>，例如 <a href="http://dubbo.apache.org/zh-cn/docs/user/references/protocol/rmi.html" target="_blank" rel="noopener">dubbo 中就可以采用 rmi 协议</a>。</p>
-<h2 id="How-to-implement-RPC"><a href="#How-to-implement-RPC" class="headerlink" title="How to implement RPC?"></a>How to implement RPC?</h2><p>我们先思考这么一个问题：要怎么去调用远程的服务呢？</p>
+<h2 id="How-to-implement-RPC"><a href="#How-to-implement-RPC" class="headerlink" title="How to implement RPC"></a>How to implement RPC</h2><p>我们先思考这么一个问题：要怎么去调用远程的服务呢？</p>
 <ol>
-<li>要知道ip和端口，以确定远程唯一的一个进程。</li>
+<li>要知道 ip 和端口，以确定远程唯一的一个进程。</li>
 <li>要知道调用远程的进程中的什么服务，以确定方法和参数</li>
 <li>调用远程的服务之后，要返回结果。</li>
 </ol>
@@ -647,7 +647,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">26</span>
+                    <span class="site-state-item-count">29</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -757,7 +757,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">36</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">39</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -839,7 +845,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#What-is-RPC"><span class="nav-number">1.</span> <span class="nav-text">What is RPC?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Why-is-RPC"><span class="nav-number">2.</span> <span class="nav-text">Why is RPC?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#RPC-vs-HTTP"><span class="nav-number">2.1.</span> <span class="nav-text">RPC vs HTTP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RPC-vs-RMI"><span class="nav-number">2.2.</span> <span class="nav-text">RPC vs RMI</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#How-to-implement-RPC"><span class="nav-number">3.</span> <span class="nav-text">How to implement RPC?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#原理"><span class="nav-number">3.1.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现"><span class="nav-number">3.2.</span> <span class="nav-text">实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#命名"><span class="nav-number">3.2.1.</span> <span class="nav-text">命名</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#暴露服务"><span class="nav-number">3.2.2.</span> <span class="nav-text">暴露服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#引用服务"><span class="nav-number">3.2.3.</span> <span class="nav-text">引用服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#定义接口"><span class="nav-number">3.2.4.</span> <span class="nav-text">定义接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#编写服务提供者"><span class="nav-number">3.2.5.</span> <span class="nav-text">编写服务提供者</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#编写服务调用者"><span class="nav-number">3.2.6.</span> <span class="nav-text">编写服务调用者</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#总结"><span class="nav-number">3.2.7.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#What-is-RPC"><span class="nav-number">1.</span> <span class="nav-text">What is RPC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Why-is-RPC"><span class="nav-number">2.</span> <span class="nav-text">Why is RPC</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#RPC-vs-HTTP"><span class="nav-number">2.1.</span> <span class="nav-text">RPC vs HTTP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RPC-vs-RMI"><span class="nav-number">2.2.</span> <span class="nav-text">RPC vs RMI</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#How-to-implement-RPC"><span class="nav-number">3.</span> <span class="nav-text">How to implement RPC</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#原理"><span class="nav-number">3.1.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现"><span class="nav-number">3.2.</span> <span class="nav-text">实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#命名"><span class="nav-number">3.2.1.</span> <span class="nav-text">命名</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#暴露服务"><span class="nav-number">3.2.2.</span> <span class="nav-text">暴露服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#引用服务"><span class="nav-number">3.2.3.</span> <span class="nav-text">引用服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#定义接口"><span class="nav-number">3.2.4.</span> <span class="nav-text">定义接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#编写服务提供者"><span class="nav-number">3.2.5.</span> <span class="nav-text">编写服务提供者</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#编写服务调用者"><span class="nav-number">3.2.6.</span> <span class="nav-text">编写服务调用者</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#总结"><span class="nav-number">3.2.7.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>

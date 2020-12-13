@@ -104,7 +104,7 @@
 <meta property="og:site_name" content="傅永德 | 个人博客">
 <meta property="og:description" content="参数配置查看所有参数1mysql&amp;gt; SHOW VARIABLES; 慢查询、索引相关的参数查看慢查询日志是否打开Usage: 1mysql&amp;gt; SHOW VARIABLES LIKE &amp;apos;%slow_query_log%&amp;apos;; Result:    Variable_name Value     slow_query_log OFF   slow_query_log_fi">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-03-23T12:40:49.522Z">
+<meta property="og:updated_time" content="2020-08-23T13:34:18.720Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySQL 手册">
 <meta name="twitter:description" content="参数配置查看所有参数1mysql&amp;gt; SHOW VARIABLES; 慢查询、索引相关的参数查看慢查询日志是否打开Usage: 1mysql&amp;gt; SHOW VARIABLES LIKE &amp;apos;%slow_query_log%&amp;apos;; Result:    Variable_name Value     slow_query_log OFF   slow_query_log_fi">
@@ -408,7 +408,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-03-23 20:40:49" itemprop="dateModified" datetime="2020-03-23T20:40:49+08:00">2020-03-23</time>
+                <time title="修改时间：2020-08-23 21:34:18" itemprop="dateModified" datetime="2020-08-23T21:34:18+08:00">2020-08-23</time>
               
             
           </span>
@@ -529,7 +529,7 @@
 <p>示例：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 得到返回记录集最多的10个SQL。</span></span><br><span class="line">mysqldumpslow -s r -t 10 /var/lib/mysql/izwz9ezwhlhq4hy1wzw9oqz-slow.log</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 得到访问次数最多的10个SQL</span></span><br><span class="line">mysqldumpslow -s c -t 10 /var/lib/mysql/izwz9ezwhlhq4hy1wzw9oqz-slow.log</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 得到按照时间排序的前10条里面含有左连接的查询语句。</span></span><br><span class="line">mysqldumpslow -s t -t 10 -g "left join" /var/lib/mysql/izwz9ezwhlhq4hy1wzw9oqz-slow.log</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 另外建议在使用这些命令时结合 | 和more 使用 ，否则有可能出现刷屏的情况。</span></span><br><span class="line">mysqldumpslow -s r -t 20 /var/lib/mysql/izwz9ezwhlhq4hy1wzw9oqz-slow.log | more</span><br></pre></td></tr></table></figure>
 <h4 id="刨析-MySQL-查询"><a href="#刨析-MySQL-查询" class="headerlink" title="刨析 MySQL 查询"></a>刨析 MySQL 查询</h4><p>在实际项目中，我们通过慢查询日志，只是找到对应的慢查询，那么如何对慢查询进行刨析呢？</p>
-<p>MySQL 在5.1版本之后引入了 <code>SHOW PROFILE</code> 命令，默认是禁用的，但可以在会话级别动态的修改。</p>
+<p>MySQL 在 5.1 版本之后引入了 <code>SHOW PROFILE</code> 命令，默认是禁用的，但可以在会话级别动态的修改。</p>
 <h5 id="开启"><a href="#开启" class="headerlink" title="开启"></a>开启</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-- 设置为 ON 或 1 均可</span><br><span class="line">mysql&gt; SET PROFILING = ON;</span><br></pre></td></tr></table></figure>
 <h5 id="刨析查询耗时"><a href="#刨析查询耗时" class="headerlink" title="刨析查询耗时"></a>刨析查询耗时</h5><p>开启之后执行任意一个查询，然后在执行 <code>SHOW PROFILING</code>，观察对应的结果。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SHOW PROFILING;</span><br></pre></td></tr></table></figure>
@@ -649,6 +649,7 @@
 </table>
 <h5 id="关闭事务自动提交"><a href="#关闭事务自动提交" class="headerlink" title="关闭事务自动提交"></a>关闭事务自动提交</h5><p>Useage:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-- 关闭事务自动提交</span><br><span class="line">mysql&gt; SET AUTOCOMMIT = OFF;</span><br></pre></td></tr></table></figure>
+
       
     </div>
 
@@ -793,7 +794,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">26</span>
+                    <span class="site-state-item-count">29</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -903,7 +904,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">36</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">39</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

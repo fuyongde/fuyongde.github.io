@@ -96,18 +96,18 @@
 
 
 
-  <meta name="description" content="镜像管理查询所需的镜像 Usage： docker search [OPTIONS] TERM  Options： -f --filter ：根据提供的条件过滤输出 --format ：使用Go模板进行漂亮的打印搜索 --limit ：最大搜索结果数（默认为25） --no-trunc：不要截断输出  Example：   1docker search mysql 安装镜像 Usage： dock">
+  <meta name="description" content="镜像管理查询所需的镜像 Usage： docker search [OPTIONS] TERM  Options： -f --filter ：根据提供的条件过滤输出 --format ：使用 Go 模板进行漂亮的打印搜索 --limit ：最大搜索结果数（默认为 25） --no-trunc：不要截断输出  Example：   1docker search mysql 安装镜像 Usage： d">
 <meta name="keywords" content="Docker">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Docker 手册">
 <meta property="og:url" content="https://fuyongde.github.io/2019/11/14/docker-手册/index.html">
 <meta property="og:site_name" content="傅永德 | 个人博客">
-<meta property="og:description" content="镜像管理查询所需的镜像 Usage： docker search [OPTIONS] TERM  Options： -f --filter ：根据提供的条件过滤输出 --format ：使用Go模板进行漂亮的打印搜索 --limit ：最大搜索结果数（默认为25） --no-trunc：不要截断输出  Example：   1docker search mysql 安装镜像 Usage： dock">
+<meta property="og:description" content="镜像管理查询所需的镜像 Usage： docker search [OPTIONS] TERM  Options： -f --filter ：根据提供的条件过滤输出 --format ：使用 Go 模板进行漂亮的打印搜索 --limit ：最大搜索结果数（默认为 25） --no-trunc：不要截断输出  Example：   1docker search mysql 安装镜像 Usage： d">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-03-24T13:54:49.927Z">
+<meta property="og:updated_time" content="2020-08-23T13:34:18.706Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Docker 手册">
-<meta name="twitter:description" content="镜像管理查询所需的镜像 Usage： docker search [OPTIONS] TERM  Options： -f --filter ：根据提供的条件过滤输出 --format ：使用Go模板进行漂亮的打印搜索 --limit ：最大搜索结果数（默认为25） --no-trunc：不要截断输出  Example：   1docker search mysql 安装镜像 Usage： dock">
+<meta name="twitter:description" content="镜像管理查询所需的镜像 Usage： docker search [OPTIONS] TERM  Options： -f --filter ：根据提供的条件过滤输出 --format ：使用 Go 模板进行漂亮的打印搜索 --limit ：最大搜索结果数（默认为 25） --no-trunc：不要截断输出  Example：   1docker search mysql 安装镜像 Usage： d">
 
 
 
@@ -408,7 +408,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2020-03-24 21:54:49" itemprop="dateModified" datetime="2020-03-24T21:54:49+08:00">2020-03-24</time>
+                <time title="修改时间：2020-08-23 21:34:18" itemprop="dateModified" datetime="2020-08-23T21:34:18+08:00">2020-08-23</time>
               
             
           </span>
@@ -466,8 +466,8 @@
 </li>
 <li><p>Options：</p>
 <p><code>-f --filter</code> ：根据提供的条件过滤输出</p>
-<p><code>--format</code> ：使用Go模板进行漂亮的打印搜索</p>
-<p><code>--limit</code> ：最大搜索结果数（默认为25）</p>
+<p><code>--format</code> ：使用 Go 模板进行漂亮的打印搜索</p>
+<p><code>--limit</code> ：最大搜索结果数（默认为 25）</p>
 <p><code>--no-trunc</code>：不要截断输出</p>
 </li>
 <li><p>Example：</p>
@@ -480,7 +480,7 @@
 </li>
 <li><p>Options：</p>
 <p><code>-a --all-tags</code>：下载存储库中的所有标记镜像</p>
-<p><code>--disable-content-trust</code>：跳过图像验证（默认为true）</p>
+<p><code>--disable-content-trust</code>：跳过图像验证（默认为 true）</p>
 </li>
 <li><p>Example：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 安装MySQL的5.7.24版本</span><br><span class="line">docker pull mysql:5.7.24</span><br><span class="line"><span class="meta">#</span> 缺省TAG时默认安装最新版本</span><br><span class="line">docker pull mysql</span><br><span class="line"><span class="meta">#</span> 安装所有版本</span><br><span class="line">docker pull -a mysql</span><br><span class="line"><span class="meta">#</span> 安装zookeeper</span><br><span class="line">docker pull zookeeper</span><br></pre></td></tr></table></figure>
@@ -489,12 +489,12 @@
 <h3 id="查看镜像信息"><a href="#查看镜像信息" class="headerlink" title="查看镜像信息"></a>查看镜像信息</h3><p>Usage：</p>
 <p><code>docker images [OPTIONS] [REPOSITORY[:TAG]]</code></p>
 <p>Options:</p>
-<p><code>-a, --all</code>：展示全部镜像<br>​    <code>--digests</code>：展示镜像的哈希值<br><code>-f, --filter filter</code>：根据提供的条件过滤输出<br>​    <code>--format string</code>：使用Go模板的漂亮打印图像<br>​    <code>--no-trunc</code>：不要截断输出<br><code>-q, --quiet</code>：仅显示数字ID</p>
+<p><code>-a, --all</code>：展示全部镜像<br>​ <code>--digests</code>：展示镜像的哈希值<br><code>-f, --filter filter</code>：根据提供的条件过滤输出<br>​ <code>--format string</code>：使用 Go 模板的漂亮打印图像<br>​ <code>--no-trunc</code>：不要截断输出<br><code>-q, --quiet</code>：仅显示数字 ID</p>
 <p>Example:</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 查看所有的进行信息</span><br><span class="line">docker images -a</span><br></pre></td></tr></table></figure>
 <h3 id="删除镜像"><a href="#删除镜像" class="headerlink" title="删除镜像"></a>删除镜像</h3><p>Usage：</p>
 <p><code>docker rmi [OPTIONS] IMAGE [IMAGE...]</code></p>
-<p>Options:<br> <code>-f, --force</code>：强制删除某个镜像<br> <code>--no-prune</code> ：不删除未标记的父类</p>
+<p>Options:<br><code>-f, --force</code>：强制删除某个镜像<br><code>--no-prune</code> ：不删除未标记的父类</p>
 <p>Example：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 删除id为cd14cecfdb3a的镜像</span><br><span class="line">docker rmi cd14cecfdb3a</span><br><span class="line"><span class="meta">#</span> 删除jenkins镜像</span><br><span class="line">docker rmi jenkins</span><br></pre></td></tr></table></figure>
 <h2 id="容器管理"><a href="#容器管理" class="headerlink" title="容器管理"></a>容器管理</h2><h3 id="查看容器"><a href="#查看容器" class="headerlink" title="查看容器"></a>查看容器</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 查看所有正在运行的容器</span><br><span class="line">docker ps</span><br><span class="line"><span class="meta">#</span> 查看所有容器</span><br><span class="line">docker ps -a</span><br><span class="line">查看所有容器ID</span><br><span class="line">docker ps -a -q</span><br></pre></td></tr></table></figure>
@@ -508,7 +508,7 @@
 <h3 id="删除容器"><a href="#删除容器" class="headerlink" title="删除容器"></a>删除容器</h3><p><code>docker rm [containerId]</code></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 删除id为1e4b2a31028d的容器</span><br><span class="line">docker rm 1e4b2a31028d</span><br></pre></td></tr></table></figure>
 <h3 id="重命名容器"><a href="#重命名容器" class="headerlink" title="重命名容器"></a>重命名容器</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 将docker-mysql重命名为mysql</span><br><span class="line">docker rename docker-mysql mysql</span><br></pre></td></tr></table></figure>
-<h2 id="其他命令"><a href="#其他命令" class="headerlink" title="其他命令"></a>其他命令</h2><h3 id="进入到一个容器"><a href="#进入到一个容器" class="headerlink" title="进入到一个容器"></a>进入到一个容器</h3><p>通常我们使用的docker镜像一般是基于 <code>Linux</code>，则可以通过下面的方式进入到 docker 容器内:</p>
+<h2 id="其他命令"><a href="#其他命令" class="headerlink" title="其他命令"></a>其他命令</h2><h3 id="进入到一个容器"><a href="#进入到一个容器" class="headerlink" title="进入到一个容器"></a>进入到一个容器</h3><p>通常我们使用的 docker 镜像一般是基于 <code>Linux</code>，则可以通过下面的方式进入到 docker 容器内:</p>
 <p><code>docker exec -it 063caee1d235 /bin/bash</code></p>
 <p>但是对于<code>Alpinelinux</code>，则需：</p>
 <p><code>docker exec -it 063caee1d235 sh</code></p>
@@ -659,7 +659,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">26</span>
+                    <span class="site-state-item-count">29</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -769,7 +769,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">36</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">39</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
