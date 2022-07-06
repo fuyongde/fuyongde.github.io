@@ -15,12 +15,12 @@
 
 
 
-<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://unpkg.com/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://unpkg.com/pace-js@1.2.4/themes/blue/pace-theme-minimal.css">
-  <script src="https://unpkg.com/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.sourcegcdn.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.sourcegcdn.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.sourcegcdn.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.sourcegcdn.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"fuyongde.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.12.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"fuyongde.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.12.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="zsh 可能是目前最好用的终端。 安装Mac OSMacOS 自带 zsh，并且当前最新版本 MasOS 默认终端即为 zsh Ubuntu使用 sudo apt install zsh 命令即可安装 zsh CentOS使用 sudo yum install zsh 命令即可安装 zsh 在安装好 zsh 之后，第一次使用的时候，会有如下的提示： 123456789101112131415161">
 <meta property="og:type" content="article">
@@ -82,6 +82,7 @@
 
   <div class="site-nav-right">
     <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -89,12 +90,38 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
   </ul>
 </nav>
 
 
 
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
 
 </div>
         
@@ -271,23 +298,29 @@
 <h3 id="Ubuntu"><a href="#Ubuntu" class="headerlink" title="Ubuntu"></a>Ubuntu</h3><p>使用 <code>sudo apt install zsh</code> 命令即可安装 zsh</p>
 <h3 id="CentOS"><a href="#CentOS" class="headerlink" title="CentOS"></a>CentOS</h3><p>使用 <code>sudo yum install zsh</code> 命令即可安装 zsh</p>
 <p>在安装好 zsh 之后，第一次使用的时候，会有如下的提示：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">This is the Z Shell configuration function for new users,</span><br><span class="line">zsh-newuser-install.</span><br><span class="line">You are seeing this message because you have no zsh startup files</span><br><span class="line">(the files .zshenv, .zprofile, .zshrc, .zlogin in the directory</span><br><span class="line">~).  This function can help you with a few settings that should</span><br><span class="line">make your use of the shell easier.</span><br><span class="line"></span><br><span class="line">You can:</span><br><span class="line"></span><br><span class="line">(q)  Quit and do nothing.  The function will be run again next time.</span><br><span class="line"></span><br><span class="line">(0)  Exit, creating the file ~/.zshrc containing just a comment.</span><br><span class="line">     That will prevent this function being run again.</span><br><span class="line"></span><br><span class="line">(1)  Continue to the main menu.</span><br><span class="line"></span><br><span class="line">(2)  Populate your ~/.zshrc with the configuration recommended</span><br><span class="line">     by the system administrator and exit (you will need to edit</span><br><span class="line">     the file by hand, if so desired).</span><br><span class="line"></span><br><span class="line">--- Type one of the keys in parentheses ---</span><br></pre></td></tr></table></figure>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">This is the Z Shell configuration function for new users,</span><br><span class="line">zsh-newuser-install.</span><br><span class="line">You are seeing this message because you have no zsh startup files</span><br><span class="line">(the files .zshenv, .zprofile, .zshrc, .zlogin in the directory</span><br><span class="line">~).  This function can help you with a few settings that should</span><br><span class="line">make your use of the shell easier.</span><br><span class="line"></span><br><span class="line">You can:</span><br><span class="line"></span><br><span class="line">(q)  Quit and do nothing.  The function will be run again next time.</span><br><span class="line"></span><br><span class="line">(0)  Exit, creating the file ~/.zshrc containing just a comment.</span><br><span class="line">     That will prevent this function being run again.</span><br><span class="line"></span><br><span class="line">(1)  Continue to the main menu.</span><br><span class="line"></span><br><span class="line">(2)  Populate your ~/.zshrc with the configuration recommended</span><br><span class="line">     by the system administrator and exit (you will need to edit</span><br><span class="line">     the file by hand, if so desired).</span><br><span class="line"></span><br><span class="line">--- Type one of the keys in parentheses ---</span><br></pre></td></tr></table></figure>
+
 <p>这里我推荐直接使用选项 (2)，通过 <code>~/.zshrc</code> 文件来配置我们的 zsh。</p>
 <h3 id="查看-zsh-版本"><a href="#查看-zsh-版本" class="headerlink" title="查看 zsh 版本"></a>查看 zsh 版本</h3><p>使用 <code>zsh --version</code> 命令即可查看 zsh 的版本。</p>
 <h3 id="将-zsh-设置为默认的-shell"><a href="#将-zsh-设置为默认的-shell" class="headerlink" title="将 zsh 设置为默认的 shell"></a>将 zsh 设置为默认的 shell</h3><p>使用 <code>chsh -s /bin/zsh root</code> 即可将 root 用户的默认 shell 设置为 zsh，如需为其他用户设置默认的 shell，将 <code>root</code> 替换为其他用户名即可。</p>
 <h3 id="查看默认的-shell"><a href="#查看默认的-shell" class="headerlink" title="查看默认的 shell"></a>查看默认的 shell</h3><p>使用 <code>echo $SHELL</code> 命令即可查看默认的 shell</p>
 <h3 id="查看当前正在使用的-shell"><a href="#查看当前正在使用的-shell" class="headerlink" title="查看当前正在使用的 shell"></a>查看当前正在使用的 shell</h3><p>使用 <code>echo $0</code> 命令即可查看当前正在使用的 shell</p>
 <h2 id="使用-oh-my-zsh-美化-zsh"><a href="#使用-oh-my-zsh-美化-zsh" class="headerlink" title="使用 oh-my-zsh 美化 zsh"></a>使用 oh-my-zsh 美化 zsh</h2><h3 id="安装-oh-my-zsh"><a href="#安装-oh-my-zsh" class="headerlink" title="安装 oh-my-zsh"></a>安装 oh-my-zsh</h3><p>打开 oh-my-zsh 官网，直接使用官网提供的命令，即可安装 oh-my-zsh，命令如下（任选其一即可）：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 使用 curl 下载</span><br><span class="line">sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> 或者使用</span><br><span class="line">sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">使用 curl 下载</span></span><br><span class="line">sh -c &quot;$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)&quot;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">或者使用</span></span><br><span class="line">sh -c &quot;$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)&quot;</span><br></pre></td></tr></table></figure>
+
 <p>对于国内的用户，上面命令下载 install.sh 可能存在连接超时的问题，我们可以替换为 gitee 的镜像来进行下载，命令如下：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://gitee.com/mirrors/oh-my-zsh/raw/master/tools/install.sh</span><br></pre></td></tr></table></figure>
+
 <p>下载之后，使用 <code>sh install.sh</code> 来安装 oh-my-zsh，如果在 clone oh-my-zsh 过程仍然连接超时的情况下，可以通过替换 install.sh 脚本中的仓库地址来进行加速。</p>
 <p>将脚本中的如下内容</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">REPO=$&#123;REPO:-ohmyzsh/ohmyzsh&#125;</span><br><span class="line">REMOTE=$&#123;REMOTE:-https://github.com/$&#123;REPO&#125;.git&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">REPO=$&#123;REPO:-ohmyzsh/ohmyzsh&#125;</span><br><span class="line">REMOTE=$&#123;REMOTE:-https://github.com/$&#123;REPO&#125;.git&#125;</span><br></pre></td></tr></table></figure>
+
 <p>替换为</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">REPO=$&#123;REPO:-mirrors/oh-my-zsh&#125;</span><br><span class="line">REMOTE=$&#123;REMOTE:-https://gitee.com/$&#123;REPO&#125;.git&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">REPO=$&#123;REPO:-mirrors/oh-my-zsh&#125;</span><br><span class="line">REMOTE=$&#123;REMOTE:-https://gitee.com/$&#123;REPO&#125;.git&#125;</span><br></pre></td></tr></table></figure>
+
 <h3 id="配置-oh-my-zsh-主题"><a href="#配置-oh-my-zsh-主题" class="headerlink" title="配置 oh-my-zsh 主题"></a>配置 oh-my-zsh 主题</h3><p>修改 <code>~/.zshrc</code> 文件，找到 ZSH_THEME 的选项，修改为自己喜欢的，笔者喜欢使用 ys 主题，其配置如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ZSH_THEME=&quot;ys&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ZSH_THEME=&quot;ys&quot;</span><br></pre></td></tr></table></figure>
+
 <p>如果你比较喜欢每次打开终端都体验不一样的主题的话，可以使用 random 主题。</p>
 <h3 id="安装常用的插件"><a href="#安装常用的插件" class="headerlink" title="安装常用的插件"></a>安装常用的插件</h3><p>下面列举一些非常实用的插件</p>
 <ul>
@@ -297,9 +330,11 @@
 </li>
 </ul>
 <p>可以使用如下命令来安装插件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 安装 zsh-syntax-highlighting</span><br><span class="line">git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;/plugins/zsh-syntax-highlighting</span><br><span class="line"></span><br><span class="line"># 安装 zsh-autosuggestions</span><br><span class="line">git clone https://github.com/zsh-users/zsh-autosuggestions $&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;/plugins/zsh-autosuggestions</span><br></pre></td></tr></table></figure>
-<p>修改 ~/.zshrc 中插件的配置</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">plugins=(git zsh-syntax-highlighting zsh-autosuggestions)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 安装 zsh-syntax-highlighting</span><br><span class="line">git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;/plugins/zsh-syntax-highlighting</span><br><span class="line"></span><br><span class="line"># 安装 zsh-autosuggestions</span><br><span class="line">git clone https://github.com/zsh-users/zsh-autosuggestions $&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;/plugins/zsh-autosuggestions</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>修改 ~&#x2F;.zshrc 中插件的配置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">plugins=(git zsh-syntax-highlighting zsh-autosuggestions)</span><br></pre></td></tr></table></figure>
+
 <p>然后使用 <code>source ~/.zshrc</code> 来使配置生效</p>
 
     </div>
@@ -374,10 +409,12 @@
   </footer>
 
   
-  <script src="https://unpkg.com/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.sourcegcdn.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
 <script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
 
   
+<script src="https://cdnjs.sourcegcdn.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
 
 
 

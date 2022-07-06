@@ -15,19 +15,19 @@
 
 
 
-<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://unpkg.com/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://unpkg.com/pace-js@1.2.4/themes/blue/pace-theme-minimal.css">
-  <script src="https://unpkg.com/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.sourcegcdn.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.sourcegcdn.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.sourcegcdn.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.sourcegcdn.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"fuyongde.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.12.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"fuyongde.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.12.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="curl 是十分常用的命令，通常我们用这个命令来请求 Web 服务器。一些常见的构造 HTTP 请求的客户端（如 Postman）关于项目协作的功能都是商业化版本才有的，团队开发过程中通过维护接口的 curl 命令脚本可以低成本的代替一些商业化软件的功能。 下面介绍一下 curl 命令的常见用法。 基础用法请求一个 URL1curl http:&#x2F;&#x2F;www.baidu.com&#x2F; -X使用 -X 参数">
+    <meta name="description" content="curl 是十分常用的命令，通常我们用这个命令来请求 Web 服务器。一些常见的构造 HTTP 请求的客户端（如 Postman）关于项目协作的功能都是商业化版本才有的，团队开发过程中通过维护接口的 curl 命令脚本可以低成本的代替一些商业化软件的功能。 下面介绍一下 curl 命令的常见用法。 基础用法请求一个 URL1curl http:&#x2F;&#x2F;www.baidu.com&#x2F;  -X使用 -X 参">
 <meta property="og:type" content="article">
 <meta property="og:title" content="curl-command 手册">
 <meta property="og:url" content="https://fuyongde.github.io/2019/10/24/curl-command-%E6%89%8B%E5%86%8C/index.html">
 <meta property="og:site_name" content="傅永德 | 个人博客">
-<meta property="og:description" content="curl 是十分常用的命令，通常我们用这个命令来请求 Web 服务器。一些常见的构造 HTTP 请求的客户端（如 Postman）关于项目协作的功能都是商业化版本才有的，团队开发过程中通过维护接口的 curl 命令脚本可以低成本的代替一些商业化软件的功能。 下面介绍一下 curl 命令的常见用法。 基础用法请求一个 URL1curl http:&#x2F;&#x2F;www.baidu.com&#x2F; -X使用 -X 参数">
+<meta property="og:description" content="curl 是十分常用的命令，通常我们用这个命令来请求 Web 服务器。一些常见的构造 HTTP 请求的客户端（如 Postman）关于项目协作的功能都是商业化版本才有的，团队开发过程中通过维护接口的 curl 命令脚本可以低成本的代替一些商业化软件的功能。 下面介绍一下 curl 命令的常见用法。 基础用法请求一个 URL1curl http:&#x2F;&#x2F;www.baidu.com&#x2F;  -X使用 -X 参">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-10-24T02:40:15.000Z">
 <meta property="article:modified_time" content="2021-08-24T10:31:49.130Z">
@@ -82,6 +82,7 @@
 
   <div class="site-nav-right">
     <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -89,12 +90,38 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
   </ul>
 </nav>
 
 
 
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
 
 </div>
         
@@ -269,41 +296,58 @@
         <p>curl 是十分常用的命令，通常我们用这个命令来请求 Web 服务器。一些常见的构造 HTTP 请求的客户端（如 Postman）关于项目协作的功能都是商业化版本才有的，团队开发过程中通过维护接口的 curl 命令脚本可以低成本的代替一些商业化软件的功能。</p>
 <p>下面介绍一下 curl 命令的常见用法。</p>
 <h2 id="基础用法"><a href="#基础用法" class="headerlink" title="基础用法"></a>基础用法</h2><h3 id="请求一个-URL"><a href="#请求一个-URL" class="headerlink" title="请求一个 URL"></a>请求一个 URL</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl http://www.baidu.com/</span><br></pre></td></tr></table></figure>
+
 <h3 id="X"><a href="#X" class="headerlink" title="-X"></a>-X</h3><p>使用 -X 参数可以指定 HTTP Method</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -X POST http://www.baidu.com/</span><br></pre></td></tr></table></figure>
+
 <h3 id="H-–header"><a href="#H-–header" class="headerlink" title="-H, –header"></a>-H, –header</h3><p>使用 -H 或者 –header 参数可以添加 HTTP 的请求头</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -H "Content-Type:application/json" http://www.baidu.com/</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -H &quot;Content-Type:application/json&quot; http://www.baidu.com/</span><br></pre></td></tr></table></figure>
+
 <h3 id="d-–data"><a href="#d-–data" class="headerlink" title="-d, –data"></a>-d, –data</h3><p>使用 -d 或 –data 可以发送 HTTP 的请求参数，可以是 form 表单，也可以是二进制的 request body</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 发送 form 表单</span></span><br><span class="line">curl -X POST -d "name=jasonfu&amp;age=20&amp;birthday=1990/06/01" "http://localhost:8080/http/post?type=form"</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 也可以使用多个 -d 参数</span></span><br><span class="line">curl -X POST -d "name=jasonfu" -d "age=20" -d "birthday=1990/06/01" "http://localhost:8080/http/post?type=form"</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">## 发送 request body</span></span></span><br><span class="line">curl -X POST -H "Content-Type:application/json" -d "&#123;\"name\":\"jasonfu\",\"age\":19,\"birthday\":12345678911&#125;" "http://localhost:8080/http/post?type=body"</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">发送 form 表单</span></span><br><span class="line">curl -X POST -d &quot;name=jasonfu&amp;age=20&amp;birthday=1990/06/01&quot; &quot;http://localhost:8080/http/post?type=form&quot;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">也可以使用多个 -d 参数</span></span><br><span class="line">curl -X POST -d &quot;name=jasonfu&quot; -d &quot;age=20&quot; -d &quot;birthday=1990/06/01&quot; &quot;http://localhost:8080/http/post?type=form&quot;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">## 发送 request body</span></span></span><br><span class="line">curl -X POST -H &quot;Content-Type:application/json&quot; -d &quot;&#123;\&quot;name\&quot;:\&quot;jasonfu\&quot;,\&quot;age\&quot;:19,\&quot;birthday\&quot;:12345678911&#125;&quot; &quot;http://localhost:8080/http/post?type=body&quot;</span><br></pre></td></tr></table></figure>
+
 <h3 id="F-–form"><a href="#F-–form" class="headerlink" title="-F, –form"></a>-F, –form</h3><p>使用 -F 或 –form 参数可以上传文件</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">## 上传文件</span></span></span><br><span class="line">curl -F "file=@alias.bat" -X POST "http://localhost:8080/http/post?type=upload"</span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">## 上传文件 带参数</span></span></span><br><span class="line">curl --form "file=@alias.bat" --form "id=1" -X POST "http://localhost:8080/http/post?type=upload"</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">## 上传文件</span></span></span><br><span class="line">curl -F &quot;file=@alias.bat&quot; -X POST &quot;http://localhost:8080/http/post?type=upload&quot;</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">## 上传文件 带参数</span></span></span><br><span class="line">curl --form &quot;file=@alias.bat&quot; --form &quot;id=1&quot; -X POST &quot;http://localhost:8080/http/post?type=upload&quot;</span><br></pre></td></tr></table></figure>
+
 <h2 id="进阶用法"><a href="#进阶用法" class="headerlink" title="进阶用法"></a>进阶用法</h2><h3 id="i-I"><a href="#i-I" class="headerlink" title="-i, -I"></a>-i, -I</h3><p>使用 -i 参数可以输出 HTTP 的相应头</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -i http://www.baidu.com/</span><br></pre></td></tr></table></figure>
+
 <p>使用 -I 参数只输出 HTTP 的相应头</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -I http://www.baidu.com/</span><br></pre></td></tr></table></figure>
+
 <h3 id="e-–referer"><a href="#e-–referer" class="headerlink" title="-e, –referer"></a>-e, –referer</h3><p>使用 -e 或者 –referer 参数可以在 HTTP 请求头中添加 referer 字段，标识从哪里跳转过来的</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl --referer http://www.baidu.com/ http://www.qq.com/</span><br></pre></td></tr></table></figure>
+
 <h3 id="A-–user-agent"><a href="#A-–user-agent" class="headerlink" title="-A, –user-agent"></a>-A, –user-agent</h3><p>使用 -A 或者 –user-agent 参数可以指定 HTTP 请求头中的 User-Agent 字段</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl --user-agent curl-client http://www.baidu.com/</span><br></pre></td></tr></table></figure>
+
 <h3 id="cookie"><a href="#cookie" class="headerlink" title="cookie"></a>cookie</h3><p>使用 -b 或者 –cookie 可以发送 cookie 给 Web 服务器。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl --cookie "user=fuyongde" http://www.baidu.com/</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl --cookie &quot;user=fuyongde&quot; http://www.baidu.com/</span><br></pre></td></tr></table></figure>
+
 <p>使用 -c 参数可以保存服务端返回的 cookie 到指定的文件</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -c baidu-cookie.txt http://www.baidu.com/</span><br></pre></td></tr></table></figure>
+
 <h3 id="显示通信过程"><a href="#显示通信过程" class="headerlink" title="显示通信过程"></a>显示通信过程</h3><p>使用 -v 或者 –verbose 参数可以展示完整的 HTTP 通信过程</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -v http://www.baidu.com/</span><br></pre></td></tr></table></figure>
+
 <p>使用 –trace 或者 –trace-ascii 参数可以展示更详细的通信过程</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl --trace tract.txt http://www.baidu.com/</span><br></pre></td></tr></table></figure>
+
 <h3 id="保存响应"><a href="#保存响应" class="headerlink" title="保存响应"></a>保存响应</h3><p>使用 -o 或者 -O 参数可以将 http 相应保存为文件，区别在于 -o 可以指定文件名，-O 则是使用 URL 中最后一段 path 作为文件名来进行保存，其下载文件的效果等同于 <code>wget</code> 命令。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 将 http://www.baidu.com/ 响应保存至文件 baidu.html 中</span><br><span class="line">curl -o baidu.html http://www.baidu.com/</span><br><span class="line"># 将 http://localhost:8080/ping 响应保存至文件 ping 中</span><br><span class="line">curl -O http://localhost:8080/ping</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 将 http://www.baidu.com/ 响应保存至文件 baidu.html 中</span><br><span class="line">curl -o baidu.html http://www.baidu.com/</span><br><span class="line"># 将 http://localhost:8080/ping 响应保存至文件 ping 中</span><br><span class="line">curl -O http://localhost:8080/ping</span><br></pre></td></tr></table></figure>
+
 <h3 id="使用代理"><a href="#使用代理" class="headerlink" title="使用代理"></a>使用代理</h3><p>一些 Web 服务器是仅支持某些特定的 ip 来访问的，这种情况下，我们就需要使用代理来发送我们的 HTTP 请求，使用 -x 参数可以指定代理服务器来发送我们的请求。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 使用 socks5 协议的代理服务器来发送请求</span></span><br><span class="line">curl -x socks5://username:password@proxyhost:8080 http://www.baidu.com/</span><br><span class="line"><span class="meta">#</span><span class="bash"> 默认情况下使用 http 协议的代理服务器来发送请求</span></span><br><span class="line">curl -x username:password@proxyhost:8080 http://www.baidu.com/</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">使用 socks5 协议的代理服务器来发送请求</span></span><br><span class="line">curl -x socks5://username:password@proxyhost:8080 http://www.baidu.com/</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">默认情况下使用 http 协议的代理服务器来发送请求</span></span><br><span class="line">curl -x username:password@proxyhost:8080 http://www.baidu.com/</span><br></pre></td></tr></table></figure>
+
 <h3 id="L-–location"><a href="#L-–location" class="headerlink" title="-L, –location"></a>-L, –location</h3><p>对于一些 HTTP 响应码为 302 的情况，可以使用 -L 或者 –location 参数来实现自动跳转的效果</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -L -i http://localhost:8080/http/redirect</span><br></pre></td></tr></table></figure>
+
 <p>其输出如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 302</span><br><span class="line">Location: http://localhost:8080/http/get/jasonfu</span><br><span class="line">Content-Length: 0</span><br><span class="line">Date: Tue, 24 Aug 2021 10:22:10 GMT</span><br><span class="line"></span><br><span class="line">HTTP/1.1 200</span><br><span class="line">Content-Type: application/json</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line">Date: Tue, 24 Aug 2021 10:22:10 GMT</span><br><span class="line"></span><br><span class="line">&#123;&quot;name&quot;:&quot;jasonfu&quot;,&quot;age&quot;:18,&quot;birthday&quot;:&quot;2021-08-24T10:22:10.713+00:00&quot;&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 302</span><br><span class="line">Location: http://localhost:8080/http/get/jasonfu</span><br><span class="line">Content-Length: 0</span><br><span class="line">Date: Tue, 24 Aug 2021 10:22:10 GMT</span><br><span class="line"></span><br><span class="line">HTTP/1.1 200</span><br><span class="line">Content-Type: application/json</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line">Date: Tue, 24 Aug 2021 10:22:10 GMT</span><br><span class="line"></span><br><span class="line">&#123;&quot;name&quot;:&quot;jasonfu&quot;,&quot;age&quot;:18,&quot;birthday&quot;:&quot;2021-08-24T10:22:10.713+00:00&quot;&#125;</span><br></pre></td></tr></table></figure>
+
 <p>可以看到已经实现了自动跳转的效果</p>
 <h3 id="–limit-rate"><a href="#–limit-rate" class="headerlink" title="–limit-rate"></a>–limit-rate</h3><p>使用 –limit-rate 参数可以限制访问 HTTP 请求和响应的带宽。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 将带宽限制为每秒 1k 字节</span></span><br><span class="line">curl --limit-rate 1k http://www.baidu.com/</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">将带宽限制为每秒 1k 字节</span></span><br><span class="line">curl --limit-rate 1k http://www.baidu.com/</span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -377,10 +421,12 @@
   </footer>
 
   
-  <script src="https://unpkg.com/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.sourcegcdn.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
 <script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
 
   
+<script src="https://cdnjs.sourcegcdn.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
 
 
 

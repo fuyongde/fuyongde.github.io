@@ -15,19 +15,19 @@
 
 
 
-<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://unpkg.com/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://unpkg.com/pace-js@1.2.4/themes/blue/pace-theme-minimal.css">
-  <script src="https://unpkg.com/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.sourcegcdn.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.sourcegcdn.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.sourcegcdn.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.sourcegcdn.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"fuyongde.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.12.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"fuyongde.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.12.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="镜像管理查询所需的镜像 Usage： docker search [OPTIONS] TERM  Options： -f --filter ：根据提供的条件过滤输出 --format ：使用 Go 模板进行漂亮的打印搜索 --limit ：最大搜索结果数（默认为 25） --no-trunc：不要截断输出  Example：   1docker search mysql 安装镜像 Usage： d">
+    <meta name="description" content="镜像管理查询所需的镜像 Usage： docker search [OPTIONS] TERM  Options： -f --filter ：根据提供的条件过滤输出 --format ：使用 Go 模板进行漂亮的打印搜索 --limit ：最大搜索结果数（默认为 25） --no-trunc：不要截断输出  Example：   1docker search mysql  安装镜像 Usage：">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Docker 手册">
 <meta property="og:url" content="https://fuyongde.github.io/2019/11/14/docker-%E6%89%8B%E5%86%8C/index.html">
 <meta property="og:site_name" content="傅永德 | 个人博客">
-<meta property="og:description" content="镜像管理查询所需的镜像 Usage： docker search [OPTIONS] TERM  Options： -f --filter ：根据提供的条件过滤输出 --format ：使用 Go 模板进行漂亮的打印搜索 --limit ：最大搜索结果数（默认为 25） --no-trunc：不要截断输出  Example：   1docker search mysql 安装镜像 Usage： d">
+<meta property="og:description" content="镜像管理查询所需的镜像 Usage： docker search [OPTIONS] TERM  Options： -f --filter ：根据提供的条件过滤输出 --format ：使用 Go 模板进行漂亮的打印搜索 --limit ：最大搜索结果数（默认为 25） --no-trunc：不要截断输出  Example：   1docker search mysql  安装镜像 Usage：">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-11-14T09:31:52.000Z">
 <meta property="article:modified_time" content="2020-08-28T03:55:48.916Z">
@@ -80,6 +80,7 @@
 
   <div class="site-nav-right">
     <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -87,12 +88,38 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
   </ul>
 </nav>
 
 
 
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
 
 </div>
         
@@ -278,6 +305,7 @@
 </li>
 </ul>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker search mysql</span><br></pre></td></tr></table></figure>
+
 <h3 id="安装镜像"><a href="#安装镜像" class="headerlink" title="安装镜像"></a>安装镜像</h3><ul>
 <li><p>Usage：</p>
 <p><code>docker pull [OPTIONS] NAME[:TAG|@DIGEST]</code></p>
@@ -287,31 +315,38 @@
 <p><code>--disable-content-trust</code>：跳过图像验证（默认为 true）</p>
 </li>
 <li><p>Example：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 安装MySQL的5.7.24版本</span><br><span class="line">docker pull mysql:5.7.24</span><br><span class="line"><span class="meta">#</span> 缺省TAG时默认安装最新版本</span><br><span class="line">docker pull mysql</span><br><span class="line"><span class="meta">#</span> 安装所有版本</span><br><span class="line">docker pull -a mysql</span><br><span class="line"><span class="meta">#</span> 安装zookeeper</span><br><span class="line">docker pull zookeeper</span><br></pre></td></tr></table></figure>
-</li>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安装MySQL的5.7.24版本</span></span><br><span class="line">docker pull mysql:5.7.24</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">缺省TAG时默认安装最新版本</span></span><br><span class="line">docker pull mysql</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安装所有版本</span></span><br><span class="line">docker pull -a mysql</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安装zookeeper</span></span><br><span class="line">docker pull zookeeper</span><br></pre></td></tr></table></figure></li>
 </ul>
 <h3 id="查看镜像信息"><a href="#查看镜像信息" class="headerlink" title="查看镜像信息"></a>查看镜像信息</h3><p>Usage：</p>
 <p><code>docker images [OPTIONS] [REPOSITORY[:TAG]]</code></p>
 <p>Options:</p>
 <p><code>-a, --all</code>：展示全部镜像<br>​ <code>--digests</code>：展示镜像的哈希值<br><code>-f, --filter filter</code>：根据提供的条件过滤输出<br>​ <code>--format string</code>：使用 Go 模板的漂亮打印图像<br>​ <code>--no-trunc</code>：不要截断输出<br><code>-q, --quiet</code>：仅显示数字 ID</p>
 <p>Example:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 查看所有的进行信息</span><br><span class="line">docker images -a</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看所有的进行信息</span></span><br><span class="line">docker images -a</span><br></pre></td></tr></table></figure>
+
 <h3 id="删除镜像"><a href="#删除镜像" class="headerlink" title="删除镜像"></a>删除镜像</h3><p>Usage：</p>
 <p><code>docker rmi [OPTIONS] IMAGE [IMAGE...]</code></p>
 <p>Options:<br><code>-f, --force</code>：强制删除某个镜像<br><code>--no-prune</code> ：不删除未标记的父类</p>
 <p>Example：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 删除id为cd14cecfdb3a的镜像</span><br><span class="line">docker rmi cd14cecfdb3a</span><br><span class="line"><span class="meta">#</span> 删除jenkins镜像</span><br><span class="line">docker rmi jenkins</span><br></pre></td></tr></table></figure>
-<h2 id="容器管理"><a href="#容器管理" class="headerlink" title="容器管理"></a>容器管理</h2><h3 id="查看容器"><a href="#查看容器" class="headerlink" title="查看容器"></a>查看容器</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 查看所有正在运行的容器</span><br><span class="line">docker ps</span><br><span class="line"><span class="meta">#</span> 查看所有容器</span><br><span class="line">docker ps -a</span><br><span class="line">查看所有容器ID</span><br><span class="line">docker ps -a -q</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">删除<span class="built_in">id</span>为cd14cecfdb3a的镜像</span></span><br><span class="line">docker rmi cd14cecfdb3a</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">删除jenkins镜像</span></span><br><span class="line">docker rmi jenkins</span><br></pre></td></tr></table></figure>
+
+<h2 id="容器管理"><a href="#容器管理" class="headerlink" title="容器管理"></a>容器管理</h2><h3 id="查看容器"><a href="#查看容器" class="headerlink" title="查看容器"></a>查看容器</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看所有正在运行的容器</span></span><br><span class="line">docker ps</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看所有容器</span></span><br><span class="line">docker ps -a</span><br><span class="line">查看所有容器ID</span><br><span class="line">docker ps -a -q</span><br></pre></td></tr></table></figure>
+
 <h3 id="启动容器"><a href="#启动容器" class="headerlink" title="启动容器"></a>启动容器</h3><p><code>docker run IMG</code></p>
 <p>Example：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 启动MySQL</span><br><span class="line">docker run -p 3306:3306 --name MySQL -e MYSQL_ROOT_PASSWORD=fuyongde mysql:5.7.24</span><br><span class="line"><span class="meta">#</span> 启动zookeeper</span><br><span class="line">docker run -p 2181:2181 --name zookeeper zookeeper</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">启动MySQL</span></span><br><span class="line">docker run -p 3306:3306 --name MySQL -e MYSQL_ROOT_PASSWORD=fuyongde mysql:5.7.24</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">启动zookeeper</span></span><br><span class="line">docker run -p 2181:2181 --name zookeeper zookeeper</span><br></pre></td></tr></table></figure>
+
 <h3 id="停止容器"><a href="#停止容器" class="headerlink" title="停止容器"></a>停止容器</h3><p><code>docker stop [containerId]</code>：停止容器</p>
 <p>Example:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 删除id为8fcc3dad236a的容器</span><br><span class="line">docker rm 8fcc3dad236a</span><br></pre></td></tr></table></figure>
-<h3 id="重启容器"><a href="#重启容器" class="headerlink" title="重启容器"></a>重启容器</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 重启id为1e4b2a31028d的容器</span><br><span class="line">docker restart 1e4b2a31028d</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">删除<span class="built_in">id</span>为8fcc3dad236a的容器</span></span><br><span class="line">docker rm 8fcc3dad236a</span><br></pre></td></tr></table></figure>
+
+<h3 id="重启容器"><a href="#重启容器" class="headerlink" title="重启容器"></a>重启容器</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">重启<span class="built_in">id</span>为1e4b2a31028d的容器</span></span><br><span class="line">docker restart 1e4b2a31028d</span><br></pre></td></tr></table></figure>
+
 <h3 id="删除容器"><a href="#删除容器" class="headerlink" title="删除容器"></a>删除容器</h3><p><code>docker rm [containerId]</code></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 删除id为1e4b2a31028d的容器</span><br><span class="line">docker rm 1e4b2a31028d</span><br></pre></td></tr></table></figure>
-<h3 id="重命名容器"><a href="#重命名容器" class="headerlink" title="重命名容器"></a>重命名容器</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 将docker-mysql重命名为mysql</span><br><span class="line">docker rename docker-mysql mysql</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">删除<span class="built_in">id</span>为1e4b2a31028d的容器</span></span><br><span class="line">docker rm 1e4b2a31028d</span><br></pre></td></tr></table></figure>
+
+<h3 id="重命名容器"><a href="#重命名容器" class="headerlink" title="重命名容器"></a>重命名容器</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">将docker-mysql重命名为mysql</span></span><br><span class="line">docker rename docker-mysql mysql</span><br></pre></td></tr></table></figure>
+
 <h2 id="其他命令"><a href="#其他命令" class="headerlink" title="其他命令"></a>其他命令</h2><h3 id="进入到一个容器"><a href="#进入到一个容器" class="headerlink" title="进入到一个容器"></a>进入到一个容器</h3><p>通常我们使用的 docker 镜像一般是基于 <code>Linux</code>，则可以通过下面的方式进入到 docker 容器内:</p>
 <p><code>docker exec -it 063caee1d235 /bin/bash</code></p>
 <p>但是对于<code>Alpinelinux</code>，则需：</p>
@@ -391,10 +426,12 @@
   </footer>
 
   
-  <script src="https://unpkg.com/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.sourcegcdn.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
 <script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
 
   
+<script src="https://cdnjs.sourcegcdn.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
 
 
 

@@ -15,12 +15,12 @@
 
 
 
-<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://unpkg.com/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://unpkg.com/pace-js@1.2.4/themes/blue/pace-theme-minimal.css">
-  <script src="https://unpkg.com/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.sourcegcdn.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.sourcegcdn.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.sourcegcdn.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.sourcegcdn.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"fuyongde.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.12.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"fuyongde.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.12.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="死锁是指两个或者多个事务在同一个资源上相互占用，并请求锁定对方占用的资源，从而导致恶性循环的现象  示例先用一个示例来演示一下数据库死锁的情况。本示例基于 MySQL 的 InnoDB 存储引擎。 表结构我们先建一个 wallet 表，表结构如下 12345678mysql&gt; DESC wallet;+---------+---------------------+------+-----">
 <meta property="og:type" content="article">
@@ -81,6 +81,7 @@
 
   <div class="site-nav-right">
     <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -88,12 +89,38 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
   </ul>
 </nav>
 
 
 
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
 
 </div>
         
@@ -261,12 +288,17 @@
 </blockquote>
 <h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><p>先用一个示例来演示一下数据库死锁的情况。本示例基于 <code>MySQL</code> 的 <code>InnoDB</code> 存储引擎。</p>
 <h3 id="表结构"><a href="#表结构" class="headerlink" title="表结构"></a>表结构</h3><p>我们先建一个 wallet 表，表结构如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; DESC wallet;</span><br><span class="line">+---------+---------------------+------+-----+---------+-------+</span><br><span class="line">| Field   | Type                | Null | Key | Default | Extra |</span><br><span class="line">+---------+---------------------+------+-----+---------+-------+</span><br><span class="line">| id      | bigint(20) unsigned | NO   | PRI | NULL    |       |</span><br><span class="line">| user_id | bigint(20) unsigned | NO   | UNI | 0       |       |</span><br><span class="line">| balance | bigint(20)          | NO   |     | 0       |       |</span><br><span class="line">+---------+---------------------+------+-----+---------+-------+</span><br></pre></td></tr></table></figure>
-<h3 id="开启事务-A，并修改-id-为-1-的记录"><a href="#开启事务-A，并修改-id-为-1-的记录" class="headerlink" title="开启事务 A，并修改 id 为 1 的记录"></a>开启事务 A，并修改 id 为 1 的记录</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; START TRANSACTION;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; UPDATE wallet SET balance = balance + 100 WHERE id = 1;</span><br><span class="line">Query OK, 1 row affected (0.00 sec)</span><br></pre></td></tr></table></figure>
-<h3 id="开启事务-B，并修改-id-为-2-的记录"><a href="#开启事务-B，并修改-id-为-2-的记录" class="headerlink" title="开启事务 B，并修改 id 为 2 的记录"></a>开启事务 B，并修改 id 为 2 的记录</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; START TRANSACTION;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; UPDATE wallet SET balance = balance + 100 WHERE id = 2;</span><br><span class="line">Query OK, 1 row affected (0.00 sec)</span><br><span class="line">Rows matched: 1  Changed: 1  Warnings: 0</span><br></pre></td></tr></table></figure>
-<h3 id="事务-A-修改-id-为-2-的记录"><a href="#事务-A-修改-id-为-2-的记录" class="headerlink" title="事务 A 修改 id 为 2 的记录"></a>事务 A 修改 id 为 2 的记录</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; UPDATE wallet SET balance = balance + 100 WHERE id = 2;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; DESC wallet;</span><br><span class="line">+---------+---------------------+------+-----+---------+-------+</span><br><span class="line">| Field   | Type                | Null | Key | Default | Extra |</span><br><span class="line">+---------+---------------------+------+-----+---------+-------+</span><br><span class="line">| id      | bigint(20) unsigned | NO   | PRI | NULL    |       |</span><br><span class="line">| user_id | bigint(20) unsigned | NO   | UNI | 0       |       |</span><br><span class="line">| balance | bigint(20)          | NO   |     | 0       |       |</span><br><span class="line">+---------+---------------------+------+-----+---------+-------+</span><br></pre></td></tr></table></figure>
+
+<h3 id="开启事务-A，并修改-id-为-1-的记录"><a href="#开启事务-A，并修改-id-为-1-的记录" class="headerlink" title="开启事务 A，并修改 id 为 1 的记录"></a>开启事务 A，并修改 id 为 1 的记录</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; START TRANSACTION;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; UPDATE wallet SET balance = balance + 100 WHERE id = 1;</span><br><span class="line">Query OK, 1 row affected (0.00 sec)</span><br></pre></td></tr></table></figure>
+
+<h3 id="开启事务-B，并修改-id-为-2-的记录"><a href="#开启事务-B，并修改-id-为-2-的记录" class="headerlink" title="开启事务 B，并修改 id 为 2 的记录"></a>开启事务 B，并修改 id 为 2 的记录</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; START TRANSACTION;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; UPDATE wallet SET balance = balance + 100 WHERE id = 2;</span><br><span class="line">Query OK, 1 row affected (0.00 sec)</span><br><span class="line">Rows matched: 1  Changed: 1  Warnings: 0</span><br></pre></td></tr></table></figure>
+
+<h3 id="事务-A-修改-id-为-2-的记录"><a href="#事务-A-修改-id-为-2-的记录" class="headerlink" title="事务 A 修改 id 为 2 的记录"></a>事务 A 修改 id 为 2 的记录</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; UPDATE wallet SET balance = balance + 100 WHERE id = 2;</span><br></pre></td></tr></table></figure>
+
 <p>此时发现该修改并未马上成功，而是陷入的等待状态，原因是事务 A 此时要锁定 id 为 2 的记录，但该记录已经被事务 B 锁定了。</p>
-<h3 id="事务-B-修改-id-为-3-的记录"><a href="#事务-B-修改-id-为-3-的记录" class="headerlink" title="事务 B 修改 id 为 3 的记录"></a>事务 B 修改 id 为 3 的记录</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; UPDATE wallet SET balance = balance + 100 WHERE id = 1;</span><br><span class="line">ERROR 1213 (40001): Deadlock found when trying to get lock; try restarting transaction</span><br></pre></td></tr></table></figure>
+<h3 id="事务-B-修改-id-为-3-的记录"><a href="#事务-B-修改-id-为-3-的记录" class="headerlink" title="事务 B 修改 id 为 3 的记录"></a>事务 B 修改 id 为 3 的记录</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; UPDATE wallet SET balance = balance + 100 WHERE id = 1;</span><br><span class="line">ERROR 1213 (40001): Deadlock found when trying to get lock; try restarting transaction</span><br></pre></td></tr></table></figure>
+
 <p>此时事务 B 报错，错误原因很明确是发生了死锁问题，通过查询操作也可以发现事务 B 的操作已经回滚，于此同时事务 A 对 id 为 2 的记录的修改已经成功，后续的 <code>COMMIT</code> 操作就不展示了。</p>
 <h2 id="如何解决死锁问题"><a href="#如何解决死锁问题" class="headerlink" title="如何解决死锁问题"></a>如何解决死锁问题</h2><h3 id="死锁产生的原因"><a href="#死锁产生的原因" class="headerlink" title="死锁产生的原因"></a>死锁产生的原因</h3><p>锁的行为和顺序是和存储引擎相关的，同样的顺序执行语句，有些存储引擎会产生死锁，有的则不会。故死锁的产生有两重原因：有些是因为真正的数据冲突，有些则完全是由于存储引擎的实现方式导致的。</p>
 <p>死锁发生以后，只有部分或者完全回滚其中一个事务，才能打破死锁。对于事务性的系统，死锁问题是无法避免的，设计对应的应用程序时必须考虑如何处理死锁。大部分情况只需要重新执行因死锁导致回滚的事务即可。</p>
@@ -357,10 +389,12 @@
   </footer>
 
   
-  <script src="https://unpkg.com/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.sourcegcdn.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
 <script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
 
   
+<script src="https://cdnjs.sourcegcdn.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
 
 
 

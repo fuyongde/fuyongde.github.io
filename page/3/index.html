@@ -15,12 +15,12 @@
 
 
 
-<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://unpkg.com/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://unpkg.com/pace-js@1.2.4/themes/blue/pace-theme-minimal.css">
-  <script src="https://unpkg.com/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.sourcegcdn.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.sourcegcdn.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.sourcegcdn.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.sourcegcdn.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"fuyongde.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.12.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"fuyongde.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.12.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="苟利国家生死以，岂因祸福避趋之">
 <meta property="og:type" content="website">
@@ -77,6 +77,7 @@
 
   <div class="site-nav-right">
     <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -84,12 +85,38 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
   </ul>
 </nav>
 
 
 
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
 
 </div>
         
@@ -251,7 +278,8 @@
     
     <div class="post-body" itemprop="articleBody">
           <p>本文简单介绍一下数据库的事务隔离级别，所用数据库采用 <code>MySQL</code>，<code>MySQL</code> 提供了两种事务性的存储引擎 <code>InnoDB</code> 和 <code>NDB Cluster</code>，本文示例采用 <code>InnoDB</code> 存储引擎。</p>
-<h2 id="查看当前数据的事务隔离级别"><a href="#查看当前数据的事务隔离级别" class="headerlink" title="查看当前数据的事务隔离级别"></a>查看当前数据的事务隔离级别</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">-- 查看当前数据库事务隔离级别</span><br><span class="line">mysql&gt; SHOW VARIABLES LIKE &apos;%transaction_isolation%&apos;;</span><br><span class="line">-- 或者</span><br><span class="line">mysql&gt; SELECT @@transaction_isolation;</span><br><span class="line">-- 低版本的 MySQL 查看事务隔离级别的属性是不一样的</span><br><span class="line">mysql&gt; SHOW VARIABLES LIKE &apos;%tx_isolation%&apos;;</span><br><span class="line">-- 或者</span><br><span class="line">mysql&gt; SELECT @@tx_isolation;</span><br></pre></td></tr></table></figure>
+<h2 id="查看当前数据的事务隔离级别"><a href="#查看当前数据的事务隔离级别" class="headerlink" title="查看当前数据的事务隔离级别"></a>查看当前数据的事务隔离级别</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">-- 查看当前数据库事务隔离级别</span><br><span class="line">mysql&gt; SHOW VARIABLES LIKE &#x27;%transaction_isolation%&#x27;;</span><br><span class="line">-- 或者</span><br><span class="line">mysql&gt; SELECT @@transaction_isolation;</span><br><span class="line">-- 低版本的 MySQL 查看事务隔离级别的属性是不一样的</span><br><span class="line">mysql&gt; SHOW VARIABLES LIKE &#x27;%tx_isolation%&#x27;;</span><br><span class="line">-- 或者</span><br><span class="line">mysql&gt; SELECT @@tx_isolation;</span><br></pre></td></tr></table></figure>
+
 <h2 id="不同的事务隔离级别所面对的问题"><a href="#不同的事务隔离级别所面对的问题" class="headerlink" title="不同的事务隔离级别所面对的问题"></a>不同的事务隔离级别所面对的问题</h2><table>
 <thead>
 <tr>
@@ -261,8 +289,7 @@
 <th>幻读</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>读未提交（read-uncommitted）</td>
 <td>是</td>
 <td>是</td>
@@ -286,8 +313,7 @@
 <td>否</td>
 <td>否</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 <ul>
 <li><p><code>脏读</code>：事务 A 读取了事务 B 更新的数据，然后 B 回滚操作，那么 A 读取到的数据是脏数据。</p>
 </li>
@@ -297,22 +323,15 @@
 </li>
 </ul>
 <p>小结：不可重复读的和幻读很容易混淆，不可重复读侧重于修改，幻读侧重于新增或删除。解决不可重复读的问题只需锁住满足条件的行，解决幻读需要锁表。</p>
-<h2 id="脏读的场景"><a href="#脏读的场景" class="headerlink" title="脏读的场景"></a>脏读的场景</h2><h3 id="客户端-A-先开启事务，查询用户余额"><a href="#客户端-A-先开启事务，查询用户余额" class="headerlink" title="客户端 A 先开启事务，查询用户余额"></a>客户端 A 先开启事务，查询用户余额</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">-- 客户端A设置当前会话级别为`read-uncommitted`</span><br><span class="line">mysq&gt; SET SESSION TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;</span><br><span class="line">-- 客户端A开启事务</span><br><span class="line">mysq&gt; START TRANSACTION;</span><br><span class="line">-- 客户端A查询用户余额</span><br><span class="line">mysq&gt; SELECT * FROM wallet WHERE user_id = 1;</span><br><span class="line">-- 结果如下：</span><br><span class="line"># +----+---------+-----------+</span><br><span class="line"># | id | user_id | balance   |</span><br><span class="line"># +----+---------+-----------+</span><br><span class="line"># |  1 |       1 | 100000000 |</span><br><span class="line"># +----+---------+-----------+</span><br></pre></td></tr></table></figure>
-<h3 id="客户端-B-开启事务，并修改用户余额"><a href="#客户端-B-开启事务，并修改用户余额" class="headerlink" title="客户端 B 开启事务，并修改用户余额"></a>客户端 B 开启事务，并修改用户余额</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-- 客户端B设置当前会话级别为`read-uncommitted`</span><br><span class="line">mysq&gt; SET SESSION TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;</span><br><span class="line">-- 客户端B开启事务</span><br><span class="line">mysq&gt; START TRANSACTION;</span><br><span class="line">-- 客户端B修改用户余额，</span><br><span class="line">mysql&gt; UPDATE wallet SET balance = balance + 100 WHERE user_id = 1;</span><br></pre></td></tr></table></figure>
-<h3 id="客户端-A-查询用户余额"><a href="#客户端-A-查询用户余额" class="headerlink" title="客户端 A 查询用户余额"></a>客户端 A 查询用户余额</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">-- 客户端A获取用户余额（此时由于B的事务并未提交，故A事务读到了B事务已经更新后的数据，此时发生脏读）</span><br><span class="line">mysq&gt; SELECT * FROM wallet WHERE user_id = 1;</span><br><span class="line">-- 结果如下：</span><br><span class="line"># +----+---------+-----------+</span><br><span class="line"># | id | user_id | balance   |</span><br><span class="line"># +----+---------+-----------+</span><br><span class="line"># |  1 |       1 | 100000100 |</span><br><span class="line"># +----+---------+-----------+</span><br></pre></td></tr></table></figure>
-<h3 id="客户端-B-回滚事务"><a href="#客户端-B-回滚事务" class="headerlink" title="客户端 B 回滚事务"></a>客户端 B 回滚事务</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-- 客户端B回滚事务</span><br><span class="line">mysql&gt; ROLLBACK;</span><br></pre></td></tr></table></figure>
-<h3 id="客户端-A-修改用户余额"><a href="#客户端-A-修改用户余额" class="headerlink" title="客户端 A 修改用户余额"></a>客户端 A 修改用户余额</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">-- 客户端A修改用户余额</span><br><span class="line">mysq&gt; UPDATE wallet SET balance = balance - 500 WHERE user_id = 1;</span><br><span class="line"></span><br><span class="line">-- 客户端A查询用户余额</span><br><span class="line">mysq&gt; SELECT * FROM wallet WHERE user_id = 1;</span><br><span class="line">-- 结果如下：</span><br><span class="line"># +----+---------+----------+</span><br><span class="line"># | id | user_id | balance  |</span><br><span class="line"># +----+---------+----------+</span><br><span class="line"># |  1 |       1 | 99999500 |</span><br><span class="line"># +----+---------+----------+</span><br><span class="line">-- 对于A客户端来讲，此时的结果是很奇怪的。</span><br><span class="line">-- 客户端A提交事务</span><br><span class="line">mysql&gt; COMMIT;</span><br></pre></td></tr></table></figure>
-<h2 id="不可重复读的场景"><a href="#不可重复读的场景" class="headerlink" title="不可重复读的场景"></a>不可重复读的场景</h2><h3 id="客户端-A-开启事务，查询用户余额"><a href="#客户端-A-开启事务，查询用户余额" class="headerlink" title="客户端 A 开启事务，查询用户余额"></a>客户端 A 开启事务，查询用户余额</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">-- 客户端A设置当前会话级别为`read-committed`</span><br><span class="line">mysql&gt; SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED;</span><br><span class="line">-- 客户端A开启事务</span><br><span class="line">mysql&gt; BEGIN;</span><br><span class="line">-- 客户端A查询用户余额</span><br><span class="line">SELECT * FROM wallet WHERE user_id = 1;</span><br><span class="line">-- 结果如下:</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># | id | user_id | balance |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># |  1 |       1 |     200 |</span><br><span class="line"># +----+---------+---------+</span><br></pre></td></tr></table></figure>
-<h3 id="客户端-B-开启事务，并修改用户余额-1"><a href="#客户端-B-开启事务，并修改用户余额-1" class="headerlink" title="客户端 B 开启事务，并修改用户余额"></a>客户端 B 开启事务，并修改用户余额</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">-- 客户端B设置当前会话级别为`read-committed`</span><br><span class="line">mysql&gt; SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED;</span><br><span class="line">-- 客户端B开启事务</span><br><span class="line">mysql&gt; BEGIN;</span><br><span class="line">-- 客户端B修改用户余额</span><br><span class="line">mysql&gt; UPDATE wallet SET balance = balance + 100 WHERE user_id = 1;</span><br><span class="line">-- 客户端B查询用户余额</span><br><span class="line">mysql&gt; SELECT * FROM wallet WHERE user_id = 1;</span><br><span class="line">-- 结果如下：</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># | id | user_id | balance |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># |  1 |       1 |     300 |</span><br><span class="line"># +----+---------+---------+</span><br></pre></td></tr></table></figure>
-<h3 id="客户端-A-查询用户余额-1"><a href="#客户端-A-查询用户余额-1" class="headerlink" title="客户端 A 查询用户余额"></a>客户端 A 查询用户余额</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">-- 客户端A查询用户余额</span><br><span class="line">mysql&gt; SELECT * FROM wallet WHERE user_id = 1;</span><br><span class="line">-- 结果如下：</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># | id | user_id | balance |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># |  1 |       1 |     200 |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line">-- 此时客户端B的事务还没有提交，故客户端A不能查询到B事务已经更新的数据，解决了脏读的问题</span><br></pre></td></tr></table></figure>
-<h3 id="客户端-B-提交事务"><a href="#客户端-B-提交事务" class="headerlink" title="客户端 B 提交事务"></a>客户端 B 提交事务</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-- 客户端B提交事务</span><br><span class="line">mysql&gt; COMMIT;</span><br></pre></td></tr></table></figure>
-<h3 id="客户端-A-查询用户余额-2"><a href="#客户端-A-查询用户余额-2" class="headerlink" title="客户端 A 查询用户余额"></a>客户端 A 查询用户余额</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">-- 客户端A查询用户余额</span><br><span class="line">mysql&gt; SELECT * FROM wallet WHERE user_id = 1;</span><br><span class="line">-- 结果如下：</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># | id | user_id | balance |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># |  1 |       1 |     300 |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line">-- 此时客户端B的事务还已经提交，结果与上一步不一致，即产生了不可重复读的问题。</span><br><span class="line">-- 客户端A提交事务</span><br><span class="line">mysql&gt; COMMIT;</span><br></pre></td></tr></table></figure>
-<h2 id="幻读的场景"><a href="#幻读的场景" class="headerlink" title="幻读的场景"></a>幻读的场景</h2><h3 id="客户端-A-开启事务，查询所有用户"><a href="#客户端-A-开启事务，查询所有用户" class="headerlink" title="客户端 A 开启事务，查询所有用户"></a>客户端 A 开启事务，查询所有用户</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">-- 客户端A设置当前会话级别为`repeatable-read`</span><br><span class="line">mysql&gt; SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ;</span><br><span class="line">-- 客户端A开启事务</span><br><span class="line">mysql&gt; BEGIN;</span><br><span class="line">-- 客户端A查询所有用户余额</span><br><span class="line">SELECT * FROM wallet;</span><br><span class="line">-- 结果如下:</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># | id | user_id | balance |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># |  1 |       1 |     100 |</span><br><span class="line"># +----+---------+---------+</span><br></pre></td></tr></table></figure>
-<h3 id="客户端-B-开启事务，并插入一条记录"><a href="#客户端-B-开启事务，并插入一条记录" class="headerlink" title="客户端 B 开启事务，并插入一条记录"></a>客户端 B 开启事务，并插入一条记录</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">-- 客户端B设置当前会话级别为`repeatable-read`</span><br><span class="line">mysql&gt; SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ;</span><br><span class="line">-- 客户端B开启事务</span><br><span class="line">mysql&gt; BEGIN;</span><br><span class="line">-- 客户端B查询所有用户余额</span><br><span class="line">SELECT * FROM wallet;</span><br><span class="line">-- 结果如下:</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># | id | user_id | balance |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># |  1 |       1 |     100 |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line">-- 客户端B插入一条记录</span><br><span class="line">mysq&gt; INSERT INTO wallet (`id`, `user_id`, `balance`) VALUES (2, 2, 200);</span><br><span class="line">-- 客户端B查询所有的用户余额</span><br><span class="line">mysql&gt; SELECT * FROM wallet;</span><br><span class="line">-- 结果如下</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># | id | user_id | balance |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># |  1 |       1 |     100 |</span><br><span class="line"># |  2 |       2 |     200 |</span><br><span class="line"># +----+---------+---------+</span><br></pre></td></tr></table></figure>
-<h3 id="客户端-A-查询所有用户余额"><a href="#客户端-A-查询所有用户余额" class="headerlink" title="客户端 A 查询所有用户余额"></a>客户端 A 查询所有用户余额</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">-- 客户端A查询所有用户余额, 此时发生幻读。</span><br><span class="line">SELECT * FROM wallet;</span><br><span class="line">-- 结果如下:</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># | id | user_id | balance |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># |  1 |       1 |     100 |</span><br><span class="line"># +----+---------+---------+</span><br></pre></td></tr></table></figure>
-<h3 id="客户端-B-提交事务-1"><a href="#客户端-B-提交事务-1" class="headerlink" title="客户端 B 提交事务"></a>客户端 B 提交事务</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-- 客户端B提交事务</span><br><span class="line">mysq&gt; COMMIT;</span><br></pre></td></tr></table></figure>
-<h3 id="客户端-A-插入一条记录"><a href="#客户端-A-插入一条记录" class="headerlink" title="客户端 A 插入一条记录"></a>客户端 A 插入一条记录</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-- 客户A插入id为2的记录</span><br><span class="line">mysql&gt; INSERT INTO wallet (`id`, `user_id`, `balance`) VALUES (2, 2, 200);</span><br><span class="line">-- 结果失败了，</span><br><span class="line">ERROR 1062 (23000): Duplicate entry &apos;2&apos; for key &apos;PRIMARY&apos;</span><br><span class="line">-- 客户端A回滚</span><br><span class="line">mysql&gt; ROLLBACK;</span><br></pre></td></tr></table></figure>
-
+<h2 id="脏读的场景"><a href="#脏读的场景" class="headerlink" title="脏读的场景"></a>脏读的场景</h2><h3 id="客户端-A-先开启事务，查询用户余额"><a href="#客户端-A-先开启事务，查询用户余额" class="headerlink" title="客户端 A 先开启事务，查询用户余额"></a>客户端 A 先开启事务，查询用户余额</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">-- 客户端A设置当前会话级别为`read-uncommitted`</span><br><span class="line">mysq&gt; SET SESSION TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;</span><br><span class="line">-- 客户端A开启事务</span><br><span class="line">mysq&gt; START TRANSACTION;</span><br><span class="line">-- 客户端A查询用户余额</span><br><span class="line">mysq&gt; SELECT * FROM wallet WHERE user_id = 1;</span><br><span class="line">-- 结果如下：</span><br><span class="line"># +----+---------+-----------+</span><br><span class="line"># | id | user_id | balance   |</span><br><span class="line"># +----+---------+-----------+</span><br><span class="line"># |  1 |       1 | 100000000 |</span><br><span class="line"># +----+---------+-----------+</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/11/14/transaction-isolation/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -397,42 +416,22 @@
     
     <div class="post-body" itemprop="articleBody">
           <p>记录常用的 JVM 参数，持续更新 …</p>
-<h2 id="堆内存设置"><a href="#堆内存设置" class="headerlink" title="堆内存设置"></a>堆内存设置</h2><p><code>-Xms128M</code> : 设置 java 程序启动时堆内存 128M（默认为物理内存 1/64,且小于 1G），阿里 p3c 文档中推荐 Xmx 与 Xms 配置同样的大小，避免 GC 后调整堆大小带来的压力</p>
-<p><code>-Xmx256M</code> : 设置最大堆内存 256M，超出后会出现 OutOfMemoryError（默认为物理内存 1/64，且小于 1G）</p>
+<h2 id="堆内存设置"><a href="#堆内存设置" class="headerlink" title="堆内存设置"></a>堆内存设置</h2><p><code>-Xms128M</code> : 设置 java 程序启动时堆内存 128M（默认为物理内存 1&#x2F;64,且小于 1G），阿里 p3c 文档中推荐 Xmx 与 Xms 配置同样的大小，避免 GC 后调整堆大小带来的压力</p>
+<p><code>-Xmx256M</code> : 设置最大堆内存 256M，超出后会出现 OutOfMemoryError（默认为物理内存 1&#x2F;64，且小于 1G）</p>
 <p><code>-Xmn10M</code> : 设置新生代区域大小为 10M</p>
 <p><code>-XX:NewSize=2M</code> : 设置新生代初始大小为 2M</p>
 <p><code>-XX:MaxNewSize=2M</code> : 设置新生代最大值为 2M</p>
 <p><code>-Xss1M</code> : 设置线程栈的大小 1M（默认 1M）</p>
 <p><code>-XX:MinHeapFreeRatio=40</code> : 设置堆空间最小空闲比例（默认 40）（当 Xmx 与 Xms 相等时，该配置无效）</p>
 <p><code>-XX:MaxHeapFreeRatio=70</code> : 设置堆空间最大空闲比例（默认 70）（当 Xmx 与 Xms 相等时，该配置无效）</p>
-<p><code>-XX:NewRatio=2</code> : 设置年轻代与年老代的比例为 2:1</p>
-<p><code>-XX:SurvivorRatio=8</code> : 设置年轻代中 eden 区与 survivor 区的比例为 8 : 1</p>
-<p><code>-XX:MetaspaceSize=64M</code> : 设置元数据空间初始大小（取代-XX:PermSize）</p>
-<p><code>-XX:MaxMetaspaceSize=128M</code> : 设置元数据空间最大值（取代之前-XX:MaxPermSize）</p>
-<p><code>-XX:TargetSurvivorRatio=50</code> : 设置 survivor 区使用率。当 survivor 区达到 50%时，将对象送入老年代</p>
-<p><code>-XX:+UseTLAB</code> : 在年轻代空间中使用本地线程分配缓冲区(TLAB)，默认开启</p>
-<p><code>-XX:TLABSize=512k</code> : 设置 TLAB 大小为 512k</p>
-<p><code>-XX:+UseCompressedOops</code> : 使用压缩指针，默认开启</p>
-<p><code>-XX:MaxTenuringThreshold=15</code> : 对象进入老年代的年龄（Parallel 是 15，CMS 是 6）</p>
-<h2 id="垃圾收集器相关参数"><a href="#垃圾收集器相关参数" class="headerlink" title="垃圾收集器相关参数"></a>垃圾收集器相关参数</h2><p><code>-XX:+UseSerialGC</code> : 启用 <code>Serial</code> 收集器，开启之后会默认启用 Serial（年轻代）+ Serial Old（年老代）的收集器组合。</p>
-<p><code>-XX:+UseParNewGC</code> : 启用 <code>ParNew</code> 收集器，开启之后会默认启用 ParNew（年轻代）+ Serial Old（老年代，该收集器已过时）的收集器组合，新生代使用<strong>复制</strong>算法，老年代采用<strong>标记-整理</strong>算法。推荐配合老年代使用 <code>CMS</code> 收集器。</p>
-<p><code>-XX:+UseParallelGC</code> : 启用 <code>Parallel</code> 收集器，Java8 默认启用该收集器，俗称吞吐量优先的收集器。开启之后默认启用 Parallel Scavenge（年轻代）+ Parallel Old（老年代）。与 ParNew 的区别在于自适应调节策略，虚拟机会根据当前系统的运行情况手机性能监控信息，动态调整参数以提供最合适的停顿时间或最大吞吐量。新生代采用<strong>复制</strong>算法，老年代采用<strong>标记-整理</strong>算法。</p>
-<p><code>-XX:+UseParallelOleGC</code> : 启用 <code>Parallel</code> 收集器，与 <code>-XX:+UseParallelGC</code> 可相互激活。</p>
-<p><code>-XX:+ParallelGCThreads</code> : 限制垃圾收集的线程数量，默认开始和 CPU 数量相同的线程数。</p>
-<p><code>-XX:+UseConcMarkSweepGC</code> : 启用 <code>CMS</code> 收集器，开启该参数之后，默认打开 <code>-XX:+UseParNewGC</code>，启用 ParNew（年轻代）+ CMS（老年代）+ Serial Old（老年代）收集器的组合，Serial Old 将作为 CMS 出错的后备收集器。</p>
-<p><code>-XX:+UseG1GC</code> : 启用 <code>G1</code> 收集器，<code>G1</code> 收集器不同于以往的收集器，<code>G1</code> 收集器既可以回收年轻代的垃圾也可以回收年老代的垃圾。</p>
-<h2 id="GC-相关的参数"><a href="#GC-相关的参数" class="headerlink" title="GC 相关的参数"></a>GC 相关的参数</h2><p><code>-XX:+PrintGC</code> : 输出 GC 日志</p>
-<p><code>-XX:+PrintGCDetails</code> : 输出 GC 的详细日志</p>
-<p><code>-XX:+PrintGCTimeStamps</code> : 输出 GC 的时间戳（以基准时间的形式）</p>
-<p><code>-XX:+PrintGCDateStamps</code> : 输出 GC 的时间戳（以日期的形式，如 2013-05-04T21:53:59.234+0800）</p>
-<p><code>-XX:+PrintHeapAtGC</code> : 在进行 GC 的前后打印出堆的信息</p>
-<p><code>-XX:+PrintGCApplicationStoppedTime</code> : 输出 GC 造成应用暂停的时间</p>
-<p><code>-Xloggc:../logs/gc.log</code> : 日志文件的输出路径</p>
-<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p><code>-XX:+HeapDumpOnOutOfMemoryError</code> : 让 JVM 碰到 OOM 场景时输出 dump 信息。 说明：OOM 的发生是有概率的，甚至有规律地相隔数月才出现一例，出现时的现场信息对查错 非常有价值。</p>
-<p><code>-XX:MaxGCPauseMillis</code> : 设置每次年轻代垃圾回收的最长时间，如果无法满足此时间，JVM 会自动调整年轻代大小，以满足此值。</p>
-<p><code>-XX:+TraceClassLoading</code> : 跟踪类的加载信息</p>
-<p><code>-XX:+PrintCommandLineFlags</code> : 打印启动命令参数</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/11/10/jvm-%E6%89%8B%E5%86%8C/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -519,42 +518,19 @@
           <p>curl 是十分常用的命令，通常我们用这个命令来请求 Web 服务器。一些常见的构造 HTTP 请求的客户端（如 Postman）关于项目协作的功能都是商业化版本才有的，团队开发过程中通过维护接口的 curl 命令脚本可以低成本的代替一些商业化软件的功能。</p>
 <p>下面介绍一下 curl 命令的常见用法。</p>
 <h2 id="基础用法"><a href="#基础用法" class="headerlink" title="基础用法"></a>基础用法</h2><h3 id="请求一个-URL"><a href="#请求一个-URL" class="headerlink" title="请求一个 URL"></a>请求一个 URL</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl http://www.baidu.com/</span><br></pre></td></tr></table></figure>
+
 <h3 id="X"><a href="#X" class="headerlink" title="-X"></a>-X</h3><p>使用 -X 参数可以指定 HTTP Method</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -X POST http://www.baidu.com/</span><br></pre></td></tr></table></figure>
-<h3 id="H-–header"><a href="#H-–header" class="headerlink" title="-H, –header"></a>-H, –header</h3><p>使用 -H 或者 –header 参数可以添加 HTTP 的请求头</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -H "Content-Type:application/json" http://www.baidu.com/</span><br></pre></td></tr></table></figure>
-<h3 id="d-–data"><a href="#d-–data" class="headerlink" title="-d, –data"></a>-d, –data</h3><p>使用 -d 或 –data 可以发送 HTTP 的请求参数，可以是 form 表单，也可以是二进制的 request body</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 发送 form 表单</span></span><br><span class="line">curl -X POST -d "name=jasonfu&amp;age=20&amp;birthday=1990/06/01" "http://localhost:8080/http/post?type=form"</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 也可以使用多个 -d 参数</span></span><br><span class="line">curl -X POST -d "name=jasonfu" -d "age=20" -d "birthday=1990/06/01" "http://localhost:8080/http/post?type=form"</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">## 发送 request body</span></span></span><br><span class="line">curl -X POST -H "Content-Type:application/json" -d "&#123;\"name\":\"jasonfu\",\"age\":19,\"birthday\":12345678911&#125;" "http://localhost:8080/http/post?type=body"</span><br></pre></td></tr></table></figure>
-<h3 id="F-–form"><a href="#F-–form" class="headerlink" title="-F, –form"></a>-F, –form</h3><p>使用 -F 或 –form 参数可以上传文件</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">## 上传文件</span></span></span><br><span class="line">curl -F "file=@alias.bat" -X POST "http://localhost:8080/http/post?type=upload"</span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">## 上传文件 带参数</span></span></span><br><span class="line">curl --form "file=@alias.bat" --form "id=1" -X POST "http://localhost:8080/http/post?type=upload"</span><br></pre></td></tr></table></figure>
-<h2 id="进阶用法"><a href="#进阶用法" class="headerlink" title="进阶用法"></a>进阶用法</h2><h3 id="i-I"><a href="#i-I" class="headerlink" title="-i, -I"></a>-i, -I</h3><p>使用 -i 参数可以输出 HTTP 的相应头</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -i http://www.baidu.com/</span><br></pre></td></tr></table></figure>
-<p>使用 -I 参数只输出 HTTP 的相应头</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -I http://www.baidu.com/</span><br></pre></td></tr></table></figure>
-<h3 id="e-–referer"><a href="#e-–referer" class="headerlink" title="-e, –referer"></a>-e, –referer</h3><p>使用 -e 或者 –referer 参数可以在 HTTP 请求头中添加 referer 字段，标识从哪里跳转过来的</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl --referer http://www.baidu.com/ http://www.qq.com/</span><br></pre></td></tr></table></figure>
-<h3 id="A-–user-agent"><a href="#A-–user-agent" class="headerlink" title="-A, –user-agent"></a>-A, –user-agent</h3><p>使用 -A 或者 –user-agent 参数可以指定 HTTP 请求头中的 User-Agent 字段</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl --user-agent curl-client http://www.baidu.com/</span><br></pre></td></tr></table></figure>
-<h3 id="cookie"><a href="#cookie" class="headerlink" title="cookie"></a>cookie</h3><p>使用 -b 或者 –cookie 可以发送 cookie 给 Web 服务器。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl --cookie "user=fuyongde" http://www.baidu.com/</span><br></pre></td></tr></table></figure>
-<p>使用 -c 参数可以保存服务端返回的 cookie 到指定的文件</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -c baidu-cookie.txt http://www.baidu.com/</span><br></pre></td></tr></table></figure>
-<h3 id="显示通信过程"><a href="#显示通信过程" class="headerlink" title="显示通信过程"></a>显示通信过程</h3><p>使用 -v 或者 –verbose 参数可以展示完整的 HTTP 通信过程</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -v http://www.baidu.com/</span><br></pre></td></tr></table></figure>
-<p>使用 –trace 或者 –trace-ascii 参数可以展示更详细的通信过程</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl --trace tract.txt http://www.baidu.com/</span><br></pre></td></tr></table></figure>
-<h3 id="保存响应"><a href="#保存响应" class="headerlink" title="保存响应"></a>保存响应</h3><p>使用 -o 或者 -O 参数可以将 http 相应保存为文件，区别在于 -o 可以指定文件名，-O 则是使用 URL 中最后一段 path 作为文件名来进行保存，其下载文件的效果等同于 <code>wget</code> 命令。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 将 http://www.baidu.com/ 响应保存至文件 baidu.html 中</span><br><span class="line">curl -o baidu.html http://www.baidu.com/</span><br><span class="line"># 将 http://localhost:8080/ping 响应保存至文件 ping 中</span><br><span class="line">curl -O http://localhost:8080/ping</span><br></pre></td></tr></table></figure>
-<h3 id="使用代理"><a href="#使用代理" class="headerlink" title="使用代理"></a>使用代理</h3><p>一些 Web 服务器是仅支持某些特定的 ip 来访问的，这种情况下，我们就需要使用代理来发送我们的 HTTP 请求，使用 -x 参数可以指定代理服务器来发送我们的请求。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 使用 socks5 协议的代理服务器来发送请求</span></span><br><span class="line">curl -x socks5://username:password@proxyhost:8080 http://www.baidu.com/</span><br><span class="line"><span class="meta">#</span><span class="bash"> 默认情况下使用 http 协议的代理服务器来发送请求</span></span><br><span class="line">curl -x username:password@proxyhost:8080 http://www.baidu.com/</span><br></pre></td></tr></table></figure>
-<h3 id="L-–location"><a href="#L-–location" class="headerlink" title="-L, –location"></a>-L, –location</h3><p>对于一些 HTTP 响应码为 302 的情况，可以使用 -L 或者 –location 参数来实现自动跳转的效果</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -L -i http://localhost:8080/http/redirect</span><br></pre></td></tr></table></figure>
-<p>其输出如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 302</span><br><span class="line">Location: http://localhost:8080/http/get/jasonfu</span><br><span class="line">Content-Length: 0</span><br><span class="line">Date: Tue, 24 Aug 2021 10:22:10 GMT</span><br><span class="line"></span><br><span class="line">HTTP/1.1 200</span><br><span class="line">Content-Type: application/json</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line">Date: Tue, 24 Aug 2021 10:22:10 GMT</span><br><span class="line"></span><br><span class="line">&#123;&quot;name&quot;:&quot;jasonfu&quot;,&quot;age&quot;:18,&quot;birthday&quot;:&quot;2021-08-24T10:22:10.713+00:00&quot;&#125;</span><br></pre></td></tr></table></figure>
-<p>可以看到已经实现了自动跳转的效果</p>
-<h3 id="–limit-rate"><a href="#–limit-rate" class="headerlink" title="–limit-rate"></a>–limit-rate</h3><p>使用 –limit-rate 参数可以限制访问 HTTP 请求和响应的带宽。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 将带宽限制为每秒 1k 字节</span></span><br><span class="line">curl --limit-rate 1k http://www.baidu.com/</span><br></pre></td></tr></table></figure>
 
+<h3 id="H-–header"><a href="#H-–header" class="headerlink" title="-H, –header"></a>-H, –header</h3><p>使用 -H 或者 –header 参数可以添加 HTTP 的请求头</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/10/24/curl-command-%E6%89%8B%E5%86%8C/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -636,163 +612,22 @@
 <p>Spring Cloud provides tools for developers to quickly build some of the common patterns in distributed systems .</p>
 </blockquote>
 <p><code>Spring Cloud</code> 为开发者提供了快速构建分布式系统的模型。<code>Spring Cloud</code> 除了抽象了分布式系统里的一些接口，并且提供了一系列开箱即用的组件。</p>
-<p><code>Spring Cloud</code> 更详细的介绍以及相关的组件，可以参考<a href="https://spring.io/projects/spring-cloud" target="_blank" rel="noopener">官网</a>。</p>
+<p><code>Spring Cloud</code> 更详细的介绍以及相关的组件，可以参考<a target="_blank" rel="noopener" href="https://spring.io/projects/spring-cloud">官网</a>。</p>
 <h3 id="Spring-Cloud-Alibaba-对-Spring-Cloud-的意义"><a href="#Spring-Cloud-Alibaba-对-Spring-Cloud-的意义" class="headerlink" title="Spring Cloud Alibaba 对 Spring Cloud 的意义"></a>Spring Cloud Alibaba 对 Spring Cloud 的意义</h3><ul>
 <li><code>Spring Cloud Alibaba</code> 在 <code>Spring Cloud</code> 体系中是一个套件，类似于 <code>Netflix OSS</code>，为开发者提供了更多的选择。</li>
 <li>在 <code>Netflix OSS</code> 诸多重要组件先后宣布停止新功能开发的大背景下 <code>Spring Cloud Alibaba</code> 作为一个高速迭代中的新生项目无疑是更合适的选择。</li>
 <li>将国内非常流行的 <code>Dubbo</code>、<code>RocketMQ</code> 等融入 <code>Spring Cloud</code> 体系，使得应用的接入和改造的成本更低。</li>
 <li><code>Spring Cloud Alibaba</code> 是中文文档最全的 <code>Spring Cloud</code> 组件。</li>
 </ul>
-<h2 id="组件"><a href="#组件" class="headerlink" title="组件"></a>组件</h2><h3 id="开源组件"><a href="#开源组件" class="headerlink" title="开源组件"></a>开源组件</h3><ul>
-<li>Nacos Config：配置中心</li>
-<li>Nacos Discovery：服务发现（注册中心）</li>
-<li>Sentinel：把流量作为切入点，从流量控制、熔断降级、系统负载保护等多个维度保护服务的稳定性。</li>
-<li>RocketMQ：<code>Apache RocketMQ™</code> 基于 Java 的高性能、高吞吐量的分布式消息和流计算平台。</li>
-<li>Dubbo Spring Cloud：<code>Apache Dubbo™</code> 是一款高性能 Java RPC 框架。</li>
-<li>Seata：阿里巴巴开源产品，一个易于使用的高性能微服务分布式事务解决方案。</li>
-</ul>
-<h3 id="商业化组件"><a href="#商业化组件" class="headerlink" title="商业化组件"></a>商业化组件</h3><ul>
-<li>ANS：注册中心</li>
-<li>ACM：配置中心</li>
-<li>OSS：阿里云对象存储服务</li>
-<li>SchedulerX：阿里中间件团队开发的一款分布式任务调度产品，支持周期性的任务与固定时间点触发任务。</li>
-<li>SMS：覆盖全球的短信服务，友好、高效、智能的互联化通讯能力，帮助企业迅速搭建客户触达通道。</li>
-</ul>
-<h3 id="组件的版本关系"><a href="#组件的版本关系" class="headerlink" title="组件的版本关系"></a>组件的版本关系</h3><table>
-<thead>
-<tr>
-<th>Spring Cloud Alibaba Version</th>
-<th>Sentinel Version</th>
-<th>Nacos Version</th>
-<th>RocketMQ Version</th>
-<th>Dubbo Version</th>
-<th>Seata Version</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>2.1.0.RELEASE 2.0.0.RELEASE 1.5.0.RELEASE</td>
-<td>1.6.3</td>
-<td>1.1.1</td>
-<td>4.4.0</td>
-<td>2.7.3</td>
-<td>0.7.1</td>
-</tr>
-<tr>
-<td>0.9.0.RELEASE 0.2.2.RELEASE 0.1.2.RELEASE</td>
-<td>1.5.2</td>
-<td>1.0.0</td>
-<td>4.4.0</td>
-<td>2.7.1</td>
-<td>0.4.2</td>
-</tr>
-<tr>
-<td>0.2.1.RELEASE 0.1.1.RELEASE</td>
-<td>1.4.0</td>
-<td>0.6.2</td>
-<td>4.3.1</td>
-<td>x</td>
-<td>x</td>
-</tr>
-<tr>
-<td>0.2.0.RELEASE 0.1.0.RELEASE</td>
-<td>1.3.0-GA</td>
-<td>0.3.0</td>
-<td>x</td>
-<td>x</td>
-<td>x</td>
-</tr>
-</tbody>
-</table>
-<h3 id="与-Spring-Cloud-以及-Spring-Boot-的版本依赖关系"><a href="#与-Spring-Cloud-以及-Spring-Boot-的版本依赖关系" class="headerlink" title="与 Spring Cloud 以及 Spring Boot 的版本依赖关系"></a>与 Spring Cloud 以及 Spring Boot 的版本依赖关系</h3><table>
-<thead>
-<tr>
-<th>Spring Cloud Version</th>
-<th>Spring Cloud Alibaba Version</th>
-<th>Spring Boot Version</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Spring Cloud Greenwich</td>
-<td>2.1.0.RELEASE</td>
-<td>2.1.X.RELEASE</td>
-</tr>
-<tr>
-<td>Spring Cloud Finchley</td>
-<td>2.0.0.RELEASE</td>
-<td>2.0.X.RELEASE</td>
-</tr>
-<tr>
-<td>Spring Cloud Edgware</td>
-<td>1.5.0.RELEASE</td>
-<td>1.5.X.RELEASE</td>
-</tr>
-</tbody>
-</table>
-<p>过老的版本不推荐</p>
-<h2 id="Spring-Cloud-Alibaba-VS-Dubbo"><a href="#Spring-Cloud-Alibaba-VS-Dubbo" class="headerlink" title="Spring Cloud Alibaba VS Dubbo"></a>Spring Cloud Alibaba VS Dubbo</h2><p><code>Dubbo Spring Cloud</code> (归属于 Spring Cloud Alibaba 项目)是基于 <code>Dubbo Spring Boot</code> (归属于 Dubbo 项目)和 <code>Spring Cloud</code>开发，使得 Dubbo 应用以一种更优雅的方式融入 <code>Spring Cloud</code> 体系。</p>
-<h3 id="功能对比"><a href="#功能对比" class="headerlink" title="功能对比"></a>功能对比</h3><p>由于 <code>Dubbo Spring Cloud</code> 构建在原生的 <code>Spring Cloud</code> 之上，其服务治理方面的能力可认为是 <code>Spring Cloud</code> 的加强版，不仅完全覆盖 <code>Spring Cloud</code> <a href="https://cloud.spring.io/spring-cloud-static/Greenwich.RELEASE/single/spring-cloud.html#_features" target="_blank" rel="noopener">原生特性</a>，而且提供更为稳定和成熟的实现，特性比对如下表所示：</p>
-<table>
-<thead>
-<tr>
-<th>功能组件</th>
-<th>Spring Cloud</th>
-<th>Dubbo Spring Cloud</th>
-<th>Dubbo</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>分布式配置（Distributed configuration）</td>
-<td>Git、Zookeeper、Consul、JDBC</td>
-<td>Spring Cloud 分布式配置 + <a href="http://dubbo.apache.org/zh-cn/docs/user/configuration/config-center.html" target="_blank" rel="noopener">Dubbo 配置中心</a></td>
-<td>Dubbo 配置中心</td>
-</tr>
-<tr>
-<td>服务注册与发现（Service registration and discovery）</td>
-<td>Eureka、Zookeeper、Consul</td>
-<td>Spring Cloud 原生注册中心[1] + <a href="http://dubbo.apache.org/zh-cn/docs/user/references/registry/introduction.html" target="_blank" rel="noopener">Dubbo 原生注册中心</a></td>
-<td>Dubbo 原生注册中心</td>
-</tr>
-<tr>
-<td>负载均衡（Load balancing）</td>
-<td>Ribbon（随机、轮询等算法）</td>
-<td>Dubbo 内建实现（随机、轮询等算法 + 权重等特性）[2]</td>
-<td>Dubbo 内建实现（随机、轮询等算法 + 权重等特性）</td>
-</tr>
-<tr>
-<td>服务熔断（Circuit Breakers）</td>
-<td>Spring Cloud Hystrix</td>
-<td>Spring Cloud Hystrix + Alibaba Sentinel[3] 等</td>
-<td>Alibaba Sentinel</td>
-</tr>
-<tr>
-<td>服务调用（Service-to-service calls）</td>
-<td>Open Feign、<code>RestTemplate</code></td>
-<td>Spring Cloud 服务调用 + Dubbo <code>@Reference</code></td>
-<td>Dubbo <code>@Reference</code></td>
-</tr>
-<tr>
-<td>链路跟踪（Tracing）</td>
-<td><a href="https://spring.io/projects/spring-cloud-sleuth" target="_blank" rel="noopener">Spring Cloud Sleuth</a> + <a href="https://github.com/apache/incubator-zipkin" target="_blank" rel="noopener">Zipkin</a></td>
-<td>Zipkin、opentracing 等</td>
-<td>Zipkin、opentracing 等</td>
-</tr>
-</tbody>
-</table>
-<p>[1]: <code>Spring Cloud</code> 原生注册中心，除 <code>Eureka</code>、<code>Zookeeper</code>、<code>Consul</code> 之外，还包括 <code>Spring Cloud Alibaba</code> 中的 <code>Nacos</code></p>
-<p>[2]: <code>Dubbo Spring Cloud</code> 相对于单纯的 <code>Dubbo</code> 服务的一个坑：单纯的 <code>Dubbo</code> 是将每一个由 @org.apache.dubbo.config.annotation.Service 注解的服务作为单独的服务暴露的，<code>Dubbo Spring Cloud</code> 如果采用推荐的写法，是将所属的工程作为一个服务来暴露的，若同一个服务版本不一致，会导致消费者找不到服务的情况。</p>
-<p>[3]: <a href="https://github.com/alibaba/Sentinel/wiki/%E4%BB%8B%E7%BB%8D" target="_blank" rel="noopener">Alibaba Sentinel</a>：<code>Sentinel</code> 以流量为切入点，从流量控制、熔断降级、系统负载保护等多个维度保护服务的稳定性 - ，目前 <code>Sentinel</code> 已被 <code>Spring Cloud</code> 项目纳为<a href="https://spring.io/blog/2019/04/16/introducing-spring-cloud-circuit-breaker" target="_blank" rel="noopener">断路器的候选实现</a></p>
-<h3 id="写法对比"><a href="#写法对比" class="headerlink" title="写法对比"></a>写法对比</h3><p>从依赖上，<code>Dubbo Spring Boot</code> 的项目需要引入 <code>dubbo-spring-boot-starter</code> 相关依赖，<code>Dubbo Spring Cloud</code> 项目需要引入 <code>spring-cloud-starter-dubbo</code>相关依赖。</p>
-<p>Example：</p>
-<p><code>Dubbo Spring Boot</code></p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.dubbo<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>dubbo-spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.dubbo<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>dubbo<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.dubbo<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>dubbo-registry-nacos<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba.nacos<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>nacos-client<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p><code>Dubbo Spring Cloud</code></p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-dubbo<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-alibaba-nacos-discovery<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>从配置和代码上，<code>Dubbo Spring Cloud</code> 完全兼容 <code>Dubbo Spring Boot</code> 的配置写法，但是更推荐将 <code>Dubbo</code> 挂载本机 <code>Spring Cloud</code> 的服务发现的地址，并且推荐配置消费者所订阅的服务，从而来降低服务寻址时的 CPU 和内存开销。写发如下：</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">cloud:</span></span><br><span class="line">    <span class="attr">nacos:</span></span><br><span class="line">      <span class="attr">discovery:</span></span><br><span class="line">        <span class="attr">server-addr:</span> <span class="string">nacos1.dafy.com:8848</span></span><br><span class="line"><span class="attr">dubbo:</span></span><br><span class="line">  <span class="attr">registry:</span></span><br><span class="line">    <span class="attr">address:</span> <span class="string">spring-cloud://localhost</span></span><br><span class="line">  <span class="attr">cloud:</span></span><br><span class="line">    <span class="attr">subscribed-services:</span> <span class="string">bs-auth</span></span><br></pre></td></tr></table></figure>
-
+<h2 id="组件"><a href="#组件" class="headerlink" title="组件"></a>组件</h2><h3 id="开源组件"><a href="#开源组件" class="headerlink" title="开源组件"></a>开源组件</h3>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/10/11/spring-cloud-alibaba-introduction/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -872,35 +707,17 @@
 <p>网上很多对于相关问题的分析都是简单粗暴的认为是时区的问题，却没有讲明白问题出现的根本原因。</p>
 <h2 id="排查过程"><a href="#排查过程" class="headerlink" title="排查过程"></a>排查过程</h2><h3 id="问题复现"><a href="#问题复现" class="headerlink" title="问题复现"></a>问题复现</h3><p>为了复现问题现象，我们先快速搭建一个 Spring Boot Application。</p>
 <p>先将配置文件中对日期类型的格式化配置为 <code>yyyy-MM-dd</code>，如下所示：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">spring.jackson.time-zone=GMT+8</span><br><span class="line">spring.jackson.date-format=yyyy-MM-dd</span><br></pre></td></tr></table></figure>
-<p>写一个接口，直接将有问题的日期输出，代码如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IndexController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping</span>(<span class="string">"/dst"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Map&lt;String, Object&gt; <span class="title">dst</span><span class="params">(@RequestParam(<span class="string">"date"</span>)</span> Date date) </span>&#123;</span><br><span class="line">        Map&lt;String, Object&gt; map = Maps.newHashMap();</span><br><span class="line">        System.out.println(<span class="string">"birthday : "</span> + DateFormatUtils.format(date, <span class="string">"yyyy-MM-dd"</span>));</span><br><span class="line">        map.put(<span class="string">"birthday"</span>, date);</span><br><span class="line">        <span class="keyword">return</span> map;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>构造如下请求：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GET http://localhost:8081/dst?date=1990/05/22</span><br></pre></td></tr></table></figure>
-<p>发现服务端日志正确输出<code>1990-05-22</code>，而接口返回值却输出：</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="attr">"birthday"</span>: <span class="string">"1990-05-21"</span>&#125;</span><br></pre></td></tr></table></figure>
-<p>构造如下请求：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GET http://localhost:8081/dst?date=1992/05/22</span><br></pre></td></tr></table></figure>
-<p>发现服务端日志正确输出<code>1992-05-22</code>，此时接口的输出与服务端日志一致：</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="attr">"birthday"</span>: <span class="string">"1992-05-22"</span>&#125;</span><br></pre></td></tr></table></figure>
-<p>至此，我们复现了本文要讲解的问题。</p>
-<h3 id="输出对应的时间"><a href="#输出对应的时间" class="headerlink" title="输出对应的时间"></a>输出对应的时间</h3><p>为了更精确的知道这两个日期究竟有什么不同，我们更详细的输出这两个 <code>Date</code> 所对应的具体时间。</p>
-<p>修改配置文件为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">spring.jackson.date-format=yyyy-MM-dd HH:mm:ss</span><br></pre></td></tr></table></figure>
-<p>重复以上请求，发现对于<code>1990-05-22</code>，服务端日志输出<code>1990-05-22 00:00:00</code>，而接口返回值则为<code>1990-05-21 23:00:00</code>，两者相差了一个小时。而对于<code>1992-05-22</code>，服务端日志与接口返回值完全一致。</p>
-<h3 id="输出系统的时区"><a href="#输出系统的时区" class="headerlink" title="输出系统的时区"></a>输出系统的时区</h3><p>通过上述的现象基本上可以定位问题出现在 <code>Jackson</code> 对日期的序列化上。</p>
-<p>为了排查这个问题，我们在启动 Spring Boot Application 时，先输出当前系统的时区，发现系统时区为 <code>Asia/Shanghai</code>，而我们配置的 <code>Jackson</code> 时区为 <code>GMT+8</code>。</p>
-<p>难道 <code>Asia/Shanghai</code> 与 <code>GMT+8</code> 不是同一个时区？</p>
-<h3 id="求证"><a href="#求证" class="headerlink" title="求证"></a>求证</h3><p>为了证明我们的猜想是正确的，在启动 Spring Boot Application 时，将系统时区设置为 <code>GMT+8</code>。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DSTApplication</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        SpringApplication.run(DSTApplication<span class="class">.<span class="keyword">class</span>, <span class="title">args</span>)</span>;</span><br><span class="line">        TimeZone.setDefault(TimeZone.getTimeZone(<span class="string">"GMT+8"</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>重复以上请求，发现对于<code>1990-05-22</code>，服务端日志和接口均正确输出 <code>1990-05-22 00:00:00</code>。</p>
-<p>若不设置默认时区为 <code>GMT+8</code>，而是将 <code>Jackson</code> 序列化的时区配置修改为 <code>Asia/Shanghai</code>，接口也能正确输出。</p>
-<p>那么 <code>Asia/Shanghai</code> 与 <code>GMT+8</code> 在什么情况下会导致相差一个小时的问题呢？</p>
-<h2 id="夏令时"><a href="#夏令时" class="headerlink" title="夏令时"></a>夏令时</h2><blockquote>
-<p>夏令时，表示为了节约能源，人为规定时间的意思。也叫夏时制，夏时令（Daylight Saving Time：DST），又称“日光节约时制”和“夏令时间”，在这一制度实行期间所采用的统一时间称为“夏令时间”。一般在天亮早的夏季人为将时间调快一小时，可以使人早起早睡，减少照明量，以充分利用光照资源，从而节约照明用电。各个采纳夏时制的国家具体规定不同。目前全世界有近110个国家每年要实行夏令时。1986年4月，中国中央有关部门发出“在全国范围内实行夏时制的通知”，具体作法是：每年从四月中旬第一个星期日的凌晨2时整（北京时间），将时钟拨快一小时，即将表针由2时拨至3时，夏令时开始；到九月中旬第一个星期日的凌晨2时整（北京夏令时），再将时钟拨回一小时，即将表针由2时拨至1时，夏令时结束。从1986年到1991年的六个年度，除1986年因是实行夏时制的第一年，从5月4日开始到9月14日结束外，其它年份均按规定的时段施行。在夏令时开始和结束前几天，新闻媒体均刊登有关部门的通告。1992年起，夏令时暂停实行。</p>
-</blockquote>
-<p>以上内容摘抄自<a href="https://baike.baidu.com/item/%E5%A4%8F%E4%BB%A4%E6%97%B6" target="_blank" rel="noopener">百度百科</a>，这也就是为什么在上述例子中为什么<code>1992-05-22</code>即使在系统时区与 <code>Jackson</code> 序列化时区不一致的情况下，仍然能够正确返回，而<code>1990-05-22</code>就会出错。</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring.jackson.time-zone</span>=<span class="string">GMT+8</span></span><br><span class="line"><span class="attr">spring.jackson.date-format</span>=<span class="string">yyyy-MM-dd</span></span><br></pre></td></tr></table></figure>
 
+<p>写一个接口，直接将有问题的日期输出，代码如下：</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/10/01/daylight-saving-time/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -988,75 +805,21 @@
 <h2 id="别名命令"><a href="#别名命令" class="headerlink" title="别名命令"></a>别名命令</h2><p>在使用 Linux 系统时，我喜欢使用 <code>ll</code> 命令来查看当前目录的文件，但是 Windows 系统的 Powershell 没有这个命令，所以每次用的时候就很不习惯。我们可以通过对命令设置别名来让 Powershell 支持我们的使用习惯。</p>
 <h3 id="查看别名"><a href="#查看别名" class="headerlink" title="查看别名"></a>查看别名</h3><p><code>Get-Alias</code> 或者 <code>gal</code> 命令来查看我们系统命令的别名，如下</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">PS C:\Users\fuyongde&gt; get-alias</span><br><span class="line"></span><br><span class="line">CommandType     Name                                               Version    Source</span><br><span class="line">-----------     ----                                               -------    ------</span><br><span class="line">Alias           % -&gt; ForEach-Object</span><br><span class="line">Alias           ? -&gt; Where-Object</span><br><span class="line">Alias           ac -&gt; Add-Content</span><br><span class="line">Alias           cat -&gt; Get-Content</span><br></pre></td></tr></table></figure>
+
 <ul>
 <li>查看某别名的原命令，如 <code>ls</code> 的原命令：<code>Get-Alias ls</code></li>
 <li>查看某原命令的别名，如 <code>Get-ChildItem</code> 的别名：<code>Get-Alias -Definition Get-ChildItem</code></li>
 </ul>
 <h3 id="临时创建或更改别名"><a href="#临时创建或更改别名" class="headerlink" title="临时创建或更改别名"></a>临时创建或更改别名</h3><p>使用 <code>Set-Alias</code> 命令来创建或更改别名，但是改命令只在当前的的 PowerShell Session 中生效。另外还有一个 <code>New-Alias</code> 命令用法类似。</p>
-<h4 id="创建不带参数的别名"><a href="#创建不带参数的别名" class="headerlink" title="创建不带参数的别名"></a>创建不带参数的别名</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">PS C:\Users\fuyongde&gt; Set-Alias -Name ll -Value get-childitem</span><br><span class="line"><span class="meta">#</span> 或者简单一些</span><br><span class="line">PS C:\Users\fuyongde&gt; Set-Alias ll get-childitem</span><br></pre></td></tr></table></figure>
-<h4 id="创建带参数的别名"><a href="#创建带参数的别名" class="headerlink" title="创建带参数的别名"></a>创建带参数的别名</h4><p>如果命令带参数如想为 <code>Get-ChildItem -Name</code> 设定别名为 <code>ll</code> 则我们需要两步，第一步为这个带参数原命令设定一个中间 <code>function</code>，第二步为这个 <code>function</code> 指定别名</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PS C:\Users\fuyongde&gt; function getlist &#123;Get-ChildItem -Name&#125;</span><br><span class="line">PS C:\Users\fuyongde&gt; Set-Alias ll getlist</span><br></pre></td></tr></table></figure>
-<h4 id="创建永久的别名"><a href="#创建永久的别名" class="headerlink" title="创建永久的别名"></a>创建永久的别名</h4><p>在 PowerShell 中直接使用 <code>Set-Alias</code> 或 <code>New-Alias</code> 命令创建的别名在关闭此 Session 后即会失效，防止此现象的方法是将此命令写入 Windows PowerShell profile 文件。</p>
-<p>查看此文件在计算机中的位置：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PS C:\Users\fuyongde&gt; $profile</span><br></pre></td></tr></table></figure>
-<p>结果如下：</p>
-<p><code>C:\Users\fuyongde\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1</code></p>
-<p>但如果安装了 <code>PowerShell6</code> 的话，则结果是：</p>
-<p><code>C:\Users\fuyongde\Documents\PowerShell\Microsoft.PowerShell_profile.ps1</code></p>
-<p>打开对应文件，并写入要预设的别名</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Set-Alias ll get-childitem</span><br></pre></td></tr></table></figure>
-<p>注意：该种方式有可能会遇到系统上禁止运行脚本的提示，这是因为 PowerShell 对安全做过充分考量，把脚本的执行分成了几个策略。以下是常用的执行策略：</p>
-<ul>
-<li><code>Restricted</code>：禁止运行任何脚本和配置文件，默认情况下就是该策略。</li>
-<li><code>AllSigned</code>：可以运行脚本，但要求所有脚本和配置文件由可信任的发布者签名，包括在本地计算机编写的脚本。</li>
-<li><code>RemoteSigned</code>：可以运行脚本，但要求从网络上下载的脚本和配置由可信任的发布者签名，不要求对已经运行和在本地计算机编写的脚本进行签名。</li>
-<li><code>Unrestricted</code>：可以运行未签名的脚本，这种策略也是最危险的。</li>
-</ul>
-<p>通过 <code>Get-ExecutionPolicy</code> 命令可查看当前配置的执行策略，通过管理员运行 PowerShell 并执行 <code>Set-ExecutionPolicy RemoteSigned</code> 可更改执行策略。</p>
-<h3 id="删除别名"><a href="#删除别名" class="headerlink" title="删除别名"></a>删除别名</h3><p>使用 <code>Remove-Item alias</code> 命令删除已设定的别名。</p>
-<p>如删除别名 ll ：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PS C:\Users\fuyongde&gt; Remove-Item alias:\ll</span><br></pre></td></tr></table></figure>
-<h2 id="环境变量命令"><a href="#环境变量命令" class="headerlink" title="环境变量命令"></a>环境变量命令</h2><h3 id="切换-PowerShell-的-page-为-UTF-8-代码页"><a href="#切换-PowerShell-的-page-为-UTF-8-代码页" class="headerlink" title="切换 PowerShell 的 page 为 UTF-8 代码页"></a>切换 PowerShell 的 page 为 UTF-8 代码页</h3><p>在最新版本的 windows 操作系统中，powershell 默认的代码页已经是 UTF-8 字符集的代码页了。常见的代码页如下：</p>
-<ul>
-<li><p><code>65001</code>：UTF-8 代码页</p>
-</li>
-<li><p><code>950</code>：繁体中文</p>
-</li>
-<li><p><code>936</code>：简体中文默认的 GBK</p>
-</li>
-<li><p><code>437</code>：MS-DOS 美国英语</p>
-</li>
-</ul>
-<p>命令如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chcp 65001</span><br></pre></td></tr></table></figure>
-<h2 id="Modules-管理"><a href="#Modules-管理" class="headerlink" title="Modules 管理"></a>Modules 管理</h2><h3 id="安装-Module"><a href="#安装-Module" class="headerlink" title="安装 Module"></a>安装 Module</h3><p>使用 <code>Install-Module</code> 命令来安装 Module，其支持的参数有很多，具体可以查看<a href="https://docs.microsoft.com/zh-cn/powershell/module/powershellget/install-module?view=powershell-7.2" target="_blank" rel="noopener">官方文档</a>，这里我们只列举最常用的参数的使用方法：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 为当前用户安装 posh-git 模块</span><br><span class="line">Install-Module -Name posh-git -Scope CurrentUser</span><br></pre></td></tr></table></figure>
-<h3 id="查找-Module"><a href="#查找-Module" class="headerlink" title="查找 Module"></a>查找 Module</h3><p>使用 <code>Find-Module</code> 命令可以来查找 Module，其支持的参数有很多，具体可以查看<a href="https://docs.microsoft.com/zh-cn/powershell/module/powershellget/find-module?view=powershell-7.2" target="_blank" rel="noopener">官方文档</a>，这里我们只列举最常用的参数的使用方法：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 查找名称为 PowerShellGet 的 Module</span><br><span class="line">Find-Module -Name PowerShellGet</span><br></pre></td></tr></table></figure>
-<h3 id="查看已经安装的-Modules"><a href="#查看已经安装的-Modules" class="headerlink" title="查看已经安装的 Modules"></a>查看已经安装的 Modules</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 查看已经安装的所有的 Modules</span><br><span class="line">Get-InstalledModule</span><br><span class="line"><span class="meta">#</span> 查看已经安装的指定名称、版本的 Modules</span><br><span class="line">Get-InstalledModule -Name "AzureRM.Automation" -MinimumVersion 1.0 -MaximumVersion 2.0</span><br></pre></td></tr></table></figure>
-<h3 id="卸载-Module"><a href="#卸载-Module" class="headerlink" title="卸载 Module"></a>卸载 Module</h3><p>使用 <code>Uninstall-Module</code> 命令可以来卸载 Module，其支持的参数有很多，具体可以查看<a href="https://docs.microsoft.com/zh-cn/powershell/module/powershellget/uninstall-module?view=powershell-7.2" target="_blank" rel="noopener">官方文档</a>，这里我们只列举最常用的参数的使用方法：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 卸载指定名称的模块</span><br><span class="line">Uninstall-Module -Name SpeculationControl</span><br><span class="line"><span class="meta">#</span> 强制卸载指定名称的模块</span><br><span class="line">Uninstall-Module -Name SpeculationControl -Force</span><br><span class="line"><span class="meta">#</span> 使用流水线的方式卸载，即先查找到某个模块并卸载</span><br><span class="line">Get-InstalledModule -Name SpeculationControl | Uninstall-Module</span><br><span class="line"><span class="meta">#</span> 卸载指定版本的模块</span><br><span class="line">Uninstall-Module -Name 'oh-my-posh' -RequiredVersion '7.31.1'</span><br></pre></td></tr></table></figure>
-<h2 id="美化"><a href="#美化" class="headerlink" title="美化"></a>美化</h2><p>PowerShell 原始的界面是非常丑的，我们可以通过安装一些 modules 来进行美化，网上有很多博客介绍如何美化 PowerShell，但是大部门没有介绍每个 module 的作用。</p>
-<h3 id="oh-my-posh"><a href="#oh-my-posh" class="headerlink" title="oh-my-posh"></a>oh-my-posh</h3><blockquote>
-<p>A prompt theme engine for any shell.</p>
-</blockquote>
-<p>从介绍中可以看出 oh-my-posh 是为任何 shell 提供的一套主题引擎，具体更多的文档可以查阅<a href="https://ohmyposh.dev/" target="_blank" rel="noopener">官网</a>。</p>
-<h4 id="安装-oh-my-posh"><a href="#安装-oh-my-posh" class="headerlink" title="安装 oh-my-posh"></a>安装 oh-my-posh</h4><p>为 Powershell 安装 oh-my-posh 非常简单，安装命令如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Install-Module oh-my-posh -Scope CurrentUser</span><br></pre></td></tr></table></figure>
-<h4 id="更新-oh-my-posh"><a href="#更新-oh-my-posh" class="headerlink" title="更新 oh-my-posh"></a>更新 oh-my-posh</h4><p>如果之前安装过 oh-my-posh 但是想要更新版本，其更新命令如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Update-Module oh-my-posh</span><br></pre></td></tr></table></figure>
-<h4 id="启用-oh-my-posh"><a href="#启用-oh-my-posh" class="headerlink" title="启用 oh-my-posh"></a>启用 oh-my-posh</h4><p>安装 oh-my-posh 之后，并不会直接启用，跟上文创建别名的方法一样，在 Windows PowerShell profile 文件中启用即可。通过 <code>notepad $PROFILE</code> 命令，打开 Windows PowerShell profile 文件，在文件中添加如下内容：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 引入 oh-my-posh 模块</span><br><span class="line">Import-Module oh-my-posh</span><br><span class="line"><span class="meta">#</span> 设置 oh-my-posh 的主题为 ys，这里也可以修改为其他主题</span><br><span class="line">Set-PoshPrompt -Theme ys</span><br></pre></td></tr></table></figure>
-<h4 id="部分主题乱码问题"><a href="#部分主题乱码问题" class="headerlink" title="部分主题乱码问题"></a>部分主题乱码问题</h4><p>由于一些 oh-my-posh 中用到了一些特殊的字符，需要对应的终端更换为支持这种特殊字符的字体，可以在<a href="https://www.nerdfonts.com/" target="_blank" rel="noopener">nerdfonts 网站</a>网站下载自己喜欢的字体，个人推荐 <code>DejaVuSansMono Nerd Font</code> 这个字体。</p>
-<h3 id="posh-git"><a href="#posh-git" class="headerlink" title="posh-git"></a>posh-git</h3><p>posh-git 用于在 shell 上提示 git 的一些信息，其安装、更新、卸载过程跟其他的 PowerShell modules 一致。这里只列举安装命令：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Install-Module posh-git -Scope CurrentUser</span><br></pre></td></tr></table></figure>
-<h4 id="启用-posh-git"><a href="#启用-posh-git" class="headerlink" title="启用 posh-git"></a>启用 posh-git</h4><p>安装 posh-git 之后，并不会直接启用，跟上文创建别名的方法一样，在 Windows PowerShell profile 文件中启用即可。通过 <code>notepad $PROFILE</code> 命令，打开 Windows PowerShell profile 文件，在文件中添加如下内容：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 引入 oh-my-posh 模块</span><br><span class="line">Import-Module posh-git</span><br></pre></td></tr></table></figure>
-<h3 id="PSReadLine"><a href="#PSReadLine" class="headerlink" title="PSReadLine"></a>PSReadLine</h3><p>PSReadLine 在 PowerShell 控制台中提供改进的命令行编辑体验。具体说明可参考其<a href="https://docs.microsoft.com/zh-cn/powershell/module/psreadline/about/about_psreadline?view=powershell-7.2" target="_blank" rel="noopener">官方文档</a>。</p>
-<h4 id="安装-PSReadLine"><a href="#安装-PSReadLine" class="headerlink" title="安装 PSReadLine"></a>安装 PSReadLine</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Install-Module -Name PSReadLine</span><br></pre></td></tr></table></figure>
-<h4 id="启用-PSReadLine"><a href="#启用-PSReadLine" class="headerlink" title="启用 PSReadLine"></a>启用 PSReadLine</h4><p>安装 PSReadLine 之后，并不会直接启用，跟上文创建别名的方法一样，在 Windows PowerShell profile 文件中启用即可。通过 <code>notepad $PROFILE</code> 命令，打开 Windows PowerShell profile 文件，在文件中添加如下内容：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 引入 PSReadLine 模块</span><br><span class="line">Import-Module PSReadLine</span><br><span class="line"><span class="meta">#</span> 设置编辑模式为 Emacs</span><br><span class="line">Set-PSReadlineOption -EditMode Emacs</span><br><span class="line"><span class="meta">#</span> 开启预测 IntelliSense，其模式为历史命令，即历史敲过的命令都会进行提示</span><br><span class="line">Set-PSReadLineOption -PredictionSource History</span><br><span class="line"><span class="meta">#</span> 开启预测 IntelliSense 之后，使用快捷键快速选中命令</span><br><span class="line">Set-PSReadlineKeyHandler -Key UpArrow -Function HistorySearchBackward</span><br><span class="line">Set-PSReadlineKeyHandler -Key DownArrow -Function HistorySearchForward</span><br></pre></td></tr></table></figure>
-
+<h4 id="创建不带参数的别名"><a href="#创建不带参数的别名" class="headerlink" title="创建不带参数的别名"></a>创建不带参数的别名</h4>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/09/27/powershell-%E6%89%8B%E5%86%8C/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1150,49 +913,19 @@
 </ul>
 <p>下面演示一下 <code>cat /etc/os-release</code>，其他不详细说明。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /etc/os-release</span><br></pre></td></tr></table></figure>
-<p>输出如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">PRETTY_NAME=&quot;Debian GNU/Linux 9 (stretch)&quot;</span><br><span class="line">NAME=&quot;Debian GNU/Linux&quot;</span><br><span class="line">VERSION_ID=&quot;9&quot;</span><br><span class="line">VERSION=&quot;9 (stretch)&quot;</span><br><span class="line">ID=debian</span><br><span class="line">HOME_URL=&quot;https://www.debian.org/&quot;</span><br><span class="line">SUPPORT_URL=&quot;https://www.debian.org/support&quot;</span><br><span class="line">BUG_REPORT_URL=&quot;https://bugs.debian.org/&quot;</span><br></pre></td></tr></table></figure>
-<h3 id="替换源"><a href="#替换源" class="headerlink" title="替换源"></a>替换源</h3><p>由于网络的原因，国内部分 Linux 在安装软件时非常缓慢，将源替换为国内的镜像可以方便很多。</p>
-<p>国内常见的镜像如清华大学、阿里云、163 等等，大家可自行选择。由于大部分网络上的博客，只写了具体源的地址，对很多没有基础的同学来说，由于系统版本的差异，反而会适得其反。</p>
-<p>替换源一定要遵循下面的步骤：</p>
-<ol>
-<li>确认操作系统版本。如何查看可参考上文。</li>
-<li>备份默认的源。不同的操作系统版本，源的文件位置各不一样，直接采用备份文件的方式备份即可。</li>
-<li>选择对应版本的源并替换。</li>
-</ol>
-<p>下面针对常见的 <code>Debian</code>、<code>Ubuntu</code>、<code>CentOS</code>，这里以说明一下如何正确的查找并替换源。</p>
-<h4 id="Debian"><a href="#Debian" class="headerlink" title="Debian"></a>Debian</h4><p><code>Debian</code> 系统的源文件目录位于 <code>/etc/apt/sources.list</code>，这里我们以清华大学的镜像为例。清华大学开源镜像站 <a href="https://mirror.tuna.tsinghua.edu.cn/help/debian/" target="_blank" rel="noopener">Debian 系统的帮助页面</a> 详细列举了常用版本的源的信息。</p>
-<p>例如，我们系统的版本是 <code>9 (stretch)</code>，则选择 <code>stretch</code>，替换掉对应的源即可。</p>
-<p>stretch 版本的源信息如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/debian/ stretch main contrib non-free</span><br><span class="line"># deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ stretch main contrib non-free</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/debian/ stretch-updates main contrib non-free</span><br><span class="line"># deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ stretch-updates main contrib non-free</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/debian/ stretch-backports main contrib non-free</span><br><span class="line"># deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ stretch-backports main contrib non-free</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/debian-security stretch/updates main contrib non-free</span><br><span class="line"># deb-src https://mirrors.tuna.tsinghua.edu.cn/debian-security stretch/updates main contrib non-free</span><br></pre></td></tr></table></figure>
-<p>buster 版本的源信息如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/debian/ buster main contrib non-free</span><br><span class="line"># deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ buster main contrib non-free</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/debian/ buster-updates main contrib non-free</span><br><span class="line"># deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ buster-updates main contrib non-free</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/debian/ buster-backports main contrib non-free</span><br><span class="line"># deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ buster-backports main contrib non-free</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/debian-security buster/updates main contrib non-free</span><br><span class="line"># deb-src https://mirrors.tuna.tsinghua.edu.cn/debian-security buster/updates main contrib non-free</span><br></pre></td></tr></table></figure>
-<p>其他版本不一一列举。</p>
-<h4 id="Ubuntu"><a href="#Ubuntu" class="headerlink" title="Ubuntu"></a>Ubuntu</h4><p><code>Ubuntu</code> 也是基于 <code>Debian</code> 的，故源的目录位置也是 <code>/etc/apt/sources.list</code>。清华大学开源镜像站 <a href="https://mirror.tuna.tsinghua.edu.cn/help/ubuntu/" target="_blank" rel="noopener">Ubuntu 系统的帮助页面</a> 详细列举了常用版本的源的信息。</p>
-<p>例如，我们系统的版本是 <code>18.04 LTS</code>，则选择 <code>18.04 LTS</code>，替换掉对应的源即可。</p>
-<p>18.04 LTS 版本的源信息如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"># 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic main restricted universe multiverse</span><br><span class="line"># deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic main restricted universe multiverse</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-updates main restricted universe multiverse</span><br><span class="line"># deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-updates main restricted universe multiverse</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-backports main restricted universe multiverse</span><br><span class="line"># deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-backports main restricted universe multiverse</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-security main restricted universe multiverse</span><br><span class="line"># deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-security main restricted universe multiverse</span><br><span class="line"></span><br><span class="line"># 预发布软件源，不建议启用</span><br><span class="line"># deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-proposed main restricted universe multiverse</span><br><span class="line"># deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-proposed main restricted universe multiverse</span><br></pre></td></tr></table></figure>
-<p><code>Ubuntu</code> 若安装了图形界面，也可以采用图形界面的方式。</p>
-<h5 id="图形界面配置"><a href="#图形界面配置" class="headerlink" title="图形界面配置"></a>图形界面配置</h5><p>新手推荐使用图形界面配置： 系统设置 -&gt; 软件和更新 选择下载服务器 -&gt; “mirrors.aliyun.com”</p>
-<h4 id="CentOS"><a href="#CentOS" class="headerlink" title="CentOS"></a>CentOS</h4><p><code>CentOS</code> 的源文件位于 <code>/etc/yum.repos.d/CentOS-Base.repo</code>，清华大学开源镜像站 <a href="https://mirror.tuna.tsinghua.edu.cn/help/centos/" target="_blank" rel="noopener">CentOS 系统的帮助页面</a> 详细列举了常用版本的源的信息。</p>
-<p>与 Debian 的不同，CentOS 替换源之后，需要运行 <code>yum makecache</code> 生成缓存。</p>
-<p>此外阿里云提供了更为简单的方式，直接下载阿里云的 <code>CentOS-Base.repo</code> 文件到对应目录即可，命令如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> CentOS 6</span><br><span class="line">wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-6.repo</span><br><span class="line"><span class="meta">#</span> 或者</span><br><span class="line">curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-6.repo</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> CentOS 7</span><br><span class="line">wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo</span><br><span class="line"><span class="meta">#</span> 或者</span><br><span class="line">curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> 由于非阿里云 ECS 用户会出现 Couldn't resolve host 'mirrors.cloud.aliyuncs.com' 信息，不影响使用。用户也可自行修改相关配置: eg:</span><br><span class="line">sed -i -e '/mirrors.cloud.aliyuncs.com/d' -e '/mirrors.aliyuncs.com/d' /etc/yum.repos.d/CentOS-Base.repo</span><br></pre></td></tr></table></figure>
-<p>CentOS 7 版本的清华大学源信息如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"># CentOS-Base.repo</span><br><span class="line">#</span><br><span class="line"># The mirror system uses the connecting IP address of the client and the</span><br><span class="line"># update status of each mirror to pick mirrors that are updated to and</span><br><span class="line"># geographically close to the client.  You should use this for CentOS updates</span><br><span class="line"># unless you are manually picking other mirrors.</span><br><span class="line">#</span><br><span class="line"># If the mirrorlist= does not work for you, as a fall back you can try the</span><br><span class="line"># remarked out baseurl= line instead.</span><br><span class="line">#</span><br><span class="line">#</span><br><span class="line"></span><br><span class="line">[base]</span><br><span class="line">name=CentOS-$releasever - Base</span><br><span class="line">baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos/$releasever/os/$basearch/</span><br><span class="line">#mirrorlist=http://mirrorlist.centos.org/?release=$releasever&amp;arch=$basearch&amp;repo=os</span><br><span class="line">gpgcheck=1</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7</span><br><span class="line"></span><br><span class="line">#released updates</span><br><span class="line">[updates]</span><br><span class="line">name=CentOS-$releasever - Updates</span><br><span class="line">baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos/$releasever/updates/$basearch/</span><br><span class="line">#mirrorlist=http://mirrorlist.centos.org/?release=$releasever&amp;arch=$basearch&amp;repo=updates</span><br><span class="line">gpgcheck=1</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7</span><br><span class="line"></span><br><span class="line">#additional packages that may be useful</span><br><span class="line">[extras]</span><br><span class="line">name=CentOS-$releasever - Extras</span><br><span class="line">baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos/$releasever/extras/$basearch/</span><br><span class="line">#mirrorlist=http://mirrorlist.centos.org/?release=$releasever&amp;arch=$basearch&amp;repo=extras</span><br><span class="line">gpgcheck=1</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7</span><br><span class="line"></span><br><span class="line">#additional packages that extend functionality of existing packages</span><br><span class="line">[centosplus]</span><br><span class="line">name=CentOS-$releasever - Plus</span><br><span class="line">baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos/$releasever/centosplus/$basearch/</span><br><span class="line">#mirrorlist=http://mirrorlist.centos.org/?release=$releasever&amp;arch=$basearch&amp;repo=centosplus</span><br><span class="line">gpgcheck=1</span><br><span class="line">enabled=0</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7</span><br></pre></td></tr></table></figure>
-<h3 id="配置免密登录"><a href="#配置免密登录" class="headerlink" title="配置免密登录"></a>配置免密登录</h3><p>场景：A 主机实现免密登录 B 主机</p>
-<ol>
-<li>A 主机生成公私钥对 <code>ssh-keygen</code>；</li>
-<li>将生成的公钥传输给 B 机器 <code>scp /root/.ssh/id_rsp.pub remoteUser@remoteIp:remoteFolder</code>；</li>
-<li>登录 B 机器，将 A 机器的公钥追加到 B 主机用户目录下的 <code>.ssh/authorized_keys</code> 文件，执行 <code>cat id_rsa.pub &gt;&gt; .ssh/.ssh/authorized_keys</code> 命令即可。若没有<code>authorized_keys</code>文件，则需要创建，且其权限要为 <code>600</code>。</li>
-</ol>
-<h3 id="查看系统负载"><a href="#查看系统负载" class="headerlink" title="查看系统负载"></a>查看系统负载</h3><p><code>top</code>：重点关注 CPU、内存的使用率，以及 average（平均负载，三个值分别是 CPU 最近 1 分钟、5 分钟、15 分钟的平均负载）</p>
-<p><code>vmstat</code>：</p>
-<h3 id="Linux-子系统"><a href="#Linux-子系统" class="headerlink" title="Linux 子系统"></a>Linux 子系统</h3><p>在 <code>Windows 10</code> 中使用 Linux 子系统时，经常会需要用到 <code>root</code> 账号，初始情况下，该账号时没有设定密码的，需要设定之后才能正常使用。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 设置 root 账户的密码</span><br><span class="line">sudo passwd</span><br><span class="line"><span class="meta">#</span> 切换 root 账户</span><br><span class="line">su</span><br></pre></td></tr></table></figure>
-<h3 id="软件管理"><a href="#软件管理" class="headerlink" title="软件管理"></a>软件管理</h3><h4 id="Ubuntu-软件管理"><a href="#Ubuntu-软件管理" class="headerlink" title="Ubuntu 软件管理"></a>Ubuntu 软件管理</h4><h5 id="查看安装了那些软件"><a href="#查看安装了那些软件" class="headerlink" title="查看安装了那些软件"></a>查看安装了那些软件</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 查看安装了哪些软件包</span><br><span class="line">apt list --installed</span><br><span class="line"><span class="meta">#</span> 也可以使用 dpkg 命令来查看安装了哪些软件包</span><br><span class="line">dpkg --list</span><br></pre></td></tr></table></figure>
-<h5 id="卸载已经安装的软件"><a href="#卸载已经安装的软件" class="headerlink" title="卸载已经安装的软件"></a>卸载已经安装的软件</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 卸载某个软件包</span><br><span class="line">apt remove packagename</span><br><span class="line"><span class="meta">#</span> 也可以使用自动卸载</span><br><span class="line">apt autoremove packagename</span><br><span class="line"><span class="meta">#</span> 使用 dpkg 命令卸载</span><br><span class="line">dpkg --remove packagename</span><br></pre></td></tr></table></figure>
 
+<p>输出如下</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">PRETTY_NAME=&quot;Debian GNU/Linux 9 (stretch)&quot;</span><br><span class="line">NAME=&quot;Debian GNU/Linux&quot;</span><br><span class="line">VERSION_ID=&quot;9&quot;</span><br><span class="line">VERSION=&quot;9 (stretch)&quot;</span><br><span class="line">ID=debian</span><br><span class="line">HOME_URL=&quot;https://www.debian.org/&quot;</span><br><span class="line">SUPPORT_URL=&quot;https://www.debian.org/support&quot;</span><br><span class="line">BUG_REPORT_URL=&quot;https://bugs.debian.org/&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="替换源"><a href="#替换源" class="headerlink" title="替换源"></a>替换源</h3><p>由于网络的原因，国内部分 Linux 在安装软件时非常缓慢，将源替换为国内的镜像可以方便很多。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/09/24/linux-%E6%89%8B%E5%86%8C/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1270,18 +1003,18 @@
           <p>在 <a href="https://fuyongde.github.io/2019/07/11/rpc-introduction/">Rpc Introduction</a> 中简单写了一个 <code>RPC Framework</code>。在本节中，对 <code>Edith</code> 新增采用线程池支持多线程的特性。</p>
 <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>实际开发中，我们的应用程序是不能盲目的开辟线程的，这样会造成资源的极大浪费。若采用线程池，可以减少创建和销毁线程的次数，让每个线程可以多次使用，并且可以根据系统的承受能力，调整线程池中工作线程的数量，方式消耗过多的内存。</p>
 <p>如有需要可以阅读 <code>Dubbo</code> 中关于线程池的设计（位于 <code>org.apache.dubbo.common.threadpool</code> 包）。</p>
-<h2 id="开发"><a href="#开发" class="headerlink" title="开发"></a>开发</h2><h3 id="依赖"><a href="#依赖" class="headerlink" title="依赖"></a>依赖</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;com.google.guava&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;guava&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
-<h3 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h3><p>本文代码可以从<a href="https://github.com/fuyongde/edith/releases/tag/0.1.1" target="_blank" rel="noopener">这里</a>获取。</p>
-<h4 id="新增-ThreadUtils-java"><a href="#新增-ThreadUtils-java" class="headerlink" title="新增 ThreadUtils.java"></a>新增 ThreadUtils.java</h4><p>用于创建 <code>ExecutorService</code></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadUtils</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 用于对线程分配一个名字，方便排查问题</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> format format</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> Edith-1</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> ThreadFactory <span class="title">buildThreadFactory</span><span class="params">(String format)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ThreadFactoryBuilder().setNameFormat(format).build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ExecutorService <span class="title">newCachedThreadPool</span><span class="params">(<span class="keyword">int</span> maximumPoolSize)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ThreadPoolExecutor(THREAD_CORE_POOL_SIZE, maximumPoolSize &gt; <span class="number">0</span> ? maximumPoolSize : THREAD_MAXIMUM_POOL_SIZE,</span><br><span class="line">                Long.MAX_VALUE, TimeUnit.MICROSECONDS, <span class="keyword">new</span> SynchronousQueue&lt;&gt;(), buildThreadFactory(THREAD_NAME), <span class="keyword">new</span> ThreadPoolExecutor.AbortPolicy());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="修改-RpcFramework-java"><a href="#修改-RpcFramework-java" class="headerlink" title="修改 RpcFramework.java"></a>修改 RpcFramework.java</h4><p>将原代码中 <code>new Thread()</code> 部分替换为线程池。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> ExecutorService executorService = ThreadUtils.newCachedThreadPool(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">export</span><span class="params">(<span class="keyword">final</span> Object service, <span class="keyword">int</span> port)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    Objects.requireNonNull(service, <span class="string">"Service instance is null!"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (port &lt;= PORT_MIN || port &gt; PORT_MAX) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Invalid port "</span> + port);</span><br><span class="line">    &#125;</span><br><span class="line">    System.out.println(<span class="string">"Export service "</span> + service.getClass().getName() + <span class="string">" on port "</span> + port);</span><br><span class="line">    ServerSocket server = <span class="keyword">new</span> ServerSocket(port);</span><br><span class="line">    <span class="keyword">for</span> (; ; ) &#123;</span><br><span class="line">        System.out.println(<span class="string">"application is running"</span>);</span><br><span class="line">        Socket socket = server.accept();</span><br><span class="line">        executorService.execute(() -&gt; &#123;</span><br><span class="line">            <span class="comment">// do something ...</span></span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>经过以上修改，我们在例子中的 <code>HelloServiceImpl</code> 打印一下线程名称</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">hello</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">    String result = <span class="string">"Hello "</span> + name;</span><br><span class="line">    System.out.println(Thread.currentThread().getName() + <span class="string">" "</span> + result);</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>启动 <code>provider</code>，然后用 <code>consumer</code> 调用一次，观察 <code>provider</code> 的控制台输出</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Edith-0 Hello Peter Parker</span><br></pre></td></tr></table></figure>
-<p>Done.</p>
+<h2 id="开发"><a href="#开发" class="headerlink" title="开发"></a>开发</h2><h3 id="依赖"><a href="#依赖" class="headerlink" title="依赖"></a>依赖</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;com.google.guava&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;guava&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
 
+<h3 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h3><p>本文代码可以从<a target="_blank" rel="noopener" href="https://github.com/fuyongde/edith/releases/tag/0.1.1">这里</a>获取。</p>
+<h4 id="新增-ThreadUtils-java"><a href="#新增-ThreadUtils-java" class="headerlink" title="新增 ThreadUtils.java"></a>新增 ThreadUtils.java</h4>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/07/16/edith-with-thread-pool/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1360,63 +1093,22 @@
 <p>Remote Procedure Call (RPC) is a protocol that one program can use to request a service from a program located in another computer on a network without having to understand the network’s details. A procedure call is also sometimes known as a function call or a subroutine call. A procedure call is also sometimes known as a function call or a subroutine call.</p>
 </blockquote>
 <p><code>RPC</code> 是一种远程过程调用协议，一个程序可以使用该协议从位于网络上另一台计算机中的程序请求服务，而无需了解网络的详细信息。<code>RPC</code> 有时也称为函数调用或子程序调用。<code>RPC</code> 是进程间通信的一种方式。</p>
-<h2 id="Why-is-RPC"><a href="#Why-is-RPC" class="headerlink" title="Why is RPC"></a>Why is RPC</h2><p>网上很多关于 <code>RPC</code> 的优点，笔者都不太赞同。不能将那些成熟的 <code>RPC</code> 框架解决的问题全部归结为 <code>RPC</code> 的优点。比如 <code>RPC</code> 的概念中并没有提到服务治理等问题，但是常见的 <code>RPC</code> 框架（如 <a href="http://dubbo.apache.org" target="_blank" rel="noopener">DUBBO</a>）均解决了服务治理的相关问题，这显然不能作为 <code>RPC</code> 的优点。要解释“Why is RPC?”的问题，还是要回归到 <code>RPC</code> 的概念上来。</p>
+<h2 id="Why-is-RPC"><a href="#Why-is-RPC" class="headerlink" title="Why is RPC"></a>Why is RPC</h2><p>网上很多关于 <code>RPC</code> 的优点，笔者都不太赞同。不能将那些成熟的 <code>RPC</code> 框架解决的问题全部归结为 <code>RPC</code> 的优点。比如 <code>RPC</code> 的概念中并没有提到服务治理等问题，但是常见的 <code>RPC</code> 框架（如 <a target="_blank" rel="noopener" href="http://dubbo.apache.org/">DUBBO</a>）均解决了服务治理的相关问题，这显然不能作为 <code>RPC</code> 的优点。要解释“Why is RPC?”的问题，还是要回归到 <code>RPC</code> 的概念上来。</p>
 <ul>
 <li><code>RPC</code> 可以使<em>远程过程调用</em>变得像本地调用一样简单。</li>
 <li>方便计算能力的横向扩展。</li>
 </ul>
-<p>有兴趣可以阅读 <a href="http://dubbo.apache.org/zh-cn/docs/user/preface/background.html" target="_blank" rel="noopener">dubbo 诞生的背景</a> 以及<a href="http://dubbo.apache.org/zh-cn/docs/user/preface/requirements.html" target="_blank" rel="noopener">dubbo 解决了哪些需求</a>。</p>
+<p>有兴趣可以阅读 <a target="_blank" rel="noopener" href="http://dubbo.apache.org/zh-cn/docs/user/preface/background.html">dubbo 诞生的背景</a> 以及<a target="_blank" rel="noopener" href="http://dubbo.apache.org/zh-cn/docs/user/preface/requirements.html">dubbo 解决了哪些需求</a>。</p>
 <h3 id="RPC-vs-HTTP"><a href="#RPC-vs-HTTP" class="headerlink" title="RPC vs HTTP"></a>RPC vs HTTP</h3><p>其实这两者不是同一个维度的概念。从 <code>RPC</code> 的概念上来讲，<code>HTTP</code> 其实就是 <code>RPC</code> 的一种实现。</p>
-<h3 id="RPC-vs-RMI"><a href="#RPC-vs-RMI" class="headerlink" title="RPC vs RMI"></a>RPC vs RMI</h3><p>这两者也不是同一个维度的概念。</p>
-<p><code>RMI</code> 是 <code>JAVA</code> 提供的一种<em>远程方法调用</em>，而 <code>RPC</code> 的变成模型是<em>远程过程调用</em>，<code>RPC</code> 并没有规定采用哪种编程语言实现，<strong>我们甚至可以使用 <code>JAVA</code> 语言实现一个具体的 <code>RPC</code> 协议，内部采用 <code>RMI</code> 来实现数据的传输</strong>，例如 <a href="http://dubbo.apache.org/zh-cn/docs/user/references/protocol/rmi.html" target="_blank" rel="noopener">dubbo 中就可以采用 rmi 协议</a>。</p>
-<h2 id="How-to-implement-RPC"><a href="#How-to-implement-RPC" class="headerlink" title="How to implement RPC"></a>How to implement RPC</h2><p>我们先思考这么一个问题：要怎么去调用远程的服务呢？</p>
-<ol>
-<li>要知道 ip 和端口，以确定远程唯一的一个进程。</li>
-<li>要知道调用远程的进程中的什么服务，以确定方法和参数</li>
-<li>调用远程的服务之后，要返回结果。</li>
-</ol>
-<p>根据上述的三点，我们来看一下如何实现一个 <code>RPC</code> 框架。</p>
-<h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>在一个 <code>RPC</code> 的架构中包含 4 个组件：</p>
-<ol>
-<li><code>Client</code>：即客户端，服务调用方</li>
-<li><code>Client Stub</code>：客户端存根，用于存方服务端地址信息，将客户端的信息打包成网络消息，再通过网络发送给服务提供者</li>
-<li><code>Server Stub</code>：服务端存根，接收客户端发送过来的消息，并调用本地服务</li>
-<li><code>Server</code>：服务提供者</li>
-</ol>
-<p>一个 <code>RPC</code> 的调用过程：</p>
-<ol>
-<li><code>Client</code> 调用以本地调用方式调用服务；</li>
-<li><code>Client Stub</code> 接收到调用后负责将方法、参数等组装成能够进行网络传输的消息体（在 <code>Java</code> 中是序列化的过程）；</li>
-<li><code>Client Stub</code> 找到服务地址，并将消息体通过网络发送到服务端；</li>
-<li><code>Server Stub</code> 收到消息后进行解码（在 <code>Java</code> 中是反序列化的过程）；</li>
-<li><code>Server Stub</code> 根据解码结果调用 <code>Server</code> 处理；</li>
-<li><code>Server</code> 将结果返回给 <code>Server Stub</code>；</li>
-<li><code>Server Stub</code> 将返回结果打包成消息体（在 <code>Java</code> 中是序列化的过程）；</li>
-<li><code>Server Stub</code> 将打包后的消息通过网络并发送至消费方；</li>
-<li><code>Client Stub</code> 接收到消息，并进行解码（在 <code>Java</code> 中是反序列化的过程）；</li>
-<li><code>Client</code> 得到最终结果。</li>
-</ol>
-<p>一图顶千言</p>
-<img src="/2019/07/11/rpc-introduction/theory.jpg" title="RPC 原理">
-<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><p>我们简单的采用 <code>Java</code> 语言来实现一个 <code>RPC</code> 框架。</p>
-<h4 id="命名"><a href="#命名" class="headerlink" title="命名"></a>命名</h4><p>作为钢铁侠粉丝，这里我们将项目命名为 <a href="https://github.com/fuyongde/edith/releases/tag/0.1.0" target="_blank" rel="noopener">Edith</a>。</p>
-<blockquote>
-<p>Even dead,I am hero. -<em>Tony Stark</em></p>
-</blockquote>
-<p>伊人已逝，仍是英雄。永远纪念 <em>Tony Stark</em>。</p>
-<h4 id="暴露服务"><a href="#暴露服务" class="headerlink" title="暴露服务"></a>暴露服务</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RpcFramework</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">export</span><span class="params">(<span class="keyword">final</span> Object service, <span class="keyword">int</span> port)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (service == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Service instance is null"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (port &lt;= <span class="number">0</span> || port &gt; <span class="number">65535</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Invalid port "</span> + port);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"Export service "</span> + service.getClass().getName() + <span class="string">" on port "</span> + port);</span><br><span class="line">        ServerSocket server = <span class="keyword">new</span> ServerSocket(port);</span><br><span class="line">        <span class="keyword">for</span> (; ; ) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="keyword">final</span> Socket socket = server.accept();</span><br><span class="line">                <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">                    <span class="keyword">try</span> &#123;</span><br><span class="line">                        <span class="keyword">try</span> &#123;</span><br><span class="line">                            ObjectInputStream input = <span class="keyword">new</span> ObjectInputStream(socket.getInputStream());</span><br><span class="line">                            <span class="keyword">try</span> &#123;</span><br><span class="line">                                String methodName = input.readUTF();</span><br><span class="line">                                Class&lt;?&gt;[] parameterTypes = (Class&lt;?&gt;[]) input.readObject();</span><br><span class="line">                                Object[] arguments = (Object[]) input.readObject();</span><br><span class="line">                                ObjectOutputStream output = <span class="keyword">new</span> ObjectOutputStream(socket.getOutputStream());</span><br><span class="line">                                <span class="keyword">try</span> &#123;</span><br><span class="line">                                    Method method = service.getClass().getMethod(methodName, parameterTypes);</span><br><span class="line">                                    Object result = method.invoke(service, arguments);</span><br><span class="line">                                    output.writeObject(result);</span><br><span class="line">                                &#125; <span class="keyword">catch</span> (Throwable t) &#123;</span><br><span class="line">                                    output.writeObject(t);</span><br><span class="line">                                &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                                    output.close();</span><br><span class="line">                                &#125;</span><br><span class="line">                            &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                                input.close();</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                            socket.close();</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                        e.printStackTrace();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;).start();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="引用服务"><a href="#引用服务" class="headerlink" title="引用服务"></a>引用服务</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RpcFramework</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">T <span class="title">refer</span><span class="params">(<span class="keyword">final</span> Class&lt;T&gt; interfaceClass, <span class="keyword">final</span> String host, <span class="keyword">final</span> <span class="keyword">int</span> port)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (interfaceClass == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Interface class is null"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (!interfaceClass.isInterface()) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"The "</span> + interfaceClass.getName() + <span class="string">" must be interface class!"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (host == <span class="keyword">null</span> || host.length() == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Host is null!"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (port &lt;= PORT_MIN || port &gt; PORT_MAX) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Invalid port "</span> + port);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">"Get remote service "</span> + interfaceClass.getName() + <span class="string">" from server "</span> + host + <span class="string">":"</span> + port);</span><br><span class="line">        <span class="keyword">return</span> (T) Proxy.newProxyInstance(interfaceClass.getClassLoader(), <span class="keyword">new</span> Class&lt;?&gt;[]&#123;interfaceClass&#125;, (proxy, method, arguments) -&gt; &#123;</span><br><span class="line">            Socket socket = <span class="keyword">new</span> Socket(host, port);</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                ObjectOutputStream output = <span class="keyword">new</span> ObjectOutputStream(socket.getOutputStream());</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    output.writeUTF(method.getName());</span><br><span class="line">                    output.writeObject(method.getParameterTypes());</span><br><span class="line">                    output.writeObject(arguments);</span><br><span class="line">                    ObjectInputStream input = <span class="keyword">new</span> ObjectInputStream(socket.getInputStream());</span><br><span class="line">                    <span class="keyword">try</span> &#123;</span><br><span class="line">                        Object result = input.readObject();</span><br><span class="line">                        <span class="keyword">if</span> (result <span class="keyword">instanceof</span> Throwable) &#123;</span><br><span class="line">                            <span class="keyword">throw</span> (Throwable) result;</span><br><span class="line">                        &#125;</span><br><span class="line">                        <span class="keyword">return</span> result;</span><br><span class="line">                    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                        input.close();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                    output.close();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                socket.close();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="定义接口"><a href="#定义接口" class="headerlink" title="定义接口"></a>定义接口</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">HelloService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 返回一个字符串</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> name name</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> Hello name</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function">String <span class="title">hello</span><span class="params">(String name)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="编写服务提供者"><a href="#编写服务提供者" class="headerlink" title="编写服务提供者"></a>编写服务提供者</h4><p>先实现 <code>HelloService</code></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloServiceImpl</span> <span class="keyword">implements</span> <span class="title">HelloService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">hello</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        String result = <span class="string">"Hello "</span> + name;</span><br><span class="line">        System.out.println(Thread.currentThread().getName() + <span class="string">" "</span> + result);</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>启动并暴漏服务</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Provider</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        HelloService helloService = <span class="keyword">new</span> HelloServiceImpl();</span><br><span class="line">        RpcFramework.export(helloService, <span class="number">8888</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="编写服务调用者"><a href="#编写服务调用者" class="headerlink" title="编写服务调用者"></a>编写服务调用者</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Consumer</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        HelloService helloService = RpcFramework.refer(HelloService.class, "127.0.0.1", 8888);</span><br><span class="line">        String name = <span class="string">"Peter Parker"</span>;</span><br><span class="line">        System.out.println(helloService.hello(name));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>执行 <code>Consumer</code>，查看控制台输出：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello Peter Parker</span><br></pre></td></tr></table></figure>
-<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>本文的例子，采用了阻塞的 Socket IO 流来进行 Client 和 Server 之间的端对端通信。方法的远程调用采用了 <code>Java</code> 的动态代理，参数的序列化与反序列化采用 <code>ObjectStream</code>。成熟的 <code>RPC</code> 框架会对上述的实现方式进行替换，比如采用 <code>Netty</code> 的 <code>NIO</code> 来实现非阻塞通信，采用成熟的注册中心来统一管理服务的注册与发现，采用 <code>hession2</code>，<code>fastjson</code> 等序列化方式等等。成熟的 <code>RPC</code> 框架还会考虑调用过程中的诸多问题，比如重试机制、超时配置等等。</p>
-<p>本文参考了 <a href="https://www.cnkirito.moe/easy-know-rpc/" target="_blank" rel="noopener">徐靖峰的博客</a>。</p>
-
+<h3 id="RPC-vs-RMI"><a href="#RPC-vs-RMI" class="headerlink" title="RPC vs RMI"></a>RPC vs RMI</h3>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/07/11/rpc-introduction/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1497,23 +1189,20 @@
 </blockquote>
 <p>大概是受 <code>Donald Trump</code> 的启发 🙄，Google 发布的 <code>jib</code> 让原本已经很简单的 <code>Docker</code> 镜像构建过程变得更加简单。</p>
 <p>一图顶千言，先看 <code>Docker</code> 构建镜像流程</p>
-<img src="/2019/06/26/jib-make-docker-simple-again/docker_process.jpg" title="Docker 构建容器镜像的流程">
-<p>再看 <code>Jib</code> 构建容器镜像流程</p>
-<img src="/2019/06/26/jib-make-docker-simple-again/jib_process.jpg" title="Jib 构建容器镜像的流程">
-<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>下面来介绍以下如何使用 <code>Jib</code></p>
-<h3 id="编写-Spring-Boot-Application"><a href="#编写-Spring-Boot-Application" class="headerlink" title="编写 Spring Boot Application"></a>编写 Spring Boot Application</h3><p>略</p>
-<h3 id="配置-Jib-插件"><a href="#配置-Jib-插件" class="headerlink" title="配置 Jib 插件"></a>配置 Jib 插件</h3><p>在项目的 <code>pom.xml</code> 文件中，新增如下配置</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.google.cloud.tools<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jib-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.3.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">from</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">image</span>&gt;</span>openjdk:8u212-jdk-alpine<span class="tag">&lt;/<span class="name">image</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">from</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">to</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">image</span>&gt;</span>registry.cn-hangzhou.aliyuncs.com/fuyongde/ebony-maw:$&#123;project.version&#125;<span class="tag">&lt;/<span class="name">image</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">to</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">container</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">jvmFlags</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">jvmFlag</span>&gt;</span>-Xms128m<span class="tag">&lt;/<span class="name">jvmFlag</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">jvmFlag</span>&gt;</span>-Xmx128m<span class="tag">&lt;/<span class="name">jvmFlag</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">jvmFlags</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">container</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">executions</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">execution</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">phase</span>&gt;</span>package<span class="tag">&lt;/<span class="name">phase</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">goals</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">goal</span>&gt;</span>build<span class="tag">&lt;/<span class="name">goal</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">goals</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">execution</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">executions</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>其中</p>
-<ul>
-<li>from：等同于 <code>Dockerfile</code> 中的 <code>FROM</code></li>
-<li>to：镜像容器服务的地址以及对应的 <code>tag</code>，这里我采用的是阿里云的地址</li>
-<li>jvmFlag：容器启动时的 <code>JVM</code> 参数</li>
-</ul>
-<h3 id="构建"><a href="#构建" class="headerlink" title="构建"></a>构建</h3><p>在终端执行 <code>maven package</code> 命令，<code>Docker</code> 镜像就打包并上传好了 ✌。</p>
-<p>至此，整个构建过程已经完成，我们甚至连 <code>Dockerfile</code> 都不用写，是不是超级简单 🤪。</p>
-<p>如有需要，可参考本文中的 <a href="https://github.com/fuyongde/marvel/tree/master/ebony-maw" target="_blank" rel="noopener">Demo</a> 。</p>
+<img src="/2019/06/26/jib-make-docker-simple-again/docker_process.jpg" class title="Docker 构建容器镜像的流程">
 
+<p>再看 <code>Jib</code> 构建容器镜像流程</p>
+<img src="/2019/06/26/jib-make-docker-simple-again/jib_process.jpg" class title="Jib 构建容器镜像的流程">
+
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>下面来介绍以下如何使用 <code>Jib</code></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/06/26/jib-make-docker-simple-again/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1557,10 +1246,12 @@
   </footer>
 
   
-  <script src="https://unpkg.com/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.sourcegcdn.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
 <script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
 
   
+<script src="https://cdnjs.sourcegcdn.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
 
 
 
