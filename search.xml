@@ -2,7 +2,7 @@
 <search>
   <entry>
     <title>JaCoCo手册</title>
-    <url>/2022/01/26/JaCoCo%E6%89%8B%E5%86%8C/</url>
+    <url>/public/2022/01/26/JaCoCo%E6%89%8B%E5%86%8C/</url>
     <content><![CDATA[<h2 id="JaCoCo-简介"><a href="#JaCoCo-简介" class="headerlink" title="JaCoCo 简介"></a>JaCoCo 简介</h2><blockquote>
 <p>JaCoCo should provide the standard technology for code coverage analysis in Java VM based environments. The focus is providing a lightweight, flexible and well documented library for integration with various build and development tools.</p>
 </blockquote>
@@ -105,7 +105,7 @@
   </entry>
   <entry>
     <title>Arthas 非常实用的几个命令</title>
-    <url>/2020/01/18/arthas-useful-command/</url>
+    <url>/public/2020/01/18/arthas-useful-command/</url>
     <content><![CDATA[<p>本文介绍几个非常有用的 Arthas 命令，熟练使用这几个命令，可以让我们在排查线上问题的时候更加轻松。</p>
 <p>关于 Arthas 的设计思想，美团技术团队的文章<a href="https://tech.meituan.com/2019/02/28/java-dynamic-trace.html">Java 动态追踪技术探究</a>一文中做了详细的说明，有兴趣可以去阅读一下。</p>
 <h2 id="trace"><a href="#trace" class="headerlink" title="trace"></a>trace</h2><p><code>trace</code> 命令见名知意，可以用于跟踪方法内部的调用路径，渲染整个调用链路上所有的性能开销和跟踪调用链路。</p>
@@ -131,7 +131,7 @@
   </entry>
   <entry>
     <title>android command line 安装时的坑</title>
-    <url>/2020/03/24/android-command-line-%E5%AE%89%E8%A3%85%E6%97%B6%E7%9A%84%E5%9D%91/</url>
+    <url>/public/2020/03/24/android-command-line-%E5%AE%89%E8%A3%85%E6%97%B6%E7%9A%84%E5%9D%91/</url>
     <content><![CDATA[<p>很久没有搞过 Android 开发了，Android 的命令行安装方式相比之前发生了一些变化，这里针对安装最新的 Android 命令行时遇到的一些问题，记录一下解决方法。</p>
 <p><em>问题：下载最新的 commandlinetools 在自己指定的目录安装之后，无法使用</em></p>
 <p><strong>原因：最新版本的 commandlinetools 对安装的目录是有要求的</strong></p>
@@ -146,7 +146,7 @@
   </entry>
   <entry>
     <title>curl-command 手册</title>
-    <url>/2019/10/24/curl-command-%E6%89%8B%E5%86%8C/</url>
+    <url>/public/2019/10/24/curl-command-%E6%89%8B%E5%86%8C/</url>
     <content><![CDATA[<p>curl 是十分常用的命令，通常我们用这个命令来请求 Web 服务器。一些常见的构造 HTTP 请求的客户端（如 Postman）关于项目协作的功能都是商业化版本才有的，团队开发过程中通过维护接口的 curl 命令脚本可以低成本的代替一些商业化软件的功能。</p>
 <p>下面介绍一下 curl 命令的常见用法。</p>
 <h2 id="基础用法"><a href="#基础用法" class="headerlink" title="基础用法"></a>基础用法</h2><h3 id="请求一个-URL"><a href="#请求一个-URL" class="headerlink" title="请求一个 URL"></a>请求一个 URL</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">curl http://www.baidu.com/</span><br></pre></td></tr></table></figure>
@@ -214,7 +214,7 @@
   </entry>
   <entry>
     <title>数据库死锁</title>
-    <url>/2019/11/15/database-deadlock/</url>
+    <url>/public/2019/11/15/database-deadlock/</url>
     <content><![CDATA[<blockquote>
 <p>死锁是指两个或者多个事务在同一个资源上相互占用，并请求锁定对方占用的资源，从而导致恶性循环的现象</p>
 </blockquote>
@@ -257,7 +257,7 @@
   </entry>
   <entry>
     <title>夏令时问题</title>
-    <url>/2019/10/01/daylight-saving-time/</url>
+    <url>/public/2019/10/01/daylight-saving-time/</url>
     <content><![CDATA[<p>在工作中，遇到一个很有意思的关于时间的问题，这里跟大家分享一下。</p>
 <h2 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h2><p>从数据库里取出用户的生日<code>1990-05-22</code>，接口返回时发现返回值变成了<code>1990-05-21</code>，而对于<code>1992-05-22</code>这样的日期却能正确返回。</p>
 <p>网上很多对于相关问题的分析都是简单粗暴的认为是时区的问题，却没有讲明白问题出现的根本原因。</p>
@@ -306,7 +306,7 @@
   </entry>
   <entry>
     <title>Docker 手册</title>
-    <url>/2019/11/14/docker-%E6%89%8B%E5%86%8C/</url>
+    <url>/public/2019/11/14/docker-%E6%89%8B%E5%86%8C/</url>
     <content><![CDATA[<h2 id="镜像管理"><a href="#镜像管理" class="headerlink" title="镜像管理"></a>镜像管理</h2><h3 id="查询所需的镜像"><a href="#查询所需的镜像" class="headerlink" title="查询所需的镜像"></a>查询所需的镜像</h3><ul>
 <li><p>Usage：</p>
 <p><code>docker search [OPTIONS] TERM</code></p>
@@ -381,7 +381,7 @@
   </entry>
   <entry>
     <title>使用 Docker 构建 Spring Boot Application</title>
-    <url>/2019/06/25/dockerizing-spring-boot-application/</url>
+    <url>/public/2019/06/25/dockerizing-spring-boot-application/</url>
     <content><![CDATA[<h2 id="Docker-amp-Spring-Boot"><a href="#Docker-amp-Spring-Boot" class="headerlink" title="Docker &amp; Spring Boot"></a>Docker &amp; Spring Boot</h2><p><code>Docker</code> 是一种 <code>Linux</code> 容器的实现，具有进程的轻量级资源隔离的特点，每一个容器对应操作系统中的一个进程，但是它又会有自己的网络空间、文件系统、PID 等。<code>Docker</code> 除了实现 <code>Linux</code> 容器，还使得容器具有“社会化”的属性，用户可以将容器镜像发布在 <code>Docker Hub</code> 与其他开发者共享、协作，类似于 <code>Maven</code>。</p>
 <p><code>Spring Boot</code> 简化了 Spring 应用程序的开发过程，遵循约定优先配置的原则提供了各类 <em>开箱即用（out-of-the-box）</em> 的框架配置。另一方面，<code>Spring Boot</code> 还具备将代码直接构建为可执行 jar 包的能力，这个 jar 包是一个可以独立运行的部署单元。基于以上特性，现在普遍认为 <code>Spring Boot</code> 提供了一种快速构造<strong>微服务（Micro-Service）</strong>的能力。</p>
 <p><code>Spring Boot</code> 的运行环境非常简单，将 Spring Boot Application 打包为 <code>Docker</code> 镜像，对于自动化部署、运维都非常方便。</p>
@@ -457,7 +457,7 @@
   </entry>
   <entry>
     <title>Dubbo 中的负载均衡策略</title>
-    <url>/2019/11/16/dubbo-loadbalance/</url>
+    <url>/public/2019/11/16/dubbo-loadbalance/</url>
     <content><![CDATA[<p><code>Dubbo</code> 内置了 4 种负载均衡策略</p>
 <ul>
 <li><code>RandomLoadBalance</code>：随机负载均衡，随机选择一个服务结点，跟权重相关。该策略是 <code>Dubbo</code> 的<strong>默认</strong>负载均衡策略。</li>
@@ -546,7 +546,7 @@
   </entry>
   <entry>
     <title>RPC 进阶 - 线程池</title>
-    <url>/2019/07/16/edith-with-thread-pool/</url>
+    <url>/public/2019/07/16/edith-with-thread-pool/</url>
     <content><![CDATA[<p>在 <a href="https://fuyongde.github.io/2019/07/11/rpc-introduction/">Rpc Introduction</a> 中简单写了一个 <code>RPC Framework</code>。在本节中，对 <code>Edith</code> 新增采用线程池支持多线程的特性。</p>
 <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>实际开发中，我们的应用程序是不能盲目的开辟线程的，这样会造成资源的极大浪费。若采用线程池，可以减少创建和销毁线程的次数，让每个线程可以多次使用，并且可以根据系统的承受能力，调整线程池中工作线程的数量，方式消耗过多的内存。</p>
 <p>如有需要可以阅读 <code>Dubbo</code> 中关于线程池的设计（位于 <code>org.apache.dubbo.common.threadpool</code> 包）。</p>
@@ -573,7 +573,7 @@
   </entry>
   <entry>
     <title>git 恢复已删除的分支</title>
-    <url>/2020/03/26/git-%E6%81%A2%E5%A4%8D%E5%B7%B2%E5%88%A0%E9%99%A4%E7%9A%84%E5%88%86%E6%94%AF/</url>
+    <url>/public/2020/03/26/git-%E6%81%A2%E5%A4%8D%E5%B7%B2%E5%88%A0%E9%99%A4%E7%9A%84%E5%88%86%E6%94%AF/</url>
     <content><![CDATA[<p>在日常开发中，如果我们一不小心删除了某个分支，又想重新使用这个分支，该怎么找回该分支上的代码呢？</p>
 <h2 id="场景还原"><a href="#场景还原" class="headerlink" title="场景还原"></a>场景还原</h2><ol>
 <li>有一个 git 仓库，从 <code>master</code> 分支新建 <code>feature/delete_branch</code> 分支，并进行一次提交，如下：</li>
@@ -604,7 +604,7 @@
   </entry>
   <entry>
     <title>Gradle 手册</title>
-    <url>/2020/03/08/gradle-%E6%89%8B%E5%86%8C/</url>
+    <url>/public/2020/03/08/gradle-%E6%89%8B%E5%86%8C/</url>
     <content><![CDATA[<h2 id="Gradle-是什么"><a href="#Gradle-是什么" class="headerlink" title="Gradle 是什么"></a>Gradle 是什么</h2><blockquote>
 <p>Gradle is an open-source build automation tool focused on flexibility and performance. Gradle build scripts are written using a Groovy or Kotlin DSL. Read about Gradle features to learn what is possible with Gradle.</p>
 </blockquote>
@@ -658,7 +658,7 @@
   </entry>
   <entry>
     <title>如何使用Hexo？</title>
-    <url>/2010/05/24/hexo/</url>
+    <url>/public/2010/05/24/hexo/</url>
     <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
 <h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
 
@@ -676,7 +676,7 @@
   </entry>
   <entry>
     <title>如何使用 Java 的 HttpClient 请求 Https 服务</title>
-    <url>/2020/12/10/how-use-httpclient-over-https/</url>
+    <url>/public/2020/12/10/how-use-httpclient-over-https/</url>
     <content><![CDATA[<p>近期收到一些小伙伴问 Java 中如何调用 https 中双向认证的接口的问题，本文采用 okhttp 以及 Java11 的 httpclient 来介绍如何使用 Java 代码调用 https 双向认证的接口。</p>
 <h2 id="前置工作"><a href="#前置工作" class="headerlink" title="前置工作"></a>前置工作</h2><ol>
 <li>生成服务端、客户端证书，并将各自的公钥加入到对方的信任链中以供后续的使用；</li>
@@ -735,7 +735,7 @@
   </entry>
   <entry>
     <title>Java 多线程死锁问题</title>
-    <url>/2019/11/19/java-deadlock/</url>
+    <url>/public/2019/11/19/java-deadlock/</url>
     <content><![CDATA[<p>本文描述一个 Java 多线程死锁问题，并演示使用 <code>jstack</code>、<code>arthas</code> 工具来发现应用程序中的线程死锁。</p>
 <h2 id="先编写一段死锁的代码"><a href="#先编写一段死锁的代码" class="headerlink" title="先编写一段死锁的代码"></a>先编写一段死锁的代码</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">App</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">x</span> <span class="operator">=</span> <span class="string">&quot;x&quot;</span>;</span><br><span class="line">        <span class="type">String</span> <span class="variable">y</span> <span class="operator">=</span> <span class="string">&quot;y&quot;</span>;</span><br><span class="line">        <span class="type">Thread</span> <span class="variable">a</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>(<span class="keyword">new</span> <span class="title class_">Runnable</span>() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">                <span class="type">String</span> <span class="variable">threadName</span> <span class="operator">=</span> Thread.currentThread().getName();</span><br><span class="line">                <span class="keyword">synchronized</span> (x) &#123;</span><br><span class="line">                    System.out.println(String.format(<span class="string">&quot;Thread %s Start %s&quot;</span>, threadName, <span class="string">&quot;------&quot;</span>));</span><br><span class="line">                    System.out.println(String.format(<span class="string">&quot;Thread %s, x = %s&quot;</span>, threadName, x));</span><br><span class="line">                    <span class="keyword">synchronized</span> (y) &#123;</span><br><span class="line">                        System.out.println(String.format(<span class="string">&quot;Thread %s, y = %s&quot;</span>, threadName, y));</span><br><span class="line">                    &#125;</span><br><span class="line">                    System.out.println(String.format(<span class="string">&quot;Thread %s End %s&quot;</span>, threadName, <span class="string">&quot;------&quot;</span>));</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        <span class="type">Thread</span> <span class="variable">b</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>(<span class="keyword">new</span> <span class="title class_">Runnable</span>() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">                <span class="type">String</span> <span class="variable">threadName</span> <span class="operator">=</span> Thread.currentThread().getName();</span><br><span class="line">                <span class="keyword">synchronized</span> (y) &#123;</span><br><span class="line">                    System.out.println(String.format(<span class="string">&quot;Thread %s Start %s&quot;</span>, threadName, <span class="string">&quot;------&quot;</span>));</span><br><span class="line">                    System.out.println(String.format(<span class="string">&quot;Thread %s, y = %s&quot;</span>, threadName, y));</span><br><span class="line">                    <span class="keyword">synchronized</span> (x) &#123;</span><br><span class="line">                        System.out.println(String.format(<span class="string">&quot;Thread %s, x = %s&quot;</span>, threadName, x));</span><br><span class="line">                    &#125;</span><br><span class="line">                    System.out.println(String.format(<span class="string">&quot;Thread %s End %s&quot;</span>, threadName, <span class="string">&quot;------&quot;</span>));</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        a.start();</span><br><span class="line">        b.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -772,7 +772,7 @@
   </entry>
   <entry>
     <title>Java8 Stream</title>
-    <url>/2019/06/15/java8-stream/</url>
+    <url>/public/2019/06/15/java8-stream/</url>
     <content><![CDATA[<blockquote>
 <p>A sequence of elements supporting sequential and parallel aggregate operations.</p>
 </blockquote>
@@ -925,7 +925,7 @@
   </entry>
   <entry>
     <title>javaagent 使用指南</title>
-    <url>/2022/01/08/javaagent-%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/</url>
+    <url>/public/2022/01/08/javaagent-%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/</url>
     <content><![CDATA[<p>最近在做基于 JaCoCo 的代码覆盖率工具，了解到了一下 javaagent 相关的一些知识点。</p>
 <h2 id="javaagent-是什么？"><a href="#javaagent-是什么？" class="headerlink" title="javaagent 是什么？"></a>javaagent 是什么？</h2><p>javaagent 是 java 命令的一个参数选项，可以用于加载 Java 语言的代理。</p>
 <p>那么这个参数加载的 Java 语言的代理需要满足什么样的规范呢？</p>
@@ -940,7 +940,7 @@
   </entry>
   <entry>
     <title>Jenkins-手册</title>
-    <url>/2020/02/18/jenkins-%E6%89%8B%E5%86%8C/</url>
+    <url>/public/2020/02/18/jenkins-%E6%89%8B%E5%86%8C/</url>
     <content><![CDATA[<p>Jenkins 是常见的 CI 平台</p>
 <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="Windows-平台"><a href="#Windows-平台" class="headerlink" title="Windows 平台"></a>Windows 平台</h3><p>略</p>
 <h3 id="CentOS-平台"><a href="#CentOS-平台" class="headerlink" title="CentOS 平台"></a>CentOS 平台</h3><p>更为详细的步骤及说明可查看<a href="https://pkg.jenkins.io/redhat-stable/">官网</a></p>
@@ -974,7 +974,7 @@
   </entry>
   <entry>
     <title>Jib - Make docker simple again</title>
-    <url>/2019/06/26/jib-make-docker-simple-again/</url>
+    <url>/public/2019/06/26/jib-make-docker-simple-again/</url>
     <content><![CDATA[<p>在 <a href="https://fuyongde.github.io/2019/06/25/Dockerizing-Spring-Boot-Application/">使用 Docker 构建 Spring Boot Application</a> 中简单介绍了如何使用 <code>Docker</code> 构建 <code>Spring Boot Application</code>。本文探讨如何更简单的构建 <code>Docker</code> 镜像。</p>
 <h2 id="jib-简介"><a href="#jib-简介" class="headerlink" title="jib 简介"></a>jib 简介</h2><blockquote>
 <p>Make America Great Again. – Donald Trump</p>
@@ -1009,7 +1009,7 @@
   </entry>
   <entry>
     <title>JVM 手册</title>
-    <url>/2019/11/10/jvm-%E6%89%8B%E5%86%8C/</url>
+    <url>/public/2019/11/10/jvm-%E6%89%8B%E5%86%8C/</url>
     <content><![CDATA[<p>记录常用的 JVM 参数，持续更新 …</p>
 <h2 id="堆内存设置"><a href="#堆内存设置" class="headerlink" title="堆内存设置"></a>堆内存设置</h2><p><code>-Xms128M</code> : 设置 java 程序启动时堆内存 128M（默认为物理内存 1&#x2F;64,且小于 1G），阿里 p3c 文档中推荐 Xmx 与 Xms 配置同样的大小，避免 GC 后调整堆大小带来的压力</p>
 <p><code>-Xmx256M</code> : 设置最大堆内存 256M，超出后会出现 OutOfMemoryError（默认为物理内存 1&#x2F;64，且小于 1G）</p>
@@ -1057,7 +1057,7 @@
   </entry>
   <entry>
     <title>Maven Wapper 手册</title>
-    <url>/2019/06/23/maven-wapper-%E6%89%8B%E5%86%8C/</url>
+    <url>/public/2019/06/23/maven-wapper-%E6%89%8B%E5%86%8C/</url>
     <content><![CDATA[<p>我们使用 Maven 时，基本上只会用到 <code>mvn</code> 这一个命令。有些童鞋可能听说过 <code>mvnw</code>，这个是啥？</p>
 <p>mvnw 是 Maven Wrapper 的缩写，我们安装 Maven 时，默认情况下，系统所有项目都会使用全局安装的这个 Maven 版本。但是，对于某些项目来说，它可能必须使用某个特定的 Maven 版本，这个时候，就可以使用 Maven Wrapper，它可以负责给这个特定的项目安装指定版本的 Maven，而其他项目不受影响。</p>
 <p>简单地说，Maven Wrapper 就是给一个项目提供一个独立的，指定版本的 Maven 给它使用。</p>
@@ -1088,7 +1088,7 @@
   </entry>
   <entry>
     <title>Linux 手册</title>
-    <url>/2019/09/24/linux-%E6%89%8B%E5%86%8C/</url>
+    <url>/public/2019/09/24/linux-%E6%89%8B%E5%86%8C/</url>
     <content><![CDATA[<p>记录一些常用的 Linux 操作，持续更新 …</p>
 <h3 id="查看系统版本"><a href="#查看系统版本" class="headerlink" title="查看系统版本"></a>查看系统版本</h3><p>常用的查看系统版本有以下命令</p>
 <ul>
@@ -1161,7 +1161,7 @@
   </entry>
   <entry>
     <title>Maven 手册</title>
-    <url>/2019/06/22/maven-%E6%89%8B%E5%86%8C/</url>
+    <url>/public/2019/06/22/maven-%E6%89%8B%E5%86%8C/</url>
     <content><![CDATA[<h2 id="什么是-Maven"><a href="#什么是-Maven" class="headerlink" title="什么是 Maven"></a>什么是 Maven</h2><blockquote>
 <p>Apache Maven is a software project management and comprehension tool. Based on the concept of a project object model (POM), Maven can manage a project’s build, reporting and documentation from a central piece of information.</p>
 </blockquote>
@@ -1343,7 +1343,7 @@
   </entry>
   <entry>
     <title>MySQL 索引</title>
-    <url>/2019/11/23/mysql-index-categories/</url>
+    <url>/public/2019/11/23/mysql-index-categories/</url>
     <content><![CDATA[<p>本文粗略说以下 MySQL 中常见的索引分类。</p>
 <h2 id="物理存储角度"><a href="#物理存储角度" class="headerlink" title="物理存储角度"></a>物理存储角度</h2><ul>
 <li>聚簇索引</li>
@@ -1380,7 +1380,7 @@
   </entry>
   <entry>
     <title>MySQL 优化器成本模型</title>
-    <url>/2019/12/04/mysql-optimizer-cost-model/</url>
+    <url>/public/2019/12/04/mysql-optimizer-cost-model/</url>
     <content><![CDATA[<p>本文探讨一下 MySQL5.7 版本中 优化器的代价模型。相关内容也可查看<a href="https://dev.mysql.com/doc/refman/5.7/en/cost-model.html">官网</a></p>
 <p>MySQL 优化器成本模型由两个表组成，分别位于 mysql.server_cost 和 mysql.engine_cost 中。</p>
 <ul>
@@ -1409,7 +1409,7 @@
   </entry>
   <entry>
     <title>MySQL 手册</title>
-    <url>/2019/11/14/mysql-%E6%89%8B%E5%86%8C/</url>
+    <url>/public/2019/11/14/mysql-%E6%89%8B%E5%86%8C/</url>
     <content><![CDATA[<h2 id="参数配置"><a href="#参数配置" class="headerlink" title="参数配置"></a>参数配置</h2><h3 id="查看所有参数"><a href="#查看所有参数" class="headerlink" title="查看所有参数"></a>查看所有参数</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mysql&gt; SHOW VARIABLES;</span><br></pre></td></tr></table></figure>
 
 <h3 id="慢查询、索引相关的参数"><a href="#慢查询、索引相关的参数" class="headerlink" title="慢查询、索引相关的参数"></a>慢查询、索引相关的参数</h3><h4 id="查看慢查询日志是否打开"><a href="#查看慢查询日志是否打开" class="headerlink" title="查看慢查询日志是否打开"></a>查看慢查询日志是否打开</h4><p>Usage:</p>
@@ -1612,7 +1612,7 @@
   </entry>
   <entry>
     <title>pip-手册</title>
-    <url>/2020/03/20/pip-%E6%89%8B%E5%86%8C/</url>
+    <url>/public/2020/03/20/pip-%E6%89%8B%E5%86%8C/</url>
     <content><![CDATA[<p>PyPI (Python Package Index) 是 <code>Python</code> 编程语言的软件存储库。开发者可以通过 PyPI 查找和安装由 <code>Python</code> 社区开发和共享的软件，也可以将自己开发的库上传至 PyPI 。</p>
 <p>由于国外访问比较慢，我们可以通过配置国内的镜像来进行加速访问。</p>
 <h2 id="配置-Aliyun-的镜像"><a href="#配置-Aliyun-的镜像" class="headerlink" title="配置 Aliyun 的镜像"></a>配置 Aliyun 的镜像</h2><h3 id="Linux-平台"><a href="#Linux-平台" class="headerlink" title="Linux 平台"></a>Linux 平台</h3><ol>
@@ -1635,7 +1635,7 @@
   </entry>
   <entry>
     <title>npm-手册</title>
-    <url>/2020/07/19/npm-%E6%89%8B%E5%86%8C/</url>
+    <url>/public/2020/07/19/npm-%E6%89%8B%E5%86%8C/</url>
     <content><![CDATA[<h2 id="配置淘宝镜像"><a href="#配置淘宝镜像" class="headerlink" title="配置淘宝镜像"></a>配置淘宝镜像</h2><ol>
 <li>备份旧镜像</li>
 </ol>
@@ -1667,7 +1667,7 @@
   </entry>
   <entry>
     <title>PowerShell 手册</title>
-    <url>/2019/09/27/powershell-%E6%89%8B%E5%86%8C/</url>
+    <url>/public/2019/09/27/powershell-%E6%89%8B%E5%86%8C/</url>
     <content><![CDATA[<p>记录一些常见的 <code>Powershell</code> 的使用问题</p>
 <h2 id="别名命令"><a href="#别名命令" class="headerlink" title="别名命令"></a>别名命令</h2><p>在使用 Linux 系统时，我喜欢使用 <code>ll</code> 命令来查看当前目录的文件，但是 Windows 系统的 Powershell 没有这个命令，所以每次用的时候就很不习惯。我们可以通过对命令设置别名来让 Powershell 支持我们的使用习惯。</p>
 <h3 id="查看别名"><a href="#查看别名" class="headerlink" title="查看别名"></a>查看别名</h3><p><code>Get-Alias</code> 或者 <code>gal</code> 命令来查看我们系统命令的别名，如下</p>
@@ -1768,7 +1768,7 @@
   </entry>
   <entry>
     <title>RPC Introduction</title>
-    <url>/2019/07/11/rpc-introduction/</url>
+    <url>/public/2019/07/11/rpc-introduction/</url>
     <content><![CDATA[<h2 id="What-is-RPC"><a href="#What-is-RPC" class="headerlink" title="What is RPC"></a>What is RPC</h2><blockquote>
 <p>Remote Procedure Call (RPC) is a protocol that one program can use to request a service from a program located in another computer on a network without having to understand the network’s details. A procedure call is also sometimes known as a function call or a subroutine call. A procedure call is also sometimes known as a function call or a subroutine call.</p>
 </blockquote>
@@ -1844,7 +1844,7 @@
   </entry>
   <entry>
     <title>一个 Spring 依赖注入的问题浅析</title>
-    <url>/2021/08/08/%E4%B8%80%E4%B8%AA-Spring-%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5%E7%9A%84%E9%97%AE%E9%A2%98%E6%B5%85%E6%9E%90/</url>
+    <url>/public/2021/08/08/%E4%B8%80%E4%B8%AA-Spring-%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5%E7%9A%84%E9%97%AE%E9%A2%98%E6%B5%85%E6%9E%90/</url>
     <content><![CDATA[<p>使用 Spring 做项目的先思考一个问题，一个接口有在多个实现类的情况下，在成员变量的声明上如果没有指定注入那个别名的 Bean 的时候 Spring 会如何选择对应的 Bean 来进行注入？</p>
 <h2 id="问题模拟"><a href="#问题模拟" class="headerlink" title="问题模拟"></a>问题模拟</h2><p>先来简单说明一下示例代码。</p>
 <p>定义一个接口，用于打印当前注入的 Bean 的名称</p>
@@ -1894,7 +1894,7 @@
   </entry>
   <entry>
     <title>zsh 手册</title>
-    <url>/2021/08/24/zsh-%E6%89%8B%E5%86%8C/</url>
+    <url>/public/2021/08/24/zsh-%E6%89%8B%E5%86%8C/</url>
     <content><![CDATA[<p>zsh 可能是目前最好用的终端。</p>
 <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="Mac-OS"><a href="#Mac-OS" class="headerlink" title="Mac OS"></a>Mac OS</h3><p>MacOS 自带 zsh，并且当前最新版本 MasOS 默认终端即为 zsh</p>
 <h3 id="Ubuntu"><a href="#Ubuntu" class="headerlink" title="Ubuntu"></a>Ubuntu</h3><p>使用 <code>sudo apt install zsh</code> 命令即可安装 zsh</p>
@@ -1950,7 +1950,7 @@
   </entry>
   <entry>
     <title>使用 Guava 中 RateLimiter 遇到的一个问题</title>
-    <url>/2021/06/26/%E4%BD%BF%E7%94%A8Guava%E4%B8%ADRateLimiter%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%B8%AA%E9%97%AE%E9%A2%98/</url>
+    <url>/public/2021/06/26/%E4%BD%BF%E7%94%A8Guava%E4%B8%ADRateLimiter%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%B8%AA%E9%97%AE%E9%A2%98/</url>
     <content><![CDATA[<p>线上业务使用了 Guava 中的 RateLimiter 来做单机的限流。最近运维同事反馈，在修改了限流的配置之后，请求频率没有超过限流的配置却触发了限流逻辑，在此对该问题进行一下分析与总结。</p>
 <h2 id="问题模拟"><a href="#问题模拟" class="headerlink" title="问题模拟"></a>问题模拟</h2><p>根据上述问题的现象，初步推测问题可能跟 Guava 中 RateLimiter 的限流算法实现有关，为了方便排查问题，参考线上业务的限流的逻辑写了一个 demo，其核心代码如下：</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/hello&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">HelloController</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** 用于存储不同的接口，对应的 RateLimiter **/</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Map&lt;String, RateLimiter&gt; RATE_LIMITER_MAP = Maps.newConcurrentMap();</span><br><span class="line">    <span class="comment">/** 用于存储不同接口限流配置的参数 **/</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Map&lt;String, String&gt; RATE_MAP = Maps.newConcurrentMap();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        <span class="comment">// 初始化一个接口默认的限流配置</span></span><br><span class="line">        RATE_MAP.put(<span class="string">&quot;loan&quot;</span>, <span class="string">&quot;100000&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 测试限流的接口</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> key 限流配置的 key</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/testLimit&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">testLimit</span><span class="params">(String key)</span> &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">value</span> <span class="operator">=</span> RATE_MAP.get(key);</span><br><span class="line">        logger.info(<span class="string">&quot;自定义限流配置=&#123;&#125;&quot;</span>, value);</span><br><span class="line">        <span class="type">Double</span> <span class="variable">currentRate</span> <span class="operator">=</span> Double.parseDouble(value);</span><br><span class="line"></span><br><span class="line">        <span class="type">RateLimiter</span> <span class="variable">rateLimiter</span> <span class="operator">=</span> RATE_LIMITER_MAP.get(key);</span><br><span class="line">        <span class="keyword">if</span> (rateLimiter == <span class="literal">null</span> || !isSameRate(currentRate, rateLimiter.getRate())) &#123;</span><br><span class="line">            logger.info(<span class="string">&quot;创建新的RateLimiter|速率=&#123;&#125;&quot;</span>, currentRate.toString());</span><br><span class="line">            rateLimiter = RateLimiter.create(currentRate);</span><br><span class="line">            RATE_LIMITER_MAP.putIfAbsent(key, rateLimiter);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">boolean</span> <span class="variable">allowed</span> <span class="operator">=</span> rateLimiter.tryAcquire();</span><br><span class="line">        logger.info(<span class="string">&quot;是否允许当前请求通过=&#123;&#125;|rate=&#123;&#125;&quot;</span>, allowed, rateLimiter.getRate());</span><br><span class="line">        <span class="keyword">return</span> allowed ? <span class="string">&quot;SUCCESS&quot;</span> : <span class="string">&quot;FAIL&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 模拟修改限流配置</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> key 限流配置的key</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> rate 限流的值</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/setRate&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">setRate</span><span class="params">(String key, String rate)</span> &#123;</span><br><span class="line">        RATE_MAP.put(key, rate);</span><br><span class="line">        <span class="type">String</span> <span class="variable">currentValue</span> <span class="operator">=</span> RATE_MAP.get(key);</span><br><span class="line">        logger.info(<span class="string">&quot;设置完之后的值=&#123;&#125;&quot;</span>, currentValue);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;SUCCESS&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -2001,7 +2001,7 @@
   </entry>
   <entry>
     <title>事务隔离级别</title>
-    <url>/2019/11/14/transaction-isolation/</url>
+    <url>/public/2019/11/14/transaction-isolation/</url>
     <content><![CDATA[<p>本文简单介绍一下数据库的事务隔离级别，所用数据库采用 <code>MySQL</code>，<code>MySQL</code> 提供了两种事务性的存储引擎 <code>InnoDB</code> 和 <code>NDB Cluster</code>，本文示例采用 <code>InnoDB</code> 存储引擎。</p>
 <h2 id="查看当前数据的事务隔离级别"><a href="#查看当前数据的事务隔离级别" class="headerlink" title="查看当前数据的事务隔离级别"></a>查看当前数据的事务隔离级别</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 查看当前数据库事务隔离级别</span><br><span class="line">mysql&gt; SHOW VARIABLES LIKE &#x27;%transaction_isolation%&#x27;;</span><br><span class="line">-- 或者</span><br><span class="line">mysql&gt; SELECT @@transaction_isolation;</span><br><span class="line">-- 低版本的 MySQL 查看事务隔离级别的属性是不一样的</span><br><span class="line">mysql&gt; SHOW VARIABLES LIKE &#x27;%tx_isolation%&#x27;;</span><br><span class="line">-- 或者</span><br><span class="line">mysql&gt; SELECT @@tx_isolation;</span><br></pre></td></tr></table></figure>
 
@@ -2086,7 +2086,7 @@
   </entry>
   <entry>
     <title>Spring Cloud Alibaba Introduction</title>
-    <url>/2019/10/11/spring-cloud-alibaba-introduction/</url>
+    <url>/public/2019/10/11/spring-cloud-alibaba-introduction/</url>
     <content><![CDATA[<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><blockquote>
 <p><code>Spring Cloud Alibaba</code> 致力于提供微服务开发的一站式解决方案。此项目包含开发分布式应用服务的必需组件（涵盖了服务治理、配置管理、限流降级以及阿里开源生态和商业生态的诸多组件），方便开发者通过 <code>Spring Cloud</code> 编程模型轻松使用这些组件来开发分布式应用服务。依托 <code>Spring Cloud Alibaba</code>，您只需要添加一些注解和少量配置，就可以将 <code>Spring Cloud</code> 应用接入阿里分布式应用解决方案，通过阿里中间件来迅速搭建分布式应用系统。</p>
 </blockquote>
