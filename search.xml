@@ -104,6 +104,21 @@
 ]]></content>
   </entry>
   <entry>
+    <title>android command line 安装时的坑</title>
+    <url>/2020/03/24/android-command-line-%E5%AE%89%E8%A3%85%E6%97%B6%E7%9A%84%E5%9D%91/</url>
+    <content><![CDATA[<p>很久没有搞过 Android 开发了，Android 的命令行安装方式相比之前发生了一些变化，这里针对安装最新的 Android 命令行时遇到的一些问题，记录一下解决方法。</p>
+<p><em>问题：下载最新的 commandlinetools 在自己指定的目录安装之后，无法使用</em></p>
+<p><strong>原因：最新版本的 commandlinetools 对安装的目录是有要求的</strong></p>
+<ol>
+<li>Download latest Command line tools from android i.e. commandlinetools-win-6200805_latest.zip</li>
+<li>Unzip the downloaded file</li>
+<li>Create directory for storing commandline tools somewhere on your disk, with following path included: android&#x2F;cmdline-tools&#x2F;latest Basically when You unzip this Cmd line tools, just rename tools directory to latest and make sure You put this latest folder in android&#x2F;cmdline-tools directory somewhere on your disk</li>
+<li>Create ANDROID_HOME environment variable for directory that stores the cmdline tools directory location like: <code>C:\YourLocationWhereYouStoreTheDirectory\android\cmdline-tools\latest</code></li>
+<li>Create new entry in Path environment variable as %ANDROID_HOME%\bin</li>
+</ol>
+]]></content>
+  </entry>
+  <entry>
     <title>Arthas 非常实用的几个命令</title>
     <url>/2020/01/18/arthas-useful-command/</url>
     <content><![CDATA[<p>本文介绍几个非常有用的 Arthas 命令，熟练使用这几个命令，可以让我们在排查线上问题的时候更加轻松。</p>
@@ -128,21 +143,6 @@
       <tags>
         <tag>Arthas</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>android command line 安装时的坑</title>
-    <url>/2020/03/24/android-command-line-%E5%AE%89%E8%A3%85%E6%97%B6%E7%9A%84%E5%9D%91/</url>
-    <content><![CDATA[<p>很久没有搞过 Android 开发了，Android 的命令行安装方式相比之前发生了一些变化，这里针对安装最新的 Android 命令行时遇到的一些问题，记录一下解决方法。</p>
-<p><em>问题：下载最新的 commandlinetools 在自己指定的目录安装之后，无法使用</em></p>
-<p><strong>原因：最新版本的 commandlinetools 对安装的目录是有要求的</strong></p>
-<ol>
-<li>Download latest Command line tools from android i.e. commandlinetools-win-6200805_latest.zip</li>
-<li>Unzip the downloaded file</li>
-<li>Create directory for storing commandline tools somewhere on your disk, with following path included: android&#x2F;cmdline-tools&#x2F;latest Basically when You unzip this Cmd line tools, just rename tools directory to latest and make sure You put this latest folder in android&#x2F;cmdline-tools directory somewhere on your disk</li>
-<li>Create ANDROID_HOME environment variable for directory that stores the cmdline tools directory location like: <code>C:\YourLocationWhereYouStoreTheDirectory\android\cmdline-tools\latest</code></li>
-<li>Create new entry in Path environment variable as %ANDROID_HOME%\bin</li>
-</ol>
-]]></content>
   </entry>
   <entry>
     <title>curl-command 手册</title>
@@ -256,55 +256,6 @@
       </tags>
   </entry>
   <entry>
-    <title>夏令时问题</title>
-    <url>/2019/10/01/daylight-saving-time/</url>
-    <content><![CDATA[<p>在工作中，遇到一个很有意思的关于时间的问题，这里跟大家分享一下。</p>
-<h2 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h2><p>从数据库里取出用户的生日<code>1990-05-22</code>，接口返回时发现返回值变成了<code>1990-05-21</code>，而对于<code>1992-05-22</code>这样的日期却能正确返回。</p>
-<p>网上很多对于相关问题的分析都是简单粗暴的认为是时区的问题，却没有讲明白问题出现的根本原因。</p>
-<h2 id="排查过程"><a href="#排查过程" class="headerlink" title="排查过程"></a>排查过程</h2><h3 id="问题复现"><a href="#问题复现" class="headerlink" title="问题复现"></a>问题复现</h3><p>为了复现问题现象，我们先快速搭建一个 Spring Boot Application。</p>
-<p>先将配置文件中对日期类型的格式化配置为 <code>yyyy-MM-dd</code>，如下所示：</p>
-<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">spring.jackson.time-zone</span>=<span class="string">GMT+8</span></span><br><span class="line"><span class="attr">spring.jackson.date-format</span>=<span class="string">yyyy-MM-dd</span></span><br></pre></td></tr></table></figure>
-
-<p>写一个接口，直接将有问题的日期输出，代码如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">IndexController</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/dst&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Map&lt;String, Object&gt; <span class="title function_">dst</span><span class="params">(<span class="meta">@RequestParam(&quot;date&quot;)</span> Date date)</span> &#123;</span><br><span class="line">        Map&lt;String, Object&gt; map = Maps.newHashMap();</span><br><span class="line">        System.out.println(<span class="string">&quot;birthday : &quot;</span> + DateFormatUtils.format(date, <span class="string">&quot;yyyy-MM-dd&quot;</span>));</span><br><span class="line">        map.put(<span class="string">&quot;birthday&quot;</span>, date);</span><br><span class="line">        <span class="keyword">return</span> map;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>构造如下请求：</p>
-<figure class="highlight http"><table><tr><td class="code"><pre><span class="line">GET http://localhost:8081/dst?date=1990/05/22</span><br></pre></td></tr></table></figure>
-
-<p>发现服务端日志正确输出<code>1990-05-22</code>，而接口返回值却输出：</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span><span class="attr">&quot;birthday&quot;</span><span class="punctuation">:</span> <span class="string">&quot;1990-05-21&quot;</span><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
-
-<p>构造如下请求：</p>
-<figure class="highlight http"><table><tr><td class="code"><pre><span class="line">GET http://localhost:8081/dst?date=1992/05/22</span><br></pre></td></tr></table></figure>
-
-<p>发现服务端日志正确输出<code>1992-05-22</code>，此时接口的输出与服务端日志一致：</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span><span class="attr">&quot;birthday&quot;</span><span class="punctuation">:</span> <span class="string">&quot;1992-05-22&quot;</span><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
-
-<p>至此，我们复现了本文要讲解的问题。</p>
-<h3 id="输出对应的时间"><a href="#输出对应的时间" class="headerlink" title="输出对应的时间"></a>输出对应的时间</h3><p>为了更精确的知道这两个日期究竟有什么不同，我们更详细的输出这两个 <code>Date</code> 所对应的具体时间。</p>
-<p>修改配置文件为：</p>
-<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">spring.jackson.date-format</span>=<span class="string">yyyy-MM-dd HH:mm:ss</span></span><br></pre></td></tr></table></figure>
-
-<p>重复以上请求，发现对于<code>1990-05-22</code>，服务端日志输出<code>1990-05-22 00:00:00</code>，而接口返回值则为<code>1990-05-21 23:00:00</code>，两者相差了一个小时。而对于<code>1992-05-22</code>，服务端日志与接口返回值完全一致。</p>
-<h3 id="输出系统的时区"><a href="#输出系统的时区" class="headerlink" title="输出系统的时区"></a>输出系统的时区</h3><p>通过上述的现象基本上可以定位问题出现在 <code>Jackson</code> 对日期的序列化上。</p>
-<p>为了排查这个问题，我们在启动 Spring Boot Application 时，先输出当前系统的时区，发现系统时区为 <code>Asia/Shanghai</code>，而我们配置的 <code>Jackson</code> 时区为 <code>GMT+8</code>。</p>
-<p>难道 <code>Asia/Shanghai</code> 与 <code>GMT+8</code> 不是同一个时区？</p>
-<h3 id="求证"><a href="#求证" class="headerlink" title="求证"></a>求证</h3><p>为了证明我们的猜想是正确的，在启动 Spring Boot Application 时，将系统时区设置为 <code>GMT+8</code>。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DSTApplication</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        SpringApplication.run(DSTApplication.class, args);</span><br><span class="line">        TimeZone.setDefault(TimeZone.getTimeZone(<span class="string">&quot;GMT+8&quot;</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>重复以上请求，发现对于<code>1990-05-22</code>，服务端日志和接口均正确输出 <code>1990-05-22 00:00:00</code>。</p>
-<p>若不设置默认时区为 <code>GMT+8</code>，而是将 <code>Jackson</code> 序列化的时区配置修改为 <code>Asia/Shanghai</code>，接口也能正确输出。</p>
-<p>那么 <code>Asia/Shanghai</code> 与 <code>GMT+8</code> 在什么情况下会导致相差一个小时的问题呢？</p>
-<h2 id="夏令时"><a href="#夏令时" class="headerlink" title="夏令时"></a>夏令时</h2><blockquote>
-<p>夏令时，表示为了节约能源，人为规定时间的意思。也叫夏时制，夏时令（Daylight Saving Time：DST），又称“日光节约时制”和“夏令时间”，在这一制度实行期间所采用的统一时间称为“夏令时间”。一般在天亮早的夏季人为将时间调快一小时，可以使人早起早睡，减少照明量，以充分利用光照资源，从而节约照明用电。各个采纳夏时制的国家具体规定不同。目前全世界有近110个国家每年要实行夏令时。1986年4月，中国中央有关部门发出“在全国范围内实行夏时制的通知”，具体作法是：每年从四月中旬第一个星期日的凌晨2时整（北京时间），将时钟拨快一小时，即将表针由2时拨至3时，夏令时开始；到九月中旬第一个星期日的凌晨2时整（北京夏令时），再将时钟拨回一小时，即将表针由2时拨至1时，夏令时结束。从1986年到1991年的六个年度，除1986年因是实行夏时制的第一年，从5月4日开始到9月14日结束外，其它年份均按规定的时段施行。在夏令时开始和结束前几天，新闻媒体均刊登有关部门的通告。1992年起，夏令时暂停实行。</p>
-</blockquote>
-<p>以上内容摘抄自<a href="https://baike.baidu.com/item/%E5%A4%8F%E4%BB%A4%E6%97%B6">百度百科</a>，这也就是为什么在上述例子中为什么<code>1992-05-22</code>即使在系统时区与 <code>Jackson</code> 序列化时区不一致的情况下，仍然能够正确返回，而<code>1990-05-22</code>就会出错。</p>
-]]></content>
-      <tags>
-        <tag>夏令时</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Docker 手册</title>
     <url>/2019/11/14/docker-%E6%89%8B%E5%86%8C/</url>
     <content><![CDATA[<h2 id="镜像管理"><a href="#镜像管理" class="headerlink" title="镜像管理"></a>镜像管理</h2><h3 id="查询所需的镜像"><a href="#查询所需的镜像" class="headerlink" title="查询所需的镜像"></a>查询所需的镜像</h3><ul>
@@ -377,6 +328,55 @@
       </categories>
       <tags>
         <tag>Docker</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>夏令时问题</title>
+    <url>/2019/10/01/daylight-saving-time/</url>
+    <content><![CDATA[<p>在工作中，遇到一个很有意思的关于时间的问题，这里跟大家分享一下。</p>
+<h2 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h2><p>从数据库里取出用户的生日<code>1990-05-22</code>，接口返回时发现返回值变成了<code>1990-05-21</code>，而对于<code>1992-05-22</code>这样的日期却能正确返回。</p>
+<p>网上很多对于相关问题的分析都是简单粗暴的认为是时区的问题，却没有讲明白问题出现的根本原因。</p>
+<h2 id="排查过程"><a href="#排查过程" class="headerlink" title="排查过程"></a>排查过程</h2><h3 id="问题复现"><a href="#问题复现" class="headerlink" title="问题复现"></a>问题复现</h3><p>为了复现问题现象，我们先快速搭建一个 Spring Boot Application。</p>
+<p>先将配置文件中对日期类型的格式化配置为 <code>yyyy-MM-dd</code>，如下所示：</p>
+<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">spring.jackson.time-zone</span>=<span class="string">GMT+8</span></span><br><span class="line"><span class="attr">spring.jackson.date-format</span>=<span class="string">yyyy-MM-dd</span></span><br></pre></td></tr></table></figure>
+
+<p>写一个接口，直接将有问题的日期输出，代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">IndexController</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/dst&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Map&lt;String, Object&gt; <span class="title function_">dst</span><span class="params">(<span class="meta">@RequestParam(&quot;date&quot;)</span> Date date)</span> &#123;</span><br><span class="line">        Map&lt;String, Object&gt; map = Maps.newHashMap();</span><br><span class="line">        System.out.println(<span class="string">&quot;birthday : &quot;</span> + DateFormatUtils.format(date, <span class="string">&quot;yyyy-MM-dd&quot;</span>));</span><br><span class="line">        map.put(<span class="string">&quot;birthday&quot;</span>, date);</span><br><span class="line">        <span class="keyword">return</span> map;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>构造如下请求：</p>
+<figure class="highlight http"><table><tr><td class="code"><pre><span class="line">GET http://localhost:8081/dst?date=1990/05/22</span><br></pre></td></tr></table></figure>
+
+<p>发现服务端日志正确输出<code>1990-05-22</code>，而接口返回值却输出：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span><span class="attr">&quot;birthday&quot;</span><span class="punctuation">:</span> <span class="string">&quot;1990-05-21&quot;</span><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>构造如下请求：</p>
+<figure class="highlight http"><table><tr><td class="code"><pre><span class="line">GET http://localhost:8081/dst?date=1992/05/22</span><br></pre></td></tr></table></figure>
+
+<p>发现服务端日志正确输出<code>1992-05-22</code>，此时接口的输出与服务端日志一致：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span><span class="attr">&quot;birthday&quot;</span><span class="punctuation">:</span> <span class="string">&quot;1992-05-22&quot;</span><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>至此，我们复现了本文要讲解的问题。</p>
+<h3 id="输出对应的时间"><a href="#输出对应的时间" class="headerlink" title="输出对应的时间"></a>输出对应的时间</h3><p>为了更精确的知道这两个日期究竟有什么不同，我们更详细的输出这两个 <code>Date</code> 所对应的具体时间。</p>
+<p>修改配置文件为：</p>
+<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">spring.jackson.date-format</span>=<span class="string">yyyy-MM-dd HH:mm:ss</span></span><br></pre></td></tr></table></figure>
+
+<p>重复以上请求，发现对于<code>1990-05-22</code>，服务端日志输出<code>1990-05-22 00:00:00</code>，而接口返回值则为<code>1990-05-21 23:00:00</code>，两者相差了一个小时。而对于<code>1992-05-22</code>，服务端日志与接口返回值完全一致。</p>
+<h3 id="输出系统的时区"><a href="#输出系统的时区" class="headerlink" title="输出系统的时区"></a>输出系统的时区</h3><p>通过上述的现象基本上可以定位问题出现在 <code>Jackson</code> 对日期的序列化上。</p>
+<p>为了排查这个问题，我们在启动 Spring Boot Application 时，先输出当前系统的时区，发现系统时区为 <code>Asia/Shanghai</code>，而我们配置的 <code>Jackson</code> 时区为 <code>GMT+8</code>。</p>
+<p>难道 <code>Asia/Shanghai</code> 与 <code>GMT+8</code> 不是同一个时区？</p>
+<h3 id="求证"><a href="#求证" class="headerlink" title="求证"></a>求证</h3><p>为了证明我们的猜想是正确的，在启动 Spring Boot Application 时，将系统时区设置为 <code>GMT+8</code>。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DSTApplication</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        SpringApplication.run(DSTApplication.class, args);</span><br><span class="line">        TimeZone.setDefault(TimeZone.getTimeZone(<span class="string">&quot;GMT+8&quot;</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>重复以上请求，发现对于<code>1990-05-22</code>，服务端日志和接口均正确输出 <code>1990-05-22 00:00:00</code>。</p>
+<p>若不设置默认时区为 <code>GMT+8</code>，而是将 <code>Jackson</code> 序列化的时区配置修改为 <code>Asia/Shanghai</code>，接口也能正确输出。</p>
+<p>那么 <code>Asia/Shanghai</code> 与 <code>GMT+8</code> 在什么情况下会导致相差一个小时的问题呢？</p>
+<h2 id="夏令时"><a href="#夏令时" class="headerlink" title="夏令时"></a>夏令时</h2><blockquote>
+<p>夏令时，表示为了节约能源，人为规定时间的意思。也叫夏时制，夏时令（Daylight Saving Time：DST），又称“日光节约时制”和“夏令时间”，在这一制度实行期间所采用的统一时间称为“夏令时间”。一般在天亮早的夏季人为将时间调快一小时，可以使人早起早睡，减少照明量，以充分利用光照资源，从而节约照明用电。各个采纳夏时制的国家具体规定不同。目前全世界有近110个国家每年要实行夏令时。1986年4月，中国中央有关部门发出“在全国范围内实行夏时制的通知”，具体作法是：每年从四月中旬第一个星期日的凌晨2时整（北京时间），将时钟拨快一小时，即将表针由2时拨至3时，夏令时开始；到九月中旬第一个星期日的凌晨2时整（北京夏令时），再将时钟拨回一小时，即将表针由2时拨至1时，夏令时结束。从1986年到1991年的六个年度，除1986年因是实行夏时制的第一年，从5月4日开始到9月14日结束外，其它年份均按规定的时段施行。在夏令时开始和结束前几天，新闻媒体均刊登有关部门的通告。1992年起，夏令时暂停实行。</p>
+</blockquote>
+<p>以上内容摘抄自<a href="https://baike.baidu.com/item/%E5%A4%8F%E4%BB%A4%E6%97%B6">百度百科</a>，这也就是为什么在上述例子中为什么<code>1992-05-22</code>即使在系统时区与 <code>Jackson</code> 序列化时区不一致的情况下，仍然能够正确返回，而<code>1990-05-22</code>就会出错。</p>
+]]></content>
+      <tags>
+        <tag>夏令时</tag>
       </tags>
   </entry>
   <entry>
@@ -657,24 +657,6 @@
       </tags>
   </entry>
   <entry>
-    <title>如何使用Hexo？</title>
-    <url>/2010/05/24/hexo/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/deployment.html">Deployment</a></p>
-]]></content>
-  </entry>
-  <entry>
     <title>如何使用 Java 的 HttpClient 请求 Https 服务</title>
     <url>/2020/12/10/how-use-httpclient-over-https/</url>
     <content><![CDATA[<p>近期收到一些小伙伴问 Java 中如何调用 https 中双向认证的接口的问题，本文采用 okhttp 以及 Java11 的 httpclient 来介绍如何使用 Java 代码调用 https 双向认证的接口。</p>
@@ -732,6 +714,24 @@
         <tag>https</tag>
         <tag>okhttp</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>如何使用Hexo？</title>
+    <url>/2010/05/24/hexo/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/deployment.html">Deployment</a></p>
+]]></content>
   </entry>
   <entry>
     <title>Java 多线程死锁问题</title>
@@ -973,41 +973,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Jib - Make docker simple again</title>
-    <url>/2019/06/26/jib-make-docker-simple-again/</url>
-    <content><![CDATA[<p>在 <a href="https://fuyongde.github.io/2019/06/25/Dockerizing-Spring-Boot-Application/">使用 Docker 构建 Spring Boot Application</a> 中简单介绍了如何使用 <code>Docker</code> 构建 <code>Spring Boot Application</code>。本文探讨如何更简单的构建 <code>Docker</code> 镜像。</p>
-<h2 id="jib-简介"><a href="#jib-简介" class="headerlink" title="jib 简介"></a>jib 简介</h2><blockquote>
-<p>Make America Great Again. – Donald Trump</p>
-</blockquote>
-<p>大概是受 <code>Donald Trump</code> 的启发 🙄，Google 发布的 <code>jib</code> 让原本已经很简单的 <code>Docker</code> 镜像构建过程变得更加简单。</p>
-<p>一图顶千言，先看 <code>Docker</code> 构建镜像流程</p>
-<img src="/2019/06/26/jib-make-docker-simple-again/docker_process.jpg" class="" title="Docker 构建容器镜像的流程">
-
-<p>再看 <code>Jib</code> 构建容器镜像流程</p>
-<img src="/2019/06/26/jib-make-docker-simple-again/jib_process.jpg" class="" title="Jib 构建容器镜像的流程">
-
-<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>下面来介绍以下如何使用 <code>Jib</code></p>
-<h3 id="编写-Spring-Boot-Application"><a href="#编写-Spring-Boot-Application" class="headerlink" title="编写 Spring Boot Application"></a>编写 Spring Boot Application</h3><p>略</p>
-<h3 id="配置-Jib-插件"><a href="#配置-Jib-插件" class="headerlink" title="配置 Jib 插件"></a>配置 Jib 插件</h3><p>在项目的 <code>pom.xml</code> 文件中，新增如下配置</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.google.cloud.tools<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jib-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.3.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">from</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">image</span>&gt;</span>openjdk:8u212-jdk-alpine<span class="tag">&lt;/<span class="name">image</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">from</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">to</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">image</span>&gt;</span>registry.cn-hangzhou.aliyuncs.com/fuyongde/ebony-maw:$&#123;project.version&#125;<span class="tag">&lt;/<span class="name">image</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">to</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">container</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">jvmFlags</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">jvmFlag</span>&gt;</span>-Xms128m<span class="tag">&lt;/<span class="name">jvmFlag</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">jvmFlag</span>&gt;</span>-Xmx128m<span class="tag">&lt;/<span class="name">jvmFlag</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">jvmFlags</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">container</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">executions</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">execution</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">phase</span>&gt;</span>package<span class="tag">&lt;/<span class="name">phase</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">goals</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">goal</span>&gt;</span>build<span class="tag">&lt;/<span class="name">goal</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">goals</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">execution</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">executions</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>其中</p>
-<ul>
-<li>from：等同于 <code>Dockerfile</code> 中的 <code>FROM</code></li>
-<li>to：镜像容器服务的地址以及对应的 <code>tag</code>，这里我采用的是阿里云的地址</li>
-<li>jvmFlag：容器启动时的 <code>JVM</code> 参数</li>
-</ul>
-<h3 id="构建"><a href="#构建" class="headerlink" title="构建"></a>构建</h3><p>在终端执行 <code>maven package</code> 命令，<code>Docker</code> 镜像就打包并上传好了 ✌。</p>
-<p>至此，整个构建过程已经完成，我们甚至连 <code>Dockerfile</code> 都不用写，是不是超级简单 🤪。</p>
-<p>如有需要，可参考本文中的 <a href="https://github.com/fuyongde/marvel/tree/master/ebony-maw">Demo</a> 。</p>
-]]></content>
-      <tags>
-        <tag>Docker</tag>
-        <tag>Spring Boot</tag>
-        <tag>Jib</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>JVM 手册</title>
     <url>/2019/11/10/jvm-%E6%89%8B%E5%86%8C/</url>
     <content><![CDATA[<p>记录常用的 JVM 参数，持续更新 …</p>
@@ -1056,34 +1021,38 @@
       </tags>
   </entry>
   <entry>
-    <title>Maven Wapper 手册</title>
-    <url>/2019/06/23/maven-wapper-%E6%89%8B%E5%86%8C/</url>
-    <content><![CDATA[<p>我们使用 Maven 时，基本上只会用到 <code>mvn</code> 这一个命令。有些童鞋可能听说过 <code>mvnw</code>，这个是啥？</p>
-<p>mvnw 是 Maven Wrapper 的缩写，我们安装 Maven 时，默认情况下，系统所有项目都会使用全局安装的这个 Maven 版本。但是，对于某些项目来说，它可能必须使用某个特定的 Maven 版本，这个时候，就可以使用 Maven Wrapper，它可以负责给这个特定的项目安装指定版本的 Maven，而其他项目不受影响。</p>
-<p>简单地说，Maven Wrapper 就是给一个项目提供一个独立的，指定版本的 Maven 给它使用。</p>
-<h2 id="安装-Maven-Wrapper"><a href="#安装-Maven-Wrapper" class="headerlink" title="安装 Maven Wrapper"></a>安装 Maven Wrapper</h2><p>安装 Maven Wrapper 最简单的方式是在项目的根目录（即 pom.xml 所在的目录）下运行安装命令：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mvn -N io.takari:maven:0.7.7:wrapper</span><br></pre></td></tr></table></figure>
+    <title>Jib - Make docker simple again</title>
+    <url>/2019/06/26/jib-make-docker-simple-again/</url>
+    <content><![CDATA[<p>在 <a href="https://fuyongde.github.io/2019/06/25/Dockerizing-Spring-Boot-Application/">使用 Docker 构建 Spring Boot Application</a> 中简单介绍了如何使用 <code>Docker</code> 构建 <code>Spring Boot Application</code>。本文探讨如何更简单的构建 <code>Docker</code> 镜像。</p>
+<h2 id="jib-简介"><a href="#jib-简介" class="headerlink" title="jib 简介"></a>jib 简介</h2><blockquote>
+<p>Make America Great Again. – Donald Trump</p>
+</blockquote>
+<p>大概是受 <code>Donald Trump</code> 的启发 🙄，Google 发布的 <code>jib</code> 让原本已经很简单的 <code>Docker</code> 镜像构建过程变得更加简单。</p>
+<p>一图顶千言，先看 <code>Docker</code> 构建镜像流程</p>
+<img src="/2019/06/26/jib-make-docker-simple-again/docker_process.jpg" class="" title="Docker 构建容器镜像的流程">
 
-<p>它会自动使用最新版本的 Maven。注意 0.7.7 是 Maven Wrapper 的版本。最新的 Maven Wrapper 版本可以去<a href="https://github.com/takari/maven-wrapper">官方网站</a>查看。</p>
-<p>如果要指定使用的 Maven 版本，使用下面的安装命令指定版本，例如 3.6.0：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mvn -N io.takari:maven:0.7.7:wrapper -Dmaven=3.6.0</span><br></pre></td></tr></table></figure>
+<p>再看 <code>Jib</code> 构建容器镜像流程</p>
+<img src="/2019/06/26/jib-make-docker-simple-again/jib_process.jpg" class="" title="Jib 构建容器镜像的流程">
 
-<p>安装后，查看项目结构：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Hello-World</span><br><span class="line">├── .mvn</span><br><span class="line">│   └── wrapper</span><br><span class="line">│       ├── MavenWrapperDownloader.java</span><br><span class="line">│       ├── maven-wrapper.jar</span><br><span class="line">│       └── maven-wrapper.properties</span><br><span class="line">├── mvnw</span><br><span class="line">├── mvnw.cmd</span><br><span class="line">├── pom.xml</span><br><span class="line">└── src</span><br><span class="line">    ├── main</span><br><span class="line">    │   ├── java</span><br><span class="line">    │   └── resources</span><br><span class="line">    └── test</span><br><span class="line">        ├── java</span><br><span class="line">        └── resources</span><br></pre></td></tr></table></figure>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>下面来介绍以下如何使用 <code>Jib</code></p>
+<h3 id="编写-Spring-Boot-Application"><a href="#编写-Spring-Boot-Application" class="headerlink" title="编写 Spring Boot Application"></a>编写 Spring Boot Application</h3><p>略</p>
+<h3 id="配置-Jib-插件"><a href="#配置-Jib-插件" class="headerlink" title="配置 Jib 插件"></a>配置 Jib 插件</h3><p>在项目的 <code>pom.xml</code> 文件中，新增如下配置</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.google.cloud.tools<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jib-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.3.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">from</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">image</span>&gt;</span>openjdk:8u212-jdk-alpine<span class="tag">&lt;/<span class="name">image</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">from</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">to</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">image</span>&gt;</span>registry.cn-hangzhou.aliyuncs.com/fuyongde/ebony-maw:$&#123;project.version&#125;<span class="tag">&lt;/<span class="name">image</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">to</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">container</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">jvmFlags</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">jvmFlag</span>&gt;</span>-Xms128m<span class="tag">&lt;/<span class="name">jvmFlag</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">jvmFlag</span>&gt;</span>-Xmx128m<span class="tag">&lt;/<span class="name">jvmFlag</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">jvmFlags</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">container</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">executions</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">execution</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">phase</span>&gt;</span>package<span class="tag">&lt;/<span class="name">phase</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">goals</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">goal</span>&gt;</span>build<span class="tag">&lt;/<span class="name">goal</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">goals</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">execution</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">executions</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<p>发现多了 <code>mvnw</code>、<code>mvnw.cmd</code> 和 <code>.mvn</code>目录。</p>
-<h2 id="使用-Maven-Wapper"><a href="#使用-Maven-Wapper" class="headerlink" title="使用 Maven Wapper"></a>使用 Maven Wapper</h2><p>我们只需要把 mvn 命令改成 mvnw 就可以使用跟项目关联的 Maven。例如：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mvnw clean package</span><br></pre></td></tr></table></figure>
-
-<p>Maven Wrapper 的另一个作用是把项目的 <code>mvnw</code>、<code>mvnw.cmd</code> 和 <code>.mvn</code> 提交到版本库中，可以使所有开发人员使用统一的 <code>Maven</code> 版本。</p>
+<p>其中</p>
+<ul>
+<li>from：等同于 <code>Dockerfile</code> 中的 <code>FROM</code></li>
+<li>to：镜像容器服务的地址以及对应的 <code>tag</code>，这里我采用的是阿里云的地址</li>
+<li>jvmFlag：容器启动时的 <code>JVM</code> 参数</li>
+</ul>
+<h3 id="构建"><a href="#构建" class="headerlink" title="构建"></a>构建</h3><p>在终端执行 <code>maven package</code> 命令，<code>Docker</code> 镜像就打包并上传好了 ✌。</p>
+<p>至此，整个构建过程已经完成，我们甚至连 <code>Dockerfile</code> 都不用写，是不是超级简单 🤪。</p>
+<p>如有需要，可参考本文中的 <a href="https://github.com/fuyongde/marvel/tree/master/ebony-maw">Demo</a> 。</p>
 ]]></content>
-      <categories>
-        <category>手册</category>
-      </categories>
       <tags>
-        <tag>构建工具</tag>
-        <tag>Maven</tag>
-        <tag>Maven Wapper</tag>
+        <tag>Docker</tag>
+        <tag>Spring Boot</tag>
+        <tag>Jib</tag>
       </tags>
   </entry>
   <entry>
@@ -1157,6 +1126,37 @@
       <tags>
         <tag>未完待续</tag>
         <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Maven Wapper 手册</title>
+    <url>/2019/06/23/maven-wapper-%E6%89%8B%E5%86%8C/</url>
+    <content><![CDATA[<p>我们使用 Maven 时，基本上只会用到 <code>mvn</code> 这一个命令。有些童鞋可能听说过 <code>mvnw</code>，这个是啥？</p>
+<p>mvnw 是 Maven Wrapper 的缩写，我们安装 Maven 时，默认情况下，系统所有项目都会使用全局安装的这个 Maven 版本。但是，对于某些项目来说，它可能必须使用某个特定的 Maven 版本，这个时候，就可以使用 Maven Wrapper，它可以负责给这个特定的项目安装指定版本的 Maven，而其他项目不受影响。</p>
+<p>简单地说，Maven Wrapper 就是给一个项目提供一个独立的，指定版本的 Maven 给它使用。</p>
+<h2 id="安装-Maven-Wrapper"><a href="#安装-Maven-Wrapper" class="headerlink" title="安装 Maven Wrapper"></a>安装 Maven Wrapper</h2><p>安装 Maven Wrapper 最简单的方式是在项目的根目录（即 pom.xml 所在的目录）下运行安装命令：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mvn -N io.takari:maven:0.7.7:wrapper</span><br></pre></td></tr></table></figure>
+
+<p>它会自动使用最新版本的 Maven。注意 0.7.7 是 Maven Wrapper 的版本。最新的 Maven Wrapper 版本可以去<a href="https://github.com/takari/maven-wrapper">官方网站</a>查看。</p>
+<p>如果要指定使用的 Maven 版本，使用下面的安装命令指定版本，例如 3.6.0：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mvn -N io.takari:maven:0.7.7:wrapper -Dmaven=3.6.0</span><br></pre></td></tr></table></figure>
+
+<p>安装后，查看项目结构：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Hello-World</span><br><span class="line">├── .mvn</span><br><span class="line">│   └── wrapper</span><br><span class="line">│       ├── MavenWrapperDownloader.java</span><br><span class="line">│       ├── maven-wrapper.jar</span><br><span class="line">│       └── maven-wrapper.properties</span><br><span class="line">├── mvnw</span><br><span class="line">├── mvnw.cmd</span><br><span class="line">├── pom.xml</span><br><span class="line">└── src</span><br><span class="line">    ├── main</span><br><span class="line">    │   ├── java</span><br><span class="line">    │   └── resources</span><br><span class="line">    └── test</span><br><span class="line">        ├── java</span><br><span class="line">        └── resources</span><br></pre></td></tr></table></figure>
+
+<p>发现多了 <code>mvnw</code>、<code>mvnw.cmd</code> 和 <code>.mvn</code>目录。</p>
+<h2 id="使用-Maven-Wapper"><a href="#使用-Maven-Wapper" class="headerlink" title="使用 Maven Wapper"></a>使用 Maven Wapper</h2><p>我们只需要把 mvn 命令改成 mvnw 就可以使用跟项目关联的 Maven。例如：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mvnw clean package</span><br></pre></td></tr></table></figure>
+
+<p>Maven Wrapper 的另一个作用是把项目的 <code>mvnw</code>、<code>mvnw.cmd</code> 和 <code>.mvn</code> 提交到版本库中，可以使所有开发人员使用统一的 <code>Maven</code> 版本。</p>
+]]></content>
+      <categories>
+        <category>手册</category>
+      </categories>
+      <tags>
+        <tag>构建工具</tag>
+        <tag>Maven</tag>
+        <tag>Maven Wapper</tag>
       </tags>
   </entry>
   <entry>
@@ -1342,6 +1342,35 @@
       </tags>
   </entry>
   <entry>
+    <title>MySQL 优化器成本模型</title>
+    <url>/2019/12/04/mysql-optimizer-cost-model/</url>
+    <content><![CDATA[<p>本文探讨一下 MySQL5.7 版本中 优化器的代价模型。相关内容也可查看<a href="https://dev.mysql.com/doc/refman/5.7/en/cost-model.html">官网</a></p>
+<p>MySQL 优化器成本模型由两个表组成，分别位于 mysql.server_cost 和 mysql.engine_cost 中。</p>
+<ul>
+<li>server_cost: 针对服务器操作的优化器成本估算</li>
+<li>engine_cose: 针对特定存储引擎的特定操作的优化器成本估算</li>
+</ul>
+<h2 id="server-cost"><a href="#server-cost" class="headerlink" title="server_cost"></a>server_cost</h2><p>server_cost 包含以下值：</p>
+<ul>
+<li>disk_temptable_create_cost：缺省值 40.0，该字段标识基于磁盘的存储引擎（InnoDB 和 MyISAM）中创建临时表的成本估算。从缺省值也可以看出，默认情况下创建临时表的代价是非常昂贵的。</li>
+<li>disk_temptable_row_cost：缺省值 1.0，该字段标识基于磁盘的存储引擎（InnoDB 和 MyISAM）中创建临时行的成本估算。</li>
+<li>key_compare_cost：缺省值 0.1，该字段表示比较记录的成本。</li>
+<li>memory_temptable_create_cost：缺省值 2.0，MEMORY 存储引擎创建临时表的成本，从与 disk_temptable_create_cost 的对比中可以看出，默认情况下 MEMORY 存储引擎创建临时表的成本是远小于 InnoDB 和 MyISAM 存储引擎的。</li>
+<li>memory_temptable_row_cost：缺省值 0.2，MEMORY 存储引擎创建临时行的成本。</li>
+<li>row_evaluate_cost：缺省值 0.2，行评估成本，即扫描了多少行的成本。</li>
+</ul>
+<h2 id="engine-cost"><a href="#engine-cost" class="headerlink" title="engine_cost"></a>engine_cost</h2><ul>
+<li>io_block_read_cost：缺省值 1.0，从磁盘读取索引或数据块的成本。</li>
+<li>memory_block_read_cost：缺省值 1.0，从内存数据库缓冲区读取索引说数据块的成本。</li>
+</ul>
+<h3 id="修改成本模型"><a href="#修改成本模型" class="headerlink" title="修改成本模型"></a>修改成本模型</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 修改所有的 io_block_read_cost 成本</span><br><span class="line">UPDATE mysql.engine_cost</span><br><span class="line">  SET cost_value = 2.0</span><br><span class="line">  WHERE cost_name = &#x27;io_block_read_cost&#x27;;</span><br><span class="line">FLUSH OPTIMIZER_COSTS;</span><br><span class="line"></span><br><span class="line">-- 仅修改 InnoDB 存储引擎的成本</span><br><span class="line">INSERT INTO mysql.engine_cost</span><br><span class="line">  VALUES (&#x27;InnoDB&#x27;, 0, &#x27;io_block_read_cost&#x27;, 3.0,</span><br><span class="line">  CURRENT_TIMESTAMP, &#x27;Using a slower disk for InnoDB&#x27;);</span><br><span class="line">FLUSH OPTIMIZER_COSTS;</span><br></pre></td></tr></table></figure>
+
+<h2 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h2><h3 id="打开优化器跟踪"><a href="#打开优化器跟踪" class="headerlink" title="打开优化器跟踪"></a>打开优化器跟踪</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 查看优化器跟踪的开关</span><br><span class="line">SHOW VARIABLES LIKE &#x27;%optimizer_trace%&#x27;;</span><br><span class="line">-- 打开优化器跟踪</span><br><span class="line">SET GLOBAL optimizer_trace = &#x27;enabled=on,one_line=on&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p>未完待续 …</p>
+]]></content>
+  </entry>
+  <entry>
     <title>MySQL 索引</title>
     <url>/2019/11/23/mysql-index-categories/</url>
     <content><![CDATA[<p>本文粗略说以下 MySQL 中常见的索引分类。</p>
@@ -1377,35 +1406,6 @@
         <tag>MySQL</tag>
         <tag>索引</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>MySQL 优化器成本模型</title>
-    <url>/2019/12/04/mysql-optimizer-cost-model/</url>
-    <content><![CDATA[<p>本文探讨一下 MySQL5.7 版本中 优化器的代价模型。相关内容也可查看<a href="https://dev.mysql.com/doc/refman/5.7/en/cost-model.html">官网</a></p>
-<p>MySQL 优化器成本模型由两个表组成，分别位于 mysql.server_cost 和 mysql.engine_cost 中。</p>
-<ul>
-<li>server_cost: 针对服务器操作的优化器成本估算</li>
-<li>engine_cose: 针对特定存储引擎的特定操作的优化器成本估算</li>
-</ul>
-<h2 id="server-cost"><a href="#server-cost" class="headerlink" title="server_cost"></a>server_cost</h2><p>server_cost 包含以下值：</p>
-<ul>
-<li>disk_temptable_create_cost：缺省值 40.0，该字段标识基于磁盘的存储引擎（InnoDB 和 MyISAM）中创建临时表的成本估算。从缺省值也可以看出，默认情况下创建临时表的代价是非常昂贵的。</li>
-<li>disk_temptable_row_cost：缺省值 1.0，该字段标识基于磁盘的存储引擎（InnoDB 和 MyISAM）中创建临时行的成本估算。</li>
-<li>key_compare_cost：缺省值 0.1，该字段表示比较记录的成本。</li>
-<li>memory_temptable_create_cost：缺省值 2.0，MEMORY 存储引擎创建临时表的成本，从与 disk_temptable_create_cost 的对比中可以看出，默认情况下 MEMORY 存储引擎创建临时表的成本是远小于 InnoDB 和 MyISAM 存储引擎的。</li>
-<li>memory_temptable_row_cost：缺省值 0.2，MEMORY 存储引擎创建临时行的成本。</li>
-<li>row_evaluate_cost：缺省值 0.2，行评估成本，即扫描了多少行的成本。</li>
-</ul>
-<h2 id="engine-cost"><a href="#engine-cost" class="headerlink" title="engine_cost"></a>engine_cost</h2><ul>
-<li>io_block_read_cost：缺省值 1.0，从磁盘读取索引或数据块的成本。</li>
-<li>memory_block_read_cost：缺省值 1.0，从内存数据库缓冲区读取索引说数据块的成本。</li>
-</ul>
-<h3 id="修改成本模型"><a href="#修改成本模型" class="headerlink" title="修改成本模型"></a>修改成本模型</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 修改所有的 io_block_read_cost 成本</span><br><span class="line">UPDATE mysql.engine_cost</span><br><span class="line">  SET cost_value = 2.0</span><br><span class="line">  WHERE cost_name = &#x27;io_block_read_cost&#x27;;</span><br><span class="line">FLUSH OPTIMIZER_COSTS;</span><br><span class="line"></span><br><span class="line">-- 仅修改 InnoDB 存储引擎的成本</span><br><span class="line">INSERT INTO mysql.engine_cost</span><br><span class="line">  VALUES (&#x27;InnoDB&#x27;, 0, &#x27;io_block_read_cost&#x27;, 3.0,</span><br><span class="line">  CURRENT_TIMESTAMP, &#x27;Using a slower disk for InnoDB&#x27;);</span><br><span class="line">FLUSH OPTIMIZER_COSTS;</span><br></pre></td></tr></table></figure>
-
-<h2 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h2><h3 id="打开优化器跟踪"><a href="#打开优化器跟踪" class="headerlink" title="打开优化器跟踪"></a>打开优化器跟踪</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 查看优化器跟踪的开关</span><br><span class="line">SHOW VARIABLES LIKE &#x27;%optimizer_trace%&#x27;;</span><br><span class="line">-- 打开优化器跟踪</span><br><span class="line">SET GLOBAL optimizer_trace = &#x27;enabled=on,one_line=on&#x27;;</span><br></pre></td></tr></table></figure>
-
-<p>未完待续 …</p>
-]]></content>
   </entry>
   <entry>
     <title>MySQL 手册</title>
@@ -1611,29 +1611,6 @@
       </tags>
   </entry>
   <entry>
-    <title>pip-手册</title>
-    <url>/2020/03/20/pip-%E6%89%8B%E5%86%8C/</url>
-    <content><![CDATA[<p>PyPI (Python Package Index) 是 <code>Python</code> 编程语言的软件存储库。开发者可以通过 PyPI 查找和安装由 <code>Python</code> 社区开发和共享的软件，也可以将自己开发的库上传至 PyPI 。</p>
-<p>由于国外访问比较慢，我们可以通过配置国内的镜像来进行加速访问。</p>
-<h2 id="配置-Aliyun-的镜像"><a href="#配置-Aliyun-的镜像" class="headerlink" title="配置 Aliyun 的镜像"></a>配置 Aliyun 的镜像</h2><h3 id="Linux-平台"><a href="#Linux-平台" class="headerlink" title="Linux 平台"></a>Linux 平台</h3><ol>
-<li>找到下列文件</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">~/.pip/pip.conf</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>在上述文件中添加或修改:</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[global]</span><br><span class="line">index-url = https://mirrors.aliyun.com/pypi/simple/</span><br><span class="line"></span><br><span class="line">[install]</span><br><span class="line">trusted-host=mirrors.aliyun.com</span><br></pre></td></tr></table></figure>
-
-<h3 id="Windows-平台"><a href="#Windows-平台" class="headerlink" title="Windows 平台"></a>Windows 平台</h3><p>在 <code>exporler</code> 地址栏输入 <code>%AppData%</code>，进入文件夹后，在 <code>pip</code> 文件夹下新建 <code>pip.ini</code> 文件并写入以下配置。</p>
-<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="section">[global]</span></span><br><span class="line"><span class="attr">index-url</span> = http://mirrors.aliyun.com/pypi/simple</span><br><span class="line"><span class="attr">trusted-host</span> = mirrors.aliyun.com</span><br></pre></td></tr></table></figure>
-]]></content>
-      <tags>
-        <tag>pip</tag>
-        <tag>Python</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>npm-手册</title>
     <url>/2020/07/19/npm-%E6%89%8B%E5%86%8C/</url>
     <content><![CDATA[<h2 id="配置淘宝镜像"><a href="#配置淘宝镜像" class="headerlink" title="配置淘宝镜像"></a>配置淘宝镜像</h2><ol>
@@ -1663,6 +1640,29 @@
       <tags>
         <tag>未完待续</tag>
         <tag>npm</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>pip-手册</title>
+    <url>/2020/03/20/pip-%E6%89%8B%E5%86%8C/</url>
+    <content><![CDATA[<p>PyPI (Python Package Index) 是 <code>Python</code> 编程语言的软件存储库。开发者可以通过 PyPI 查找和安装由 <code>Python</code> 社区开发和共享的软件，也可以将自己开发的库上传至 PyPI 。</p>
+<p>由于国外访问比较慢，我们可以通过配置国内的镜像来进行加速访问。</p>
+<h2 id="配置-Aliyun-的镜像"><a href="#配置-Aliyun-的镜像" class="headerlink" title="配置 Aliyun 的镜像"></a>配置 Aliyun 的镜像</h2><h3 id="Linux-平台"><a href="#Linux-平台" class="headerlink" title="Linux 平台"></a>Linux 平台</h3><ol>
+<li>找到下列文件</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">~/.pip/pip.conf</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>在上述文件中添加或修改:</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[global]</span><br><span class="line">index-url = https://mirrors.aliyun.com/pypi/simple/</span><br><span class="line"></span><br><span class="line">[install]</span><br><span class="line">trusted-host=mirrors.aliyun.com</span><br></pre></td></tr></table></figure>
+
+<h3 id="Windows-平台"><a href="#Windows-平台" class="headerlink" title="Windows 平台"></a>Windows 平台</h3><p>在 <code>exporler</code> 地址栏输入 <code>%AppData%</code>，进入文件夹后，在 <code>pip</code> 文件夹下新建 <code>pip.ini</code> 文件并写入以下配置。</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="section">[global]</span></span><br><span class="line"><span class="attr">index-url</span> = http://mirrors.aliyun.com/pypi/simple</span><br><span class="line"><span class="attr">trusted-host</span> = mirrors.aliyun.com</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>pip</tag>
+        <tag>Python</tag>
       </tags>
   </entry>
   <entry>
@@ -1843,248 +1843,6 @@
       </tags>
   </entry>
   <entry>
-    <title>一个 Spring 依赖注入的问题浅析</title>
-    <url>/2021/08/08/%E4%B8%80%E4%B8%AA-Spring-%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5%E7%9A%84%E9%97%AE%E9%A2%98%E6%B5%85%E6%9E%90/</url>
-    <content><![CDATA[<p>使用 Spring 做项目的先思考一个问题，一个接口有在多个实现类的情况下，在成员变量的声明上如果没有指定注入那个别名的 Bean 的时候 Spring 会如何选择对应的 Bean 来进行注入？</p>
-<h2 id="问题模拟"><a href="#问题模拟" class="headerlink" title="问题模拟"></a>问题模拟</h2><p>先来简单说明一下示例代码。</p>
-<p>定义一个接口，用于打印当前注入的 Bean 的名称</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">TestService</span> &#123;</span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">printBeanName</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>针对上面定义的接口编写两个实现类，并分别定义其 beanName 为 testService 和 testService2</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Service(&quot;testService&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestServiceImpl</span> <span class="keyword">implements</span> <span class="title class_">TestService</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">printBeanName</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;testService&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Service(&quot;testService2&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestServiceImpl2</span> <span class="keyword">implements</span> <span class="title class_">TestService</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">printBeanName</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;testService2&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>编写 Handler，并注入 TestService</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestHandler</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> TestService testService;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">test</span><span class="params">()</span> &#123;</span><br><span class="line">        testService.printBeanName();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>编写单元测试，并观察输出</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@SpringBootTest</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">TestHandlerTest</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> TestHandler testHandler;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">test</span><span class="params">()</span> &#123;</span><br><span class="line">        testHandler.test();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>执行该单元测试，发现其打印的 beanName 为 testService。从输出结果可以看出在这种情况下最终注入的是 beanName 为 testService 的 bean，与组合交易子系统的现象一致。</p>
-<h2 id="源码分析与验证"><a href="#源码分析与验证" class="headerlink" title="源码分析与验证"></a>源码分析与验证</h2><p>根据 Spring 的文档，使用 Autowired 注解在自动装配时会通过 <code>org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor#postProcessProperties</code> 方法来对属性进行赋值操作。我们可以在该方法入口打上断点，并对断点指定条件，如下图：</p>
-<img src="/2021/08/08/%E4%B8%80%E4%B8%AA-Spring-%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5%E7%9A%84%E9%97%AE%E9%A2%98%E6%B5%85%E6%9E%90/debug.png" class="" title="debug">
-
-<p>由于方法深度较深，调试的过程这里不再赘述，我们直接分析影响我们最终结果的方法 <code>org.springframework.beans.factory.support.DefaultListableBeanFactory#determineAutowireCandidate</code>，其源码及分析如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> candidates 为我们要注入的属性对应的所有 Bean 组成的 map</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> descriptor 描述了我们要注入的属性的一些信息，包含了属性对应的类、方法、fieldName 等信息</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">protected</span> String <span class="title function_">determineAutowireCandidate</span><span class="params">(Map&lt;String, Object&gt; candidates, DependencyDescriptor descriptor)</span> &#123;</span><br><span class="line">    <span class="comment">// requiredType 为我们要注入的属性的类型，针对本的例子 requiredType 的值为 TestService 这个类</span></span><br><span class="line">    Class&lt;?&gt; requiredType = descriptor.getDependencyType();</span><br><span class="line">    <span class="comment">// 如果 candidates 中有 Bean 添加了 @Primary 注解，则会返回该 Bean 对应的 beanName</span></span><br><span class="line">    <span class="type">String</span> <span class="variable">primaryCandidate</span> <span class="operator">=</span> determinePrimaryCandidate(candidates, requiredType);</span><br><span class="line">    <span class="keyword">if</span> (primaryCandidate != <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> primaryCandidate;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 如果 candidates 中的 Bean 没有 @Primary 注解，但是添加了 @Priority 注解，会解析 Bean 的优先级，返回优先级最高的 Bean 对应的 beanName</span></span><br><span class="line">    <span class="type">String</span> <span class="variable">priorityCandidate</span> <span class="operator">=</span> determineHighestPriorityCandidate(candidates, requiredType);</span><br><span class="line">    <span class="keyword">if</span> (priorityCandidate != <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> priorityCandidate;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 降级逻辑</span></span><br><span class="line">    <span class="keyword">for</span> (Map.Entry&lt;String, Object&gt; entry : candidates.entrySet()) &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">candidateName</span> <span class="operator">=</span> entry.getKey();</span><br><span class="line">        <span class="type">Object</span> <span class="variable">beanInstance</span> <span class="operator">=</span> entry.getValue();</span><br><span class="line">        <span class="comment">// 此时的 this.resolvableDependencies 是不包含本例子中的 TestService 对应的任一 bean 的</span></span><br><span class="line">        <span class="comment">// descriptor.getDependencyName() 方法的处理中会返回要注入的属性所对应的 fieldName，本例子中的 fieldName 为 testService</span></span><br><span class="line">        <span class="comment">// 最终如果要注入属性名跟 candidates 的 Bean 的 beanName 相同，则会返回对应的 beanName</span></span><br><span class="line">        <span class="keyword">if</span> ((beanInstance != <span class="literal">null</span> &amp;&amp; <span class="built_in">this</span>.resolvableDependencies.containsValue(beanInstance)) ||</span><br><span class="line">                matchesBeanName(candidateName, descriptor.getDependencyName())) &#123;</span><br><span class="line">            <span class="keyword">return</span> candidateName;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>下面我们来验证一下源码中的我们未验证到的情况</p>
-<h3 id="使用-Primary-注解来标识主要的类"><a href="#使用-Primary-注解来标识主要的类" class="headerlink" title="使用 Primary 注解来标识主要的类"></a>使用 Primary 注解来标识主要的类</h3><p>将 beanName 为 testService2 的 Bean 加上 Primary 注解并运行单元测试，其打印的 beanName 为 testService2。</p>
-<h3 id="使用-Priority-来标识-Bean-的优先级"><a href="#使用-Priority-来标识-Bean-的优先级" class="headerlink" title="使用 Priority 来标识 Bean 的优先级"></a>使用 Priority 来标识 Bean 的优先级</h3><p>去掉上面操作所添加的 Primary 注解，来验证使用 Priority 时的情况。</p>
-<ul>
-<li>将 beanName 为 testService2 的 bean 加上 @Priority(2) 注解并运行单元测试，其打印的 beanName 为 testService2；</li>
-<li>将 beanName 为 testService 的 bean 加上 @Priority(1) 注解，将 beanName 为 testService2 的 bean 加上 @Priority(2) 注解并运行单元测试，其打印的 beanName 为 testService；</li>
-<li>将 beanName 为 testService 的 bean 加上 @Priority(3) 注解，将 beanName 为 testService2 的 bean 加上 @Priority(2) 注解并运行单元测试，其打印的 beanName 为 testService2。</li>
-</ul>
-<h3 id="修改-TestHandler-中的属性名"><a href="#修改-TestHandler-中的属性名" class="headerlink" title="修改 TestHandler 中的属性名"></a>修改 TestHandler 中的属性名</h3><p>去掉上面操作所添加的 Primary 和 Priority 注解，来验证根据属性名注入时的情况。</p>
-<ul>
-<li>将 TestHandler 中的属性名修改为 testServcie2 并运行并运行单元测试，其打印的 beanName 为 testService2；</li>
-<li>将 TestHandler 中的属性名修改为 testServcie3 并运行并运行单元测试，程序抛出 NoUniqueBeanDefinitionException 异常。</li>
-</ul>
-<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>根据上面源码的分析与实践，同一类型存在多个 Bean 的情况下，在使用 Autowired 注解时 Spring 会采用以下装配顺序来选择要装配的 Bean</p>
-<ol>
-<li>使用了 Primary 注解的 Bean;</li>
-<li>查找使用了 Priority 注解的 Bean，并选择优先级最高的；</li>
-<li>要注入的属性的属性名称与 Bean 名称相同的；</li>
-</ol>
-<p>在我们平时写代码时，为了代码的可读性，建议使用 Qualifier 注解来明确指明要注入 Bean。</p>
-]]></content>
-      <tags>
-        <tag>Spring</tag>
-        <tag>源码</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>zsh 手册</title>
-    <url>/2021/08/24/zsh-%E6%89%8B%E5%86%8C/</url>
-    <content><![CDATA[<p>zsh 可能是目前最好用的终端。</p>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="Mac-OS"><a href="#Mac-OS" class="headerlink" title="Mac OS"></a>Mac OS</h3><p>MacOS 自带 zsh，并且当前最新版本 MasOS 默认终端即为 zsh</p>
-<h3 id="Ubuntu"><a href="#Ubuntu" class="headerlink" title="Ubuntu"></a>Ubuntu</h3><p>使用 <code>sudo apt install zsh</code> 命令即可安装 zsh</p>
-<h3 id="CentOS"><a href="#CentOS" class="headerlink" title="CentOS"></a>CentOS</h3><p>使用 <code>sudo yum install zsh</code> 命令即可安装 zsh</p>
-<p>在安装好 zsh 之后，第一次使用的时候，会有如下的提示：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">This is the Z Shell configuration function for new users,</span><br><span class="line">zsh-newuser-install.</span><br><span class="line">You are seeing this message because you have no zsh startup files</span><br><span class="line">(the files .zshenv, .zprofile, .zshrc, .zlogin in the directory</span><br><span class="line">~).  This function can help you with a few settings that should</span><br><span class="line">make your use of the shell easier.</span><br><span class="line"></span><br><span class="line">You can:</span><br><span class="line"></span><br><span class="line">(q)  Quit and do nothing.  The function will be run again next time.</span><br><span class="line"></span><br><span class="line">(0)  Exit, creating the file ~/.zshrc containing just a comment.</span><br><span class="line">     That will prevent this function being run again.</span><br><span class="line"></span><br><span class="line">(1)  Continue to the main menu.</span><br><span class="line"></span><br><span class="line">(2)  Populate your ~/.zshrc with the configuration recommended</span><br><span class="line">     by the system administrator and exit (you will need to edit</span><br><span class="line">     the file by hand, if so desired).</span><br><span class="line"></span><br><span class="line">--- Type one of the keys in parentheses ---</span><br></pre></td></tr></table></figure>
-
-<p>这里我推荐直接使用选项 (2)，通过 <code>~/.zshrc</code> 文件来配置我们的 zsh。</p>
-<h3 id="查看-zsh-版本"><a href="#查看-zsh-版本" class="headerlink" title="查看 zsh 版本"></a>查看 zsh 版本</h3><p>使用 <code>zsh --version</code> 命令即可查看 zsh 的版本。</p>
-<h3 id="将-zsh-设置为默认的-shell"><a href="#将-zsh-设置为默认的-shell" class="headerlink" title="将 zsh 设置为默认的 shell"></a>将 zsh 设置为默认的 shell</h3><p>使用 <code>chsh -s /bin/zsh root</code> 即可将 root 用户的默认 shell 设置为 zsh，如需为其他用户设置默认的 shell，将 <code>root</code> 替换为其他用户名即可。</p>
-<h3 id="查看默认的-shell"><a href="#查看默认的-shell" class="headerlink" title="查看默认的 shell"></a>查看默认的 shell</h3><p>使用 <code>echo $SHELL</code> 命令即可查看默认的 shell</p>
-<h3 id="查看当前正在使用的-shell"><a href="#查看当前正在使用的-shell" class="headerlink" title="查看当前正在使用的 shell"></a>查看当前正在使用的 shell</h3><p>使用 <code>echo $0</code> 命令即可查看当前正在使用的 shell</p>
-<h2 id="使用-oh-my-zsh-美化-zsh"><a href="#使用-oh-my-zsh-美化-zsh" class="headerlink" title="使用 oh-my-zsh 美化 zsh"></a>使用 oh-my-zsh 美化 zsh</h2><h3 id="安装-oh-my-zsh"><a href="#安装-oh-my-zsh" class="headerlink" title="安装 oh-my-zsh"></a>安装 oh-my-zsh</h3><p>打开 oh-my-zsh 官网，直接使用官网提供的命令，即可安装 oh-my-zsh，命令如下（任选其一即可）：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">使用 curl 下载</span></span><br><span class="line">sh -c &quot;$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)&quot;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">或者使用</span></span><br><span class="line">sh -c &quot;$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)&quot;</span><br></pre></td></tr></table></figure>
-
-<p>对于国内的用户，上面命令下载 install.sh 可能存在连接超时的问题，我们可以替换为 gitee 的镜像来进行下载，命令如下：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">wget https://gitee.com/mirrors/oh-my-zsh/raw/master/tools/install.sh</span><br></pre></td></tr></table></figure>
-
-<p>下载之后，使用 <code>sh install.sh</code> 来安装 oh-my-zsh，如果在 clone oh-my-zsh 过程仍然连接超时的情况下，可以通过替换 install.sh 脚本中的仓库地址来进行加速。</p>
-<p>将脚本中的如下内容</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">REPO=$&#123;REPO:-ohmyzsh/ohmyzsh&#125;</span><br><span class="line">REMOTE=$&#123;REMOTE:-https://github.com/$&#123;REPO&#125;.git&#125;</span><br></pre></td></tr></table></figure>
-
-<p>替换为</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">REPO=$&#123;REPO:-mirrors/oh-my-zsh&#125;</span><br><span class="line">REMOTE=$&#123;REMOTE:-https://gitee.com/$&#123;REPO&#125;.git&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="配置-oh-my-zsh-主题"><a href="#配置-oh-my-zsh-主题" class="headerlink" title="配置 oh-my-zsh 主题"></a>配置 oh-my-zsh 主题</h3><p>修改 <code>~/.zshrc</code> 文件，找到 ZSH_THEME 的选项，修改为自己喜欢的，笔者喜欢使用 ys 主题，其配置如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ZSH_THEME=&quot;ys&quot;</span><br></pre></td></tr></table></figure>
-
-<p>如果你比较喜欢每次打开终端都体验不一样的主题的话，可以使用 random 主题。</p>
-<h3 id="安装常用的插件"><a href="#安装常用的插件" class="headerlink" title="安装常用的插件"></a>安装常用的插件</h3><p>下面列举一些非常实用的插件</p>
-<ul>
-<li><p>zsh-syntax-highlighting 有时候记不住一些命令，等输入完了才知道命令输错了，这个插件直接在输入过程中就会提示你，当前命令是否正确，错误红色，正确绿色</p>
-</li>
-<li><p>zsh-autosuggestions 该插件会记录你之前输入过的所有命令，并且自动匹配你可能想要输入命令，然后按 → 补全</p>
-</li>
-</ul>
-<p>可以使用如下命令来安装插件</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 安装 zsh-syntax-highlighting</span><br><span class="line">git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;/plugins/zsh-syntax-highlighting</span><br><span class="line"></span><br><span class="line"># 安装 zsh-autosuggestions</span><br><span class="line">git clone https://github.com/zsh-users/zsh-autosuggestions $&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;/plugins/zsh-autosuggestions</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>修改 ~&#x2F;.zshrc 中插件的配置</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">plugins=(git zsh-syntax-highlighting zsh-autosuggestions)</span><br></pre></td></tr></table></figure>
-
-<p>然后使用 <code>source ~/.zshrc</code> 来使配置生效</p>
-]]></content>
-      <categories>
-        <category>手册</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-        <tag>bash</tag>
-        <tag>zsh</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>使用 Guava 中 RateLimiter 遇到的一个问题</title>
-    <url>/2021/06/26/%E4%BD%BF%E7%94%A8Guava%E4%B8%ADRateLimiter%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%B8%AA%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<p>线上业务使用了 Guava 中的 RateLimiter 来做单机的限流。最近运维同事反馈，在修改了限流的配置之后，请求频率没有超过限流的配置却触发了限流逻辑，在此对该问题进行一下分析与总结。</p>
-<h2 id="问题模拟"><a href="#问题模拟" class="headerlink" title="问题模拟"></a>问题模拟</h2><p>根据上述问题的现象，初步推测问题可能跟 Guava 中 RateLimiter 的限流算法实现有关，为了方便排查问题，参考线上业务的限流的逻辑写了一个 demo，其核心代码如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/hello&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">HelloController</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** 用于存储不同的接口，对应的 RateLimiter **/</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Map&lt;String, RateLimiter&gt; RATE_LIMITER_MAP = Maps.newConcurrentMap();</span><br><span class="line">    <span class="comment">/** 用于存储不同接口限流配置的参数 **/</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Map&lt;String, String&gt; RATE_MAP = Maps.newConcurrentMap();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        <span class="comment">// 初始化一个接口默认的限流配置</span></span><br><span class="line">        RATE_MAP.put(<span class="string">&quot;loan&quot;</span>, <span class="string">&quot;100000&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 测试限流的接口</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> key 限流配置的 key</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/testLimit&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">testLimit</span><span class="params">(String key)</span> &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">value</span> <span class="operator">=</span> RATE_MAP.get(key);</span><br><span class="line">        logger.info(<span class="string">&quot;自定义限流配置=&#123;&#125;&quot;</span>, value);</span><br><span class="line">        <span class="type">Double</span> <span class="variable">currentRate</span> <span class="operator">=</span> Double.parseDouble(value);</span><br><span class="line"></span><br><span class="line">        <span class="type">RateLimiter</span> <span class="variable">rateLimiter</span> <span class="operator">=</span> RATE_LIMITER_MAP.get(key);</span><br><span class="line">        <span class="keyword">if</span> (rateLimiter == <span class="literal">null</span> || !isSameRate(currentRate, rateLimiter.getRate())) &#123;</span><br><span class="line">            logger.info(<span class="string">&quot;创建新的RateLimiter|速率=&#123;&#125;&quot;</span>, currentRate.toString());</span><br><span class="line">            rateLimiter = RateLimiter.create(currentRate);</span><br><span class="line">            RATE_LIMITER_MAP.putIfAbsent(key, rateLimiter);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">boolean</span> <span class="variable">allowed</span> <span class="operator">=</span> rateLimiter.tryAcquire();</span><br><span class="line">        logger.info(<span class="string">&quot;是否允许当前请求通过=&#123;&#125;|rate=&#123;&#125;&quot;</span>, allowed, rateLimiter.getRate());</span><br><span class="line">        <span class="keyword">return</span> allowed ? <span class="string">&quot;SUCCESS&quot;</span> : <span class="string">&quot;FAIL&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 模拟修改限流配置</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> key 限流配置的key</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> rate 限流的值</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/setRate&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">setRate</span><span class="params">(String key, String rate)</span> &#123;</span><br><span class="line">        RATE_MAP.put(key, rate);</span><br><span class="line">        <span class="type">String</span> <span class="variable">currentValue</span> <span class="operator">=</span> RATE_MAP.get(key);</span><br><span class="line">        logger.info(<span class="string">&quot;设置完之后的值=&#123;&#125;&quot;</span>, currentValue);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;SUCCESS&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>启动工程，我们模拟一下出现问题时的操作。</p>
-<ol>
-<li>构造 HTTP 请求调用 <code>/setRate</code> 接口，将 loan 对应的限流的值修改为 5；</li>
-<li>构造 HTTP 请求快速调用 <code>/testLimit</code> 接口 2 次，发现第一调用接口返回 SUCCESS， 第二次接口返回 FAIL，说明第 2 次请求触发了限流；</li>
-<li>构造 HTTP 请求调用 <code>/testLimit</code> 5 次，保证 5 次请求在 1 秒内接收，发现这 5 次请求接口均返回 SUCCESS，说明这 5 次请求均未触发限流；</li>
-<li>构造 HTTP 请求调用 <code>/testLimit</code> 6 次，保证 6 次请求均在 1 秒内接收，发现前 6 次请求接口均返回 SUCCESS，说明这 6 次请求均未触发限流；</li>
-<li>构造 HTTP 请求调用 <code>/testLimit</code> 7 次，保证 7 次请求均在 1 秒内接收，发发现前 6 次请求接口均返回 SUCCESS，第 7 次请求接口返回 FAIL，说明前 6 次请求均未触发限流，第 7 次请求触发限流。</li>
-</ol>
-<p>至此，我们模拟的现象与线上一致。步骤 3 是我们预期的结果，步骤 2 中在未超过限流配置的情况下触发了限流，步骤 4、5 中的第 6 次请求在超过了限流配置的情况下，仍然允许通过，我们直观上认为这些是不合理的。</p>
-<h2 id="排查与分析"><a href="#排查与分析" class="headerlink" title="排查与分析"></a>排查与分析</h2><p>Guava 中 RateLimiter 提供了两种令牌桶的算法实现：</p>
-<ul>
-<li>平滑突发限流（SmoothBursty）</li>
-<li>平滑预热限流（SmoothWarmingUp）</li>
-</ul>
-<p>我们项目中使用了默认的平滑突发限流（SmoothBursty）算法，这里我们只针对该算法进行分析。</p>
-<h3 id="tryAcquire-方法"><a href="#tryAcquire-方法" class="headerlink" title="tryAcquire 方法"></a>tryAcquire 方法</h3><p>其源码</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">tryAcquire</span><span class="params">(<span class="type">int</span> permits, <span class="type">long</span> timeout, TimeUnit unit)</span> &#123;</span><br><span class="line">  <span class="type">long</span> <span class="variable">timeoutMicros</span> <span class="operator">=</span> max(unit.toMicros(timeout), <span class="number">0</span>);</span><br><span class="line">  checkPermits(permits);</span><br><span class="line">  <span class="type">long</span> microsToWait;</span><br><span class="line">  <span class="keyword">synchronized</span> (mutex()) &#123;</span><br><span class="line">    <span class="type">long</span> <span class="variable">nowMicros</span> <span class="operator">=</span> stopwatch.readMicros();</span><br><span class="line">    <span class="keyword">if</span> (!canAcquire(nowMicros, timeoutMicros)) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      microsToWait = reserveAndGetWaitLength(permits, nowMicros);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  stopwatch.sleepMicrosUninterruptibly(microsToWait);</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>可以观察到只有在 canAcquire 方法返回 false 的情况下，才会返回 false，通过阅读 canAcquire 方法可知该方法跟 SmoothBursty 中的成员变量 nextFreeTicketMicros 有关，该成员变量的释义如下：</p>
-<blockquote>
-<p>The time when the next request (no matter its size) will be granted. After granting a request, this is pushed further in the future. Large requests push this further than small requests.</p>
-</blockquote>
-<p>该成员变量标识下一次请求获得令牌的最早时间，在创建 SmoothBursty 时初始值为 0，并且每次授权一个请求之后，这个值会向后推移。查找该成员变量引用的地方，发现 SmoothBursty 类中 reserveEarliestAvailable、resync 方法会触发该成员变量的更新，并且观察该方法的调用栈，其中就有 <code>RateLimiter#tryAcquire()</code> 方法。</p>
-<h4 id="reserveEarliestAvailable、resync-方法"><a href="#reserveEarliestAvailable、resync-方法" class="headerlink" title="reserveEarliestAvailable、resync 方法"></a>reserveEarliestAvailable、resync 方法</h4><p>其源码</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@param</span> requiredPermits 表示我们该次请求所取得令牌数，我们这里值为 1</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@param</span> nowMicros 距创建 RateLimiter 时经过了多少时长，单位为微秒</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">final</span> <span class="type">long</span> <span class="title function_">reserveEarliestAvailable</span><span class="params">(<span class="type">int</span> requiredPermits, <span class="type">long</span> nowMicros)</span> &#123;</span><br><span class="line">  <span class="comment">// 刷新令牌数</span></span><br><span class="line">  resync(nowMicros);</span><br><span class="line">  <span class="type">long</span> <span class="variable">returnValue</span> <span class="operator">=</span> nextFreeTicketMicros;</span><br><span class="line">  <span class="comment">// storedPermits 是创建 RataLimiter 时的一个成员变量，表示当前存储的令牌数，在 resync 方法和本方法中会更新所存储的令牌数</span></span><br><span class="line">  <span class="comment">// 当前存储的令牌数跟需要获取的令牌数进行比较，取两者的的最小值，即为当前可以得到令牌数</span></span><br><span class="line">  <span class="type">double</span> <span class="variable">storedPermitsToSpend</span> <span class="operator">=</span> min(requiredPermits, <span class="built_in">this</span>.storedPermits);</span><br><span class="line">  <span class="comment">// 需要预先支付的令牌</span></span><br><span class="line">  <span class="type">double</span> <span class="variable">freshPermits</span> <span class="operator">=</span> requiredPermits - storedPermitsToSpend;</span><br><span class="line">  <span class="comment">// 在突然涌入大量请求，而现有的令牌数又不够用的情况下，会预先支付一定的令牌数</span></span><br><span class="line">  <span class="comment">// stableIntervalMicros 为创建 RateLimiter 时计算出的稳定时间间隔，其计算公式为 周期 / 令牌数，在我们的例子中，该值即为 200000 微妙（即 200ms）</span></span><br><span class="line">  <span class="comment">// waitMicros 表示预先支付令牌的时间</span></span><br><span class="line">  <span class="type">long</span> <span class="variable">waitMicros</span> <span class="operator">=</span></span><br><span class="line">      storedPermitsToWaitTime(<span class="built_in">this</span>.storedPermits, storedPermitsToSpend)</span><br><span class="line">          + (<span class="type">long</span>) (freshPermits * stableIntervalMicros);</span><br><span class="line">  <span class="comment">// 预先支付令牌的时间+原请求获取令牌的最早时间，即为下一次获取令牌的最早时间</span></span><br><span class="line">  <span class="built_in">this</span>.nextFreeTicketMicros = LongMath.saturatedAdd(nextFreeTicketMicros, waitMicros);</span><br><span class="line">  <span class="comment">// 所存储的令牌数需要减去本次消耗的令牌</span></span><br><span class="line">  <span class="built_in">this</span>.storedPermits -= storedPermitsToSpend;</span><br><span class="line">  <span class="comment">// 这里返回旧的获取令牌最早的时间，即本次请求无需为预支付的令牌付出额外的等待时间</span></span><br><span class="line">  <span class="keyword">return</span> returnValue;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">resync</span><span class="params">(<span class="type">long</span> nowMicros)</span> &#123;</span><br><span class="line">  <span class="comment">// if nextFreeTicket is in the past, resync to now</span></span><br><span class="line">  <span class="keyword">if</span> (nowMicros &gt; nextFreeTicketMicros) &#123;</span><br><span class="line">    <span class="comment">// 在 SmoothBursty 类中 coolDownIntervalMicros() 方法返回的是成员变量 stableIntervalMicros，在我们的例子中，该值即为 200000 微妙（即 200ms）</span></span><br><span class="line">    <span class="type">double</span> <span class="variable">newPermits</span> <span class="operator">=</span> (nowMicros - nextFreeTicketMicros) / coolDownIntervalMicros();</span><br><span class="line">    <span class="comment">// maxPermits 在 创建 RataLimiter 时的一个成员变量，表示所能存储的最大令牌数，在我们的例子中，该值为 5</span></span><br><span class="line">    <span class="comment">// 更新当前所存储的令牌数，取值为 原存储的令牌数与新产生的令牌数之和 与 最大存储令牌数 两个数值中较小的值，保证可用的令牌数不会大于所允许存储的最大令牌数</span></span><br><span class="line">    storedPermits = min(maxPermits, storedPermits + newPermits);</span><br><span class="line">    nextFreeTicketMicros = nowMicros;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在 reserveEarliestAvailable 方法结尾处打断点，来观察一下修改配置之后，第一次调用该方法时对 nextFreeTicketMicros 成员变量的设值情况。如下图:</p>
-<img src="/2021/06/26/%E4%BD%BF%E7%94%A8Guava%E4%B8%ADRateLimiter%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%B8%AA%E9%97%AE%E9%A2%98/debug.png" class="" title="运行中各个变量的赋值情况">
-
-<p>通过上图中的执行情况可知，在限流配置修改为 5TPS 的情况下，第一次请求进来之后，令牌桶内所存储的令牌桶还不足 1，发生了预支付令牌的情况，此时 nextFreeTicketMicros 成员变量会被赋值为约 200000 微妙（即 200ms），如果第二个请求是在第一个请求之后 200ms 内请求进来的，一定会触发限流逻辑，如下图：</p>
-<img src="/2021/06/26/%E4%BD%BF%E7%94%A8Guava%E4%B8%ADRateLimiter%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%B8%AA%E9%97%AE%E9%A2%98/limit1.png" class="" title="第二次调用该方法时触发的限流的情况">
-
-<p>同样的我们提上面的操作中 1 秒内的连续 6 次请求，第 6 次仍未触发限流，这种现象也是由于预支付令牌产生的。在一段时间内没有请求进来的情况下，令牌桶内累计了 5 个令牌，此时前 5 个令牌会被前 5 个请求消费掉，当第 6 个请求进来的时候，时间仍然在向前推进，只是此时桶内累计的令牌数不足 1 个，会触发预先支付令牌，故这种情况下第 6 个请求，仍然是能够通过的。而当第 7 个请求进来的时候，由于下一次请求获得令牌的最早时间已经大于当前时间了，故取令牌失败，触发限流，如下图：</p>
-<img src="/2021/06/26/%E4%BD%BF%E7%94%A8Guava%E4%B8%ADRateLimiter%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%B8%AA%E9%97%AE%E9%A2%98/limit1.png" class="" title="Docker 第七次调用该方法时触发的限流的情况">
-
-<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>通过以上源码的分析，Gauava 中 RateLimiter 的平滑突发限流（SmoothBursty）是通过以固定的速率向桶内放置令牌，从而达到平滑输出的效果。由于桶内会进行令牌的积累，可以应对一定程度的流量突发。</p>
-<p>对于我们线上遇到的修改配置之后第二个请求就触发了限流的问题，我们在切换配置时应该使用 RateLimiter 的 setRate 方法直接修改其限流配置，这样可以避免重新创建一个新的 RateLimiter 时会创建一个新的跑表（Stopwatch），同时也不会将 nextFreeTicketMicros 重新置为 0，使得在取令牌时对桶内令牌数的计算不会像重新创建一个那么极端。</p>
-<h2 id="发散"><a href="#发散" class="headerlink" title="发散"></a>发散</h2><p>大家也可以看一下 Guava 中平滑预热限流（SmoothWarmingUp）在实现上与的平滑突发限流（SmoothBursty）有什么区别，此外常见的其他限流算法如漏桶算法、计数法分别是怎么实现的。</p>
-]]></content>
-      <tags>
-        <tag>源码</tag>
-        <tag>Guava</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>事务隔离级别</title>
-    <url>/2019/11/14/transaction-isolation/</url>
-    <content><![CDATA[<p>本文简单介绍一下数据库的事务隔离级别，所用数据库采用 <code>MySQL</code>，<code>MySQL</code> 提供了两种事务性的存储引擎 <code>InnoDB</code> 和 <code>NDB Cluster</code>，本文示例采用 <code>InnoDB</code> 存储引擎。</p>
-<h2 id="查看当前数据的事务隔离级别"><a href="#查看当前数据的事务隔离级别" class="headerlink" title="查看当前数据的事务隔离级别"></a>查看当前数据的事务隔离级别</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 查看当前数据库事务隔离级别</span><br><span class="line">mysql&gt; SHOW VARIABLES LIKE &#x27;%transaction_isolation%&#x27;;</span><br><span class="line">-- 或者</span><br><span class="line">mysql&gt; SELECT @@transaction_isolation;</span><br><span class="line">-- 低版本的 MySQL 查看事务隔离级别的属性是不一样的</span><br><span class="line">mysql&gt; SHOW VARIABLES LIKE &#x27;%tx_isolation%&#x27;;</span><br><span class="line">-- 或者</span><br><span class="line">mysql&gt; SELECT @@tx_isolation;</span><br></pre></td></tr></table></figure>
-
-<h2 id="不同的事务隔离级别所面对的问题"><a href="#不同的事务隔离级别所面对的问题" class="headerlink" title="不同的事务隔离级别所面对的问题"></a>不同的事务隔离级别所面对的问题</h2><table>
-<thead>
-<tr>
-<th>事务隔离级别</th>
-<th>脏读</th>
-<th>不可重复读</th>
-<th>幻读</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>读未提交（read-uncommitted）</td>
-<td>是</td>
-<td>是</td>
-<td>是</td>
-</tr>
-<tr>
-<td>读已提交（read-committed）</td>
-<td>否</td>
-<td>是</td>
-<td>是</td>
-</tr>
-<tr>
-<td>可重复读（repeatable-read）</td>
-<td>否</td>
-<td>否</td>
-<td>是</td>
-</tr>
-<tr>
-<td>串行化（serializable）</td>
-<td>否</td>
-<td>否</td>
-<td>否</td>
-</tr>
-</tbody></table>
-<ul>
-<li><p><code>脏读</code>：事务 A 读取了事务 B 更新的数据，然后 B 回滚操作，那么 A 读取到的数据是脏数据。</p>
-</li>
-<li><p><code>不可重复读</code>：事务 A 多次读取同一数据，事务 B 在事务 A 多次读取的过程中，对数据作了更新并提交，导致事务 A 多次读取同一数据时，结果不一致。</p>
-</li>
-<li><p><code>幻读</code>：系统管理员 A 将数据库中所有学生的成绩从具体分数改为 ABCDE 等级，但是系统管理员 B 就在这个时候插入了一条具体分数的记录，当系统管理员 A 改结束后发现还有一条记录没有改过来，就好像发生了幻觉一样，这就叫幻读。</p>
-</li>
-</ul>
-<p>小结：不可重复读的和幻读很容易混淆，不可重复读侧重于修改，幻读侧重于新增或删除。解决不可重复读的问题只需锁住满足条件的行，解决幻读需要锁表。</p>
-<h2 id="脏读的场景"><a href="#脏读的场景" class="headerlink" title="脏读的场景"></a>脏读的场景</h2><h3 id="客户端-A-先开启事务，查询用户余额"><a href="#客户端-A-先开启事务，查询用户余额" class="headerlink" title="客户端 A 先开启事务，查询用户余额"></a>客户端 A 先开启事务，查询用户余额</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端A设置当前会话级别为`read-uncommitted`</span><br><span class="line">mysq&gt; SET SESSION TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;</span><br><span class="line">-- 客户端A开启事务</span><br><span class="line">mysq&gt; START TRANSACTION;</span><br><span class="line">-- 客户端A查询用户余额</span><br><span class="line">mysq&gt; SELECT * FROM wallet WHERE user_id = 1;</span><br><span class="line">-- 结果如下：</span><br><span class="line"># +----+---------+-----------+</span><br><span class="line"># | id | user_id | balance   |</span><br><span class="line"># +----+---------+-----------+</span><br><span class="line"># |  1 |       1 | 100000000 |</span><br><span class="line"># +----+---------+-----------+</span><br></pre></td></tr></table></figure>
-
-<h3 id="客户端-B-开启事务，并修改用户余额"><a href="#客户端-B-开启事务，并修改用户余额" class="headerlink" title="客户端 B 开启事务，并修改用户余额"></a>客户端 B 开启事务，并修改用户余额</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端B设置当前会话级别为`read-uncommitted`</span><br><span class="line">mysq&gt; SET SESSION TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;</span><br><span class="line">-- 客户端B开启事务</span><br><span class="line">mysq&gt; START TRANSACTION;</span><br><span class="line">-- 客户端B修改用户余额，</span><br><span class="line">mysql&gt; UPDATE wallet SET balance = balance + 100 WHERE user_id = 1;</span><br></pre></td></tr></table></figure>
-
-<h3 id="客户端-A-查询用户余额"><a href="#客户端-A-查询用户余额" class="headerlink" title="客户端 A 查询用户余额"></a>客户端 A 查询用户余额</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端A获取用户余额（此时由于B的事务并未提交，故A事务读到了B事务已经更新后的数据，此时发生脏读）</span><br><span class="line">mysq&gt; SELECT * FROM wallet WHERE user_id = 1;</span><br><span class="line">-- 结果如下：</span><br><span class="line"># +----+---------+-----------+</span><br><span class="line"># | id | user_id | balance   |</span><br><span class="line"># +----+---------+-----------+</span><br><span class="line"># |  1 |       1 | 100000100 |</span><br><span class="line"># +----+---------+-----------+</span><br></pre></td></tr></table></figure>
-
-<h3 id="客户端-B-回滚事务"><a href="#客户端-B-回滚事务" class="headerlink" title="客户端 B 回滚事务"></a>客户端 B 回滚事务</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端B回滚事务</span><br><span class="line">mysql&gt; ROLLBACK;</span><br></pre></td></tr></table></figure>
-
-<h3 id="客户端-A-修改用户余额"><a href="#客户端-A-修改用户余额" class="headerlink" title="客户端 A 修改用户余额"></a>客户端 A 修改用户余额</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端A修改用户余额</span><br><span class="line">mysq&gt; UPDATE wallet SET balance = balance - 500 WHERE user_id = 1;</span><br><span class="line"></span><br><span class="line">-- 客户端A查询用户余额</span><br><span class="line">mysq&gt; SELECT * FROM wallet WHERE user_id = 1;</span><br><span class="line">-- 结果如下：</span><br><span class="line"># +----+---------+----------+</span><br><span class="line"># | id | user_id | balance  |</span><br><span class="line"># +----+---------+----------+</span><br><span class="line"># |  1 |       1 | 99999500 |</span><br><span class="line"># +----+---------+----------+</span><br><span class="line">-- 对于A客户端来讲，此时的结果是很奇怪的。</span><br><span class="line">-- 客户端A提交事务</span><br><span class="line">mysql&gt; COMMIT;</span><br></pre></td></tr></table></figure>
-
-<h2 id="不可重复读的场景"><a href="#不可重复读的场景" class="headerlink" title="不可重复读的场景"></a>不可重复读的场景</h2><h3 id="客户端-A-开启事务，查询用户余额"><a href="#客户端-A-开启事务，查询用户余额" class="headerlink" title="客户端 A 开启事务，查询用户余额"></a>客户端 A 开启事务，查询用户余额</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端A设置当前会话级别为`read-committed`</span><br><span class="line">mysql&gt; SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED;</span><br><span class="line">-- 客户端A开启事务</span><br><span class="line">mysql&gt; BEGIN;</span><br><span class="line">-- 客户端A查询用户余额</span><br><span class="line">SELECT * FROM wallet WHERE user_id = 1;</span><br><span class="line">-- 结果如下:</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># | id | user_id | balance |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># |  1 |       1 |     200 |</span><br><span class="line"># +----+---------+---------+</span><br></pre></td></tr></table></figure>
-
-<h3 id="客户端-B-开启事务，并修改用户余额-1"><a href="#客户端-B-开启事务，并修改用户余额-1" class="headerlink" title="客户端 B 开启事务，并修改用户余额"></a>客户端 B 开启事务，并修改用户余额</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端B设置当前会话级别为`read-committed`</span><br><span class="line">mysql&gt; SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED;</span><br><span class="line">-- 客户端B开启事务</span><br><span class="line">mysql&gt; BEGIN;</span><br><span class="line">-- 客户端B修改用户余额</span><br><span class="line">mysql&gt; UPDATE wallet SET balance = balance + 100 WHERE user_id = 1;</span><br><span class="line">-- 客户端B查询用户余额</span><br><span class="line">mysql&gt; SELECT * FROM wallet WHERE user_id = 1;</span><br><span class="line">-- 结果如下：</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># | id | user_id | balance |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># |  1 |       1 |     300 |</span><br><span class="line"># +----+---------+---------+</span><br></pre></td></tr></table></figure>
-
-<h3 id="客户端-A-查询用户余额-1"><a href="#客户端-A-查询用户余额-1" class="headerlink" title="客户端 A 查询用户余额"></a>客户端 A 查询用户余额</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端A查询用户余额</span><br><span class="line">mysql&gt; SELECT * FROM wallet WHERE user_id = 1;</span><br><span class="line">-- 结果如下：</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># | id | user_id | balance |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># |  1 |       1 |     200 |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line">-- 此时客户端B的事务还没有提交，故客户端A不能查询到B事务已经更新的数据，解决了脏读的问题</span><br></pre></td></tr></table></figure>
-
-<h3 id="客户端-B-提交事务"><a href="#客户端-B-提交事务" class="headerlink" title="客户端 B 提交事务"></a>客户端 B 提交事务</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端B提交事务</span><br><span class="line">mysql&gt; COMMIT;</span><br></pre></td></tr></table></figure>
-
-<h3 id="客户端-A-查询用户余额-2"><a href="#客户端-A-查询用户余额-2" class="headerlink" title="客户端 A 查询用户余额"></a>客户端 A 查询用户余额</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端A查询用户余额</span><br><span class="line">mysql&gt; SELECT * FROM wallet WHERE user_id = 1;</span><br><span class="line">-- 结果如下：</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># | id | user_id | balance |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># |  1 |       1 |     300 |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line">-- 此时客户端B的事务还已经提交，结果与上一步不一致，即产生了不可重复读的问题。</span><br><span class="line">-- 客户端A提交事务</span><br><span class="line">mysql&gt; COMMIT;</span><br></pre></td></tr></table></figure>
-
-<h2 id="幻读的场景"><a href="#幻读的场景" class="headerlink" title="幻读的场景"></a>幻读的场景</h2><h3 id="客户端-A-开启事务，查询所有用户"><a href="#客户端-A-开启事务，查询所有用户" class="headerlink" title="客户端 A 开启事务，查询所有用户"></a>客户端 A 开启事务，查询所有用户</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端A设置当前会话级别为`repeatable-read`</span><br><span class="line">mysql&gt; SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ;</span><br><span class="line">-- 客户端A开启事务</span><br><span class="line">mysql&gt; BEGIN;</span><br><span class="line">-- 客户端A查询所有用户余额</span><br><span class="line">SELECT * FROM wallet;</span><br><span class="line">-- 结果如下:</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># | id | user_id | balance |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># |  1 |       1 |     100 |</span><br><span class="line"># +----+---------+---------+</span><br></pre></td></tr></table></figure>
-
-<h3 id="客户端-B-开启事务，并插入一条记录"><a href="#客户端-B-开启事务，并插入一条记录" class="headerlink" title="客户端 B 开启事务，并插入一条记录"></a>客户端 B 开启事务，并插入一条记录</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端B设置当前会话级别为`repeatable-read`</span><br><span class="line">mysql&gt; SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ;</span><br><span class="line">-- 客户端B开启事务</span><br><span class="line">mysql&gt; BEGIN;</span><br><span class="line">-- 客户端B查询所有用户余额</span><br><span class="line">SELECT * FROM wallet;</span><br><span class="line">-- 结果如下:</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># | id | user_id | balance |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># |  1 |       1 |     100 |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line">-- 客户端B插入一条记录</span><br><span class="line">mysq&gt; INSERT INTO wallet (`id`, `user_id`, `balance`) VALUES (2, 2, 200);</span><br><span class="line">-- 客户端B查询所有的用户余额</span><br><span class="line">mysql&gt; SELECT * FROM wallet;</span><br><span class="line">-- 结果如下</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># | id | user_id | balance |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># |  1 |       1 |     100 |</span><br><span class="line"># |  2 |       2 |     200 |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="客户端-A-查询所有用户余额"><a href="#客户端-A-查询所有用户余额" class="headerlink" title="客户端 A 查询所有用户余额"></a>客户端 A 查询所有用户余额</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端A查询所有用户余额, 此时发生幻读。</span><br><span class="line">SELECT * FROM wallet;</span><br><span class="line">-- 结果如下:</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># | id | user_id | balance |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># |  1 |       1 |     100 |</span><br><span class="line"># +----+---------+---------+</span><br></pre></td></tr></table></figure>
-
-<h3 id="客户端-B-提交事务-1"><a href="#客户端-B-提交事务-1" class="headerlink" title="客户端 B 提交事务"></a>客户端 B 提交事务</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端B提交事务</span><br><span class="line">mysq&gt; COMMIT;</span><br></pre></td></tr></table></figure>
-
-<h3 id="客户端-A-插入一条记录"><a href="#客户端-A-插入一条记录" class="headerlink" title="客户端 A 插入一条记录"></a>客户端 A 插入一条记录</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户A插入id为2的记录</span><br><span class="line">mysql&gt; INSERT INTO wallet (`id`, `user_id`, `balance`) VALUES (2, 2, 200);</span><br><span class="line">-- 结果失败了，</span><br><span class="line">ERROR 1062 (23000): Duplicate entry &#x27;2&#x27; for key &#x27;PRIMARY&#x27;</span><br><span class="line">-- 客户端A回滚</span><br><span class="line">mysql&gt; ROLLBACK;</span><br></pre></td></tr></table></figure>
-]]></content>
-      <tags>
-        <tag>数据库</tag>
-        <tag>MySQL</tag>
-        <tag>事务</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Spring Cloud Alibaba Introduction</title>
     <url>/2019/10/11/spring-cloud-alibaba-introduction/</url>
     <content><![CDATA[<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><blockquote>
@@ -2251,6 +2009,248 @@
         <tag>Dubbo</tag>
         <tag>Spring Cloud</tag>
         <tag>Spring Cloud Alibaba</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>zsh 手册</title>
+    <url>/2021/08/24/zsh-%E6%89%8B%E5%86%8C/</url>
+    <content><![CDATA[<p>zsh 可能是目前最好用的终端。</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="Mac-OS"><a href="#Mac-OS" class="headerlink" title="Mac OS"></a>Mac OS</h3><p>MacOS 自带 zsh，并且当前最新版本 MasOS 默认终端即为 zsh</p>
+<h3 id="Ubuntu"><a href="#Ubuntu" class="headerlink" title="Ubuntu"></a>Ubuntu</h3><p>使用 <code>sudo apt install zsh</code> 命令即可安装 zsh</p>
+<h3 id="CentOS"><a href="#CentOS" class="headerlink" title="CentOS"></a>CentOS</h3><p>使用 <code>sudo yum install zsh</code> 命令即可安装 zsh</p>
+<p>在安装好 zsh 之后，第一次使用的时候，会有如下的提示：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">This is the Z Shell configuration function for new users,</span><br><span class="line">zsh-newuser-install.</span><br><span class="line">You are seeing this message because you have no zsh startup files</span><br><span class="line">(the files .zshenv, .zprofile, .zshrc, .zlogin in the directory</span><br><span class="line">~).  This function can help you with a few settings that should</span><br><span class="line">make your use of the shell easier.</span><br><span class="line"></span><br><span class="line">You can:</span><br><span class="line"></span><br><span class="line">(q)  Quit and do nothing.  The function will be run again next time.</span><br><span class="line"></span><br><span class="line">(0)  Exit, creating the file ~/.zshrc containing just a comment.</span><br><span class="line">     That will prevent this function being run again.</span><br><span class="line"></span><br><span class="line">(1)  Continue to the main menu.</span><br><span class="line"></span><br><span class="line">(2)  Populate your ~/.zshrc with the configuration recommended</span><br><span class="line">     by the system administrator and exit (you will need to edit</span><br><span class="line">     the file by hand, if so desired).</span><br><span class="line"></span><br><span class="line">--- Type one of the keys in parentheses ---</span><br></pre></td></tr></table></figure>
+
+<p>这里我推荐直接使用选项 (2)，通过 <code>~/.zshrc</code> 文件来配置我们的 zsh。</p>
+<h3 id="查看-zsh-版本"><a href="#查看-zsh-版本" class="headerlink" title="查看 zsh 版本"></a>查看 zsh 版本</h3><p>使用 <code>zsh --version</code> 命令即可查看 zsh 的版本。</p>
+<h3 id="将-zsh-设置为默认的-shell"><a href="#将-zsh-设置为默认的-shell" class="headerlink" title="将 zsh 设置为默认的 shell"></a>将 zsh 设置为默认的 shell</h3><p>使用 <code>chsh -s /bin/zsh root</code> 即可将 root 用户的默认 shell 设置为 zsh，如需为其他用户设置默认的 shell，将 <code>root</code> 替换为其他用户名即可。</p>
+<h3 id="查看默认的-shell"><a href="#查看默认的-shell" class="headerlink" title="查看默认的 shell"></a>查看默认的 shell</h3><p>使用 <code>echo $SHELL</code> 命令即可查看默认的 shell</p>
+<h3 id="查看当前正在使用的-shell"><a href="#查看当前正在使用的-shell" class="headerlink" title="查看当前正在使用的 shell"></a>查看当前正在使用的 shell</h3><p>使用 <code>echo $0</code> 命令即可查看当前正在使用的 shell</p>
+<h2 id="使用-oh-my-zsh-美化-zsh"><a href="#使用-oh-my-zsh-美化-zsh" class="headerlink" title="使用 oh-my-zsh 美化 zsh"></a>使用 oh-my-zsh 美化 zsh</h2><h3 id="安装-oh-my-zsh"><a href="#安装-oh-my-zsh" class="headerlink" title="安装 oh-my-zsh"></a>安装 oh-my-zsh</h3><p>打开 oh-my-zsh 官网，直接使用官网提供的命令，即可安装 oh-my-zsh，命令如下（任选其一即可）：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">使用 curl 下载</span></span><br><span class="line">sh -c &quot;$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)&quot;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">或者使用</span></span><br><span class="line">sh -c &quot;$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)&quot;</span><br></pre></td></tr></table></figure>
+
+<p>对于国内的用户，上面命令下载 install.sh 可能存在连接超时的问题，我们可以替换为 gitee 的镜像来进行下载，命令如下：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">wget https://gitee.com/mirrors/oh-my-zsh/raw/master/tools/install.sh</span><br></pre></td></tr></table></figure>
+
+<p>下载之后，使用 <code>sh install.sh</code> 来安装 oh-my-zsh，如果在 clone oh-my-zsh 过程仍然连接超时的情况下，可以通过替换 install.sh 脚本中的仓库地址来进行加速。</p>
+<p>将脚本中的如下内容</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">REPO=$&#123;REPO:-ohmyzsh/ohmyzsh&#125;</span><br><span class="line">REMOTE=$&#123;REMOTE:-https://github.com/$&#123;REPO&#125;.git&#125;</span><br></pre></td></tr></table></figure>
+
+<p>替换为</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">REPO=$&#123;REPO:-mirrors/oh-my-zsh&#125;</span><br><span class="line">REMOTE=$&#123;REMOTE:-https://gitee.com/$&#123;REPO&#125;.git&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="配置-oh-my-zsh-主题"><a href="#配置-oh-my-zsh-主题" class="headerlink" title="配置 oh-my-zsh 主题"></a>配置 oh-my-zsh 主题</h3><p>修改 <code>~/.zshrc</code> 文件，找到 ZSH_THEME 的选项，修改为自己喜欢的，笔者喜欢使用 ys 主题，其配置如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ZSH_THEME=&quot;ys&quot;</span><br></pre></td></tr></table></figure>
+
+<p>如果你比较喜欢每次打开终端都体验不一样的主题的话，可以使用 random 主题。</p>
+<h3 id="安装常用的插件"><a href="#安装常用的插件" class="headerlink" title="安装常用的插件"></a>安装常用的插件</h3><p>下面列举一些非常实用的插件</p>
+<ul>
+<li><p>zsh-syntax-highlighting 有时候记不住一些命令，等输入完了才知道命令输错了，这个插件直接在输入过程中就会提示你，当前命令是否正确，错误红色，正确绿色</p>
+</li>
+<li><p>zsh-autosuggestions 该插件会记录你之前输入过的所有命令，并且自动匹配你可能想要输入命令，然后按 → 补全</p>
+</li>
+</ul>
+<p>可以使用如下命令来安装插件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 安装 zsh-syntax-highlighting</span><br><span class="line">git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;/plugins/zsh-syntax-highlighting</span><br><span class="line"></span><br><span class="line"># 安装 zsh-autosuggestions</span><br><span class="line">git clone https://github.com/zsh-users/zsh-autosuggestions $&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;/plugins/zsh-autosuggestions</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>修改 ~&#x2F;.zshrc 中插件的配置</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">plugins=(git zsh-syntax-highlighting zsh-autosuggestions)</span><br></pre></td></tr></table></figure>
+
+<p>然后使用 <code>source ~/.zshrc</code> 来使配置生效</p>
+]]></content>
+      <categories>
+        <category>手册</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+        <tag>bash</tag>
+        <tag>zsh</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>事务隔离级别</title>
+    <url>/2019/11/14/transaction-isolation/</url>
+    <content><![CDATA[<p>本文简单介绍一下数据库的事务隔离级别，所用数据库采用 <code>MySQL</code>，<code>MySQL</code> 提供了两种事务性的存储引擎 <code>InnoDB</code> 和 <code>NDB Cluster</code>，本文示例采用 <code>InnoDB</code> 存储引擎。</p>
+<h2 id="查看当前数据的事务隔离级别"><a href="#查看当前数据的事务隔离级别" class="headerlink" title="查看当前数据的事务隔离级别"></a>查看当前数据的事务隔离级别</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 查看当前数据库事务隔离级别</span><br><span class="line">mysql&gt; SHOW VARIABLES LIKE &#x27;%transaction_isolation%&#x27;;</span><br><span class="line">-- 或者</span><br><span class="line">mysql&gt; SELECT @@transaction_isolation;</span><br><span class="line">-- 低版本的 MySQL 查看事务隔离级别的属性是不一样的</span><br><span class="line">mysql&gt; SHOW VARIABLES LIKE &#x27;%tx_isolation%&#x27;;</span><br><span class="line">-- 或者</span><br><span class="line">mysql&gt; SELECT @@tx_isolation;</span><br></pre></td></tr></table></figure>
+
+<h2 id="不同的事务隔离级别所面对的问题"><a href="#不同的事务隔离级别所面对的问题" class="headerlink" title="不同的事务隔离级别所面对的问题"></a>不同的事务隔离级别所面对的问题</h2><table>
+<thead>
+<tr>
+<th>事务隔离级别</th>
+<th>脏读</th>
+<th>不可重复读</th>
+<th>幻读</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>读未提交（read-uncommitted）</td>
+<td>是</td>
+<td>是</td>
+<td>是</td>
+</tr>
+<tr>
+<td>读已提交（read-committed）</td>
+<td>否</td>
+<td>是</td>
+<td>是</td>
+</tr>
+<tr>
+<td>可重复读（repeatable-read）</td>
+<td>否</td>
+<td>否</td>
+<td>是</td>
+</tr>
+<tr>
+<td>串行化（serializable）</td>
+<td>否</td>
+<td>否</td>
+<td>否</td>
+</tr>
+</tbody></table>
+<ul>
+<li><p><code>脏读</code>：事务 A 读取了事务 B 更新的数据，然后 B 回滚操作，那么 A 读取到的数据是脏数据。</p>
+</li>
+<li><p><code>不可重复读</code>：事务 A 多次读取同一数据，事务 B 在事务 A 多次读取的过程中，对数据作了更新并提交，导致事务 A 多次读取同一数据时，结果不一致。</p>
+</li>
+<li><p><code>幻读</code>：系统管理员 A 将数据库中所有学生的成绩从具体分数改为 ABCDE 等级，但是系统管理员 B 就在这个时候插入了一条具体分数的记录，当系统管理员 A 改结束后发现还有一条记录没有改过来，就好像发生了幻觉一样，这就叫幻读。</p>
+</li>
+</ul>
+<p>小结：不可重复读的和幻读很容易混淆，不可重复读侧重于修改，幻读侧重于新增或删除。解决不可重复读的问题只需锁住满足条件的行，解决幻读需要锁表。</p>
+<h2 id="脏读的场景"><a href="#脏读的场景" class="headerlink" title="脏读的场景"></a>脏读的场景</h2><h3 id="客户端-A-先开启事务，查询用户余额"><a href="#客户端-A-先开启事务，查询用户余额" class="headerlink" title="客户端 A 先开启事务，查询用户余额"></a>客户端 A 先开启事务，查询用户余额</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端A设置当前会话级别为`read-uncommitted`</span><br><span class="line">mysq&gt; SET SESSION TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;</span><br><span class="line">-- 客户端A开启事务</span><br><span class="line">mysq&gt; START TRANSACTION;</span><br><span class="line">-- 客户端A查询用户余额</span><br><span class="line">mysq&gt; SELECT * FROM wallet WHERE user_id = 1;</span><br><span class="line">-- 结果如下：</span><br><span class="line"># +----+---------+-----------+</span><br><span class="line"># | id | user_id | balance   |</span><br><span class="line"># +----+---------+-----------+</span><br><span class="line"># |  1 |       1 | 100000000 |</span><br><span class="line"># +----+---------+-----------+</span><br></pre></td></tr></table></figure>
+
+<h3 id="客户端-B-开启事务，并修改用户余额"><a href="#客户端-B-开启事务，并修改用户余额" class="headerlink" title="客户端 B 开启事务，并修改用户余额"></a>客户端 B 开启事务，并修改用户余额</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端B设置当前会话级别为`read-uncommitted`</span><br><span class="line">mysq&gt; SET SESSION TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;</span><br><span class="line">-- 客户端B开启事务</span><br><span class="line">mysq&gt; START TRANSACTION;</span><br><span class="line">-- 客户端B修改用户余额，</span><br><span class="line">mysql&gt; UPDATE wallet SET balance = balance + 100 WHERE user_id = 1;</span><br></pre></td></tr></table></figure>
+
+<h3 id="客户端-A-查询用户余额"><a href="#客户端-A-查询用户余额" class="headerlink" title="客户端 A 查询用户余额"></a>客户端 A 查询用户余额</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端A获取用户余额（此时由于B的事务并未提交，故A事务读到了B事务已经更新后的数据，此时发生脏读）</span><br><span class="line">mysq&gt; SELECT * FROM wallet WHERE user_id = 1;</span><br><span class="line">-- 结果如下：</span><br><span class="line"># +----+---------+-----------+</span><br><span class="line"># | id | user_id | balance   |</span><br><span class="line"># +----+---------+-----------+</span><br><span class="line"># |  1 |       1 | 100000100 |</span><br><span class="line"># +----+---------+-----------+</span><br></pre></td></tr></table></figure>
+
+<h3 id="客户端-B-回滚事务"><a href="#客户端-B-回滚事务" class="headerlink" title="客户端 B 回滚事务"></a>客户端 B 回滚事务</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端B回滚事务</span><br><span class="line">mysql&gt; ROLLBACK;</span><br></pre></td></tr></table></figure>
+
+<h3 id="客户端-A-修改用户余额"><a href="#客户端-A-修改用户余额" class="headerlink" title="客户端 A 修改用户余额"></a>客户端 A 修改用户余额</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端A修改用户余额</span><br><span class="line">mysq&gt; UPDATE wallet SET balance = balance - 500 WHERE user_id = 1;</span><br><span class="line"></span><br><span class="line">-- 客户端A查询用户余额</span><br><span class="line">mysq&gt; SELECT * FROM wallet WHERE user_id = 1;</span><br><span class="line">-- 结果如下：</span><br><span class="line"># +----+---------+----------+</span><br><span class="line"># | id | user_id | balance  |</span><br><span class="line"># +----+---------+----------+</span><br><span class="line"># |  1 |       1 | 99999500 |</span><br><span class="line"># +----+---------+----------+</span><br><span class="line">-- 对于A客户端来讲，此时的结果是很奇怪的。</span><br><span class="line">-- 客户端A提交事务</span><br><span class="line">mysql&gt; COMMIT;</span><br></pre></td></tr></table></figure>
+
+<h2 id="不可重复读的场景"><a href="#不可重复读的场景" class="headerlink" title="不可重复读的场景"></a>不可重复读的场景</h2><h3 id="客户端-A-开启事务，查询用户余额"><a href="#客户端-A-开启事务，查询用户余额" class="headerlink" title="客户端 A 开启事务，查询用户余额"></a>客户端 A 开启事务，查询用户余额</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端A设置当前会话级别为`read-committed`</span><br><span class="line">mysql&gt; SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED;</span><br><span class="line">-- 客户端A开启事务</span><br><span class="line">mysql&gt; BEGIN;</span><br><span class="line">-- 客户端A查询用户余额</span><br><span class="line">SELECT * FROM wallet WHERE user_id = 1;</span><br><span class="line">-- 结果如下:</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># | id | user_id | balance |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># |  1 |       1 |     200 |</span><br><span class="line"># +----+---------+---------+</span><br></pre></td></tr></table></figure>
+
+<h3 id="客户端-B-开启事务，并修改用户余额-1"><a href="#客户端-B-开启事务，并修改用户余额-1" class="headerlink" title="客户端 B 开启事务，并修改用户余额"></a>客户端 B 开启事务，并修改用户余额</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端B设置当前会话级别为`read-committed`</span><br><span class="line">mysql&gt; SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED;</span><br><span class="line">-- 客户端B开启事务</span><br><span class="line">mysql&gt; BEGIN;</span><br><span class="line">-- 客户端B修改用户余额</span><br><span class="line">mysql&gt; UPDATE wallet SET balance = balance + 100 WHERE user_id = 1;</span><br><span class="line">-- 客户端B查询用户余额</span><br><span class="line">mysql&gt; SELECT * FROM wallet WHERE user_id = 1;</span><br><span class="line">-- 结果如下：</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># | id | user_id | balance |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># |  1 |       1 |     300 |</span><br><span class="line"># +----+---------+---------+</span><br></pre></td></tr></table></figure>
+
+<h3 id="客户端-A-查询用户余额-1"><a href="#客户端-A-查询用户余额-1" class="headerlink" title="客户端 A 查询用户余额"></a>客户端 A 查询用户余额</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端A查询用户余额</span><br><span class="line">mysql&gt; SELECT * FROM wallet WHERE user_id = 1;</span><br><span class="line">-- 结果如下：</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># | id | user_id | balance |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># |  1 |       1 |     200 |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line">-- 此时客户端B的事务还没有提交，故客户端A不能查询到B事务已经更新的数据，解决了脏读的问题</span><br></pre></td></tr></table></figure>
+
+<h3 id="客户端-B-提交事务"><a href="#客户端-B-提交事务" class="headerlink" title="客户端 B 提交事务"></a>客户端 B 提交事务</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端B提交事务</span><br><span class="line">mysql&gt; COMMIT;</span><br></pre></td></tr></table></figure>
+
+<h3 id="客户端-A-查询用户余额-2"><a href="#客户端-A-查询用户余额-2" class="headerlink" title="客户端 A 查询用户余额"></a>客户端 A 查询用户余额</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端A查询用户余额</span><br><span class="line">mysql&gt; SELECT * FROM wallet WHERE user_id = 1;</span><br><span class="line">-- 结果如下：</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># | id | user_id | balance |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># |  1 |       1 |     300 |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line">-- 此时客户端B的事务还已经提交，结果与上一步不一致，即产生了不可重复读的问题。</span><br><span class="line">-- 客户端A提交事务</span><br><span class="line">mysql&gt; COMMIT;</span><br></pre></td></tr></table></figure>
+
+<h2 id="幻读的场景"><a href="#幻读的场景" class="headerlink" title="幻读的场景"></a>幻读的场景</h2><h3 id="客户端-A-开启事务，查询所有用户"><a href="#客户端-A-开启事务，查询所有用户" class="headerlink" title="客户端 A 开启事务，查询所有用户"></a>客户端 A 开启事务，查询所有用户</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端A设置当前会话级别为`repeatable-read`</span><br><span class="line">mysql&gt; SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ;</span><br><span class="line">-- 客户端A开启事务</span><br><span class="line">mysql&gt; BEGIN;</span><br><span class="line">-- 客户端A查询所有用户余额</span><br><span class="line">SELECT * FROM wallet;</span><br><span class="line">-- 结果如下:</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># | id | user_id | balance |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># |  1 |       1 |     100 |</span><br><span class="line"># +----+---------+---------+</span><br></pre></td></tr></table></figure>
+
+<h3 id="客户端-B-开启事务，并插入一条记录"><a href="#客户端-B-开启事务，并插入一条记录" class="headerlink" title="客户端 B 开启事务，并插入一条记录"></a>客户端 B 开启事务，并插入一条记录</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端B设置当前会话级别为`repeatable-read`</span><br><span class="line">mysql&gt; SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ;</span><br><span class="line">-- 客户端B开启事务</span><br><span class="line">mysql&gt; BEGIN;</span><br><span class="line">-- 客户端B查询所有用户余额</span><br><span class="line">SELECT * FROM wallet;</span><br><span class="line">-- 结果如下:</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># | id | user_id | balance |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># |  1 |       1 |     100 |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line">-- 客户端B插入一条记录</span><br><span class="line">mysq&gt; INSERT INTO wallet (`id`, `user_id`, `balance`) VALUES (2, 2, 200);</span><br><span class="line">-- 客户端B查询所有的用户余额</span><br><span class="line">mysql&gt; SELECT * FROM wallet;</span><br><span class="line">-- 结果如下</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># | id | user_id | balance |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># |  1 |       1 |     100 |</span><br><span class="line"># |  2 |       2 |     200 |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="客户端-A-查询所有用户余额"><a href="#客户端-A-查询所有用户余额" class="headerlink" title="客户端 A 查询所有用户余额"></a>客户端 A 查询所有用户余额</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端A查询所有用户余额, 此时发生幻读。</span><br><span class="line">SELECT * FROM wallet;</span><br><span class="line">-- 结果如下:</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># | id | user_id | balance |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># |  1 |       1 |     100 |</span><br><span class="line"># +----+---------+---------+</span><br></pre></td></tr></table></figure>
+
+<h3 id="客户端-B-提交事务-1"><a href="#客户端-B-提交事务-1" class="headerlink" title="客户端 B 提交事务"></a>客户端 B 提交事务</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端B提交事务</span><br><span class="line">mysq&gt; COMMIT;</span><br></pre></td></tr></table></figure>
+
+<h3 id="客户端-A-插入一条记录"><a href="#客户端-A-插入一条记录" class="headerlink" title="客户端 A 插入一条记录"></a>客户端 A 插入一条记录</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户A插入id为2的记录</span><br><span class="line">mysql&gt; INSERT INTO wallet (`id`, `user_id`, `balance`) VALUES (2, 2, 200);</span><br><span class="line">-- 结果失败了，</span><br><span class="line">ERROR 1062 (23000): Duplicate entry &#x27;2&#x27; for key &#x27;PRIMARY&#x27;</span><br><span class="line">-- 客户端A回滚</span><br><span class="line">mysql&gt; ROLLBACK;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>数据库</tag>
+        <tag>MySQL</tag>
+        <tag>事务</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>一个 Spring 依赖注入的问题浅析</title>
+    <url>/2021/08/08/%E4%B8%80%E4%B8%AA-Spring-%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5%E7%9A%84%E9%97%AE%E9%A2%98%E6%B5%85%E6%9E%90/</url>
+    <content><![CDATA[<p>使用 Spring 做项目的先思考一个问题，一个接口有在多个实现类的情况下，在成员变量的声明上如果没有指定注入那个别名的 Bean 的时候 Spring 会如何选择对应的 Bean 来进行注入？</p>
+<h2 id="问题模拟"><a href="#问题模拟" class="headerlink" title="问题模拟"></a>问题模拟</h2><p>先来简单说明一下示例代码。</p>
+<p>定义一个接口，用于打印当前注入的 Bean 的名称</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">TestService</span> &#123;</span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">printBeanName</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>针对上面定义的接口编写两个实现类，并分别定义其 beanName 为 testService 和 testService2</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Service(&quot;testService&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestServiceImpl</span> <span class="keyword">implements</span> <span class="title class_">TestService</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">printBeanName</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;testService&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Service(&quot;testService2&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestServiceImpl2</span> <span class="keyword">implements</span> <span class="title class_">TestService</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">printBeanName</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;testService2&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编写 Handler，并注入 TestService</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestHandler</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> TestService testService;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">test</span><span class="params">()</span> &#123;</span><br><span class="line">        testService.printBeanName();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编写单元测试，并观察输出</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@SpringBootTest</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">TestHandlerTest</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> TestHandler testHandler;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">test</span><span class="params">()</span> &#123;</span><br><span class="line">        testHandler.test();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>执行该单元测试，发现其打印的 beanName 为 testService。从输出结果可以看出在这种情况下最终注入的是 beanName 为 testService 的 bean，与组合交易子系统的现象一致。</p>
+<h2 id="源码分析与验证"><a href="#源码分析与验证" class="headerlink" title="源码分析与验证"></a>源码分析与验证</h2><p>根据 Spring 的文档，使用 Autowired 注解在自动装配时会通过 <code>org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor#postProcessProperties</code> 方法来对属性进行赋值操作。我们可以在该方法入口打上断点，并对断点指定条件，如下图：</p>
+<img src="/2021/08/08/%E4%B8%80%E4%B8%AA-Spring-%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5%E7%9A%84%E9%97%AE%E9%A2%98%E6%B5%85%E6%9E%90/debug.png" class="" title="debug">
+
+<p>由于方法深度较深，调试的过程这里不再赘述，我们直接分析影响我们最终结果的方法 <code>org.springframework.beans.factory.support.DefaultListableBeanFactory#determineAutowireCandidate</code>，其源码及分析如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> candidates 为我们要注入的属性对应的所有 Bean 组成的 map</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> descriptor 描述了我们要注入的属性的一些信息，包含了属性对应的类、方法、fieldName 等信息</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">protected</span> String <span class="title function_">determineAutowireCandidate</span><span class="params">(Map&lt;String, Object&gt; candidates, DependencyDescriptor descriptor)</span> &#123;</span><br><span class="line">    <span class="comment">// requiredType 为我们要注入的属性的类型，针对本的例子 requiredType 的值为 TestService 这个类</span></span><br><span class="line">    Class&lt;?&gt; requiredType = descriptor.getDependencyType();</span><br><span class="line">    <span class="comment">// 如果 candidates 中有 Bean 添加了 @Primary 注解，则会返回该 Bean 对应的 beanName</span></span><br><span class="line">    <span class="type">String</span> <span class="variable">primaryCandidate</span> <span class="operator">=</span> determinePrimaryCandidate(candidates, requiredType);</span><br><span class="line">    <span class="keyword">if</span> (primaryCandidate != <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> primaryCandidate;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 如果 candidates 中的 Bean 没有 @Primary 注解，但是添加了 @Priority 注解，会解析 Bean 的优先级，返回优先级最高的 Bean 对应的 beanName</span></span><br><span class="line">    <span class="type">String</span> <span class="variable">priorityCandidate</span> <span class="operator">=</span> determineHighestPriorityCandidate(candidates, requiredType);</span><br><span class="line">    <span class="keyword">if</span> (priorityCandidate != <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> priorityCandidate;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 降级逻辑</span></span><br><span class="line">    <span class="keyword">for</span> (Map.Entry&lt;String, Object&gt; entry : candidates.entrySet()) &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">candidateName</span> <span class="operator">=</span> entry.getKey();</span><br><span class="line">        <span class="type">Object</span> <span class="variable">beanInstance</span> <span class="operator">=</span> entry.getValue();</span><br><span class="line">        <span class="comment">// 此时的 this.resolvableDependencies 是不包含本例子中的 TestService 对应的任一 bean 的</span></span><br><span class="line">        <span class="comment">// descriptor.getDependencyName() 方法的处理中会返回要注入的属性所对应的 fieldName，本例子中的 fieldName 为 testService</span></span><br><span class="line">        <span class="comment">// 最终如果要注入属性名跟 candidates 的 Bean 的 beanName 相同，则会返回对应的 beanName</span></span><br><span class="line">        <span class="keyword">if</span> ((beanInstance != <span class="literal">null</span> &amp;&amp; <span class="built_in">this</span>.resolvableDependencies.containsValue(beanInstance)) ||</span><br><span class="line">                matchesBeanName(candidateName, descriptor.getDependencyName())) &#123;</span><br><span class="line">            <span class="keyword">return</span> candidateName;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>下面我们来验证一下源码中的我们未验证到的情况</p>
+<h3 id="使用-Primary-注解来标识主要的类"><a href="#使用-Primary-注解来标识主要的类" class="headerlink" title="使用 Primary 注解来标识主要的类"></a>使用 Primary 注解来标识主要的类</h3><p>将 beanName 为 testService2 的 Bean 加上 Primary 注解并运行单元测试，其打印的 beanName 为 testService2。</p>
+<h3 id="使用-Priority-来标识-Bean-的优先级"><a href="#使用-Priority-来标识-Bean-的优先级" class="headerlink" title="使用 Priority 来标识 Bean 的优先级"></a>使用 Priority 来标识 Bean 的优先级</h3><p>去掉上面操作所添加的 Primary 注解，来验证使用 Priority 时的情况。</p>
+<ul>
+<li>将 beanName 为 testService2 的 bean 加上 @Priority(2) 注解并运行单元测试，其打印的 beanName 为 testService2；</li>
+<li>将 beanName 为 testService 的 bean 加上 @Priority(1) 注解，将 beanName 为 testService2 的 bean 加上 @Priority(2) 注解并运行单元测试，其打印的 beanName 为 testService；</li>
+<li>将 beanName 为 testService 的 bean 加上 @Priority(3) 注解，将 beanName 为 testService2 的 bean 加上 @Priority(2) 注解并运行单元测试，其打印的 beanName 为 testService2。</li>
+</ul>
+<h3 id="修改-TestHandler-中的属性名"><a href="#修改-TestHandler-中的属性名" class="headerlink" title="修改 TestHandler 中的属性名"></a>修改 TestHandler 中的属性名</h3><p>去掉上面操作所添加的 Primary 和 Priority 注解，来验证根据属性名注入时的情况。</p>
+<ul>
+<li>将 TestHandler 中的属性名修改为 testServcie2 并运行并运行单元测试，其打印的 beanName 为 testService2；</li>
+<li>将 TestHandler 中的属性名修改为 testServcie3 并运行并运行单元测试，程序抛出 NoUniqueBeanDefinitionException 异常。</li>
+</ul>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>根据上面源码的分析与实践，同一类型存在多个 Bean 的情况下，在使用 Autowired 注解时 Spring 会采用以下装配顺序来选择要装配的 Bean</p>
+<ol>
+<li>使用了 Primary 注解的 Bean;</li>
+<li>查找使用了 Priority 注解的 Bean，并选择优先级最高的；</li>
+<li>要注入的属性的属性名称与 Bean 名称相同的；</li>
+</ol>
+<p>在我们平时写代码时，为了代码的可读性，建议使用 Qualifier 注解来明确指明要注入 Bean。</p>
+]]></content>
+      <tags>
+        <tag>Spring</tag>
+        <tag>源码</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用 Guava 中 RateLimiter 遇到的一个问题</title>
+    <url>/2021/06/26/%E4%BD%BF%E7%94%A8Guava%E4%B8%ADRateLimiter%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%B8%AA%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<p>线上业务使用了 Guava 中的 RateLimiter 来做单机的限流。最近运维同事反馈，在修改了限流的配置之后，请求频率没有超过限流的配置却触发了限流逻辑，在此对该问题进行一下分析与总结。</p>
+<h2 id="问题模拟"><a href="#问题模拟" class="headerlink" title="问题模拟"></a>问题模拟</h2><p>根据上述问题的现象，初步推测问题可能跟 Guava 中 RateLimiter 的限流算法实现有关，为了方便排查问题，参考线上业务的限流的逻辑写了一个 demo，其核心代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/hello&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">HelloController</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** 用于存储不同的接口，对应的 RateLimiter **/</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Map&lt;String, RateLimiter&gt; RATE_LIMITER_MAP = Maps.newConcurrentMap();</span><br><span class="line">    <span class="comment">/** 用于存储不同接口限流配置的参数 **/</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Map&lt;String, String&gt; RATE_MAP = Maps.newConcurrentMap();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        <span class="comment">// 初始化一个接口默认的限流配置</span></span><br><span class="line">        RATE_MAP.put(<span class="string">&quot;loan&quot;</span>, <span class="string">&quot;100000&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 测试限流的接口</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> key 限流配置的 key</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/testLimit&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">testLimit</span><span class="params">(String key)</span> &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">value</span> <span class="operator">=</span> RATE_MAP.get(key);</span><br><span class="line">        logger.info(<span class="string">&quot;自定义限流配置=&#123;&#125;&quot;</span>, value);</span><br><span class="line">        <span class="type">Double</span> <span class="variable">currentRate</span> <span class="operator">=</span> Double.parseDouble(value);</span><br><span class="line"></span><br><span class="line">        <span class="type">RateLimiter</span> <span class="variable">rateLimiter</span> <span class="operator">=</span> RATE_LIMITER_MAP.get(key);</span><br><span class="line">        <span class="keyword">if</span> (rateLimiter == <span class="literal">null</span> || !isSameRate(currentRate, rateLimiter.getRate())) &#123;</span><br><span class="line">            logger.info(<span class="string">&quot;创建新的RateLimiter|速率=&#123;&#125;&quot;</span>, currentRate.toString());</span><br><span class="line">            rateLimiter = RateLimiter.create(currentRate);</span><br><span class="line">            RATE_LIMITER_MAP.putIfAbsent(key, rateLimiter);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">boolean</span> <span class="variable">allowed</span> <span class="operator">=</span> rateLimiter.tryAcquire();</span><br><span class="line">        logger.info(<span class="string">&quot;是否允许当前请求通过=&#123;&#125;|rate=&#123;&#125;&quot;</span>, allowed, rateLimiter.getRate());</span><br><span class="line">        <span class="keyword">return</span> allowed ? <span class="string">&quot;SUCCESS&quot;</span> : <span class="string">&quot;FAIL&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 模拟修改限流配置</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> key 限流配置的key</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> rate 限流的值</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/setRate&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">setRate</span><span class="params">(String key, String rate)</span> &#123;</span><br><span class="line">        RATE_MAP.put(key, rate);</span><br><span class="line">        <span class="type">String</span> <span class="variable">currentValue</span> <span class="operator">=</span> RATE_MAP.get(key);</span><br><span class="line">        logger.info(<span class="string">&quot;设置完之后的值=&#123;&#125;&quot;</span>, currentValue);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;SUCCESS&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>启动工程，我们模拟一下出现问题时的操作。</p>
+<ol>
+<li>构造 HTTP 请求调用 <code>/setRate</code> 接口，将 loan 对应的限流的值修改为 5；</li>
+<li>构造 HTTP 请求快速调用 <code>/testLimit</code> 接口 2 次，发现第一调用接口返回 SUCCESS， 第二次接口返回 FAIL，说明第 2 次请求触发了限流；</li>
+<li>构造 HTTP 请求调用 <code>/testLimit</code> 5 次，保证 5 次请求在 1 秒内接收，发现这 5 次请求接口均返回 SUCCESS，说明这 5 次请求均未触发限流；</li>
+<li>构造 HTTP 请求调用 <code>/testLimit</code> 6 次，保证 6 次请求均在 1 秒内接收，发现前 6 次请求接口均返回 SUCCESS，说明这 6 次请求均未触发限流；</li>
+<li>构造 HTTP 请求调用 <code>/testLimit</code> 7 次，保证 7 次请求均在 1 秒内接收，发发现前 6 次请求接口均返回 SUCCESS，第 7 次请求接口返回 FAIL，说明前 6 次请求均未触发限流，第 7 次请求触发限流。</li>
+</ol>
+<p>至此，我们模拟的现象与线上一致。步骤 3 是我们预期的结果，步骤 2 中在未超过限流配置的情况下触发了限流，步骤 4、5 中的第 6 次请求在超过了限流配置的情况下，仍然允许通过，我们直观上认为这些是不合理的。</p>
+<h2 id="排查与分析"><a href="#排查与分析" class="headerlink" title="排查与分析"></a>排查与分析</h2><p>Guava 中 RateLimiter 提供了两种令牌桶的算法实现：</p>
+<ul>
+<li>平滑突发限流（SmoothBursty）</li>
+<li>平滑预热限流（SmoothWarmingUp）</li>
+</ul>
+<p>我们项目中使用了默认的平滑突发限流（SmoothBursty）算法，这里我们只针对该算法进行分析。</p>
+<h3 id="tryAcquire-方法"><a href="#tryAcquire-方法" class="headerlink" title="tryAcquire 方法"></a>tryAcquire 方法</h3><p>其源码</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">tryAcquire</span><span class="params">(<span class="type">int</span> permits, <span class="type">long</span> timeout, TimeUnit unit)</span> &#123;</span><br><span class="line">  <span class="type">long</span> <span class="variable">timeoutMicros</span> <span class="operator">=</span> max(unit.toMicros(timeout), <span class="number">0</span>);</span><br><span class="line">  checkPermits(permits);</span><br><span class="line">  <span class="type">long</span> microsToWait;</span><br><span class="line">  <span class="keyword">synchronized</span> (mutex()) &#123;</span><br><span class="line">    <span class="type">long</span> <span class="variable">nowMicros</span> <span class="operator">=</span> stopwatch.readMicros();</span><br><span class="line">    <span class="keyword">if</span> (!canAcquire(nowMicros, timeoutMicros)) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      microsToWait = reserveAndGetWaitLength(permits, nowMicros);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  stopwatch.sleepMicrosUninterruptibly(microsToWait);</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以观察到只有在 canAcquire 方法返回 false 的情况下，才会返回 false，通过阅读 canAcquire 方法可知该方法跟 SmoothBursty 中的成员变量 nextFreeTicketMicros 有关，该成员变量的释义如下：</p>
+<blockquote>
+<p>The time when the next request (no matter its size) will be granted. After granting a request, this is pushed further in the future. Large requests push this further than small requests.</p>
+</blockquote>
+<p>该成员变量标识下一次请求获得令牌的最早时间，在创建 SmoothBursty 时初始值为 0，并且每次授权一个请求之后，这个值会向后推移。查找该成员变量引用的地方，发现 SmoothBursty 类中 reserveEarliestAvailable、resync 方法会触发该成员变量的更新，并且观察该方法的调用栈，其中就有 <code>RateLimiter#tryAcquire()</code> 方法。</p>
+<h4 id="reserveEarliestAvailable、resync-方法"><a href="#reserveEarliestAvailable、resync-方法" class="headerlink" title="reserveEarliestAvailable、resync 方法"></a>reserveEarliestAvailable、resync 方法</h4><p>其源码</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@param</span> requiredPermits 表示我们该次请求所取得令牌数，我们这里值为 1</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@param</span> nowMicros 距创建 RateLimiter 时经过了多少时长，单位为微秒</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">final</span> <span class="type">long</span> <span class="title function_">reserveEarliestAvailable</span><span class="params">(<span class="type">int</span> requiredPermits, <span class="type">long</span> nowMicros)</span> &#123;</span><br><span class="line">  <span class="comment">// 刷新令牌数</span></span><br><span class="line">  resync(nowMicros);</span><br><span class="line">  <span class="type">long</span> <span class="variable">returnValue</span> <span class="operator">=</span> nextFreeTicketMicros;</span><br><span class="line">  <span class="comment">// storedPermits 是创建 RataLimiter 时的一个成员变量，表示当前存储的令牌数，在 resync 方法和本方法中会更新所存储的令牌数</span></span><br><span class="line">  <span class="comment">// 当前存储的令牌数跟需要获取的令牌数进行比较，取两者的的最小值，即为当前可以得到令牌数</span></span><br><span class="line">  <span class="type">double</span> <span class="variable">storedPermitsToSpend</span> <span class="operator">=</span> min(requiredPermits, <span class="built_in">this</span>.storedPermits);</span><br><span class="line">  <span class="comment">// 需要预先支付的令牌</span></span><br><span class="line">  <span class="type">double</span> <span class="variable">freshPermits</span> <span class="operator">=</span> requiredPermits - storedPermitsToSpend;</span><br><span class="line">  <span class="comment">// 在突然涌入大量请求，而现有的令牌数又不够用的情况下，会预先支付一定的令牌数</span></span><br><span class="line">  <span class="comment">// stableIntervalMicros 为创建 RateLimiter 时计算出的稳定时间间隔，其计算公式为 周期 / 令牌数，在我们的例子中，该值即为 200000 微妙（即 200ms）</span></span><br><span class="line">  <span class="comment">// waitMicros 表示预先支付令牌的时间</span></span><br><span class="line">  <span class="type">long</span> <span class="variable">waitMicros</span> <span class="operator">=</span></span><br><span class="line">      storedPermitsToWaitTime(<span class="built_in">this</span>.storedPermits, storedPermitsToSpend)</span><br><span class="line">          + (<span class="type">long</span>) (freshPermits * stableIntervalMicros);</span><br><span class="line">  <span class="comment">// 预先支付令牌的时间+原请求获取令牌的最早时间，即为下一次获取令牌的最早时间</span></span><br><span class="line">  <span class="built_in">this</span>.nextFreeTicketMicros = LongMath.saturatedAdd(nextFreeTicketMicros, waitMicros);</span><br><span class="line">  <span class="comment">// 所存储的令牌数需要减去本次消耗的令牌</span></span><br><span class="line">  <span class="built_in">this</span>.storedPermits -= storedPermitsToSpend;</span><br><span class="line">  <span class="comment">// 这里返回旧的获取令牌最早的时间，即本次请求无需为预支付的令牌付出额外的等待时间</span></span><br><span class="line">  <span class="keyword">return</span> returnValue;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">resync</span><span class="params">(<span class="type">long</span> nowMicros)</span> &#123;</span><br><span class="line">  <span class="comment">// if nextFreeTicket is in the past, resync to now</span></span><br><span class="line">  <span class="keyword">if</span> (nowMicros &gt; nextFreeTicketMicros) &#123;</span><br><span class="line">    <span class="comment">// 在 SmoothBursty 类中 coolDownIntervalMicros() 方法返回的是成员变量 stableIntervalMicros，在我们的例子中，该值即为 200000 微妙（即 200ms）</span></span><br><span class="line">    <span class="type">double</span> <span class="variable">newPermits</span> <span class="operator">=</span> (nowMicros - nextFreeTicketMicros) / coolDownIntervalMicros();</span><br><span class="line">    <span class="comment">// maxPermits 在 创建 RataLimiter 时的一个成员变量，表示所能存储的最大令牌数，在我们的例子中，该值为 5</span></span><br><span class="line">    <span class="comment">// 更新当前所存储的令牌数，取值为 原存储的令牌数与新产生的令牌数之和 与 最大存储令牌数 两个数值中较小的值，保证可用的令牌数不会大于所允许存储的最大令牌数</span></span><br><span class="line">    storedPermits = min(maxPermits, storedPermits + newPermits);</span><br><span class="line">    nextFreeTicketMicros = nowMicros;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 reserveEarliestAvailable 方法结尾处打断点，来观察一下修改配置之后，第一次调用该方法时对 nextFreeTicketMicros 成员变量的设值情况。如下图:</p>
+<img src="/2021/06/26/%E4%BD%BF%E7%94%A8Guava%E4%B8%ADRateLimiter%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%B8%AA%E9%97%AE%E9%A2%98/debug.png" class="" title="运行中各个变量的赋值情况">
+
+<p>通过上图中的执行情况可知，在限流配置修改为 5TPS 的情况下，第一次请求进来之后，令牌桶内所存储的令牌桶还不足 1，发生了预支付令牌的情况，此时 nextFreeTicketMicros 成员变量会被赋值为约 200000 微妙（即 200ms），如果第二个请求是在第一个请求之后 200ms 内请求进来的，一定会触发限流逻辑，如下图：</p>
+<img src="/2021/06/26/%E4%BD%BF%E7%94%A8Guava%E4%B8%ADRateLimiter%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%B8%AA%E9%97%AE%E9%A2%98/limit1.png" class="" title="第二次调用该方法时触发的限流的情况">
+
+<p>同样的我们提上面的操作中 1 秒内的连续 6 次请求，第 6 次仍未触发限流，这种现象也是由于预支付令牌产生的。在一段时间内没有请求进来的情况下，令牌桶内累计了 5 个令牌，此时前 5 个令牌会被前 5 个请求消费掉，当第 6 个请求进来的时候，时间仍然在向前推进，只是此时桶内累计的令牌数不足 1 个，会触发预先支付令牌，故这种情况下第 6 个请求，仍然是能够通过的。而当第 7 个请求进来的时候，由于下一次请求获得令牌的最早时间已经大于当前时间了，故取令牌失败，触发限流，如下图：</p>
+<img src="/2021/06/26/%E4%BD%BF%E7%94%A8Guava%E4%B8%ADRateLimiter%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%B8%AA%E9%97%AE%E9%A2%98/limit1.png" class="" title="Docker 第七次调用该方法时触发的限流的情况">
+
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>通过以上源码的分析，Gauava 中 RateLimiter 的平滑突发限流（SmoothBursty）是通过以固定的速率向桶内放置令牌，从而达到平滑输出的效果。由于桶内会进行令牌的积累，可以应对一定程度的流量突发。</p>
+<p>对于我们线上遇到的修改配置之后第二个请求就触发了限流的问题，我们在切换配置时应该使用 RateLimiter 的 setRate 方法直接修改其限流配置，这样可以避免重新创建一个新的 RateLimiter 时会创建一个新的跑表（Stopwatch），同时也不会将 nextFreeTicketMicros 重新置为 0，使得在取令牌时对桶内令牌数的计算不会像重新创建一个那么极端。</p>
+<h2 id="发散"><a href="#发散" class="headerlink" title="发散"></a>发散</h2><p>大家也可以看一下 Guava 中平滑预热限流（SmoothWarmingUp）在实现上与的平滑突发限流（SmoothBursty）有什么区别，此外常见的其他限流算法如漏桶算法、计数法分别是怎么实现的。</p>
+]]></content>
+      <tags>
+        <tag>源码</tag>
+        <tag>Guava</tag>
       </tags>
   </entry>
 </search>
