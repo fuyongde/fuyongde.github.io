@@ -119,74 +119,6 @@
 ]]></content>
   </entry>
   <entry>
-    <title>curl-command 手册</title>
-    <url>/2019/10/24/curl-command-%E6%89%8B%E5%86%8C/</url>
-    <content><![CDATA[<p>curl 是十分常用的命令，通常我们用这个命令来请求 Web 服务器。一些常见的构造 HTTP 请求的客户端（如 Postman）关于项目协作的功能都是商业化版本才有的，团队开发过程中通过维护接口的 curl 命令脚本可以低成本的代替一些商业化软件的功能。</p>
-<p>下面介绍一下 curl 命令的常见用法。</p>
-<h2 id="基础用法"><a href="#基础用法" class="headerlink" title="基础用法"></a>基础用法</h2><h3 id="请求一个-URL"><a href="#请求一个-URL" class="headerlink" title="请求一个 URL"></a>请求一个 URL</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">curl http://www.baidu.com/</span><br></pre></td></tr></table></figure>
-
-<h3 id="X"><a href="#X" class="headerlink" title="-X"></a>-X</h3><p>使用 -X 参数可以指定 HTTP Method</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">curl -X POST http://www.baidu.com/</span><br></pre></td></tr></table></figure>
-
-<h3 id="H-–header"><a href="#H-–header" class="headerlink" title="-H, –header"></a>-H, –header</h3><p>使用 -H 或者 –header 参数可以添加 HTTP 的请求头</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">curl -H &quot;Content-Type:application/json&quot; http://www.baidu.com/</span><br></pre></td></tr></table></figure>
-
-<h3 id="d-–data"><a href="#d-–data" class="headerlink" title="-d, –data"></a>-d, –data</h3><p>使用 -d 或 –data 可以发送 HTTP 的请求参数，可以是 form 表单，也可以是二进制的 request body</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">发送 form 表单</span></span><br><span class="line">curl -X POST -d &quot;name=jasonfu&amp;age=20&amp;birthday=1990/06/01&quot; &quot;http://localhost:8080/http/post?type=form&quot;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">也可以使用多个 -d 参数</span></span><br><span class="line">curl -X POST -d &quot;name=jasonfu&quot; -d &quot;age=20&quot; -d &quot;birthday=1990/06/01&quot; &quot;http://localhost:8080/http/post?type=form&quot;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">## 发送 request body</span></span></span><br><span class="line">curl -X POST -H &quot;Content-Type:application/json&quot; -d &quot;&#123;\&quot;name\&quot;:\&quot;jasonfu\&quot;,\&quot;age\&quot;:19,\&quot;birthday\&quot;:12345678911&#125;&quot; &quot;http://localhost:8080/http/post?type=body&quot;</span><br></pre></td></tr></table></figure>
-
-<h3 id="F-–form"><a href="#F-–form" class="headerlink" title="-F, –form"></a>-F, –form</h3><p>使用 -F 或 –form 参数可以上传文件</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">## 上传文件</span></span></span><br><span class="line">curl -F &quot;file=@alias.bat&quot; -X POST &quot;http://localhost:8080/http/post?type=upload&quot;</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">## 上传文件 带参数</span></span></span><br><span class="line">curl --form &quot;file=@alias.bat&quot; --form &quot;id=1&quot; -X POST &quot;http://localhost:8080/http/post?type=upload&quot;</span><br></pre></td></tr></table></figure>
-
-<h2 id="进阶用法"><a href="#进阶用法" class="headerlink" title="进阶用法"></a>进阶用法</h2><h3 id="i-I"><a href="#i-I" class="headerlink" title="-i, -I"></a>-i, -I</h3><p>使用 -i 参数可以输出 HTTP 的相应头</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">curl -i http://www.baidu.com/</span><br></pre></td></tr></table></figure>
-
-<p>使用 -I 参数只输出 HTTP 的相应头</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">curl -I http://www.baidu.com/</span><br></pre></td></tr></table></figure>
-
-<h3 id="e-–referer"><a href="#e-–referer" class="headerlink" title="-e, –referer"></a>-e, –referer</h3><p>使用 -e 或者 –referer 参数可以在 HTTP 请求头中添加 referer 字段，标识从哪里跳转过来的</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">curl --referer http://www.baidu.com/ http://www.qq.com/</span><br></pre></td></tr></table></figure>
-
-<h3 id="A-–user-agent"><a href="#A-–user-agent" class="headerlink" title="-A, –user-agent"></a>-A, –user-agent</h3><p>使用 -A 或者 –user-agent 参数可以指定 HTTP 请求头中的 User-Agent 字段</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">curl --user-agent curl-client http://www.baidu.com/</span><br></pre></td></tr></table></figure>
-
-<h3 id="cookie"><a href="#cookie" class="headerlink" title="cookie"></a>cookie</h3><p>使用 -b 或者 –cookie 可以发送 cookie 给 Web 服务器。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">curl --cookie &quot;user=fuyongde&quot; http://www.baidu.com/</span><br></pre></td></tr></table></figure>
-
-<p>使用 -c 参数可以保存服务端返回的 cookie 到指定的文件</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">curl -c baidu-cookie.txt http://www.baidu.com/</span><br></pre></td></tr></table></figure>
-
-<h3 id="显示通信过程"><a href="#显示通信过程" class="headerlink" title="显示通信过程"></a>显示通信过程</h3><p>使用 -v 或者 –verbose 参数可以展示完整的 HTTP 通信过程</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">curl -v http://www.baidu.com/</span><br></pre></td></tr></table></figure>
-
-<p>使用 –trace 或者 –trace-ascii 参数可以展示更详细的通信过程</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">curl --trace tract.txt http://www.baidu.com/</span><br></pre></td></tr></table></figure>
-
-<h3 id="保存响应"><a href="#保存响应" class="headerlink" title="保存响应"></a>保存响应</h3><p>使用 -o 或者 -O 参数可以将 http 相应保存为文件，区别在于 -o 可以指定文件名，-O 则是使用 URL 中最后一段 path 作为文件名来进行保存，其下载文件的效果等同于 <code>wget</code> 命令。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 将 http://www.baidu.com/ 响应保存至文件 baidu.html 中</span><br><span class="line">curl -o baidu.html http://www.baidu.com/</span><br><span class="line"># 将 http://localhost:8080/ping 响应保存至文件 ping 中</span><br><span class="line">curl -O http://localhost:8080/ping</span><br></pre></td></tr></table></figure>
-
-<h3 id="使用代理"><a href="#使用代理" class="headerlink" title="使用代理"></a>使用代理</h3><p>一些 Web 服务器是仅支持某些特定的 ip 来访问的，这种情况下，我们就需要使用代理来发送我们的 HTTP 请求，使用 -x 参数可以指定代理服务器来发送我们的请求。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">使用 socks5 协议的代理服务器来发送请求</span></span><br><span class="line">curl -x socks5://username:password@proxyhost:8080 http://www.baidu.com/</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">默认情况下使用 http 协议的代理服务器来发送请求</span></span><br><span class="line">curl -x username:password@proxyhost:8080 http://www.baidu.com/</span><br></pre></td></tr></table></figure>
-
-<h3 id="L-–location"><a href="#L-–location" class="headerlink" title="-L, –location"></a>-L, –location</h3><p>对于一些 HTTP 响应码为 302 的情况，可以使用 -L 或者 –location 参数来实现自动跳转的效果</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">curl -L -i http://localhost:8080/http/redirect</span><br></pre></td></tr></table></figure>
-
-<p>其输出如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">HTTP/1.1 302</span><br><span class="line">Location: http://localhost:8080/http/get/jasonfu</span><br><span class="line">Content-Length: 0</span><br><span class="line">Date: Tue, 24 Aug 2021 10:22:10 GMT</span><br><span class="line"></span><br><span class="line">HTTP/1.1 200</span><br><span class="line">Content-Type: application/json</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line">Date: Tue, 24 Aug 2021 10:22:10 GMT</span><br><span class="line"></span><br><span class="line">&#123;&quot;name&quot;:&quot;jasonfu&quot;,&quot;age&quot;:18,&quot;birthday&quot;:&quot;2021-08-24T10:22:10.713+00:00&quot;&#125;</span><br></pre></td></tr></table></figure>
-
-<p>可以看到已经实现了自动跳转的效果</p>
-<h3 id="–limit-rate"><a href="#–limit-rate" class="headerlink" title="–limit-rate"></a>–limit-rate</h3><p>使用 –limit-rate 参数可以限制访问 HTTP 请求和响应的带宽。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">将带宽限制为每秒 1k 字节</span></span><br><span class="line">curl --limit-rate 1k http://www.baidu.com/</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>手册</category>
-      </categories>
-      <tags>
-        <tag>curl</tag>
-        <tag>command</tag>
-        <tag>未完待续</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Arthas 非常实用的几个命令</title>
     <url>/2020/01/18/arthas-useful-command/</url>
     <content><![CDATA[<p>本文介绍几个非常有用的 Arthas 命令，熟练使用这几个命令，可以让我们在排查线上问题的时候更加轻松。</p>
@@ -253,6 +185,74 @@
       <tags>
         <tag>数据库</tag>
         <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>curl-command 手册</title>
+    <url>/2019/10/24/curl-command-%E6%89%8B%E5%86%8C/</url>
+    <content><![CDATA[<p>curl 是十分常用的命令，通常我们用这个命令来请求 Web 服务器。一些常见的构造 HTTP 请求的客户端（如 Postman）关于项目协作的功能都是商业化版本才有的，团队开发过程中通过维护接口的 curl 命令脚本可以低成本的代替一些商业化软件的功能。</p>
+<p>下面介绍一下 curl 命令的常见用法。</p>
+<h2 id="基础用法"><a href="#基础用法" class="headerlink" title="基础用法"></a>基础用法</h2><h3 id="请求一个-URL"><a href="#请求一个-URL" class="headerlink" title="请求一个 URL"></a>请求一个 URL</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">curl http://www.baidu.com/</span><br></pre></td></tr></table></figure>
+
+<h3 id="X"><a href="#X" class="headerlink" title="-X"></a>-X</h3><p>使用 -X 参数可以指定 HTTP Method</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">curl -X POST http://www.baidu.com/</span><br></pre></td></tr></table></figure>
+
+<h3 id="H-–header"><a href="#H-–header" class="headerlink" title="-H, –header"></a>-H, –header</h3><p>使用 -H 或者 –header 参数可以添加 HTTP 的请求头</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">curl -H &quot;Content-Type:application/json&quot; http://www.baidu.com/</span><br></pre></td></tr></table></figure>
+
+<h3 id="d-–data"><a href="#d-–data" class="headerlink" title="-d, –data"></a>-d, –data</h3><p>使用 -d 或 –data 可以发送 HTTP 的请求参数，可以是 form 表单，也可以是二进制的 request body</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">发送 form 表单</span></span><br><span class="line">curl -X POST -d &quot;name=jasonfu&amp;age=20&amp;birthday=1990/06/01&quot; &quot;http://localhost:8080/http/post?type=form&quot;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">也可以使用多个 -d 参数</span></span><br><span class="line">curl -X POST -d &quot;name=jasonfu&quot; -d &quot;age=20&quot; -d &quot;birthday=1990/06/01&quot; &quot;http://localhost:8080/http/post?type=form&quot;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">## 发送 request body</span></span></span><br><span class="line">curl -X POST -H &quot;Content-Type:application/json&quot; -d &quot;&#123;\&quot;name\&quot;:\&quot;jasonfu\&quot;,\&quot;age\&quot;:19,\&quot;birthday\&quot;:12345678911&#125;&quot; &quot;http://localhost:8080/http/post?type=body&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="F-–form"><a href="#F-–form" class="headerlink" title="-F, –form"></a>-F, –form</h3><p>使用 -F 或 –form 参数可以上传文件</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">## 上传文件</span></span></span><br><span class="line">curl -F &quot;file=@alias.bat&quot; -X POST &quot;http://localhost:8080/http/post?type=upload&quot;</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">## 上传文件 带参数</span></span></span><br><span class="line">curl --form &quot;file=@alias.bat&quot; --form &quot;id=1&quot; -X POST &quot;http://localhost:8080/http/post?type=upload&quot;</span><br></pre></td></tr></table></figure>
+
+<h2 id="进阶用法"><a href="#进阶用法" class="headerlink" title="进阶用法"></a>进阶用法</h2><h3 id="i-I"><a href="#i-I" class="headerlink" title="-i, -I"></a>-i, -I</h3><p>使用 -i 参数可以输出 HTTP 的相应头</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">curl -i http://www.baidu.com/</span><br></pre></td></tr></table></figure>
+
+<p>使用 -I 参数只输出 HTTP 的相应头</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">curl -I http://www.baidu.com/</span><br></pre></td></tr></table></figure>
+
+<h3 id="e-–referer"><a href="#e-–referer" class="headerlink" title="-e, –referer"></a>-e, –referer</h3><p>使用 -e 或者 –referer 参数可以在 HTTP 请求头中添加 referer 字段，标识从哪里跳转过来的</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">curl --referer http://www.baidu.com/ http://www.qq.com/</span><br></pre></td></tr></table></figure>
+
+<h3 id="A-–user-agent"><a href="#A-–user-agent" class="headerlink" title="-A, –user-agent"></a>-A, –user-agent</h3><p>使用 -A 或者 –user-agent 参数可以指定 HTTP 请求头中的 User-Agent 字段</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">curl --user-agent curl-client http://www.baidu.com/</span><br></pre></td></tr></table></figure>
+
+<h3 id="cookie"><a href="#cookie" class="headerlink" title="cookie"></a>cookie</h3><p>使用 -b 或者 –cookie 可以发送 cookie 给 Web 服务器。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">curl --cookie &quot;user=fuyongde&quot; http://www.baidu.com/</span><br></pre></td></tr></table></figure>
+
+<p>使用 -c 参数可以保存服务端返回的 cookie 到指定的文件</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">curl -c baidu-cookie.txt http://www.baidu.com/</span><br></pre></td></tr></table></figure>
+
+<h3 id="显示通信过程"><a href="#显示通信过程" class="headerlink" title="显示通信过程"></a>显示通信过程</h3><p>使用 -v 或者 –verbose 参数可以展示完整的 HTTP 通信过程</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">curl -v http://www.baidu.com/</span><br></pre></td></tr></table></figure>
+
+<p>使用 –trace 或者 –trace-ascii 参数可以展示更详细的通信过程</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">curl --trace tract.txt http://www.baidu.com/</span><br></pre></td></tr></table></figure>
+
+<h3 id="保存响应"><a href="#保存响应" class="headerlink" title="保存响应"></a>保存响应</h3><p>使用 -o 或者 -O 参数可以将 http 相应保存为文件，区别在于 -o 可以指定文件名，-O 则是使用 URL 中最后一段 path 作为文件名来进行保存，其下载文件的效果等同于 <code>wget</code> 命令。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 将 http://www.baidu.com/ 响应保存至文件 baidu.html 中</span><br><span class="line">curl -o baidu.html http://www.baidu.com/</span><br><span class="line"># 将 http://localhost:8080/ping 响应保存至文件 ping 中</span><br><span class="line">curl -O http://localhost:8080/ping</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用代理"><a href="#使用代理" class="headerlink" title="使用代理"></a>使用代理</h3><p>一些 Web 服务器是仅支持某些特定的 ip 来访问的，这种情况下，我们就需要使用代理来发送我们的 HTTP 请求，使用 -x 参数可以指定代理服务器来发送我们的请求。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">使用 socks5 协议的代理服务器来发送请求</span></span><br><span class="line">curl -x socks5://username:password@proxyhost:8080 http://www.baidu.com/</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">默认情况下使用 http 协议的代理服务器来发送请求</span></span><br><span class="line">curl -x username:password@proxyhost:8080 http://www.baidu.com/</span><br></pre></td></tr></table></figure>
+
+<h3 id="L-–location"><a href="#L-–location" class="headerlink" title="-L, –location"></a>-L, –location</h3><p>对于一些 HTTP 响应码为 302 的情况，可以使用 -L 或者 –location 参数来实现自动跳转的效果</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">curl -L -i http://localhost:8080/http/redirect</span><br></pre></td></tr></table></figure>
+
+<p>其输出如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">HTTP/1.1 302</span><br><span class="line">Location: http://localhost:8080/http/get/jasonfu</span><br><span class="line">Content-Length: 0</span><br><span class="line">Date: Tue, 24 Aug 2021 10:22:10 GMT</span><br><span class="line"></span><br><span class="line">HTTP/1.1 200</span><br><span class="line">Content-Type: application/json</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line">Date: Tue, 24 Aug 2021 10:22:10 GMT</span><br><span class="line"></span><br><span class="line">&#123;&quot;name&quot;:&quot;jasonfu&quot;,&quot;age&quot;:18,&quot;birthday&quot;:&quot;2021-08-24T10:22:10.713+00:00&quot;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到已经实现了自动跳转的效果</p>
+<h3 id="–limit-rate"><a href="#–limit-rate" class="headerlink" title="–limit-rate"></a>–limit-rate</h3><p>使用 –limit-rate 参数可以限制访问 HTTP 请求和响应的带宽。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">将带宽限制为每秒 1k 字节</span></span><br><span class="line">curl --limit-rate 1k http://www.baidu.com/</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>手册</category>
+      </categories>
+      <tags>
+        <tag>curl</tag>
+        <tag>command</tag>
+        <tag>未完待续</tag>
       </tags>
   </entry>
   <entry>
@@ -924,6 +924,21 @@
       </tags>
   </entry>
   <entry>
+    <title>javaagent 使用指南</title>
+    <url>/2022/01/08/javaagent-%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/</url>
+    <content><![CDATA[<p>最近在做基于 JaCoCo 的代码覆盖率工具，了解到了一下 javaagent 相关的一些知识点。</p>
+<h2 id="javaagent-是什么？"><a href="#javaagent-是什么？" class="headerlink" title="javaagent 是什么？"></a>javaagent 是什么？</h2><p>javaagent 是 java 命令的一个参数选项，可以用于加载 Java 语言的代理。</p>
+<p>那么这个参数加载的 Java 语言的代理需要满足什么样的规范呢？</p>
+<ol>
+<li>代理 jar 包中的 MANIFEST.MF 文件需指定 Premain-Class；</li>
+<li>Premain-Class 指定的类中必须实现 premain 方法。</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Jenkins-手册</title>
     <url>/2020/02/18/jenkins-%E6%89%8B%E5%86%8C/</url>
     <content><![CDATA[<p>Jenkins 是常见的 CI 平台</p>
@@ -955,41 +970,6 @@
         <tag>Jenkins</tag>
         <tag>CI</tag>
         <tag>持续集成</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Jib - Make docker simple again</title>
-    <url>/2019/06/26/jib-make-docker-simple-again/</url>
-    <content><![CDATA[<p>在 <a href="https://fuyongde.github.io/2019/06/25/Dockerizing-Spring-Boot-Application/">使用 Docker 构建 Spring Boot Application</a> 中简单介绍了如何使用 <code>Docker</code> 构建 <code>Spring Boot Application</code>。本文探讨如何更简单的构建 <code>Docker</code> 镜像。</p>
-<h2 id="jib-简介"><a href="#jib-简介" class="headerlink" title="jib 简介"></a>jib 简介</h2><blockquote>
-<p>Make America Great Again. – Donald Trump</p>
-</blockquote>
-<p>大概是受 <code>Donald Trump</code> 的启发 🙄，Google 发布的 <code>jib</code> 让原本已经很简单的 <code>Docker</code> 镜像构建过程变得更加简单。</p>
-<p>一图顶千言，先看 <code>Docker</code> 构建镜像流程</p>
-<img src="/2019/06/26/jib-make-docker-simple-again/docker_process.jpg" class="" title="Docker 构建容器镜像的流程">
-
-<p>再看 <code>Jib</code> 构建容器镜像流程</p>
-<img src="/2019/06/26/jib-make-docker-simple-again/jib_process.jpg" class="" title="Jib 构建容器镜像的流程">
-
-<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>下面来介绍以下如何使用 <code>Jib</code></p>
-<h3 id="编写-Spring-Boot-Application"><a href="#编写-Spring-Boot-Application" class="headerlink" title="编写 Spring Boot Application"></a>编写 Spring Boot Application</h3><p>略</p>
-<h3 id="配置-Jib-插件"><a href="#配置-Jib-插件" class="headerlink" title="配置 Jib 插件"></a>配置 Jib 插件</h3><p>在项目的 <code>pom.xml</code> 文件中，新增如下配置</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.google.cloud.tools<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jib-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.3.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">from</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">image</span>&gt;</span>openjdk:8u212-jdk-alpine<span class="tag">&lt;/<span class="name">image</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">from</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">to</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">image</span>&gt;</span>registry.cn-hangzhou.aliyuncs.com/fuyongde/ebony-maw:$&#123;project.version&#125;<span class="tag">&lt;/<span class="name">image</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">to</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">container</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">jvmFlags</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">jvmFlag</span>&gt;</span>-Xms128m<span class="tag">&lt;/<span class="name">jvmFlag</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">jvmFlag</span>&gt;</span>-Xmx128m<span class="tag">&lt;/<span class="name">jvmFlag</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">jvmFlags</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">container</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">executions</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">execution</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">phase</span>&gt;</span>package<span class="tag">&lt;/<span class="name">phase</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">goals</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">goal</span>&gt;</span>build<span class="tag">&lt;/<span class="name">goal</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">goals</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">execution</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">executions</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>其中</p>
-<ul>
-<li>from：等同于 <code>Dockerfile</code> 中的 <code>FROM</code></li>
-<li>to：镜像容器服务的地址以及对应的 <code>tag</code>，这里我采用的是阿里云的地址</li>
-<li>jvmFlag：容器启动时的 <code>JVM</code> 参数</li>
-</ul>
-<h3 id="构建"><a href="#构建" class="headerlink" title="构建"></a>构建</h3><p>在终端执行 <code>maven package</code> 命令，<code>Docker</code> 镜像就打包并上传好了 ✌。</p>
-<p>至此，整个构建过程已经完成，我们甚至连 <code>Dockerfile</code> 都不用写，是不是超级简单 🤪。</p>
-<p>如有需要，可参考本文中的 <a href="https://github.com/fuyongde/marvel/tree/master/ebony-maw">Demo</a> 。</p>
-]]></content>
-      <tags>
-        <tag>Docker</tag>
-        <tag>Spring Boot</tag>
-        <tag>Jib</tag>
       </tags>
   </entry>
   <entry>
@@ -1038,6 +1018,41 @@
       <tags>
         <tag>未完待续</tag>
         <tag>JVM</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Jib - Make docker simple again</title>
+    <url>/2019/06/26/jib-make-docker-simple-again/</url>
+    <content><![CDATA[<p>在 <a href="https://fuyongde.github.io/2019/06/25/Dockerizing-Spring-Boot-Application/">使用 Docker 构建 Spring Boot Application</a> 中简单介绍了如何使用 <code>Docker</code> 构建 <code>Spring Boot Application</code>。本文探讨如何更简单的构建 <code>Docker</code> 镜像。</p>
+<h2 id="jib-简介"><a href="#jib-简介" class="headerlink" title="jib 简介"></a>jib 简介</h2><blockquote>
+<p>Make America Great Again. – Donald Trump</p>
+</blockquote>
+<p>大概是受 <code>Donald Trump</code> 的启发 🙄，Google 发布的 <code>jib</code> 让原本已经很简单的 <code>Docker</code> 镜像构建过程变得更加简单。</p>
+<p>一图顶千言，先看 <code>Docker</code> 构建镜像流程</p>
+<img src="/2019/06/26/jib-make-docker-simple-again/docker_process.jpg" class="" title="Docker 构建容器镜像的流程">
+
+<p>再看 <code>Jib</code> 构建容器镜像流程</p>
+<img src="/2019/06/26/jib-make-docker-simple-again/jib_process.jpg" class="" title="Jib 构建容器镜像的流程">
+
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>下面来介绍以下如何使用 <code>Jib</code></p>
+<h3 id="编写-Spring-Boot-Application"><a href="#编写-Spring-Boot-Application" class="headerlink" title="编写 Spring Boot Application"></a>编写 Spring Boot Application</h3><p>略</p>
+<h3 id="配置-Jib-插件"><a href="#配置-Jib-插件" class="headerlink" title="配置 Jib 插件"></a>配置 Jib 插件</h3><p>在项目的 <code>pom.xml</code> 文件中，新增如下配置</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.google.cloud.tools<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jib-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.3.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">from</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">image</span>&gt;</span>openjdk:8u212-jdk-alpine<span class="tag">&lt;/<span class="name">image</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">from</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">to</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">image</span>&gt;</span>registry.cn-hangzhou.aliyuncs.com/fuyongde/ebony-maw:$&#123;project.version&#125;<span class="tag">&lt;/<span class="name">image</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">to</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">container</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">jvmFlags</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">jvmFlag</span>&gt;</span>-Xms128m<span class="tag">&lt;/<span class="name">jvmFlag</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">jvmFlag</span>&gt;</span>-Xmx128m<span class="tag">&lt;/<span class="name">jvmFlag</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">jvmFlags</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">container</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">executions</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">execution</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">phase</span>&gt;</span>package<span class="tag">&lt;/<span class="name">phase</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">goals</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">goal</span>&gt;</span>build<span class="tag">&lt;/<span class="name">goal</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">goals</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">execution</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">executions</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>其中</p>
+<ul>
+<li>from：等同于 <code>Dockerfile</code> 中的 <code>FROM</code></li>
+<li>to：镜像容器服务的地址以及对应的 <code>tag</code>，这里我采用的是阿里云的地址</li>
+<li>jvmFlag：容器启动时的 <code>JVM</code> 参数</li>
+</ul>
+<h3 id="构建"><a href="#构建" class="headerlink" title="构建"></a>构建</h3><p>在终端执行 <code>maven package</code> 命令，<code>Docker</code> 镜像就打包并上传好了 ✌。</p>
+<p>至此，整个构建过程已经完成，我们甚至连 <code>Dockerfile</code> 都不用写，是不是超级简单 🤪。</p>
+<p>如有需要，可参考本文中的 <a href="https://github.com/fuyongde/marvel/tree/master/ebony-maw">Demo</a> 。</p>
+]]></content>
+      <tags>
+        <tag>Docker</tag>
+        <tag>Spring Boot</tag>
+        <tag>Jib</tag>
       </tags>
   </entry>
   <entry>
@@ -1111,6 +1126,37 @@
       <tags>
         <tag>未完待续</tag>
         <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Maven Wapper 手册</title>
+    <url>/2019/06/23/maven-wapper-%E6%89%8B%E5%86%8C/</url>
+    <content><![CDATA[<p>我们使用 Maven 时，基本上只会用到 <code>mvn</code> 这一个命令。有些童鞋可能听说过 <code>mvnw</code>，这个是啥？</p>
+<p>mvnw 是 Maven Wrapper 的缩写，我们安装 Maven 时，默认情况下，系统所有项目都会使用全局安装的这个 Maven 版本。但是，对于某些项目来说，它可能必须使用某个特定的 Maven 版本，这个时候，就可以使用 Maven Wrapper，它可以负责给这个特定的项目安装指定版本的 Maven，而其他项目不受影响。</p>
+<p>简单地说，Maven Wrapper 就是给一个项目提供一个独立的，指定版本的 Maven 给它使用。</p>
+<h2 id="安装-Maven-Wrapper"><a href="#安装-Maven-Wrapper" class="headerlink" title="安装 Maven Wrapper"></a>安装 Maven Wrapper</h2><p>安装 Maven Wrapper 最简单的方式是在项目的根目录（即 pom.xml 所在的目录）下运行安装命令：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mvn -N io.takari:maven:0.7.7:wrapper</span><br></pre></td></tr></table></figure>
+
+<p>它会自动使用最新版本的 Maven。注意 0.7.7 是 Maven Wrapper 的版本。最新的 Maven Wrapper 版本可以去<a href="https://github.com/takari/maven-wrapper">官方网站</a>查看。</p>
+<p>如果要指定使用的 Maven 版本，使用下面的安装命令指定版本，例如 3.6.0：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mvn -N io.takari:maven:0.7.7:wrapper -Dmaven=3.6.0</span><br></pre></td></tr></table></figure>
+
+<p>安装后，查看项目结构：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Hello-World</span><br><span class="line">├── .mvn</span><br><span class="line">│   └── wrapper</span><br><span class="line">│       ├── MavenWrapperDownloader.java</span><br><span class="line">│       ├── maven-wrapper.jar</span><br><span class="line">│       └── maven-wrapper.properties</span><br><span class="line">├── mvnw</span><br><span class="line">├── mvnw.cmd</span><br><span class="line">├── pom.xml</span><br><span class="line">└── src</span><br><span class="line">    ├── main</span><br><span class="line">    │   ├── java</span><br><span class="line">    │   └── resources</span><br><span class="line">    └── test</span><br><span class="line">        ├── java</span><br><span class="line">        └── resources</span><br></pre></td></tr></table></figure>
+
+<p>发现多了 <code>mvnw</code>、<code>mvnw.cmd</code> 和 <code>.mvn</code>目录。</p>
+<h2 id="使用-Maven-Wapper"><a href="#使用-Maven-Wapper" class="headerlink" title="使用 Maven Wapper"></a>使用 Maven Wapper</h2><p>我们只需要把 mvn 命令改成 mvnw 就可以使用跟项目关联的 Maven。例如：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mvnw clean package</span><br></pre></td></tr></table></figure>
+
+<p>Maven Wrapper 的另一个作用是把项目的 <code>mvnw</code>、<code>mvnw.cmd</code> 和 <code>.mvn</code> 提交到版本库中，可以使所有开发人员使用统一的 <code>Maven</code> 版本。</p>
+]]></content>
+      <categories>
+        <category>手册</category>
+      </categories>
+      <tags>
+        <tag>构建工具</tag>
+        <tag>Maven</tag>
+        <tag>Maven Wapper</tag>
       </tags>
   </entry>
   <entry>
@@ -1293,52 +1339,6 @@
         <tag>未完待续</tag>
         <tag>构建工具</tag>
         <tag>Maven</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>javaagent 使用指南</title>
-    <url>/2022/01/08/javaagent-%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/</url>
-    <content><![CDATA[<p>最近在做基于 JaCoCo 的代码覆盖率工具，了解到了一下 javaagent 相关的一些知识点。</p>
-<h2 id="javaagent-是什么？"><a href="#javaagent-是什么？" class="headerlink" title="javaagent 是什么？"></a>javaagent 是什么？</h2><p>javaagent 是 java 命令的一个参数选项，可以用于加载 Java 语言的代理。</p>
-<p>那么这个参数加载的 Java 语言的代理需要满足什么样的规范呢？</p>
-<ol>
-<li>代理 jar 包中的 MANIFEST.MF 文件需指定 Premain-Class；</li>
-<li>Premain-Class 指定的类中必须实现 premain 方法。</li>
-</ol>
-]]></content>
-      <tags>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Maven Wapper 手册</title>
-    <url>/2019/06/23/maven-wapper-%E6%89%8B%E5%86%8C/</url>
-    <content><![CDATA[<p>我们使用 Maven 时，基本上只会用到 <code>mvn</code> 这一个命令。有些童鞋可能听说过 <code>mvnw</code>，这个是啥？</p>
-<p>mvnw 是 Maven Wrapper 的缩写，我们安装 Maven 时，默认情况下，系统所有项目都会使用全局安装的这个 Maven 版本。但是，对于某些项目来说，它可能必须使用某个特定的 Maven 版本，这个时候，就可以使用 Maven Wrapper，它可以负责给这个特定的项目安装指定版本的 Maven，而其他项目不受影响。</p>
-<p>简单地说，Maven Wrapper 就是给一个项目提供一个独立的，指定版本的 Maven 给它使用。</p>
-<h2 id="安装-Maven-Wrapper"><a href="#安装-Maven-Wrapper" class="headerlink" title="安装 Maven Wrapper"></a>安装 Maven Wrapper</h2><p>安装 Maven Wrapper 最简单的方式是在项目的根目录（即 pom.xml 所在的目录）下运行安装命令：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mvn -N io.takari:maven:0.7.7:wrapper</span><br></pre></td></tr></table></figure>
-
-<p>它会自动使用最新版本的 Maven。注意 0.7.7 是 Maven Wrapper 的版本。最新的 Maven Wrapper 版本可以去<a href="https://github.com/takari/maven-wrapper">官方网站</a>查看。</p>
-<p>如果要指定使用的 Maven 版本，使用下面的安装命令指定版本，例如 3.6.0：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mvn -N io.takari:maven:0.7.7:wrapper -Dmaven=3.6.0</span><br></pre></td></tr></table></figure>
-
-<p>安装后，查看项目结构：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Hello-World</span><br><span class="line">├── .mvn</span><br><span class="line">│   └── wrapper</span><br><span class="line">│       ├── MavenWrapperDownloader.java</span><br><span class="line">│       ├── maven-wrapper.jar</span><br><span class="line">│       └── maven-wrapper.properties</span><br><span class="line">├── mvnw</span><br><span class="line">├── mvnw.cmd</span><br><span class="line">├── pom.xml</span><br><span class="line">└── src</span><br><span class="line">    ├── main</span><br><span class="line">    │   ├── java</span><br><span class="line">    │   └── resources</span><br><span class="line">    └── test</span><br><span class="line">        ├── java</span><br><span class="line">        └── resources</span><br></pre></td></tr></table></figure>
-
-<p>发现多了 <code>mvnw</code>、<code>mvnw.cmd</code> 和 <code>.mvn</code>目录。</p>
-<h2 id="使用-Maven-Wapper"><a href="#使用-Maven-Wapper" class="headerlink" title="使用 Maven Wapper"></a>使用 Maven Wapper</h2><p>我们只需要把 mvn 命令改成 mvnw 就可以使用跟项目关联的 Maven。例如：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mvnw clean package</span><br></pre></td></tr></table></figure>
-
-<p>Maven Wrapper 的另一个作用是把项目的 <code>mvnw</code>、<code>mvnw.cmd</code> 和 <code>.mvn</code> 提交到版本库中，可以使所有开发人员使用统一的 <code>Maven</code> 版本。</p>
-]]></content>
-      <categories>
-        <category>手册</category>
-      </categories>
-      <tags>
-        <tag>构建工具</tag>
-        <tag>Maven</tag>
-        <tag>Maven Wapper</tag>
       </tags>
   </entry>
   <entry>
@@ -1606,8 +1606,8 @@
         <category>手册</category>
       </categories>
       <tags>
-        <tag>未完待续</tag>
         <tag>MySQL</tag>
+        <tag>未完待续</tag>
       </tags>
   </entry>
   <entry>
@@ -1764,6 +1764,82 @@
       <tags>
         <tag>未完待续</tag>
         <tag>PowerShell</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>RPC Introduction</title>
+    <url>/2019/07/11/rpc-introduction/</url>
+    <content><![CDATA[<h2 id="What-is-RPC"><a href="#What-is-RPC" class="headerlink" title="What is RPC"></a>What is RPC</h2><blockquote>
+<p>Remote Procedure Call (RPC) is a protocol that one program can use to request a service from a program located in another computer on a network without having to understand the network’s details. A procedure call is also sometimes known as a function call or a subroutine call. A procedure call is also sometimes known as a function call or a subroutine call.</p>
+</blockquote>
+<p><code>RPC</code> 是一种远程过程调用协议，一个程序可以使用该协议从位于网络上另一台计算机中的程序请求服务，而无需了解网络的详细信息。<code>RPC</code> 有时也称为函数调用或子程序调用。<code>RPC</code> 是进程间通信的一种方式。</p>
+<h2 id="Why-is-RPC"><a href="#Why-is-RPC" class="headerlink" title="Why is RPC"></a>Why is RPC</h2><p>网上很多关于 <code>RPC</code> 的优点，笔者都不太赞同。不能将那些成熟的 <code>RPC</code> 框架解决的问题全部归结为 <code>RPC</code> 的优点。比如 <code>RPC</code> 的概念中并没有提到服务治理等问题，但是常见的 <code>RPC</code> 框架（如 <a href="http://dubbo.apache.org/">DUBBO</a>）均解决了服务治理的相关问题，这显然不能作为 <code>RPC</code> 的优点。要解释“Why is RPC?”的问题，还是要回归到 <code>RPC</code> 的概念上来。</p>
+<ul>
+<li><code>RPC</code> 可以使<em>远程过程调用</em>变得像本地调用一样简单。</li>
+<li>方便计算能力的横向扩展。</li>
+</ul>
+<p>有兴趣可以阅读 <a href="http://dubbo.apache.org/zh-cn/docs/user/preface/background.html">dubbo 诞生的背景</a> 以及<a href="http://dubbo.apache.org/zh-cn/docs/user/preface/requirements.html">dubbo 解决了哪些需求</a>。</p>
+<h3 id="RPC-vs-HTTP"><a href="#RPC-vs-HTTP" class="headerlink" title="RPC vs HTTP"></a>RPC vs HTTP</h3><p>其实这两者不是同一个维度的概念。从 <code>RPC</code> 的概念上来讲，<code>HTTP</code> 其实就是 <code>RPC</code> 的一种实现。</p>
+<h3 id="RPC-vs-RMI"><a href="#RPC-vs-RMI" class="headerlink" title="RPC vs RMI"></a>RPC vs RMI</h3><p>这两者也不是同一个维度的概念。</p>
+<p><code>RMI</code> 是 <code>JAVA</code> 提供的一种<em>远程方法调用</em>，而 <code>RPC</code> 的变成模型是<em>远程过程调用</em>，<code>RPC</code> 并没有规定采用哪种编程语言实现，<strong>我们甚至可以使用 <code>JAVA</code> 语言实现一个具体的 <code>RPC</code> 协议，内部采用 <code>RMI</code> 来实现数据的传输</strong>，例如 <a href="http://dubbo.apache.org/zh-cn/docs/user/references/protocol/rmi.html">dubbo 中就可以采用 rmi 协议</a>。</p>
+<h2 id="How-to-implement-RPC"><a href="#How-to-implement-RPC" class="headerlink" title="How to implement RPC"></a>How to implement RPC</h2><p>我们先思考这么一个问题：要怎么去调用远程的服务呢？</p>
+<ol>
+<li>要知道 ip 和端口，以确定远程唯一的一个进程。</li>
+<li>要知道调用远程的进程中的什么服务，以确定方法和参数</li>
+<li>调用远程的服务之后，要返回结果。</li>
+</ol>
+<p>根据上述的三点，我们来看一下如何实现一个 <code>RPC</code> 框架。</p>
+<h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>在一个 <code>RPC</code> 的架构中包含 4 个组件：</p>
+<ol>
+<li><code>Client</code>：即客户端，服务调用方</li>
+<li><code>Client Stub</code>：客户端存根，用于存方服务端地址信息，将客户端的信息打包成网络消息，再通过网络发送给服务提供者</li>
+<li><code>Server Stub</code>：服务端存根，接收客户端发送过来的消息，并调用本地服务</li>
+<li><code>Server</code>：服务提供者</li>
+</ol>
+<p>一个 <code>RPC</code> 的调用过程：</p>
+<ol>
+<li><code>Client</code> 调用以本地调用方式调用服务；</li>
+<li><code>Client Stub</code> 接收到调用后负责将方法、参数等组装成能够进行网络传输的消息体（在 <code>Java</code> 中是序列化的过程）；</li>
+<li><code>Client Stub</code> 找到服务地址，并将消息体通过网络发送到服务端；</li>
+<li><code>Server Stub</code> 收到消息后进行解码（在 <code>Java</code> 中是反序列化的过程）；</li>
+<li><code>Server Stub</code> 根据解码结果调用 <code>Server</code> 处理；</li>
+<li><code>Server</code> 将结果返回给 <code>Server Stub</code>；</li>
+<li><code>Server Stub</code> 将返回结果打包成消息体（在 <code>Java</code> 中是序列化的过程）；</li>
+<li><code>Server Stub</code> 将打包后的消息通过网络并发送至消费方；</li>
+<li><code>Client Stub</code> 接收到消息，并进行解码（在 <code>Java</code> 中是反序列化的过程）；</li>
+<li><code>Client</code> 得到最终结果。</li>
+</ol>
+<p>一图顶千言</p>
+<img src="/2019/07/11/rpc-introduction/theory.jpg" class="" title="RPC 原理">
+
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><p>我们简单的采用 <code>Java</code> 语言来实现一个 <code>RPC</code> 框架。</p>
+<h4 id="命名"><a href="#命名" class="headerlink" title="命名"></a>命名</h4><p>作为钢铁侠粉丝，这里我们将项目命名为 <a href="https://github.com/fuyongde/edith/releases/tag/0.1.0">Edith</a>。</p>
+<blockquote>
+<p>Even dead,I am hero. -<em>Tony Stark</em></p>
+</blockquote>
+<p>伊人已逝，仍是英雄。永远纪念 _Tony Stark_。</p>
+<h4 id="暴露服务"><a href="#暴露服务" class="headerlink" title="暴露服务"></a>暴露服务</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">RpcFramework</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">export</span><span class="params">(<span class="keyword">final</span> Object service, <span class="type">int</span> port)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="keyword">if</span> (service == <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>(<span class="string">&quot;Service instance is null&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (port &lt;= <span class="number">0</span> || port &gt; <span class="number">65535</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>(<span class="string">&quot;Invalid port &quot;</span> + port);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;Export service &quot;</span> + service.getClass().getName() + <span class="string">&quot; on port &quot;</span> + port);</span><br><span class="line">        <span class="type">ServerSocket</span> <span class="variable">server</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ServerSocket</span>(port);</span><br><span class="line">        <span class="keyword">for</span> (; ; ) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="keyword">final</span> <span class="type">Socket</span> <span class="variable">socket</span> <span class="operator">=</span> server.accept();</span><br><span class="line">                <span class="keyword">new</span> <span class="title class_">Thread</span>(() -&gt; &#123;</span><br><span class="line">                    <span class="keyword">try</span> &#123;</span><br><span class="line">                        <span class="keyword">try</span> &#123;</span><br><span class="line">                            <span class="type">ObjectInputStream</span> <span class="variable">input</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ObjectInputStream</span>(socket.getInputStream());</span><br><span class="line">                            <span class="keyword">try</span> &#123;</span><br><span class="line">                                <span class="type">String</span> <span class="variable">methodName</span> <span class="operator">=</span> input.readUTF();</span><br><span class="line">                                Class&lt;?&gt;[] parameterTypes = (Class&lt;?&gt;[]) input.readObject();</span><br><span class="line">                                Object[] arguments = (Object[]) input.readObject();</span><br><span class="line">                                <span class="type">ObjectOutputStream</span> <span class="variable">output</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ObjectOutputStream</span>(socket.getOutputStream());</span><br><span class="line">                                <span class="keyword">try</span> &#123;</span><br><span class="line">                                    <span class="type">Method</span> <span class="variable">method</span> <span class="operator">=</span> service.getClass().getMethod(methodName, parameterTypes);</span><br><span class="line">                                    <span class="type">Object</span> <span class="variable">result</span> <span class="operator">=</span> method.invoke(service, arguments);</span><br><span class="line">                                    output.writeObject(result);</span><br><span class="line">                                &#125; <span class="keyword">catch</span> (Throwable t) &#123;</span><br><span class="line">                                    output.writeObject(t);</span><br><span class="line">                                &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                                    output.close();</span><br><span class="line">                                &#125;</span><br><span class="line">                            &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                                input.close();</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                            socket.close();</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                        e.printStackTrace();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;).start();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="引用服务"><a href="#引用服务" class="headerlink" title="引用服务"></a>引用服务</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">RpcFramework</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; T <span class="title function_">refer</span><span class="params">(<span class="keyword">final</span> Class&lt;T&gt; interfaceClass, <span class="keyword">final</span> String host, <span class="keyword">final</span> <span class="type">int</span> port)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (interfaceClass == <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>(<span class="string">&quot;Interface class is null&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (!interfaceClass.isInterface()) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>(<span class="string">&quot;The &quot;</span> + interfaceClass.getName() + <span class="string">&quot; must be interface class!&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (host == <span class="literal">null</span> || host.length() == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>(<span class="string">&quot;Host is null!&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (port &lt;= PORT_MIN || port &gt; PORT_MAX) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>(<span class="string">&quot;Invalid port &quot;</span> + port);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">&quot;Get remote service &quot;</span> + interfaceClass.getName() + <span class="string">&quot; from server &quot;</span> + host + <span class="string">&quot;:&quot;</span> + port);</span><br><span class="line">        <span class="keyword">return</span> (T) Proxy.newProxyInstance(interfaceClass.getClassLoader(), <span class="keyword">new</span> <span class="title class_">Class</span>&lt;?&gt;[]&#123;interfaceClass&#125;, (proxy, method, arguments) -&gt; &#123;</span><br><span class="line">            <span class="type">Socket</span> <span class="variable">socket</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Socket</span>(host, port);</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="type">ObjectOutputStream</span> <span class="variable">output</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ObjectOutputStream</span>(socket.getOutputStream());</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    output.writeUTF(method.getName());</span><br><span class="line">                    output.writeObject(method.getParameterTypes());</span><br><span class="line">                    output.writeObject(arguments);</span><br><span class="line">                    <span class="type">ObjectInputStream</span> <span class="variable">input</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ObjectInputStream</span>(socket.getInputStream());</span><br><span class="line">                    <span class="keyword">try</span> &#123;</span><br><span class="line">                        <span class="type">Object</span> <span class="variable">result</span> <span class="operator">=</span> input.readObject();</span><br><span class="line">                        <span class="keyword">if</span> (result <span class="keyword">instanceof</span> Throwable) &#123;</span><br><span class="line">                            <span class="keyword">throw</span> (Throwable) result;</span><br><span class="line">                        &#125;</span><br><span class="line">                        <span class="keyword">return</span> result;</span><br><span class="line">                    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                        input.close();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                    output.close();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                socket.close();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="定义接口"><a href="#定义接口" class="headerlink" title="定义接口"></a>定义接口</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">HelloService</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 返回一个字符串</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> name name</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> Hello name</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    String <span class="title function_">hello</span><span class="params">(String name)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="编写服务提供者"><a href="#编写服务提供者" class="headerlink" title="编写服务提供者"></a>编写服务提供者</h4><p>先实现 <code>HelloService</code></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">HelloServiceImpl</span> <span class="keyword">implements</span> <span class="title class_">HelloService</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">hello</span><span class="params">(String name)</span> &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">result</span> <span class="operator">=</span> <span class="string">&quot;Hello &quot;</span> + name;</span><br><span class="line">        System.out.println(Thread.currentThread().getName() + <span class="string">&quot; &quot;</span> + result);</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>启动并暴漏服务</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Provider</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="type">HelloService</span> <span class="variable">helloService</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">HelloServiceImpl</span>();</span><br><span class="line">        RpcFramework.export(helloService, <span class="number">8888</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="编写服务调用者"><a href="#编写服务调用者" class="headerlink" title="编写服务调用者"></a>编写服务调用者</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Consumer</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">HelloService</span> <span class="variable">helloService</span> <span class="operator">=</span> RpcFramework.refer(HelloService.class, <span class="string">&quot;127.0.0.1&quot;</span>, <span class="number">8888</span>);</span><br><span class="line">        <span class="type">String</span> <span class="variable">name</span> <span class="operator">=</span> <span class="string">&quot;Peter Parker&quot;</span>;</span><br><span class="line">        System.out.println(helloService.hello(name));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>执行 <code>Consumer</code>，查看控制台输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Hello Peter Parker</span><br></pre></td></tr></table></figure>
+
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>本文的例子，采用了阻塞的 Socket IO 流来进行 Client 和 Server 之间的端对端通信。方法的远程调用采用了 <code>Java</code> 的动态代理，参数的序列化与反序列化采用 <code>ObjectStream</code>。成熟的 <code>RPC</code> 框架会对上述的实现方式进行替换，比如采用 <code>Netty</code> 的 <code>NIO</code> 来实现非阻塞通信，采用成熟的注册中心来统一管理服务的注册与发现，采用 <code>hession2</code>，<code>fastjson</code> 等序列化方式等等。成熟的 <code>RPC</code> 框架还会考虑调用过程中的诸多问题，比如重试机制、超时配置等等。</p>
+<p>本文参考了 <a href="https://www.cnkirito.moe/easy-know-rpc/">徐靖峰的博客</a>。</p>
+]]></content>
+      <tags>
+        <tag>RPC</tag>
       </tags>
   </entry>
   <entry>
@@ -1936,167 +2012,6 @@
       </tags>
   </entry>
   <entry>
-    <title>事务隔离级别</title>
-    <url>/2019/11/14/transaction-isolation/</url>
-    <content><![CDATA[<p>本文简单介绍一下数据库的事务隔离级别，所用数据库采用 <code>MySQL</code>，<code>MySQL</code> 提供了两种事务性的存储引擎 <code>InnoDB</code> 和 <code>NDB Cluster</code>，本文示例采用 <code>InnoDB</code> 存储引擎。</p>
-<h2 id="查看当前数据的事务隔离级别"><a href="#查看当前数据的事务隔离级别" class="headerlink" title="查看当前数据的事务隔离级别"></a>查看当前数据的事务隔离级别</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 查看当前数据库事务隔离级别</span><br><span class="line">mysql&gt; SHOW VARIABLES LIKE &#x27;%transaction_isolation%&#x27;;</span><br><span class="line">-- 或者</span><br><span class="line">mysql&gt; SELECT @@transaction_isolation;</span><br><span class="line">-- 低版本的 MySQL 查看事务隔离级别的属性是不一样的</span><br><span class="line">mysql&gt; SHOW VARIABLES LIKE &#x27;%tx_isolation%&#x27;;</span><br><span class="line">-- 或者</span><br><span class="line">mysql&gt; SELECT @@tx_isolation;</span><br></pre></td></tr></table></figure>
-
-<h2 id="不同的事务隔离级别所面对的问题"><a href="#不同的事务隔离级别所面对的问题" class="headerlink" title="不同的事务隔离级别所面对的问题"></a>不同的事务隔离级别所面对的问题</h2><table>
-<thead>
-<tr>
-<th>事务隔离级别</th>
-<th>脏读</th>
-<th>不可重复读</th>
-<th>幻读</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>读未提交（read-uncommitted）</td>
-<td>是</td>
-<td>是</td>
-<td>是</td>
-</tr>
-<tr>
-<td>读已提交（read-committed）</td>
-<td>否</td>
-<td>是</td>
-<td>是</td>
-</tr>
-<tr>
-<td>可重复读（repeatable-read）</td>
-<td>否</td>
-<td>否</td>
-<td>是</td>
-</tr>
-<tr>
-<td>串行化（serializable）</td>
-<td>否</td>
-<td>否</td>
-<td>否</td>
-</tr>
-</tbody></table>
-<ul>
-<li><p><code>脏读</code>：事务 A 读取了事务 B 更新的数据，然后 B 回滚操作，那么 A 读取到的数据是脏数据。</p>
-</li>
-<li><p><code>不可重复读</code>：事务 A 多次读取同一数据，事务 B 在事务 A 多次读取的过程中，对数据作了更新并提交，导致事务 A 多次读取同一数据时，结果不一致。</p>
-</li>
-<li><p><code>幻读</code>：系统管理员 A 将数据库中所有学生的成绩从具体分数改为 ABCDE 等级，但是系统管理员 B 就在这个时候插入了一条具体分数的记录，当系统管理员 A 改结束后发现还有一条记录没有改过来，就好像发生了幻觉一样，这就叫幻读。</p>
-</li>
-</ul>
-<p>小结：不可重复读的和幻读很容易混淆，不可重复读侧重于修改，幻读侧重于新增或删除。解决不可重复读的问题只需锁住满足条件的行，解决幻读需要锁表。</p>
-<h2 id="脏读的场景"><a href="#脏读的场景" class="headerlink" title="脏读的场景"></a>脏读的场景</h2><h3 id="客户端-A-先开启事务，查询用户余额"><a href="#客户端-A-先开启事务，查询用户余额" class="headerlink" title="客户端 A 先开启事务，查询用户余额"></a>客户端 A 先开启事务，查询用户余额</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端A设置当前会话级别为`read-uncommitted`</span><br><span class="line">mysq&gt; SET SESSION TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;</span><br><span class="line">-- 客户端A开启事务</span><br><span class="line">mysq&gt; START TRANSACTION;</span><br><span class="line">-- 客户端A查询用户余额</span><br><span class="line">mysq&gt; SELECT * FROM wallet WHERE user_id = 1;</span><br><span class="line">-- 结果如下：</span><br><span class="line"># +----+---------+-----------+</span><br><span class="line"># | id | user_id | balance   |</span><br><span class="line"># +----+---------+-----------+</span><br><span class="line"># |  1 |       1 | 100000000 |</span><br><span class="line"># +----+---------+-----------+</span><br></pre></td></tr></table></figure>
-
-<h3 id="客户端-B-开启事务，并修改用户余额"><a href="#客户端-B-开启事务，并修改用户余额" class="headerlink" title="客户端 B 开启事务，并修改用户余额"></a>客户端 B 开启事务，并修改用户余额</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端B设置当前会话级别为`read-uncommitted`</span><br><span class="line">mysq&gt; SET SESSION TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;</span><br><span class="line">-- 客户端B开启事务</span><br><span class="line">mysq&gt; START TRANSACTION;</span><br><span class="line">-- 客户端B修改用户余额，</span><br><span class="line">mysql&gt; UPDATE wallet SET balance = balance + 100 WHERE user_id = 1;</span><br></pre></td></tr></table></figure>
-
-<h3 id="客户端-A-查询用户余额"><a href="#客户端-A-查询用户余额" class="headerlink" title="客户端 A 查询用户余额"></a>客户端 A 查询用户余额</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端A获取用户余额（此时由于B的事务并未提交，故A事务读到了B事务已经更新后的数据，此时发生脏读）</span><br><span class="line">mysq&gt; SELECT * FROM wallet WHERE user_id = 1;</span><br><span class="line">-- 结果如下：</span><br><span class="line"># +----+---------+-----------+</span><br><span class="line"># | id | user_id | balance   |</span><br><span class="line"># +----+---------+-----------+</span><br><span class="line"># |  1 |       1 | 100000100 |</span><br><span class="line"># +----+---------+-----------+</span><br></pre></td></tr></table></figure>
-
-<h3 id="客户端-B-回滚事务"><a href="#客户端-B-回滚事务" class="headerlink" title="客户端 B 回滚事务"></a>客户端 B 回滚事务</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端B回滚事务</span><br><span class="line">mysql&gt; ROLLBACK;</span><br></pre></td></tr></table></figure>
-
-<h3 id="客户端-A-修改用户余额"><a href="#客户端-A-修改用户余额" class="headerlink" title="客户端 A 修改用户余额"></a>客户端 A 修改用户余额</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端A修改用户余额</span><br><span class="line">mysq&gt; UPDATE wallet SET balance = balance - 500 WHERE user_id = 1;</span><br><span class="line"></span><br><span class="line">-- 客户端A查询用户余额</span><br><span class="line">mysq&gt; SELECT * FROM wallet WHERE user_id = 1;</span><br><span class="line">-- 结果如下：</span><br><span class="line"># +----+---------+----------+</span><br><span class="line"># | id | user_id | balance  |</span><br><span class="line"># +----+---------+----------+</span><br><span class="line"># |  1 |       1 | 99999500 |</span><br><span class="line"># +----+---------+----------+</span><br><span class="line">-- 对于A客户端来讲，此时的结果是很奇怪的。</span><br><span class="line">-- 客户端A提交事务</span><br><span class="line">mysql&gt; COMMIT;</span><br></pre></td></tr></table></figure>
-
-<h2 id="不可重复读的场景"><a href="#不可重复读的场景" class="headerlink" title="不可重复读的场景"></a>不可重复读的场景</h2><h3 id="客户端-A-开启事务，查询用户余额"><a href="#客户端-A-开启事务，查询用户余额" class="headerlink" title="客户端 A 开启事务，查询用户余额"></a>客户端 A 开启事务，查询用户余额</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端A设置当前会话级别为`read-committed`</span><br><span class="line">mysql&gt; SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED;</span><br><span class="line">-- 客户端A开启事务</span><br><span class="line">mysql&gt; BEGIN;</span><br><span class="line">-- 客户端A查询用户余额</span><br><span class="line">SELECT * FROM wallet WHERE user_id = 1;</span><br><span class="line">-- 结果如下:</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># | id | user_id | balance |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># |  1 |       1 |     200 |</span><br><span class="line"># +----+---------+---------+</span><br></pre></td></tr></table></figure>
-
-<h3 id="客户端-B-开启事务，并修改用户余额-1"><a href="#客户端-B-开启事务，并修改用户余额-1" class="headerlink" title="客户端 B 开启事务，并修改用户余额"></a>客户端 B 开启事务，并修改用户余额</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端B设置当前会话级别为`read-committed`</span><br><span class="line">mysql&gt; SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED;</span><br><span class="line">-- 客户端B开启事务</span><br><span class="line">mysql&gt; BEGIN;</span><br><span class="line">-- 客户端B修改用户余额</span><br><span class="line">mysql&gt; UPDATE wallet SET balance = balance + 100 WHERE user_id = 1;</span><br><span class="line">-- 客户端B查询用户余额</span><br><span class="line">mysql&gt; SELECT * FROM wallet WHERE user_id = 1;</span><br><span class="line">-- 结果如下：</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># | id | user_id | balance |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># |  1 |       1 |     300 |</span><br><span class="line"># +----+---------+---------+</span><br></pre></td></tr></table></figure>
-
-<h3 id="客户端-A-查询用户余额-1"><a href="#客户端-A-查询用户余额-1" class="headerlink" title="客户端 A 查询用户余额"></a>客户端 A 查询用户余额</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端A查询用户余额</span><br><span class="line">mysql&gt; SELECT * FROM wallet WHERE user_id = 1;</span><br><span class="line">-- 结果如下：</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># | id | user_id | balance |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># |  1 |       1 |     200 |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line">-- 此时客户端B的事务还没有提交，故客户端A不能查询到B事务已经更新的数据，解决了脏读的问题</span><br></pre></td></tr></table></figure>
-
-<h3 id="客户端-B-提交事务"><a href="#客户端-B-提交事务" class="headerlink" title="客户端 B 提交事务"></a>客户端 B 提交事务</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端B提交事务</span><br><span class="line">mysql&gt; COMMIT;</span><br></pre></td></tr></table></figure>
-
-<h3 id="客户端-A-查询用户余额-2"><a href="#客户端-A-查询用户余额-2" class="headerlink" title="客户端 A 查询用户余额"></a>客户端 A 查询用户余额</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端A查询用户余额</span><br><span class="line">mysql&gt; SELECT * FROM wallet WHERE user_id = 1;</span><br><span class="line">-- 结果如下：</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># | id | user_id | balance |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># |  1 |       1 |     300 |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line">-- 此时客户端B的事务还已经提交，结果与上一步不一致，即产生了不可重复读的问题。</span><br><span class="line">-- 客户端A提交事务</span><br><span class="line">mysql&gt; COMMIT;</span><br></pre></td></tr></table></figure>
-
-<h2 id="幻读的场景"><a href="#幻读的场景" class="headerlink" title="幻读的场景"></a>幻读的场景</h2><h3 id="客户端-A-开启事务，查询所有用户"><a href="#客户端-A-开启事务，查询所有用户" class="headerlink" title="客户端 A 开启事务，查询所有用户"></a>客户端 A 开启事务，查询所有用户</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端A设置当前会话级别为`repeatable-read`</span><br><span class="line">mysql&gt; SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ;</span><br><span class="line">-- 客户端A开启事务</span><br><span class="line">mysql&gt; BEGIN;</span><br><span class="line">-- 客户端A查询所有用户余额</span><br><span class="line">SELECT * FROM wallet;</span><br><span class="line">-- 结果如下:</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># | id | user_id | balance |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># |  1 |       1 |     100 |</span><br><span class="line"># +----+---------+---------+</span><br></pre></td></tr></table></figure>
-
-<h3 id="客户端-B-开启事务，并插入一条记录"><a href="#客户端-B-开启事务，并插入一条记录" class="headerlink" title="客户端 B 开启事务，并插入一条记录"></a>客户端 B 开启事务，并插入一条记录</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端B设置当前会话级别为`repeatable-read`</span><br><span class="line">mysql&gt; SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ;</span><br><span class="line">-- 客户端B开启事务</span><br><span class="line">mysql&gt; BEGIN;</span><br><span class="line">-- 客户端B查询所有用户余额</span><br><span class="line">SELECT * FROM wallet;</span><br><span class="line">-- 结果如下:</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># | id | user_id | balance |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># |  1 |       1 |     100 |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line">-- 客户端B插入一条记录</span><br><span class="line">mysq&gt; INSERT INTO wallet (`id`, `user_id`, `balance`) VALUES (2, 2, 200);</span><br><span class="line">-- 客户端B查询所有的用户余额</span><br><span class="line">mysql&gt; SELECT * FROM wallet;</span><br><span class="line">-- 结果如下</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># | id | user_id | balance |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># |  1 |       1 |     100 |</span><br><span class="line"># |  2 |       2 |     200 |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="客户端-A-查询所有用户余额"><a href="#客户端-A-查询所有用户余额" class="headerlink" title="客户端 A 查询所有用户余额"></a>客户端 A 查询所有用户余额</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端A查询所有用户余额, 此时发生幻读。</span><br><span class="line">SELECT * FROM wallet;</span><br><span class="line">-- 结果如下:</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># | id | user_id | balance |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># |  1 |       1 |     100 |</span><br><span class="line"># +----+---------+---------+</span><br></pre></td></tr></table></figure>
-
-<h3 id="客户端-B-提交事务-1"><a href="#客户端-B-提交事务-1" class="headerlink" title="客户端 B 提交事务"></a>客户端 B 提交事务</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端B提交事务</span><br><span class="line">mysq&gt; COMMIT;</span><br></pre></td></tr></table></figure>
-
-<h3 id="客户端-A-插入一条记录"><a href="#客户端-A-插入一条记录" class="headerlink" title="客户端 A 插入一条记录"></a>客户端 A 插入一条记录</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户A插入id为2的记录</span><br><span class="line">mysql&gt; INSERT INTO wallet (`id`, `user_id`, `balance`) VALUES (2, 2, 200);</span><br><span class="line">-- 结果失败了，</span><br><span class="line">ERROR 1062 (23000): Duplicate entry &#x27;2&#x27; for key &#x27;PRIMARY&#x27;</span><br><span class="line">-- 客户端A回滚</span><br><span class="line">mysql&gt; ROLLBACK;</span><br></pre></td></tr></table></figure>
-]]></content>
-      <tags>
-        <tag>数据库</tag>
-        <tag>MySQL</tag>
-        <tag>事务</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>RPC Introduction</title>
-    <url>/2019/07/11/rpc-introduction/</url>
-    <content><![CDATA[<h2 id="What-is-RPC"><a href="#What-is-RPC" class="headerlink" title="What is RPC"></a>What is RPC</h2><blockquote>
-<p>Remote Procedure Call (RPC) is a protocol that one program can use to request a service from a program located in another computer on a network without having to understand the network’s details. A procedure call is also sometimes known as a function call or a subroutine call. A procedure call is also sometimes known as a function call or a subroutine call.</p>
-</blockquote>
-<p><code>RPC</code> 是一种远程过程调用协议，一个程序可以使用该协议从位于网络上另一台计算机中的程序请求服务，而无需了解网络的详细信息。<code>RPC</code> 有时也称为函数调用或子程序调用。<code>RPC</code> 是进程间通信的一种方式。</p>
-<h2 id="Why-is-RPC"><a href="#Why-is-RPC" class="headerlink" title="Why is RPC"></a>Why is RPC</h2><p>网上很多关于 <code>RPC</code> 的优点，笔者都不太赞同。不能将那些成熟的 <code>RPC</code> 框架解决的问题全部归结为 <code>RPC</code> 的优点。比如 <code>RPC</code> 的概念中并没有提到服务治理等问题，但是常见的 <code>RPC</code> 框架（如 <a href="http://dubbo.apache.org/">DUBBO</a>）均解决了服务治理的相关问题，这显然不能作为 <code>RPC</code> 的优点。要解释“Why is RPC?”的问题，还是要回归到 <code>RPC</code> 的概念上来。</p>
-<ul>
-<li><code>RPC</code> 可以使<em>远程过程调用</em>变得像本地调用一样简单。</li>
-<li>方便计算能力的横向扩展。</li>
-</ul>
-<p>有兴趣可以阅读 <a href="http://dubbo.apache.org/zh-cn/docs/user/preface/background.html">dubbo 诞生的背景</a> 以及<a href="http://dubbo.apache.org/zh-cn/docs/user/preface/requirements.html">dubbo 解决了哪些需求</a>。</p>
-<h3 id="RPC-vs-HTTP"><a href="#RPC-vs-HTTP" class="headerlink" title="RPC vs HTTP"></a>RPC vs HTTP</h3><p>其实这两者不是同一个维度的概念。从 <code>RPC</code> 的概念上来讲，<code>HTTP</code> 其实就是 <code>RPC</code> 的一种实现。</p>
-<h3 id="RPC-vs-RMI"><a href="#RPC-vs-RMI" class="headerlink" title="RPC vs RMI"></a>RPC vs RMI</h3><p>这两者也不是同一个维度的概念。</p>
-<p><code>RMI</code> 是 <code>JAVA</code> 提供的一种<em>远程方法调用</em>，而 <code>RPC</code> 的变成模型是<em>远程过程调用</em>，<code>RPC</code> 并没有规定采用哪种编程语言实现，<strong>我们甚至可以使用 <code>JAVA</code> 语言实现一个具体的 <code>RPC</code> 协议，内部采用 <code>RMI</code> 来实现数据的传输</strong>，例如 <a href="http://dubbo.apache.org/zh-cn/docs/user/references/protocol/rmi.html">dubbo 中就可以采用 rmi 协议</a>。</p>
-<h2 id="How-to-implement-RPC"><a href="#How-to-implement-RPC" class="headerlink" title="How to implement RPC"></a>How to implement RPC</h2><p>我们先思考这么一个问题：要怎么去调用远程的服务呢？</p>
-<ol>
-<li>要知道 ip 和端口，以确定远程唯一的一个进程。</li>
-<li>要知道调用远程的进程中的什么服务，以确定方法和参数</li>
-<li>调用远程的服务之后，要返回结果。</li>
-</ol>
-<p>根据上述的三点，我们来看一下如何实现一个 <code>RPC</code> 框架。</p>
-<h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>在一个 <code>RPC</code> 的架构中包含 4 个组件：</p>
-<ol>
-<li><code>Client</code>：即客户端，服务调用方</li>
-<li><code>Client Stub</code>：客户端存根，用于存方服务端地址信息，将客户端的信息打包成网络消息，再通过网络发送给服务提供者</li>
-<li><code>Server Stub</code>：服务端存根，接收客户端发送过来的消息，并调用本地服务</li>
-<li><code>Server</code>：服务提供者</li>
-</ol>
-<p>一个 <code>RPC</code> 的调用过程：</p>
-<ol>
-<li><code>Client</code> 调用以本地调用方式调用服务；</li>
-<li><code>Client Stub</code> 接收到调用后负责将方法、参数等组装成能够进行网络传输的消息体（在 <code>Java</code> 中是序列化的过程）；</li>
-<li><code>Client Stub</code> 找到服务地址，并将消息体通过网络发送到服务端；</li>
-<li><code>Server Stub</code> 收到消息后进行解码（在 <code>Java</code> 中是反序列化的过程）；</li>
-<li><code>Server Stub</code> 根据解码结果调用 <code>Server</code> 处理；</li>
-<li><code>Server</code> 将结果返回给 <code>Server Stub</code>；</li>
-<li><code>Server Stub</code> 将返回结果打包成消息体（在 <code>Java</code> 中是序列化的过程）；</li>
-<li><code>Server Stub</code> 将打包后的消息通过网络并发送至消费方；</li>
-<li><code>Client Stub</code> 接收到消息，并进行解码（在 <code>Java</code> 中是反序列化的过程）；</li>
-<li><code>Client</code> 得到最终结果。</li>
-</ol>
-<p>一图顶千言</p>
-<img src="/2019/07/11/rpc-introduction/theory.jpg" class="" title="RPC 原理">
-
-<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><p>我们简单的采用 <code>Java</code> 语言来实现一个 <code>RPC</code> 框架。</p>
-<h4 id="命名"><a href="#命名" class="headerlink" title="命名"></a>命名</h4><p>作为钢铁侠粉丝，这里我们将项目命名为 <a href="https://github.com/fuyongde/edith/releases/tag/0.1.0">Edith</a>。</p>
-<blockquote>
-<p>Even dead,I am hero. -<em>Tony Stark</em></p>
-</blockquote>
-<p>伊人已逝，仍是英雄。永远纪念 _Tony Stark_。</p>
-<h4 id="暴露服务"><a href="#暴露服务" class="headerlink" title="暴露服务"></a>暴露服务</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">RpcFramework</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">export</span><span class="params">(<span class="keyword">final</span> Object service, <span class="type">int</span> port)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="keyword">if</span> (service == <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>(<span class="string">&quot;Service instance is null&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (port &lt;= <span class="number">0</span> || port &gt; <span class="number">65535</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>(<span class="string">&quot;Invalid port &quot;</span> + port);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;Export service &quot;</span> + service.getClass().getName() + <span class="string">&quot; on port &quot;</span> + port);</span><br><span class="line">        <span class="type">ServerSocket</span> <span class="variable">server</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ServerSocket</span>(port);</span><br><span class="line">        <span class="keyword">for</span> (; ; ) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="keyword">final</span> <span class="type">Socket</span> <span class="variable">socket</span> <span class="operator">=</span> server.accept();</span><br><span class="line">                <span class="keyword">new</span> <span class="title class_">Thread</span>(() -&gt; &#123;</span><br><span class="line">                    <span class="keyword">try</span> &#123;</span><br><span class="line">                        <span class="keyword">try</span> &#123;</span><br><span class="line">                            <span class="type">ObjectInputStream</span> <span class="variable">input</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ObjectInputStream</span>(socket.getInputStream());</span><br><span class="line">                            <span class="keyword">try</span> &#123;</span><br><span class="line">                                <span class="type">String</span> <span class="variable">methodName</span> <span class="operator">=</span> input.readUTF();</span><br><span class="line">                                Class&lt;?&gt;[] parameterTypes = (Class&lt;?&gt;[]) input.readObject();</span><br><span class="line">                                Object[] arguments = (Object[]) input.readObject();</span><br><span class="line">                                <span class="type">ObjectOutputStream</span> <span class="variable">output</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ObjectOutputStream</span>(socket.getOutputStream());</span><br><span class="line">                                <span class="keyword">try</span> &#123;</span><br><span class="line">                                    <span class="type">Method</span> <span class="variable">method</span> <span class="operator">=</span> service.getClass().getMethod(methodName, parameterTypes);</span><br><span class="line">                                    <span class="type">Object</span> <span class="variable">result</span> <span class="operator">=</span> method.invoke(service, arguments);</span><br><span class="line">                                    output.writeObject(result);</span><br><span class="line">                                &#125; <span class="keyword">catch</span> (Throwable t) &#123;</span><br><span class="line">                                    output.writeObject(t);</span><br><span class="line">                                &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                                    output.close();</span><br><span class="line">                                &#125;</span><br><span class="line">                            &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                                input.close();</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                            socket.close();</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                        e.printStackTrace();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;).start();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="引用服务"><a href="#引用服务" class="headerlink" title="引用服务"></a>引用服务</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">RpcFramework</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; T <span class="title function_">refer</span><span class="params">(<span class="keyword">final</span> Class&lt;T&gt; interfaceClass, <span class="keyword">final</span> String host, <span class="keyword">final</span> <span class="type">int</span> port)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (interfaceClass == <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>(<span class="string">&quot;Interface class is null&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (!interfaceClass.isInterface()) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>(<span class="string">&quot;The &quot;</span> + interfaceClass.getName() + <span class="string">&quot; must be interface class!&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (host == <span class="literal">null</span> || host.length() == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>(<span class="string">&quot;Host is null!&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (port &lt;= PORT_MIN || port &gt; PORT_MAX) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>(<span class="string">&quot;Invalid port &quot;</span> + port);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">&quot;Get remote service &quot;</span> + interfaceClass.getName() + <span class="string">&quot; from server &quot;</span> + host + <span class="string">&quot;:&quot;</span> + port);</span><br><span class="line">        <span class="keyword">return</span> (T) Proxy.newProxyInstance(interfaceClass.getClassLoader(), <span class="keyword">new</span> <span class="title class_">Class</span>&lt;?&gt;[]&#123;interfaceClass&#125;, (proxy, method, arguments) -&gt; &#123;</span><br><span class="line">            <span class="type">Socket</span> <span class="variable">socket</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Socket</span>(host, port);</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="type">ObjectOutputStream</span> <span class="variable">output</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ObjectOutputStream</span>(socket.getOutputStream());</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    output.writeUTF(method.getName());</span><br><span class="line">                    output.writeObject(method.getParameterTypes());</span><br><span class="line">                    output.writeObject(arguments);</span><br><span class="line">                    <span class="type">ObjectInputStream</span> <span class="variable">input</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ObjectInputStream</span>(socket.getInputStream());</span><br><span class="line">                    <span class="keyword">try</span> &#123;</span><br><span class="line">                        <span class="type">Object</span> <span class="variable">result</span> <span class="operator">=</span> input.readObject();</span><br><span class="line">                        <span class="keyword">if</span> (result <span class="keyword">instanceof</span> Throwable) &#123;</span><br><span class="line">                            <span class="keyword">throw</span> (Throwable) result;</span><br><span class="line">                        &#125;</span><br><span class="line">                        <span class="keyword">return</span> result;</span><br><span class="line">                    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                        input.close();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                    output.close();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                socket.close();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="定义接口"><a href="#定义接口" class="headerlink" title="定义接口"></a>定义接口</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">HelloService</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 返回一个字符串</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> name name</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> Hello name</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    String <span class="title function_">hello</span><span class="params">(String name)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="编写服务提供者"><a href="#编写服务提供者" class="headerlink" title="编写服务提供者"></a>编写服务提供者</h4><p>先实现 <code>HelloService</code></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">HelloServiceImpl</span> <span class="keyword">implements</span> <span class="title class_">HelloService</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">hello</span><span class="params">(String name)</span> &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">result</span> <span class="operator">=</span> <span class="string">&quot;Hello &quot;</span> + name;</span><br><span class="line">        System.out.println(Thread.currentThread().getName() + <span class="string">&quot; &quot;</span> + result);</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>启动并暴漏服务</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Provider</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="type">HelloService</span> <span class="variable">helloService</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">HelloServiceImpl</span>();</span><br><span class="line">        RpcFramework.export(helloService, <span class="number">8888</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="编写服务调用者"><a href="#编写服务调用者" class="headerlink" title="编写服务调用者"></a>编写服务调用者</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Consumer</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">HelloService</span> <span class="variable">helloService</span> <span class="operator">=</span> RpcFramework.refer(HelloService.class, <span class="string">&quot;127.0.0.1&quot;</span>, <span class="number">8888</span>);</span><br><span class="line">        <span class="type">String</span> <span class="variable">name</span> <span class="operator">=</span> <span class="string">&quot;Peter Parker&quot;</span>;</span><br><span class="line">        System.out.println(helloService.hello(name));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>执行 <code>Consumer</code>，查看控制台输出：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Hello Peter Parker</span><br></pre></td></tr></table></figure>
-
-<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>本文的例子，采用了阻塞的 Socket IO 流来进行 Client 和 Server 之间的端对端通信。方法的远程调用采用了 <code>Java</code> 的动态代理，参数的序列化与反序列化采用 <code>ObjectStream</code>。成熟的 <code>RPC</code> 框架会对上述的实现方式进行替换，比如采用 <code>Netty</code> 的 <code>NIO</code> 来实现非阻塞通信，采用成熟的注册中心来统一管理服务的注册与发现，采用 <code>hession2</code>，<code>fastjson</code> 等序列化方式等等。成熟的 <code>RPC</code> 框架还会考虑调用过程中的诸多问题，比如重试机制、超时配置等等。</p>
-<p>本文参考了 <a href="https://www.cnkirito.moe/easy-know-rpc/">徐靖峰的博客</a>。</p>
-]]></content>
-      <tags>
-        <tag>RPC</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>zsh 手册</title>
     <url>/2021/08/24/zsh-%E6%89%8B%E5%86%8C/</url>
     <content><![CDATA[<p>zsh 可能是目前最好用的终端。</p>
@@ -2200,6 +2115,91 @@
       <tags>
         <tag>Spring</tag>
         <tag>源码</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>事务隔离级别</title>
+    <url>/2019/11/14/transaction-isolation/</url>
+    <content><![CDATA[<p>本文简单介绍一下数据库的事务隔离级别，所用数据库采用 <code>MySQL</code>，<code>MySQL</code> 提供了两种事务性的存储引擎 <code>InnoDB</code> 和 <code>NDB Cluster</code>，本文示例采用 <code>InnoDB</code> 存储引擎。</p>
+<h2 id="查看当前数据的事务隔离级别"><a href="#查看当前数据的事务隔离级别" class="headerlink" title="查看当前数据的事务隔离级别"></a>查看当前数据的事务隔离级别</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 查看当前数据库事务隔离级别</span><br><span class="line">mysql&gt; SHOW VARIABLES LIKE &#x27;%transaction_isolation%&#x27;;</span><br><span class="line">-- 或者</span><br><span class="line">mysql&gt; SELECT @@transaction_isolation;</span><br><span class="line">-- 低版本的 MySQL 查看事务隔离级别的属性是不一样的</span><br><span class="line">mysql&gt; SHOW VARIABLES LIKE &#x27;%tx_isolation%&#x27;;</span><br><span class="line">-- 或者</span><br><span class="line">mysql&gt; SELECT @@tx_isolation;</span><br></pre></td></tr></table></figure>
+
+<h2 id="不同的事务隔离级别所面对的问题"><a href="#不同的事务隔离级别所面对的问题" class="headerlink" title="不同的事务隔离级别所面对的问题"></a>不同的事务隔离级别所面对的问题</h2><table>
+<thead>
+<tr>
+<th>事务隔离级别</th>
+<th>脏读</th>
+<th>不可重复读</th>
+<th>幻读</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>读未提交（read-uncommitted）</td>
+<td>是</td>
+<td>是</td>
+<td>是</td>
+</tr>
+<tr>
+<td>读已提交（read-committed）</td>
+<td>否</td>
+<td>是</td>
+<td>是</td>
+</tr>
+<tr>
+<td>可重复读（repeatable-read）</td>
+<td>否</td>
+<td>否</td>
+<td>是</td>
+</tr>
+<tr>
+<td>串行化（serializable）</td>
+<td>否</td>
+<td>否</td>
+<td>否</td>
+</tr>
+</tbody></table>
+<ul>
+<li><p><code>脏读</code>：事务 A 读取了事务 B 更新的数据，然后 B 回滚操作，那么 A 读取到的数据是脏数据。</p>
+</li>
+<li><p><code>不可重复读</code>：事务 A 多次读取同一数据，事务 B 在事务 A 多次读取的过程中，对数据作了更新并提交，导致事务 A 多次读取同一数据时，结果不一致。</p>
+</li>
+<li><p><code>幻读</code>：系统管理员 A 将数据库中所有学生的成绩从具体分数改为 ABCDE 等级，但是系统管理员 B 就在这个时候插入了一条具体分数的记录，当系统管理员 A 改结束后发现还有一条记录没有改过来，就好像发生了幻觉一样，这就叫幻读。</p>
+</li>
+</ul>
+<p>小结：不可重复读的和幻读很容易混淆，不可重复读侧重于修改，幻读侧重于新增或删除。解决不可重复读的问题只需锁住满足条件的行，解决幻读需要锁表。</p>
+<h2 id="脏读的场景"><a href="#脏读的场景" class="headerlink" title="脏读的场景"></a>脏读的场景</h2><h3 id="客户端-A-先开启事务，查询用户余额"><a href="#客户端-A-先开启事务，查询用户余额" class="headerlink" title="客户端 A 先开启事务，查询用户余额"></a>客户端 A 先开启事务，查询用户余额</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端A设置当前会话级别为`read-uncommitted`</span><br><span class="line">mysq&gt; SET SESSION TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;</span><br><span class="line">-- 客户端A开启事务</span><br><span class="line">mysq&gt; START TRANSACTION;</span><br><span class="line">-- 客户端A查询用户余额</span><br><span class="line">mysq&gt; SELECT * FROM wallet WHERE user_id = 1;</span><br><span class="line">-- 结果如下：</span><br><span class="line"># +----+---------+-----------+</span><br><span class="line"># | id | user_id | balance   |</span><br><span class="line"># +----+---------+-----------+</span><br><span class="line"># |  1 |       1 | 100000000 |</span><br><span class="line"># +----+---------+-----------+</span><br></pre></td></tr></table></figure>
+
+<h3 id="客户端-B-开启事务，并修改用户余额"><a href="#客户端-B-开启事务，并修改用户余额" class="headerlink" title="客户端 B 开启事务，并修改用户余额"></a>客户端 B 开启事务，并修改用户余额</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端B设置当前会话级别为`read-uncommitted`</span><br><span class="line">mysq&gt; SET SESSION TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;</span><br><span class="line">-- 客户端B开启事务</span><br><span class="line">mysq&gt; START TRANSACTION;</span><br><span class="line">-- 客户端B修改用户余额，</span><br><span class="line">mysql&gt; UPDATE wallet SET balance = balance + 100 WHERE user_id = 1;</span><br></pre></td></tr></table></figure>
+
+<h3 id="客户端-A-查询用户余额"><a href="#客户端-A-查询用户余额" class="headerlink" title="客户端 A 查询用户余额"></a>客户端 A 查询用户余额</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端A获取用户余额（此时由于B的事务并未提交，故A事务读到了B事务已经更新后的数据，此时发生脏读）</span><br><span class="line">mysq&gt; SELECT * FROM wallet WHERE user_id = 1;</span><br><span class="line">-- 结果如下：</span><br><span class="line"># +----+---------+-----------+</span><br><span class="line"># | id | user_id | balance   |</span><br><span class="line"># +----+---------+-----------+</span><br><span class="line"># |  1 |       1 | 100000100 |</span><br><span class="line"># +----+---------+-----------+</span><br></pre></td></tr></table></figure>
+
+<h3 id="客户端-B-回滚事务"><a href="#客户端-B-回滚事务" class="headerlink" title="客户端 B 回滚事务"></a>客户端 B 回滚事务</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端B回滚事务</span><br><span class="line">mysql&gt; ROLLBACK;</span><br></pre></td></tr></table></figure>
+
+<h3 id="客户端-A-修改用户余额"><a href="#客户端-A-修改用户余额" class="headerlink" title="客户端 A 修改用户余额"></a>客户端 A 修改用户余额</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端A修改用户余额</span><br><span class="line">mysq&gt; UPDATE wallet SET balance = balance - 500 WHERE user_id = 1;</span><br><span class="line"></span><br><span class="line">-- 客户端A查询用户余额</span><br><span class="line">mysq&gt; SELECT * FROM wallet WHERE user_id = 1;</span><br><span class="line">-- 结果如下：</span><br><span class="line"># +----+---------+----------+</span><br><span class="line"># | id | user_id | balance  |</span><br><span class="line"># +----+---------+----------+</span><br><span class="line"># |  1 |       1 | 99999500 |</span><br><span class="line"># +----+---------+----------+</span><br><span class="line">-- 对于A客户端来讲，此时的结果是很奇怪的。</span><br><span class="line">-- 客户端A提交事务</span><br><span class="line">mysql&gt; COMMIT;</span><br></pre></td></tr></table></figure>
+
+<h2 id="不可重复读的场景"><a href="#不可重复读的场景" class="headerlink" title="不可重复读的场景"></a>不可重复读的场景</h2><h3 id="客户端-A-开启事务，查询用户余额"><a href="#客户端-A-开启事务，查询用户余额" class="headerlink" title="客户端 A 开启事务，查询用户余额"></a>客户端 A 开启事务，查询用户余额</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端A设置当前会话级别为`read-committed`</span><br><span class="line">mysql&gt; SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED;</span><br><span class="line">-- 客户端A开启事务</span><br><span class="line">mysql&gt; BEGIN;</span><br><span class="line">-- 客户端A查询用户余额</span><br><span class="line">SELECT * FROM wallet WHERE user_id = 1;</span><br><span class="line">-- 结果如下:</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># | id | user_id | balance |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># |  1 |       1 |     200 |</span><br><span class="line"># +----+---------+---------+</span><br></pre></td></tr></table></figure>
+
+<h3 id="客户端-B-开启事务，并修改用户余额-1"><a href="#客户端-B-开启事务，并修改用户余额-1" class="headerlink" title="客户端 B 开启事务，并修改用户余额"></a>客户端 B 开启事务，并修改用户余额</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端B设置当前会话级别为`read-committed`</span><br><span class="line">mysql&gt; SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED;</span><br><span class="line">-- 客户端B开启事务</span><br><span class="line">mysql&gt; BEGIN;</span><br><span class="line">-- 客户端B修改用户余额</span><br><span class="line">mysql&gt; UPDATE wallet SET balance = balance + 100 WHERE user_id = 1;</span><br><span class="line">-- 客户端B查询用户余额</span><br><span class="line">mysql&gt; SELECT * FROM wallet WHERE user_id = 1;</span><br><span class="line">-- 结果如下：</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># | id | user_id | balance |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># |  1 |       1 |     300 |</span><br><span class="line"># +----+---------+---------+</span><br></pre></td></tr></table></figure>
+
+<h3 id="客户端-A-查询用户余额-1"><a href="#客户端-A-查询用户余额-1" class="headerlink" title="客户端 A 查询用户余额"></a>客户端 A 查询用户余额</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端A查询用户余额</span><br><span class="line">mysql&gt; SELECT * FROM wallet WHERE user_id = 1;</span><br><span class="line">-- 结果如下：</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># | id | user_id | balance |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># |  1 |       1 |     200 |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line">-- 此时客户端B的事务还没有提交，故客户端A不能查询到B事务已经更新的数据，解决了脏读的问题</span><br></pre></td></tr></table></figure>
+
+<h3 id="客户端-B-提交事务"><a href="#客户端-B-提交事务" class="headerlink" title="客户端 B 提交事务"></a>客户端 B 提交事务</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端B提交事务</span><br><span class="line">mysql&gt; COMMIT;</span><br></pre></td></tr></table></figure>
+
+<h3 id="客户端-A-查询用户余额-2"><a href="#客户端-A-查询用户余额-2" class="headerlink" title="客户端 A 查询用户余额"></a>客户端 A 查询用户余额</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端A查询用户余额</span><br><span class="line">mysql&gt; SELECT * FROM wallet WHERE user_id = 1;</span><br><span class="line">-- 结果如下：</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># | id | user_id | balance |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># |  1 |       1 |     300 |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line">-- 此时客户端B的事务还已经提交，结果与上一步不一致，即产生了不可重复读的问题。</span><br><span class="line">-- 客户端A提交事务</span><br><span class="line">mysql&gt; COMMIT;</span><br></pre></td></tr></table></figure>
+
+<h2 id="幻读的场景"><a href="#幻读的场景" class="headerlink" title="幻读的场景"></a>幻读的场景</h2><h3 id="客户端-A-开启事务，查询所有用户"><a href="#客户端-A-开启事务，查询所有用户" class="headerlink" title="客户端 A 开启事务，查询所有用户"></a>客户端 A 开启事务，查询所有用户</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端A设置当前会话级别为`repeatable-read`</span><br><span class="line">mysql&gt; SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ;</span><br><span class="line">-- 客户端A开启事务</span><br><span class="line">mysql&gt; BEGIN;</span><br><span class="line">-- 客户端A查询所有用户余额</span><br><span class="line">SELECT * FROM wallet;</span><br><span class="line">-- 结果如下:</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># | id | user_id | balance |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># |  1 |       1 |     100 |</span><br><span class="line"># +----+---------+---------+</span><br></pre></td></tr></table></figure>
+
+<h3 id="客户端-B-开启事务，并插入一条记录"><a href="#客户端-B-开启事务，并插入一条记录" class="headerlink" title="客户端 B 开启事务，并插入一条记录"></a>客户端 B 开启事务，并插入一条记录</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端B设置当前会话级别为`repeatable-read`</span><br><span class="line">mysql&gt; SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ;</span><br><span class="line">-- 客户端B开启事务</span><br><span class="line">mysql&gt; BEGIN;</span><br><span class="line">-- 客户端B查询所有用户余额</span><br><span class="line">SELECT * FROM wallet;</span><br><span class="line">-- 结果如下:</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># | id | user_id | balance |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># |  1 |       1 |     100 |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line">-- 客户端B插入一条记录</span><br><span class="line">mysq&gt; INSERT INTO wallet (`id`, `user_id`, `balance`) VALUES (2, 2, 200);</span><br><span class="line">-- 客户端B查询所有的用户余额</span><br><span class="line">mysql&gt; SELECT * FROM wallet;</span><br><span class="line">-- 结果如下</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># | id | user_id | balance |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># |  1 |       1 |     100 |</span><br><span class="line"># |  2 |       2 |     200 |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="客户端-A-查询所有用户余额"><a href="#客户端-A-查询所有用户余额" class="headerlink" title="客户端 A 查询所有用户余额"></a>客户端 A 查询所有用户余额</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端A查询所有用户余额, 此时发生幻读。</span><br><span class="line">SELECT * FROM wallet;</span><br><span class="line">-- 结果如下:</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># | id | user_id | balance |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># |  1 |       1 |     100 |</span><br><span class="line"># +----+---------+---------+</span><br></pre></td></tr></table></figure>
+
+<h3 id="客户端-B-提交事务-1"><a href="#客户端-B-提交事务-1" class="headerlink" title="客户端 B 提交事务"></a>客户端 B 提交事务</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端B提交事务</span><br><span class="line">mysq&gt; COMMIT;</span><br></pre></td></tr></table></figure>
+
+<h3 id="客户端-A-插入一条记录"><a href="#客户端-A-插入一条记录" class="headerlink" title="客户端 A 插入一条记录"></a>客户端 A 插入一条记录</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户A插入id为2的记录</span><br><span class="line">mysql&gt; INSERT INTO wallet (`id`, `user_id`, `balance`) VALUES (2, 2, 200);</span><br><span class="line">-- 结果失败了，</span><br><span class="line">ERROR 1062 (23000): Duplicate entry &#x27;2&#x27; for key &#x27;PRIMARY&#x27;</span><br><span class="line">-- 客户端A回滚</span><br><span class="line">mysql&gt; ROLLBACK;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>数据库</tag>
+        <tag>MySQL</tag>
+        <tag>事务</tag>
       </tags>
   </entry>
   <entry>
