@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>android command line 安装时的坑</title>
+    <url>/2020/03/24/android-command-line-%E5%AE%89%E8%A3%85%E6%97%B6%E7%9A%84%E5%9D%91/</url>
+    <content><![CDATA[<p>很久没有搞过 Android 开发了，Android 的命令行安装方式相比之前发生了一些变化，这里针对安装最新的 Android 命令行时遇到的一些问题，记录一下解决方法。</p>
+<p><em>问题：下载最新的 commandlinetools 在自己指定的目录安装之后，无法使用</em></p>
+<p><strong>原因：最新版本的 commandlinetools 对安装的目录是有要求的</strong></p>
+<ol>
+<li>Download latest Command line tools from android i.e. commandlinetools-win-6200805_latest.zip</li>
+<li>Unzip the downloaded file</li>
+<li>Create directory for storing commandline tools somewhere on your disk, with following path included: android&#x2F;cmdline-tools&#x2F;latest Basically when You unzip this Cmd line tools, just rename tools directory to latest and make sure You put this latest folder in android&#x2F;cmdline-tools directory somewhere on your disk</li>
+<li>Create ANDROID_HOME environment variable for directory that stores the cmdline tools directory location like: <code>C:\YourLocationWhereYouStoreTheDirectory\android\cmdline-tools\latest</code></li>
+<li>Create new entry in Path environment variable as %ANDROID_HOME%\bin</li>
+</ol>
+]]></content>
+  </entry>
+  <entry>
     <title>JaCoCo手册</title>
     <url>/2022/01/26/JaCoCo%E6%89%8B%E5%86%8C/</url>
     <content><![CDATA[<h2 id="JaCoCo-简介"><a href="#JaCoCo-简介" class="headerlink" title="JaCoCo 简介"></a>JaCoCo 简介</h2><blockquote>
@@ -104,21 +119,6 @@
 ]]></content>
   </entry>
   <entry>
-    <title>android command line 安装时的坑</title>
-    <url>/2020/03/24/android-command-line-%E5%AE%89%E8%A3%85%E6%97%B6%E7%9A%84%E5%9D%91/</url>
-    <content><![CDATA[<p>很久没有搞过 Android 开发了，Android 的命令行安装方式相比之前发生了一些变化，这里针对安装最新的 Android 命令行时遇到的一些问题，记录一下解决方法。</p>
-<p><em>问题：下载最新的 commandlinetools 在自己指定的目录安装之后，无法使用</em></p>
-<p><strong>原因：最新版本的 commandlinetools 对安装的目录是有要求的</strong></p>
-<ol>
-<li>Download latest Command line tools from android i.e. commandlinetools-win-6200805_latest.zip</li>
-<li>Unzip the downloaded file</li>
-<li>Create directory for storing commandline tools somewhere on your disk, with following path included: android&#x2F;cmdline-tools&#x2F;latest Basically when You unzip this Cmd line tools, just rename tools directory to latest and make sure You put this latest folder in android&#x2F;cmdline-tools directory somewhere on your disk</li>
-<li>Create ANDROID_HOME environment variable for directory that stores the cmdline tools directory location like: <code>C:\YourLocationWhereYouStoreTheDirectory\android\cmdline-tools\latest</code></li>
-<li>Create new entry in Path environment variable as %ANDROID_HOME%\bin</li>
-</ol>
-]]></content>
-  </entry>
-  <entry>
     <title>Arthas 非常实用的几个命令</title>
     <url>/2020/01/18/arthas-useful-command/</url>
     <content><![CDATA[<p>本文介绍几个非常有用的 Arthas 命令，熟练使用这几个命令，可以让我们在排查线上问题的时候更加轻松。</p>
@@ -142,49 +142,6 @@
       </categories>
       <tags>
         <tag>Arthas</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>数据库死锁</title>
-    <url>/2019/11/15/database-deadlock/</url>
-    <content><![CDATA[<blockquote>
-<p>死锁是指两个或者多个事务在同一个资源上相互占用，并请求锁定对方占用的资源，从而导致恶性循环的现象</p>
-</blockquote>
-<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><p>先用一个示例来演示一下数据库死锁的情况。本示例基于 <code>MySQL</code> 的 <code>InnoDB</code> 存储引擎。</p>
-<h3 id="表结构"><a href="#表结构" class="headerlink" title="表结构"></a>表结构</h3><p>我们先建一个 wallet 表，表结构如下</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mysql&gt; DESC wallet;</span><br><span class="line">+---------+---------------------+------+-----+---------+-------+</span><br><span class="line">| Field   | Type                | Null | Key | Default | Extra |</span><br><span class="line">+---------+---------------------+------+-----+---------+-------+</span><br><span class="line">| id      | bigint(20) unsigned | NO   | PRI | NULL    |       |</span><br><span class="line">| user_id | bigint(20) unsigned | NO   | UNI | 0       |       |</span><br><span class="line">| balance | bigint(20)          | NO   |     | 0       |       |</span><br><span class="line">+---------+---------------------+------+-----+---------+-------+</span><br></pre></td></tr></table></figure>
-
-<h3 id="开启事务-A，并修改-id-为-1-的记录"><a href="#开启事务-A，并修改-id-为-1-的记录" class="headerlink" title="开启事务 A，并修改 id 为 1 的记录"></a>开启事务 A，并修改 id 为 1 的记录</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mysql&gt; START TRANSACTION;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; UPDATE wallet SET balance = balance + 100 WHERE id = 1;</span><br><span class="line">Query OK, 1 row affected (0.00 sec)</span><br></pre></td></tr></table></figure>
-
-<h3 id="开启事务-B，并修改-id-为-2-的记录"><a href="#开启事务-B，并修改-id-为-2-的记录" class="headerlink" title="开启事务 B，并修改 id 为 2 的记录"></a>开启事务 B，并修改 id 为 2 的记录</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mysql&gt; START TRANSACTION;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; UPDATE wallet SET balance = balance + 100 WHERE id = 2;</span><br><span class="line">Query OK, 1 row affected (0.00 sec)</span><br><span class="line">Rows matched: 1  Changed: 1  Warnings: 0</span><br></pre></td></tr></table></figure>
-
-<h3 id="事务-A-修改-id-为-2-的记录"><a href="#事务-A-修改-id-为-2-的记录" class="headerlink" title="事务 A 修改 id 为 2 的记录"></a>事务 A 修改 id 为 2 的记录</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mysql&gt; UPDATE wallet SET balance = balance + 100 WHERE id = 2;</span><br></pre></td></tr></table></figure>
-
-<p>此时发现该修改并未马上成功，而是陷入的等待状态，原因是事务 A 此时要锁定 id 为 2 的记录，但该记录已经被事务 B 锁定了。</p>
-<h3 id="事务-B-修改-id-为-3-的记录"><a href="#事务-B-修改-id-为-3-的记录" class="headerlink" title="事务 B 修改 id 为 3 的记录"></a>事务 B 修改 id 为 3 的记录</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mysql&gt; UPDATE wallet SET balance = balance + 100 WHERE id = 1;</span><br><span class="line">ERROR 1213 (40001): Deadlock found when trying to get lock; try restarting transaction</span><br></pre></td></tr></table></figure>
-
-<p>此时事务 B 报错，错误原因很明确是发生了死锁问题，通过查询操作也可以发现事务 B 的操作已经回滚，于此同时事务 A 对 id 为 2 的记录的修改已经成功，后续的 <code>COMMIT</code> 操作就不展示了。</p>
-<h2 id="如何解决死锁问题"><a href="#如何解决死锁问题" class="headerlink" title="如何解决死锁问题"></a>如何解决死锁问题</h2><h3 id="死锁产生的原因"><a href="#死锁产生的原因" class="headerlink" title="死锁产生的原因"></a>死锁产生的原因</h3><p>锁的行为和顺序是和存储引擎相关的，同样的顺序执行语句，有些存储引擎会产生死锁，有的则不会。故死锁的产生有两重原因：有些是因为真正的数据冲突，有些则完全是由于存储引擎的实现方式导致的。</p>
-<p>死锁发生以后，只有部分或者完全回滚其中一个事务，才能打破死锁。对于事务性的系统，死锁问题是无法避免的，设计对应的应用程序时必须考虑如何处理死锁。大部分情况只需要重新执行因死锁导致回滚的事务即可。</p>
-<h3 id="解决死锁问题"><a href="#解决死锁问题" class="headerlink" title="解决死锁问题"></a>解决死锁问题</h3><p>常见的数据库都实现了个中死锁检测和死锁超时机制。</p>
-<ul>
-<li><p>死锁检测：比如上述例子中，检测到死锁问题，数据库立马报错，这种解决方式非常有效，否则死锁会导致非常慢的查询。</p>
-</li>
-<li><p>超时机制：超时机制就是当查询时间达到锁等待超时的设定后放弃锁的请求。</p>
-</li>
-</ul>
-<p><code>InnoDB</code> 目前处理死锁的方式是将最少行级排他锁的事务进行回滚。</p>
-<h3 id="InnoDB-显式和隐式锁定"><a href="#InnoDB-显式和隐式锁定" class="headerlink" title="InnoDB 显式和隐式锁定"></a>InnoDB 显式和隐式锁定</h3><p><code>InnoDB</code> 采用的时两端锁定协议（two-phase locking protocol）。在事务执行过程中，随时都可以执行锁定，锁只有在执行 <code>COMMIT</code> 或者 <code>ROLLBACK</code> 的时候才会被释放，并且所有的锁是在同一时刻被释放。<code>InnoDB</code> 会根据隔离级别在需要的的时候自动加锁。</p>
-<p><code>InnoDB</code> 也支持通过特定的语句进行显式的锁定，这些语句不属于 <code>SQL</code> 规范。</p>
-<ul>
-<li><code>SELECT ... LOCK IN SHARE MODE</code></li>
-<li><code>SELECT ... FOR UPDATE</code></li>
-</ul>
-<p><code>MySQL</code> 也支持 <code>LOCK TABLES</code> 和 <code>UNLOCK TABLES</code> 语句，这是在服务器层面实现的，跟存储引擎无关，不能用于代替事务处理。</p>
-]]></content>
-      <tags>
-        <tag>数据库</tag>
-        <tag>MySQL</tag>
       </tags>
   </entry>
   <entry>
@@ -302,6 +259,49 @@
 ]]></content>
       <tags>
         <tag>夏令时</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>数据库死锁</title>
+    <url>/2019/11/15/database-deadlock/</url>
+    <content><![CDATA[<blockquote>
+<p>死锁是指两个或者多个事务在同一个资源上相互占用，并请求锁定对方占用的资源，从而导致恶性循环的现象</p>
+</blockquote>
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><p>先用一个示例来演示一下数据库死锁的情况。本示例基于 <code>MySQL</code> 的 <code>InnoDB</code> 存储引擎。</p>
+<h3 id="表结构"><a href="#表结构" class="headerlink" title="表结构"></a>表结构</h3><p>我们先建一个 wallet 表，表结构如下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mysql&gt; DESC wallet;</span><br><span class="line">+---------+---------------------+------+-----+---------+-------+</span><br><span class="line">| Field   | Type                | Null | Key | Default | Extra |</span><br><span class="line">+---------+---------------------+------+-----+---------+-------+</span><br><span class="line">| id      | bigint(20) unsigned | NO   | PRI | NULL    |       |</span><br><span class="line">| user_id | bigint(20) unsigned | NO   | UNI | 0       |       |</span><br><span class="line">| balance | bigint(20)          | NO   |     | 0       |       |</span><br><span class="line">+---------+---------------------+------+-----+---------+-------+</span><br></pre></td></tr></table></figure>
+
+<h3 id="开启事务-A，并修改-id-为-1-的记录"><a href="#开启事务-A，并修改-id-为-1-的记录" class="headerlink" title="开启事务 A，并修改 id 为 1 的记录"></a>开启事务 A，并修改 id 为 1 的记录</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mysql&gt; START TRANSACTION;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; UPDATE wallet SET balance = balance + 100 WHERE id = 1;</span><br><span class="line">Query OK, 1 row affected (0.00 sec)</span><br></pre></td></tr></table></figure>
+
+<h3 id="开启事务-B，并修改-id-为-2-的记录"><a href="#开启事务-B，并修改-id-为-2-的记录" class="headerlink" title="开启事务 B，并修改 id 为 2 的记录"></a>开启事务 B，并修改 id 为 2 的记录</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mysql&gt; START TRANSACTION;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; UPDATE wallet SET balance = balance + 100 WHERE id = 2;</span><br><span class="line">Query OK, 1 row affected (0.00 sec)</span><br><span class="line">Rows matched: 1  Changed: 1  Warnings: 0</span><br></pre></td></tr></table></figure>
+
+<h3 id="事务-A-修改-id-为-2-的记录"><a href="#事务-A-修改-id-为-2-的记录" class="headerlink" title="事务 A 修改 id 为 2 的记录"></a>事务 A 修改 id 为 2 的记录</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mysql&gt; UPDATE wallet SET balance = balance + 100 WHERE id = 2;</span><br></pre></td></tr></table></figure>
+
+<p>此时发现该修改并未马上成功，而是陷入的等待状态，原因是事务 A 此时要锁定 id 为 2 的记录，但该记录已经被事务 B 锁定了。</p>
+<h3 id="事务-B-修改-id-为-3-的记录"><a href="#事务-B-修改-id-为-3-的记录" class="headerlink" title="事务 B 修改 id 为 3 的记录"></a>事务 B 修改 id 为 3 的记录</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mysql&gt; UPDATE wallet SET balance = balance + 100 WHERE id = 1;</span><br><span class="line">ERROR 1213 (40001): Deadlock found when trying to get lock; try restarting transaction</span><br></pre></td></tr></table></figure>
+
+<p>此时事务 B 报错，错误原因很明确是发生了死锁问题，通过查询操作也可以发现事务 B 的操作已经回滚，于此同时事务 A 对 id 为 2 的记录的修改已经成功，后续的 <code>COMMIT</code> 操作就不展示了。</p>
+<h2 id="如何解决死锁问题"><a href="#如何解决死锁问题" class="headerlink" title="如何解决死锁问题"></a>如何解决死锁问题</h2><h3 id="死锁产生的原因"><a href="#死锁产生的原因" class="headerlink" title="死锁产生的原因"></a>死锁产生的原因</h3><p>锁的行为和顺序是和存储引擎相关的，同样的顺序执行语句，有些存储引擎会产生死锁，有的则不会。故死锁的产生有两重原因：有些是因为真正的数据冲突，有些则完全是由于存储引擎的实现方式导致的。</p>
+<p>死锁发生以后，只有部分或者完全回滚其中一个事务，才能打破死锁。对于事务性的系统，死锁问题是无法避免的，设计对应的应用程序时必须考虑如何处理死锁。大部分情况只需要重新执行因死锁导致回滚的事务即可。</p>
+<h3 id="解决死锁问题"><a href="#解决死锁问题" class="headerlink" title="解决死锁问题"></a>解决死锁问题</h3><p>常见的数据库都实现了个中死锁检测和死锁超时机制。</p>
+<ul>
+<li><p>死锁检测：比如上述例子中，检测到死锁问题，数据库立马报错，这种解决方式非常有效，否则死锁会导致非常慢的查询。</p>
+</li>
+<li><p>超时机制：超时机制就是当查询时间达到锁等待超时的设定后放弃锁的请求。</p>
+</li>
+</ul>
+<p><code>InnoDB</code> 目前处理死锁的方式是将最少行级排他锁的事务进行回滚。</p>
+<h3 id="InnoDB-显式和隐式锁定"><a href="#InnoDB-显式和隐式锁定" class="headerlink" title="InnoDB 显式和隐式锁定"></a>InnoDB 显式和隐式锁定</h3><p><code>InnoDB</code> 采用的时两端锁定协议（two-phase locking protocol）。在事务执行过程中，随时都可以执行锁定，锁只有在执行 <code>COMMIT</code> 或者 <code>ROLLBACK</code> 的时候才会被释放，并且所有的锁是在同一时刻被释放。<code>InnoDB</code> 会根据隔离级别在需要的的时候自动加锁。</p>
+<p><code>InnoDB</code> 也支持通过特定的语句进行显式的锁定，这些语句不属于 <code>SQL</code> 规范。</p>
+<ul>
+<li><code>SELECT ... LOCK IN SHARE MODE</code></li>
+<li><code>SELECT ... FOR UPDATE</code></li>
+</ul>
+<p><code>MySQL</code> 也支持 <code>LOCK TABLES</code> 和 <code>UNLOCK TABLES</code> 语句，这是在服务器层面实现的，跟存储引擎无关，不能用于代替事务处理。</p>
+]]></content>
+      <tags>
+        <tag>数据库</tag>
+        <tag>MySQL</tag>
       </tags>
   </entry>
   <entry>
@@ -456,30 +456,34 @@
       </tags>
   </entry>
   <entry>
-    <title>RPC 进阶 - 线程池</title>
-    <url>/2019/07/16/edith-with-thread-pool/</url>
-    <content><![CDATA[<p>在 <a href="https://fuyongde.github.io/2019/07/11/rpc-introduction/">Rpc Introduction</a> 中简单写了一个 <code>RPC Framework</code>。在本节中，对 <code>Edith</code> 新增采用线程池支持多线程的特性。</p>
-<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>实际开发中，我们的应用程序是不能盲目的开辟线程的，这样会造成资源的极大浪费。若采用线程池，可以减少创建和销毁线程的次数，让每个线程可以多次使用，并且可以根据系统的承受能力，调整线程池中工作线程的数量，方式消耗过多的内存。</p>
-<p>如有需要可以阅读 <code>Dubbo</code> 中关于线程池的设计（位于 <code>org.apache.dubbo.common.threadpool</code> 包）。</p>
-<h2 id="开发"><a href="#开发" class="headerlink" title="开发"></a>开发</h2><h3 id="依赖"><a href="#依赖" class="headerlink" title="依赖"></a>依赖</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;com.google.guava&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;guava&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+    <title>git 恢复已删除的分支</title>
+    <url>/2020/03/26/git-%E6%81%A2%E5%A4%8D%E5%B7%B2%E5%88%A0%E9%99%A4%E7%9A%84%E5%88%86%E6%94%AF/</url>
+    <content><![CDATA[<p>在日常开发中，如果我们一不小心删除了某个分支，又想重新使用这个分支，该怎么找回该分支上的代码呢？</p>
+<h2 id="场景还原"><a href="#场景还原" class="headerlink" title="场景还原"></a>场景还原</h2><ol>
+<li>有一个 git 仓库，从 <code>master</code> 分支新建 <code>feature/delete_branch</code> 分支，并进行一次提交，如下：</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">新建一个 feature/delete_branch 分支</span></span><br><span class="line">git branch feature/delete_branch</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">切换到 feature/delete_branch 分支</span></span><br><span class="line">git checkout feature/delete_branch</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">新建一个文件，进行一次提交并推送至远程分支</span></span><br><span class="line">git add delete-file.md</span><br><span class="line">git commit -m &#x27;:sparkles: add a delete-file.md file&#x27;</span><br><span class="line">git push origin feature/delete_branch:feature/delete_branch</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看当前分支图</span></span><br><span class="line">git log --all --decorate --oneline --graph</span><br><span class="line">* 88ac246 (HEAD -&gt; feature/delete_branch, origin/feature/delete_branch) :sparkles: add a delete-file.md file</span><br><span class="line">* 8693480 (origin/master, master) :sparkles: add a hello-git.md file</span><br></pre></td></tr></table></figure>
 
-<h3 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h3><p>本文代码可以从<a href="https://github.com/fuyongde/edith/releases/tag/0.1.1">这里</a>获取。</p>
-<h4 id="新增-ThreadUtils-java"><a href="#新增-ThreadUtils-java" class="headerlink" title="新增 ThreadUtils.java"></a>新增 ThreadUtils.java</h4><p>用于创建 <code>ExecutorService</code></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ThreadUtils</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 用于对线程分配一个名字，方便排查问题</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> format format</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> Edith-1</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> ThreadFactory <span class="title function_">buildThreadFactory</span><span class="params">(String format)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">ThreadFactoryBuilder</span>().setNameFormat(format).build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> ExecutorService <span class="title function_">newCachedThreadPool</span><span class="params">(<span class="type">int</span> maximumPoolSize)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">ThreadPoolExecutor</span>(THREAD_CORE_POOL_SIZE, maximumPoolSize &gt; <span class="number">0</span> ? maximumPoolSize : THREAD_MAXIMUM_POOL_SIZE,</span><br><span class="line">                Long.MAX_VALUE, TimeUnit.MICROSECONDS, <span class="keyword">new</span> <span class="title class_">SynchronousQueue</span>&lt;&gt;(), buildThreadFactory(THREAD_NAME), <span class="keyword">new</span> <span class="title class_">ThreadPoolExecutor</span>.AbortPolicy());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>切换到 <code>master</code> 分支，并删除 <code>feature/delete_branch</code> 分支</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">切换到 master 分支</span></span><br><span class="line">git checkout master</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">删除 feature/delete_branch 分支</span></span><br><span class="line">git branch -d feature/delete_branch</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">将删除的分支同步只至远程</span></span><br><span class="line">git push origin --delete feature/delete_branch</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">此时无论是本地还是远程都已经删除了 feature/delete_branch</span></span><br><span class="line">git log --all --decorate --oneline --graph</span><br><span class="line">* 8693480 (HEAD -&gt; master, origin/master) :sparkles: add a hello-git.md file</span><br></pre></td></tr></table></figure>
 
-<h4 id="修改-RpcFramework-java"><a href="#修改-RpcFramework-java" class="headerlink" title="修改 RpcFramework.java"></a>修改 RpcFramework.java</h4><p>将原代码中 <code>new Thread()</code> 部分替换为线程池。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">ExecutorService</span> <span class="variable">executorService</span> <span class="operator">=</span> ThreadUtils.newCachedThreadPool(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">export</span><span class="params">(<span class="keyword">final</span> Object service, <span class="type">int</span> port)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">    Objects.requireNonNull(service, <span class="string">&quot;Service instance is null!&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (port &lt;= PORT_MIN || port &gt; PORT_MAX) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>(<span class="string">&quot;Invalid port &quot;</span> + port);</span><br><span class="line">    &#125;</span><br><span class="line">    System.out.println(<span class="string">&quot;Export service &quot;</span> + service.getClass().getName() + <span class="string">&quot; on port &quot;</span> + port);</span><br><span class="line">    <span class="type">ServerSocket</span> <span class="variable">server</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ServerSocket</span>(port);</span><br><span class="line">    <span class="keyword">for</span> (; ; ) &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;application is running&quot;</span>);</span><br><span class="line">        <span class="type">Socket</span> <span class="variable">socket</span> <span class="operator">=</span> server.accept();</span><br><span class="line">        executorService.execute(() -&gt; &#123;</span><br><span class="line">            <span class="comment">// do something ...</span></span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="还原删除的分支"><a href="#还原删除的分支" class="headerlink" title="还原删除的分支"></a>还原删除的分支</h2><ol>
+<li>通过 <code>git reflog</code> 或 <code>git log</code> 命令找到我们需要恢复的 <code>commit id</code></li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">这里演示 git reflog 命令展示出来的提交</span></span><br><span class="line">git reflog</span><br><span class="line">8693480 (HEAD -&gt; master, origin/master) HEAD@&#123;0&#125;: checkout: moving from feature/delete_branch to master</span><br><span class="line">88ac246 (feature/delete_branch) HEAD@&#123;1&#125;: commit: :sparkles: add a delete-file.md file</span><br><span class="line">8693480 (HEAD -&gt; master, origin/master) HEAD@&#123;2&#125;: checkout: moving from master to feature/delete_branch</span><br><span class="line">8693480 (HEAD -&gt; master, origin/master) HEAD@&#123;3&#125;: commit (initial): :sparkles: add a hello-git.md file</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">这里演示 git <span class="built_in">log</span> 命令 展示出来的提交</span></span><br><span class="line">git log -g</span><br><span class="line">commit 86934803092ae7ae7266f9ebff3429437e423b80 (HEAD -&gt; master, origin/master)</span><br><span class="line">Reflog: HEAD@&#123;0&#125; (fuyongde &lt;fuyongde@foxmail.com&gt;)</span><br><span class="line">Reflog message: checkout: moving from feature/delete_branch to master</span><br><span class="line">Author: fuyongde &lt;fuyongde@foxmail.com&gt;</span><br><span class="line">Date:   Thu Mar 26 18:36:35 2020 +0800</span><br><span class="line"></span><br><span class="line">    :sparkles: add a hello-git.md file</span><br><span class="line"></span><br><span class="line">commit 88ac246020a0cc25071fb7fd3ac88363f4bf2beb (feature/delete_branch)</span><br><span class="line">Reflog: HEAD@&#123;1&#125; (fuyongde &lt;fuyongde@foxmail.com&gt;)</span><br><span class="line">Reflog message: commit: :sparkles: add a delete-file.md file</span><br><span class="line">Author: fuyongde &lt;fuyongde@foxmail.com&gt;</span><br><span class="line">Date:   Thu Mar 26 18:44:01 2020 +0800</span><br><span class="line"></span><br><span class="line">    :sparkles: add a delete-file.md file</span><br><span class="line"></span><br><span class="line">commit 86934803092ae7ae7266f9ebff3429437e423b80 (HEAD -&gt; master, origin/master)</span><br><span class="line">Reflog: HEAD@&#123;2&#125; (fuyongde &lt;fuyongde@foxmail.com&gt;)</span><br><span class="line">Reflog message: checkout: moving from master to feature/delete_branch</span><br><span class="line">Author: fuyongde &lt;fuyongde@foxmail.com&gt;</span><br><span class="line">Date:   Thu Mar 26 18:36:35 2020 +0800</span><br><span class="line"></span><br><span class="line">    :sparkles: add a hello-git.md file</span><br><span class="line"></span><br><span class="line">commit 86934803092ae7ae7266f9ebff3429437e423b80 (HEAD -&gt; master, origin/master)</span><br><span class="line">Reflog: HEAD@&#123;3&#125; (fuyongde &lt;fuyongde@foxmail.com&gt;)</span><br><span class="line">Reflog message: commit (initial): :sparkles: add a hello-git.md file</span><br><span class="line">Author: fuyongde &lt;fuyongde@foxmail.com&gt;</span><br><span class="line">Date:   Thu Mar 26 18:36:35 2020 +0800</span><br><span class="line"></span><br><span class="line">    :sparkles: add a hello-git.md file</span><br></pre></td></tr></table></figure>
 
-<p>经过以上修改，我们在例子中的 <code>HelloServiceImpl</code> 打印一下线程名称</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">hello</span><span class="params">(String name)</span> &#123;</span><br><span class="line">    <span class="type">String</span> <span class="variable">result</span> <span class="operator">=</span> <span class="string">&quot;Hello &quot;</span> + name;</span><br><span class="line">    System.out.println(Thread.currentThread().getName() + <span class="string">&quot; &quot;</span> + result);</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>通过 <code>git branch [branch name] [commit id]</code> 命令来恢复删除的分支</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">恢复 feature/delete_branch 分支到 88ac246 版本</span></span><br><span class="line">git branch feature/delete_branch 88ac246</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">检出 feature/delete_branch 分支</span></span><br><span class="line">git checkout feature/delete_branch</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">此时可以看到已经删除的分支都找回来了，将分支推送的远程</span></span><br><span class="line">git push origin feature/delete_branch:feature/delete_branch</span><br></pre></td></tr></table></figure>
 
-<p>启动 <code>provider</code>，然后用 <code>consumer</code> 调用一次，观察 <code>provider</code> 的控制台输出</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Edith-0 Hello Peter Parker</span><br></pre></td></tr></table></figure>
-
-<p>Done.</p>
+<h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><p>当我们删除一个分支时，git 只是删除了指向相关提交的指针，但该提交对象依然会留在版本库中，因此，如果我们知道删除分支时的 <code>commit id</code>，就可以将某个删除的分支恢复过来。</p>
 ]]></content>
       <tags>
-        <tag>rpc</tag>
+        <tag>git</tag>
+        <tag>骚操作</tag>
       </tags>
   </entry>
   <entry>
@@ -572,34 +576,30 @@
       </tags>
   </entry>
   <entry>
-    <title>git 恢复已删除的分支</title>
-    <url>/2020/03/26/git-%E6%81%A2%E5%A4%8D%E5%B7%B2%E5%88%A0%E9%99%A4%E7%9A%84%E5%88%86%E6%94%AF/</url>
-    <content><![CDATA[<p>在日常开发中，如果我们一不小心删除了某个分支，又想重新使用这个分支，该怎么找回该分支上的代码呢？</p>
-<h2 id="场景还原"><a href="#场景还原" class="headerlink" title="场景还原"></a>场景还原</h2><ol>
-<li>有一个 git 仓库，从 <code>master</code> 分支新建 <code>feature/delete_branch</code> 分支，并进行一次提交，如下：</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">新建一个 feature/delete_branch 分支</span></span><br><span class="line">git branch feature/delete_branch</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">切换到 feature/delete_branch 分支</span></span><br><span class="line">git checkout feature/delete_branch</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">新建一个文件，进行一次提交并推送至远程分支</span></span><br><span class="line">git add delete-file.md</span><br><span class="line">git commit -m &#x27;:sparkles: add a delete-file.md file&#x27;</span><br><span class="line">git push origin feature/delete_branch:feature/delete_branch</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看当前分支图</span></span><br><span class="line">git log --all --decorate --oneline --graph</span><br><span class="line">* 88ac246 (HEAD -&gt; feature/delete_branch, origin/feature/delete_branch) :sparkles: add a delete-file.md file</span><br><span class="line">* 8693480 (origin/master, master) :sparkles: add a hello-git.md file</span><br></pre></td></tr></table></figure>
+    <title>RPC 进阶 - 线程池</title>
+    <url>/2019/07/16/edith-with-thread-pool/</url>
+    <content><![CDATA[<p>在 <a href="https://fuyongde.github.io/2019/07/11/rpc-introduction/">Rpc Introduction</a> 中简单写了一个 <code>RPC Framework</code>。在本节中，对 <code>Edith</code> 新增采用线程池支持多线程的特性。</p>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>实际开发中，我们的应用程序是不能盲目的开辟线程的，这样会造成资源的极大浪费。若采用线程池，可以减少创建和销毁线程的次数，让每个线程可以多次使用，并且可以根据系统的承受能力，调整线程池中工作线程的数量，方式消耗过多的内存。</p>
+<p>如有需要可以阅读 <code>Dubbo</code> 中关于线程池的设计（位于 <code>org.apache.dubbo.common.threadpool</code> 包）。</p>
+<h2 id="开发"><a href="#开发" class="headerlink" title="开发"></a>开发</h2><h3 id="依赖"><a href="#依赖" class="headerlink" title="依赖"></a>依赖</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;com.google.guava&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;guava&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
 
-<ol start="2">
-<li>切换到 <code>master</code> 分支，并删除 <code>feature/delete_branch</code> 分支</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">切换到 master 分支</span></span><br><span class="line">git checkout master</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">删除 feature/delete_branch 分支</span></span><br><span class="line">git branch -d feature/delete_branch</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">将删除的分支同步只至远程</span></span><br><span class="line">git push origin --delete feature/delete_branch</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">此时无论是本地还是远程都已经删除了 feature/delete_branch</span></span><br><span class="line">git log --all --decorate --oneline --graph</span><br><span class="line">* 8693480 (HEAD -&gt; master, origin/master) :sparkles: add a hello-git.md file</span><br></pre></td></tr></table></figure>
+<h3 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h3><p>本文代码可以从<a href="https://github.com/fuyongde/edith/releases/tag/0.1.1">这里</a>获取。</p>
+<h4 id="新增-ThreadUtils-java"><a href="#新增-ThreadUtils-java" class="headerlink" title="新增 ThreadUtils.java"></a>新增 ThreadUtils.java</h4><p>用于创建 <code>ExecutorService</code></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ThreadUtils</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 用于对线程分配一个名字，方便排查问题</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> format format</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> Edith-1</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> ThreadFactory <span class="title function_">buildThreadFactory</span><span class="params">(String format)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">ThreadFactoryBuilder</span>().setNameFormat(format).build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> ExecutorService <span class="title function_">newCachedThreadPool</span><span class="params">(<span class="type">int</span> maximumPoolSize)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">ThreadPoolExecutor</span>(THREAD_CORE_POOL_SIZE, maximumPoolSize &gt; <span class="number">0</span> ? maximumPoolSize : THREAD_MAXIMUM_POOL_SIZE,</span><br><span class="line">                Long.MAX_VALUE, TimeUnit.MICROSECONDS, <span class="keyword">new</span> <span class="title class_">SynchronousQueue</span>&lt;&gt;(), buildThreadFactory(THREAD_NAME), <span class="keyword">new</span> <span class="title class_">ThreadPoolExecutor</span>.AbortPolicy());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="还原删除的分支"><a href="#还原删除的分支" class="headerlink" title="还原删除的分支"></a>还原删除的分支</h2><ol>
-<li>通过 <code>git reflog</code> 或 <code>git log</code> 命令找到我们需要恢复的 <code>commit id</code></li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">这里演示 git reflog 命令展示出来的提交</span></span><br><span class="line">git reflog</span><br><span class="line">8693480 (HEAD -&gt; master, origin/master) HEAD@&#123;0&#125;: checkout: moving from feature/delete_branch to master</span><br><span class="line">88ac246 (feature/delete_branch) HEAD@&#123;1&#125;: commit: :sparkles: add a delete-file.md file</span><br><span class="line">8693480 (HEAD -&gt; master, origin/master) HEAD@&#123;2&#125;: checkout: moving from master to feature/delete_branch</span><br><span class="line">8693480 (HEAD -&gt; master, origin/master) HEAD@&#123;3&#125;: commit (initial): :sparkles: add a hello-git.md file</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">这里演示 git <span class="built_in">log</span> 命令 展示出来的提交</span></span><br><span class="line">git log -g</span><br><span class="line">commit 86934803092ae7ae7266f9ebff3429437e423b80 (HEAD -&gt; master, origin/master)</span><br><span class="line">Reflog: HEAD@&#123;0&#125; (fuyongde &lt;fuyongde@foxmail.com&gt;)</span><br><span class="line">Reflog message: checkout: moving from feature/delete_branch to master</span><br><span class="line">Author: fuyongde &lt;fuyongde@foxmail.com&gt;</span><br><span class="line">Date:   Thu Mar 26 18:36:35 2020 +0800</span><br><span class="line"></span><br><span class="line">    :sparkles: add a hello-git.md file</span><br><span class="line"></span><br><span class="line">commit 88ac246020a0cc25071fb7fd3ac88363f4bf2beb (feature/delete_branch)</span><br><span class="line">Reflog: HEAD@&#123;1&#125; (fuyongde &lt;fuyongde@foxmail.com&gt;)</span><br><span class="line">Reflog message: commit: :sparkles: add a delete-file.md file</span><br><span class="line">Author: fuyongde &lt;fuyongde@foxmail.com&gt;</span><br><span class="line">Date:   Thu Mar 26 18:44:01 2020 +0800</span><br><span class="line"></span><br><span class="line">    :sparkles: add a delete-file.md file</span><br><span class="line"></span><br><span class="line">commit 86934803092ae7ae7266f9ebff3429437e423b80 (HEAD -&gt; master, origin/master)</span><br><span class="line">Reflog: HEAD@&#123;2&#125; (fuyongde &lt;fuyongde@foxmail.com&gt;)</span><br><span class="line">Reflog message: checkout: moving from master to feature/delete_branch</span><br><span class="line">Author: fuyongde &lt;fuyongde@foxmail.com&gt;</span><br><span class="line">Date:   Thu Mar 26 18:36:35 2020 +0800</span><br><span class="line"></span><br><span class="line">    :sparkles: add a hello-git.md file</span><br><span class="line"></span><br><span class="line">commit 86934803092ae7ae7266f9ebff3429437e423b80 (HEAD -&gt; master, origin/master)</span><br><span class="line">Reflog: HEAD@&#123;3&#125; (fuyongde &lt;fuyongde@foxmail.com&gt;)</span><br><span class="line">Reflog message: commit (initial): :sparkles: add a hello-git.md file</span><br><span class="line">Author: fuyongde &lt;fuyongde@foxmail.com&gt;</span><br><span class="line">Date:   Thu Mar 26 18:36:35 2020 +0800</span><br><span class="line"></span><br><span class="line">    :sparkles: add a hello-git.md file</span><br></pre></td></tr></table></figure>
+<h4 id="修改-RpcFramework-java"><a href="#修改-RpcFramework-java" class="headerlink" title="修改 RpcFramework.java"></a>修改 RpcFramework.java</h4><p>将原代码中 <code>new Thread()</code> 部分替换为线程池。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">ExecutorService</span> <span class="variable">executorService</span> <span class="operator">=</span> ThreadUtils.newCachedThreadPool(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">export</span><span class="params">(<span class="keyword">final</span> Object service, <span class="type">int</span> port)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">    Objects.requireNonNull(service, <span class="string">&quot;Service instance is null!&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (port &lt;= PORT_MIN || port &gt; PORT_MAX) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>(<span class="string">&quot;Invalid port &quot;</span> + port);</span><br><span class="line">    &#125;</span><br><span class="line">    System.out.println(<span class="string">&quot;Export service &quot;</span> + service.getClass().getName() + <span class="string">&quot; on port &quot;</span> + port);</span><br><span class="line">    <span class="type">ServerSocket</span> <span class="variable">server</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ServerSocket</span>(port);</span><br><span class="line">    <span class="keyword">for</span> (; ; ) &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;application is running&quot;</span>);</span><br><span class="line">        <span class="type">Socket</span> <span class="variable">socket</span> <span class="operator">=</span> server.accept();</span><br><span class="line">        executorService.execute(() -&gt; &#123;</span><br><span class="line">            <span class="comment">// do something ...</span></span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<ol start="2">
-<li>通过 <code>git branch [branch name] [commit id]</code> 命令来恢复删除的分支</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">恢复 feature/delete_branch 分支到 88ac246 版本</span></span><br><span class="line">git branch feature/delete_branch 88ac246</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">检出 feature/delete_branch 分支</span></span><br><span class="line">git checkout feature/delete_branch</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">此时可以看到已经删除的分支都找回来了，将分支推送的远程</span></span><br><span class="line">git push origin feature/delete_branch:feature/delete_branch</span><br></pre></td></tr></table></figure>
+<p>经过以上修改，我们在例子中的 <code>HelloServiceImpl</code> 打印一下线程名称</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">hello</span><span class="params">(String name)</span> &#123;</span><br><span class="line">    <span class="type">String</span> <span class="variable">result</span> <span class="operator">=</span> <span class="string">&quot;Hello &quot;</span> + name;</span><br><span class="line">    System.out.println(Thread.currentThread().getName() + <span class="string">&quot; &quot;</span> + result);</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><p>当我们删除一个分支时，git 只是删除了指向相关提交的指针，但该提交对象依然会留在版本库中，因此，如果我们知道删除分支时的 <code>commit id</code>，就可以将某个删除的分支恢复过来。</p>
+<p>启动 <code>provider</code>，然后用 <code>consumer</code> 调用一次，观察 <code>provider</code> 的控制台输出</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Edith-0 Hello Peter Parker</span><br></pre></td></tr></table></figure>
+
+<p>Done.</p>
 ]]></content>
       <tags>
-        <tag>git</tag>
-        <tag>骚操作</tag>
+        <tag>rpc</tag>
       </tags>
   </entry>
   <entry>
@@ -973,6 +973,41 @@
       </tags>
   </entry>
   <entry>
+    <title>Jib - Make docker simple again</title>
+    <url>/2019/06/26/jib-make-docker-simple-again/</url>
+    <content><![CDATA[<p>在 <a href="https://fuyongde.github.io/2019/06/25/Dockerizing-Spring-Boot-Application/">使用 Docker 构建 Spring Boot Application</a> 中简单介绍了如何使用 <code>Docker</code> 构建 <code>Spring Boot Application</code>。本文探讨如何更简单的构建 <code>Docker</code> 镜像。</p>
+<h2 id="jib-简介"><a href="#jib-简介" class="headerlink" title="jib 简介"></a>jib 简介</h2><blockquote>
+<p>Make America Great Again. – Donald Trump</p>
+</blockquote>
+<p>大概是受 <code>Donald Trump</code> 的启发 🙄，Google 发布的 <code>jib</code> 让原本已经很简单的 <code>Docker</code> 镜像构建过程变得更加简单。</p>
+<p>一图顶千言，先看 <code>Docker</code> 构建镜像流程</p>
+<img src="/2019/06/26/jib-make-docker-simple-again/docker_process.jpg" class="" title="Docker 构建容器镜像的流程">
+
+<p>再看 <code>Jib</code> 构建容器镜像流程</p>
+<img src="/2019/06/26/jib-make-docker-simple-again/jib_process.jpg" class="" title="Jib 构建容器镜像的流程">
+
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>下面来介绍以下如何使用 <code>Jib</code></p>
+<h3 id="编写-Spring-Boot-Application"><a href="#编写-Spring-Boot-Application" class="headerlink" title="编写 Spring Boot Application"></a>编写 Spring Boot Application</h3><p>略</p>
+<h3 id="配置-Jib-插件"><a href="#配置-Jib-插件" class="headerlink" title="配置 Jib 插件"></a>配置 Jib 插件</h3><p>在项目的 <code>pom.xml</code> 文件中，新增如下配置</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.google.cloud.tools<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jib-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.3.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">from</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">image</span>&gt;</span>openjdk:8u212-jdk-alpine<span class="tag">&lt;/<span class="name">image</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">from</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">to</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">image</span>&gt;</span>registry.cn-hangzhou.aliyuncs.com/fuyongde/ebony-maw:$&#123;project.version&#125;<span class="tag">&lt;/<span class="name">image</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">to</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">container</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">jvmFlags</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">jvmFlag</span>&gt;</span>-Xms128m<span class="tag">&lt;/<span class="name">jvmFlag</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">jvmFlag</span>&gt;</span>-Xmx128m<span class="tag">&lt;/<span class="name">jvmFlag</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">jvmFlags</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">container</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">executions</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">execution</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">phase</span>&gt;</span>package<span class="tag">&lt;/<span class="name">phase</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">goals</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">goal</span>&gt;</span>build<span class="tag">&lt;/<span class="name">goal</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">goals</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">execution</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">executions</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>其中</p>
+<ul>
+<li>from：等同于 <code>Dockerfile</code> 中的 <code>FROM</code></li>
+<li>to：镜像容器服务的地址以及对应的 <code>tag</code>，这里我采用的是阿里云的地址</li>
+<li>jvmFlag：容器启动时的 <code>JVM</code> 参数</li>
+</ul>
+<h3 id="构建"><a href="#构建" class="headerlink" title="构建"></a>构建</h3><p>在终端执行 <code>maven package</code> 命令，<code>Docker</code> 镜像就打包并上传好了 ✌。</p>
+<p>至此，整个构建过程已经完成，我们甚至连 <code>Dockerfile</code> 都不用写，是不是超级简单 🤪。</p>
+<p>如有需要，可参考本文中的 <a href="https://github.com/fuyongde/marvel/tree/master/ebony-maw">Demo</a> 。</p>
+]]></content>
+      <tags>
+        <tag>Docker</tag>
+        <tag>Spring Boot</tag>
+        <tag>Jib</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>JVM 手册</title>
     <url>/2019/11/10/jvm-%E6%89%8B%E5%86%8C/</url>
     <content><![CDATA[<p>记录常用的 JVM 参数，持续更新 …</p>
@@ -1018,41 +1053,6 @@
       <tags>
         <tag>未完待续</tag>
         <tag>JVM</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Jib - Make docker simple again</title>
-    <url>/2019/06/26/jib-make-docker-simple-again/</url>
-    <content><![CDATA[<p>在 <a href="https://fuyongde.github.io/2019/06/25/Dockerizing-Spring-Boot-Application/">使用 Docker 构建 Spring Boot Application</a> 中简单介绍了如何使用 <code>Docker</code> 构建 <code>Spring Boot Application</code>。本文探讨如何更简单的构建 <code>Docker</code> 镜像。</p>
-<h2 id="jib-简介"><a href="#jib-简介" class="headerlink" title="jib 简介"></a>jib 简介</h2><blockquote>
-<p>Make America Great Again. – Donald Trump</p>
-</blockquote>
-<p>大概是受 <code>Donald Trump</code> 的启发 🙄，Google 发布的 <code>jib</code> 让原本已经很简单的 <code>Docker</code> 镜像构建过程变得更加简单。</p>
-<p>一图顶千言，先看 <code>Docker</code> 构建镜像流程</p>
-<img src="/2019/06/26/jib-make-docker-simple-again/docker_process.jpg" class="" title="Docker 构建容器镜像的流程">
-
-<p>再看 <code>Jib</code> 构建容器镜像流程</p>
-<img src="/2019/06/26/jib-make-docker-simple-again/jib_process.jpg" class="" title="Jib 构建容器镜像的流程">
-
-<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>下面来介绍以下如何使用 <code>Jib</code></p>
-<h3 id="编写-Spring-Boot-Application"><a href="#编写-Spring-Boot-Application" class="headerlink" title="编写 Spring Boot Application"></a>编写 Spring Boot Application</h3><p>略</p>
-<h3 id="配置-Jib-插件"><a href="#配置-Jib-插件" class="headerlink" title="配置 Jib 插件"></a>配置 Jib 插件</h3><p>在项目的 <code>pom.xml</code> 文件中，新增如下配置</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.google.cloud.tools<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jib-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.3.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">from</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">image</span>&gt;</span>openjdk:8u212-jdk-alpine<span class="tag">&lt;/<span class="name">image</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">from</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">to</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">image</span>&gt;</span>registry.cn-hangzhou.aliyuncs.com/fuyongde/ebony-maw:$&#123;project.version&#125;<span class="tag">&lt;/<span class="name">image</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">to</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">container</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">jvmFlags</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">jvmFlag</span>&gt;</span>-Xms128m<span class="tag">&lt;/<span class="name">jvmFlag</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">jvmFlag</span>&gt;</span>-Xmx128m<span class="tag">&lt;/<span class="name">jvmFlag</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">jvmFlags</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">container</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">executions</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">execution</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">phase</span>&gt;</span>package<span class="tag">&lt;/<span class="name">phase</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">goals</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">goal</span>&gt;</span>build<span class="tag">&lt;/<span class="name">goal</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">goals</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">execution</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">executions</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>其中</p>
-<ul>
-<li>from：等同于 <code>Dockerfile</code> 中的 <code>FROM</code></li>
-<li>to：镜像容器服务的地址以及对应的 <code>tag</code>，这里我采用的是阿里云的地址</li>
-<li>jvmFlag：容器启动时的 <code>JVM</code> 参数</li>
-</ul>
-<h3 id="构建"><a href="#构建" class="headerlink" title="构建"></a>构建</h3><p>在终端执行 <code>maven package</code> 命令，<code>Docker</code> 镜像就打包并上传好了 ✌。</p>
-<p>至此，整个构建过程已经完成，我们甚至连 <code>Dockerfile</code> 都不用写，是不是超级简单 🤪。</p>
-<p>如有需要，可参考本文中的 <a href="https://github.com/fuyongde/marvel/tree/master/ebony-maw">Demo</a> 。</p>
-]]></content>
-      <tags>
-        <tag>Docker</tag>
-        <tag>Spring Boot</tag>
-        <tag>Jib</tag>
       </tags>
   </entry>
   <entry>
@@ -1606,8 +1606,8 @@
         <category>手册</category>
       </categories>
       <tags>
-        <tag>MySQL</tag>
         <tag>未完待续</tag>
+        <tag>MySQL</tag>
       </tags>
   </entry>
   <entry>
@@ -2012,6 +2012,91 @@
       </tags>
   </entry>
   <entry>
+    <title>事务隔离级别</title>
+    <url>/2019/11/14/transaction-isolation/</url>
+    <content><![CDATA[<p>本文简单介绍一下数据库的事务隔离级别，所用数据库采用 <code>MySQL</code>，<code>MySQL</code> 提供了两种事务性的存储引擎 <code>InnoDB</code> 和 <code>NDB Cluster</code>，本文示例采用 <code>InnoDB</code> 存储引擎。</p>
+<h2 id="查看当前数据的事务隔离级别"><a href="#查看当前数据的事务隔离级别" class="headerlink" title="查看当前数据的事务隔离级别"></a>查看当前数据的事务隔离级别</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 查看当前数据库事务隔离级别</span><br><span class="line">mysql&gt; SHOW VARIABLES LIKE &#x27;%transaction_isolation%&#x27;;</span><br><span class="line">-- 或者</span><br><span class="line">mysql&gt; SELECT @@transaction_isolation;</span><br><span class="line">-- 低版本的 MySQL 查看事务隔离级别的属性是不一样的</span><br><span class="line">mysql&gt; SHOW VARIABLES LIKE &#x27;%tx_isolation%&#x27;;</span><br><span class="line">-- 或者</span><br><span class="line">mysql&gt; SELECT @@tx_isolation;</span><br></pre></td></tr></table></figure>
+
+<h2 id="不同的事务隔离级别所面对的问题"><a href="#不同的事务隔离级别所面对的问题" class="headerlink" title="不同的事务隔离级别所面对的问题"></a>不同的事务隔离级别所面对的问题</h2><table>
+<thead>
+<tr>
+<th>事务隔离级别</th>
+<th>脏读</th>
+<th>不可重复读</th>
+<th>幻读</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>读未提交（read-uncommitted）</td>
+<td>是</td>
+<td>是</td>
+<td>是</td>
+</tr>
+<tr>
+<td>读已提交（read-committed）</td>
+<td>否</td>
+<td>是</td>
+<td>是</td>
+</tr>
+<tr>
+<td>可重复读（repeatable-read）</td>
+<td>否</td>
+<td>否</td>
+<td>是</td>
+</tr>
+<tr>
+<td>串行化（serializable）</td>
+<td>否</td>
+<td>否</td>
+<td>否</td>
+</tr>
+</tbody></table>
+<ul>
+<li><p><code>脏读</code>：事务 A 读取了事务 B 更新的数据，然后 B 回滚操作，那么 A 读取到的数据是脏数据。</p>
+</li>
+<li><p><code>不可重复读</code>：事务 A 多次读取同一数据，事务 B 在事务 A 多次读取的过程中，对数据作了更新并提交，导致事务 A 多次读取同一数据时，结果不一致。</p>
+</li>
+<li><p><code>幻读</code>：系统管理员 A 将数据库中所有学生的成绩从具体分数改为 ABCDE 等级，但是系统管理员 B 就在这个时候插入了一条具体分数的记录，当系统管理员 A 改结束后发现还有一条记录没有改过来，就好像发生了幻觉一样，这就叫幻读。</p>
+</li>
+</ul>
+<p>小结：不可重复读的和幻读很容易混淆，不可重复读侧重于修改，幻读侧重于新增或删除。解决不可重复读的问题只需锁住满足条件的行，解决幻读需要锁表。</p>
+<h2 id="脏读的场景"><a href="#脏读的场景" class="headerlink" title="脏读的场景"></a>脏读的场景</h2><h3 id="客户端-A-先开启事务，查询用户余额"><a href="#客户端-A-先开启事务，查询用户余额" class="headerlink" title="客户端 A 先开启事务，查询用户余额"></a>客户端 A 先开启事务，查询用户余额</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端A设置当前会话级别为`read-uncommitted`</span><br><span class="line">mysq&gt; SET SESSION TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;</span><br><span class="line">-- 客户端A开启事务</span><br><span class="line">mysq&gt; START TRANSACTION;</span><br><span class="line">-- 客户端A查询用户余额</span><br><span class="line">mysq&gt; SELECT * FROM wallet WHERE user_id = 1;</span><br><span class="line">-- 结果如下：</span><br><span class="line"># +----+---------+-----------+</span><br><span class="line"># | id | user_id | balance   |</span><br><span class="line"># +----+---------+-----------+</span><br><span class="line"># |  1 |       1 | 100000000 |</span><br><span class="line"># +----+---------+-----------+</span><br></pre></td></tr></table></figure>
+
+<h3 id="客户端-B-开启事务，并修改用户余额"><a href="#客户端-B-开启事务，并修改用户余额" class="headerlink" title="客户端 B 开启事务，并修改用户余额"></a>客户端 B 开启事务，并修改用户余额</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端B设置当前会话级别为`read-uncommitted`</span><br><span class="line">mysq&gt; SET SESSION TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;</span><br><span class="line">-- 客户端B开启事务</span><br><span class="line">mysq&gt; START TRANSACTION;</span><br><span class="line">-- 客户端B修改用户余额，</span><br><span class="line">mysql&gt; UPDATE wallet SET balance = balance + 100 WHERE user_id = 1;</span><br></pre></td></tr></table></figure>
+
+<h3 id="客户端-A-查询用户余额"><a href="#客户端-A-查询用户余额" class="headerlink" title="客户端 A 查询用户余额"></a>客户端 A 查询用户余额</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端A获取用户余额（此时由于B的事务并未提交，故A事务读到了B事务已经更新后的数据，此时发生脏读）</span><br><span class="line">mysq&gt; SELECT * FROM wallet WHERE user_id = 1;</span><br><span class="line">-- 结果如下：</span><br><span class="line"># +----+---------+-----------+</span><br><span class="line"># | id | user_id | balance   |</span><br><span class="line"># +----+---------+-----------+</span><br><span class="line"># |  1 |       1 | 100000100 |</span><br><span class="line"># +----+---------+-----------+</span><br></pre></td></tr></table></figure>
+
+<h3 id="客户端-B-回滚事务"><a href="#客户端-B-回滚事务" class="headerlink" title="客户端 B 回滚事务"></a>客户端 B 回滚事务</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端B回滚事务</span><br><span class="line">mysql&gt; ROLLBACK;</span><br></pre></td></tr></table></figure>
+
+<h3 id="客户端-A-修改用户余额"><a href="#客户端-A-修改用户余额" class="headerlink" title="客户端 A 修改用户余额"></a>客户端 A 修改用户余额</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端A修改用户余额</span><br><span class="line">mysq&gt; UPDATE wallet SET balance = balance - 500 WHERE user_id = 1;</span><br><span class="line"></span><br><span class="line">-- 客户端A查询用户余额</span><br><span class="line">mysq&gt; SELECT * FROM wallet WHERE user_id = 1;</span><br><span class="line">-- 结果如下：</span><br><span class="line"># +----+---------+----------+</span><br><span class="line"># | id | user_id | balance  |</span><br><span class="line"># +----+---------+----------+</span><br><span class="line"># |  1 |       1 | 99999500 |</span><br><span class="line"># +----+---------+----------+</span><br><span class="line">-- 对于A客户端来讲，此时的结果是很奇怪的。</span><br><span class="line">-- 客户端A提交事务</span><br><span class="line">mysql&gt; COMMIT;</span><br></pre></td></tr></table></figure>
+
+<h2 id="不可重复读的场景"><a href="#不可重复读的场景" class="headerlink" title="不可重复读的场景"></a>不可重复读的场景</h2><h3 id="客户端-A-开启事务，查询用户余额"><a href="#客户端-A-开启事务，查询用户余额" class="headerlink" title="客户端 A 开启事务，查询用户余额"></a>客户端 A 开启事务，查询用户余额</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端A设置当前会话级别为`read-committed`</span><br><span class="line">mysql&gt; SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED;</span><br><span class="line">-- 客户端A开启事务</span><br><span class="line">mysql&gt; BEGIN;</span><br><span class="line">-- 客户端A查询用户余额</span><br><span class="line">SELECT * FROM wallet WHERE user_id = 1;</span><br><span class="line">-- 结果如下:</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># | id | user_id | balance |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># |  1 |       1 |     200 |</span><br><span class="line"># +----+---------+---------+</span><br></pre></td></tr></table></figure>
+
+<h3 id="客户端-B-开启事务，并修改用户余额-1"><a href="#客户端-B-开启事务，并修改用户余额-1" class="headerlink" title="客户端 B 开启事务，并修改用户余额"></a>客户端 B 开启事务，并修改用户余额</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端B设置当前会话级别为`read-committed`</span><br><span class="line">mysql&gt; SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED;</span><br><span class="line">-- 客户端B开启事务</span><br><span class="line">mysql&gt; BEGIN;</span><br><span class="line">-- 客户端B修改用户余额</span><br><span class="line">mysql&gt; UPDATE wallet SET balance = balance + 100 WHERE user_id = 1;</span><br><span class="line">-- 客户端B查询用户余额</span><br><span class="line">mysql&gt; SELECT * FROM wallet WHERE user_id = 1;</span><br><span class="line">-- 结果如下：</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># | id | user_id | balance |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># |  1 |       1 |     300 |</span><br><span class="line"># +----+---------+---------+</span><br></pre></td></tr></table></figure>
+
+<h3 id="客户端-A-查询用户余额-1"><a href="#客户端-A-查询用户余额-1" class="headerlink" title="客户端 A 查询用户余额"></a>客户端 A 查询用户余额</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端A查询用户余额</span><br><span class="line">mysql&gt; SELECT * FROM wallet WHERE user_id = 1;</span><br><span class="line">-- 结果如下：</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># | id | user_id | balance |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># |  1 |       1 |     200 |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line">-- 此时客户端B的事务还没有提交，故客户端A不能查询到B事务已经更新的数据，解决了脏读的问题</span><br></pre></td></tr></table></figure>
+
+<h3 id="客户端-B-提交事务"><a href="#客户端-B-提交事务" class="headerlink" title="客户端 B 提交事务"></a>客户端 B 提交事务</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端B提交事务</span><br><span class="line">mysql&gt; COMMIT;</span><br></pre></td></tr></table></figure>
+
+<h3 id="客户端-A-查询用户余额-2"><a href="#客户端-A-查询用户余额-2" class="headerlink" title="客户端 A 查询用户余额"></a>客户端 A 查询用户余额</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端A查询用户余额</span><br><span class="line">mysql&gt; SELECT * FROM wallet WHERE user_id = 1;</span><br><span class="line">-- 结果如下：</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># | id | user_id | balance |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># |  1 |       1 |     300 |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line">-- 此时客户端B的事务还已经提交，结果与上一步不一致，即产生了不可重复读的问题。</span><br><span class="line">-- 客户端A提交事务</span><br><span class="line">mysql&gt; COMMIT;</span><br></pre></td></tr></table></figure>
+
+<h2 id="幻读的场景"><a href="#幻读的场景" class="headerlink" title="幻读的场景"></a>幻读的场景</h2><h3 id="客户端-A-开启事务，查询所有用户"><a href="#客户端-A-开启事务，查询所有用户" class="headerlink" title="客户端 A 开启事务，查询所有用户"></a>客户端 A 开启事务，查询所有用户</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端A设置当前会话级别为`repeatable-read`</span><br><span class="line">mysql&gt; SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ;</span><br><span class="line">-- 客户端A开启事务</span><br><span class="line">mysql&gt; BEGIN;</span><br><span class="line">-- 客户端A查询所有用户余额</span><br><span class="line">SELECT * FROM wallet;</span><br><span class="line">-- 结果如下:</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># | id | user_id | balance |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># |  1 |       1 |     100 |</span><br><span class="line"># +----+---------+---------+</span><br></pre></td></tr></table></figure>
+
+<h3 id="客户端-B-开启事务，并插入一条记录"><a href="#客户端-B-开启事务，并插入一条记录" class="headerlink" title="客户端 B 开启事务，并插入一条记录"></a>客户端 B 开启事务，并插入一条记录</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端B设置当前会话级别为`repeatable-read`</span><br><span class="line">mysql&gt; SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ;</span><br><span class="line">-- 客户端B开启事务</span><br><span class="line">mysql&gt; BEGIN;</span><br><span class="line">-- 客户端B查询所有用户余额</span><br><span class="line">SELECT * FROM wallet;</span><br><span class="line">-- 结果如下:</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># | id | user_id | balance |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># |  1 |       1 |     100 |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line">-- 客户端B插入一条记录</span><br><span class="line">mysq&gt; INSERT INTO wallet (`id`, `user_id`, `balance`) VALUES (2, 2, 200);</span><br><span class="line">-- 客户端B查询所有的用户余额</span><br><span class="line">mysql&gt; SELECT * FROM wallet;</span><br><span class="line">-- 结果如下</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># | id | user_id | balance |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># |  1 |       1 |     100 |</span><br><span class="line"># |  2 |       2 |     200 |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="客户端-A-查询所有用户余额"><a href="#客户端-A-查询所有用户余额" class="headerlink" title="客户端 A 查询所有用户余额"></a>客户端 A 查询所有用户余额</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端A查询所有用户余额, 此时发生幻读。</span><br><span class="line">SELECT * FROM wallet;</span><br><span class="line">-- 结果如下:</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># | id | user_id | balance |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># |  1 |       1 |     100 |</span><br><span class="line"># +----+---------+---------+</span><br></pre></td></tr></table></figure>
+
+<h3 id="客户端-B-提交事务-1"><a href="#客户端-B-提交事务-1" class="headerlink" title="客户端 B 提交事务"></a>客户端 B 提交事务</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端B提交事务</span><br><span class="line">mysq&gt; COMMIT;</span><br></pre></td></tr></table></figure>
+
+<h3 id="客户端-A-插入一条记录"><a href="#客户端-A-插入一条记录" class="headerlink" title="客户端 A 插入一条记录"></a>客户端 A 插入一条记录</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户A插入id为2的记录</span><br><span class="line">mysql&gt; INSERT INTO wallet (`id`, `user_id`, `balance`) VALUES (2, 2, 200);</span><br><span class="line">-- 结果失败了，</span><br><span class="line">ERROR 1062 (23000): Duplicate entry &#x27;2&#x27; for key &#x27;PRIMARY&#x27;</span><br><span class="line">-- 客户端A回滚</span><br><span class="line">mysql&gt; ROLLBACK;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>数据库</tag>
+        <tag>MySQL</tag>
+        <tag>事务</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>zsh 手册</title>
     <url>/2021/08/24/zsh-%E6%89%8B%E5%86%8C/</url>
     <content><![CDATA[<p>zsh 可能是目前最好用的终端。</p>
@@ -2115,91 +2200,6 @@
       <tags>
         <tag>Spring</tag>
         <tag>源码</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>事务隔离级别</title>
-    <url>/2019/11/14/transaction-isolation/</url>
-    <content><![CDATA[<p>本文简单介绍一下数据库的事务隔离级别，所用数据库采用 <code>MySQL</code>，<code>MySQL</code> 提供了两种事务性的存储引擎 <code>InnoDB</code> 和 <code>NDB Cluster</code>，本文示例采用 <code>InnoDB</code> 存储引擎。</p>
-<h2 id="查看当前数据的事务隔离级别"><a href="#查看当前数据的事务隔离级别" class="headerlink" title="查看当前数据的事务隔离级别"></a>查看当前数据的事务隔离级别</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 查看当前数据库事务隔离级别</span><br><span class="line">mysql&gt; SHOW VARIABLES LIKE &#x27;%transaction_isolation%&#x27;;</span><br><span class="line">-- 或者</span><br><span class="line">mysql&gt; SELECT @@transaction_isolation;</span><br><span class="line">-- 低版本的 MySQL 查看事务隔离级别的属性是不一样的</span><br><span class="line">mysql&gt; SHOW VARIABLES LIKE &#x27;%tx_isolation%&#x27;;</span><br><span class="line">-- 或者</span><br><span class="line">mysql&gt; SELECT @@tx_isolation;</span><br></pre></td></tr></table></figure>
-
-<h2 id="不同的事务隔离级别所面对的问题"><a href="#不同的事务隔离级别所面对的问题" class="headerlink" title="不同的事务隔离级别所面对的问题"></a>不同的事务隔离级别所面对的问题</h2><table>
-<thead>
-<tr>
-<th>事务隔离级别</th>
-<th>脏读</th>
-<th>不可重复读</th>
-<th>幻读</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>读未提交（read-uncommitted）</td>
-<td>是</td>
-<td>是</td>
-<td>是</td>
-</tr>
-<tr>
-<td>读已提交（read-committed）</td>
-<td>否</td>
-<td>是</td>
-<td>是</td>
-</tr>
-<tr>
-<td>可重复读（repeatable-read）</td>
-<td>否</td>
-<td>否</td>
-<td>是</td>
-</tr>
-<tr>
-<td>串行化（serializable）</td>
-<td>否</td>
-<td>否</td>
-<td>否</td>
-</tr>
-</tbody></table>
-<ul>
-<li><p><code>脏读</code>：事务 A 读取了事务 B 更新的数据，然后 B 回滚操作，那么 A 读取到的数据是脏数据。</p>
-</li>
-<li><p><code>不可重复读</code>：事务 A 多次读取同一数据，事务 B 在事务 A 多次读取的过程中，对数据作了更新并提交，导致事务 A 多次读取同一数据时，结果不一致。</p>
-</li>
-<li><p><code>幻读</code>：系统管理员 A 将数据库中所有学生的成绩从具体分数改为 ABCDE 等级，但是系统管理员 B 就在这个时候插入了一条具体分数的记录，当系统管理员 A 改结束后发现还有一条记录没有改过来，就好像发生了幻觉一样，这就叫幻读。</p>
-</li>
-</ul>
-<p>小结：不可重复读的和幻读很容易混淆，不可重复读侧重于修改，幻读侧重于新增或删除。解决不可重复读的问题只需锁住满足条件的行，解决幻读需要锁表。</p>
-<h2 id="脏读的场景"><a href="#脏读的场景" class="headerlink" title="脏读的场景"></a>脏读的场景</h2><h3 id="客户端-A-先开启事务，查询用户余额"><a href="#客户端-A-先开启事务，查询用户余额" class="headerlink" title="客户端 A 先开启事务，查询用户余额"></a>客户端 A 先开启事务，查询用户余额</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端A设置当前会话级别为`read-uncommitted`</span><br><span class="line">mysq&gt; SET SESSION TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;</span><br><span class="line">-- 客户端A开启事务</span><br><span class="line">mysq&gt; START TRANSACTION;</span><br><span class="line">-- 客户端A查询用户余额</span><br><span class="line">mysq&gt; SELECT * FROM wallet WHERE user_id = 1;</span><br><span class="line">-- 结果如下：</span><br><span class="line"># +----+---------+-----------+</span><br><span class="line"># | id | user_id | balance   |</span><br><span class="line"># +----+---------+-----------+</span><br><span class="line"># |  1 |       1 | 100000000 |</span><br><span class="line"># +----+---------+-----------+</span><br></pre></td></tr></table></figure>
-
-<h3 id="客户端-B-开启事务，并修改用户余额"><a href="#客户端-B-开启事务，并修改用户余额" class="headerlink" title="客户端 B 开启事务，并修改用户余额"></a>客户端 B 开启事务，并修改用户余额</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端B设置当前会话级别为`read-uncommitted`</span><br><span class="line">mysq&gt; SET SESSION TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;</span><br><span class="line">-- 客户端B开启事务</span><br><span class="line">mysq&gt; START TRANSACTION;</span><br><span class="line">-- 客户端B修改用户余额，</span><br><span class="line">mysql&gt; UPDATE wallet SET balance = balance + 100 WHERE user_id = 1;</span><br></pre></td></tr></table></figure>
-
-<h3 id="客户端-A-查询用户余额"><a href="#客户端-A-查询用户余额" class="headerlink" title="客户端 A 查询用户余额"></a>客户端 A 查询用户余额</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端A获取用户余额（此时由于B的事务并未提交，故A事务读到了B事务已经更新后的数据，此时发生脏读）</span><br><span class="line">mysq&gt; SELECT * FROM wallet WHERE user_id = 1;</span><br><span class="line">-- 结果如下：</span><br><span class="line"># +----+---------+-----------+</span><br><span class="line"># | id | user_id | balance   |</span><br><span class="line"># +----+---------+-----------+</span><br><span class="line"># |  1 |       1 | 100000100 |</span><br><span class="line"># +----+---------+-----------+</span><br></pre></td></tr></table></figure>
-
-<h3 id="客户端-B-回滚事务"><a href="#客户端-B-回滚事务" class="headerlink" title="客户端 B 回滚事务"></a>客户端 B 回滚事务</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端B回滚事务</span><br><span class="line">mysql&gt; ROLLBACK;</span><br></pre></td></tr></table></figure>
-
-<h3 id="客户端-A-修改用户余额"><a href="#客户端-A-修改用户余额" class="headerlink" title="客户端 A 修改用户余额"></a>客户端 A 修改用户余额</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端A修改用户余额</span><br><span class="line">mysq&gt; UPDATE wallet SET balance = balance - 500 WHERE user_id = 1;</span><br><span class="line"></span><br><span class="line">-- 客户端A查询用户余额</span><br><span class="line">mysq&gt; SELECT * FROM wallet WHERE user_id = 1;</span><br><span class="line">-- 结果如下：</span><br><span class="line"># +----+---------+----------+</span><br><span class="line"># | id | user_id | balance  |</span><br><span class="line"># +----+---------+----------+</span><br><span class="line"># |  1 |       1 | 99999500 |</span><br><span class="line"># +----+---------+----------+</span><br><span class="line">-- 对于A客户端来讲，此时的结果是很奇怪的。</span><br><span class="line">-- 客户端A提交事务</span><br><span class="line">mysql&gt; COMMIT;</span><br></pre></td></tr></table></figure>
-
-<h2 id="不可重复读的场景"><a href="#不可重复读的场景" class="headerlink" title="不可重复读的场景"></a>不可重复读的场景</h2><h3 id="客户端-A-开启事务，查询用户余额"><a href="#客户端-A-开启事务，查询用户余额" class="headerlink" title="客户端 A 开启事务，查询用户余额"></a>客户端 A 开启事务，查询用户余额</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端A设置当前会话级别为`read-committed`</span><br><span class="line">mysql&gt; SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED;</span><br><span class="line">-- 客户端A开启事务</span><br><span class="line">mysql&gt; BEGIN;</span><br><span class="line">-- 客户端A查询用户余额</span><br><span class="line">SELECT * FROM wallet WHERE user_id = 1;</span><br><span class="line">-- 结果如下:</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># | id | user_id | balance |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># |  1 |       1 |     200 |</span><br><span class="line"># +----+---------+---------+</span><br></pre></td></tr></table></figure>
-
-<h3 id="客户端-B-开启事务，并修改用户余额-1"><a href="#客户端-B-开启事务，并修改用户余额-1" class="headerlink" title="客户端 B 开启事务，并修改用户余额"></a>客户端 B 开启事务，并修改用户余额</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端B设置当前会话级别为`read-committed`</span><br><span class="line">mysql&gt; SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED;</span><br><span class="line">-- 客户端B开启事务</span><br><span class="line">mysql&gt; BEGIN;</span><br><span class="line">-- 客户端B修改用户余额</span><br><span class="line">mysql&gt; UPDATE wallet SET balance = balance + 100 WHERE user_id = 1;</span><br><span class="line">-- 客户端B查询用户余额</span><br><span class="line">mysql&gt; SELECT * FROM wallet WHERE user_id = 1;</span><br><span class="line">-- 结果如下：</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># | id | user_id | balance |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># |  1 |       1 |     300 |</span><br><span class="line"># +----+---------+---------+</span><br></pre></td></tr></table></figure>
-
-<h3 id="客户端-A-查询用户余额-1"><a href="#客户端-A-查询用户余额-1" class="headerlink" title="客户端 A 查询用户余额"></a>客户端 A 查询用户余额</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端A查询用户余额</span><br><span class="line">mysql&gt; SELECT * FROM wallet WHERE user_id = 1;</span><br><span class="line">-- 结果如下：</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># | id | user_id | balance |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># |  1 |       1 |     200 |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line">-- 此时客户端B的事务还没有提交，故客户端A不能查询到B事务已经更新的数据，解决了脏读的问题</span><br></pre></td></tr></table></figure>
-
-<h3 id="客户端-B-提交事务"><a href="#客户端-B-提交事务" class="headerlink" title="客户端 B 提交事务"></a>客户端 B 提交事务</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端B提交事务</span><br><span class="line">mysql&gt; COMMIT;</span><br></pre></td></tr></table></figure>
-
-<h3 id="客户端-A-查询用户余额-2"><a href="#客户端-A-查询用户余额-2" class="headerlink" title="客户端 A 查询用户余额"></a>客户端 A 查询用户余额</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端A查询用户余额</span><br><span class="line">mysql&gt; SELECT * FROM wallet WHERE user_id = 1;</span><br><span class="line">-- 结果如下：</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># | id | user_id | balance |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># |  1 |       1 |     300 |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line">-- 此时客户端B的事务还已经提交，结果与上一步不一致，即产生了不可重复读的问题。</span><br><span class="line">-- 客户端A提交事务</span><br><span class="line">mysql&gt; COMMIT;</span><br></pre></td></tr></table></figure>
-
-<h2 id="幻读的场景"><a href="#幻读的场景" class="headerlink" title="幻读的场景"></a>幻读的场景</h2><h3 id="客户端-A-开启事务，查询所有用户"><a href="#客户端-A-开启事务，查询所有用户" class="headerlink" title="客户端 A 开启事务，查询所有用户"></a>客户端 A 开启事务，查询所有用户</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端A设置当前会话级别为`repeatable-read`</span><br><span class="line">mysql&gt; SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ;</span><br><span class="line">-- 客户端A开启事务</span><br><span class="line">mysql&gt; BEGIN;</span><br><span class="line">-- 客户端A查询所有用户余额</span><br><span class="line">SELECT * FROM wallet;</span><br><span class="line">-- 结果如下:</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># | id | user_id | balance |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># |  1 |       1 |     100 |</span><br><span class="line"># +----+---------+---------+</span><br></pre></td></tr></table></figure>
-
-<h3 id="客户端-B-开启事务，并插入一条记录"><a href="#客户端-B-开启事务，并插入一条记录" class="headerlink" title="客户端 B 开启事务，并插入一条记录"></a>客户端 B 开启事务，并插入一条记录</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端B设置当前会话级别为`repeatable-read`</span><br><span class="line">mysql&gt; SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ;</span><br><span class="line">-- 客户端B开启事务</span><br><span class="line">mysql&gt; BEGIN;</span><br><span class="line">-- 客户端B查询所有用户余额</span><br><span class="line">SELECT * FROM wallet;</span><br><span class="line">-- 结果如下:</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># | id | user_id | balance |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># |  1 |       1 |     100 |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line">-- 客户端B插入一条记录</span><br><span class="line">mysq&gt; INSERT INTO wallet (`id`, `user_id`, `balance`) VALUES (2, 2, 200);</span><br><span class="line">-- 客户端B查询所有的用户余额</span><br><span class="line">mysql&gt; SELECT * FROM wallet;</span><br><span class="line">-- 结果如下</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># | id | user_id | balance |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># |  1 |       1 |     100 |</span><br><span class="line"># |  2 |       2 |     200 |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="客户端-A-查询所有用户余额"><a href="#客户端-A-查询所有用户余额" class="headerlink" title="客户端 A 查询所有用户余额"></a>客户端 A 查询所有用户余额</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端A查询所有用户余额, 此时发生幻读。</span><br><span class="line">SELECT * FROM wallet;</span><br><span class="line">-- 结果如下:</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># | id | user_id | balance |</span><br><span class="line"># +----+---------+---------+</span><br><span class="line"># |  1 |       1 |     100 |</span><br><span class="line"># +----+---------+---------+</span><br></pre></td></tr></table></figure>
-
-<h3 id="客户端-B-提交事务-1"><a href="#客户端-B-提交事务-1" class="headerlink" title="客户端 B 提交事务"></a>客户端 B 提交事务</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户端B提交事务</span><br><span class="line">mysq&gt; COMMIT;</span><br></pre></td></tr></table></figure>
-
-<h3 id="客户端-A-插入一条记录"><a href="#客户端-A-插入一条记录" class="headerlink" title="客户端 A 插入一条记录"></a>客户端 A 插入一条记录</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 客户A插入id为2的记录</span><br><span class="line">mysql&gt; INSERT INTO wallet (`id`, `user_id`, `balance`) VALUES (2, 2, 200);</span><br><span class="line">-- 结果失败了，</span><br><span class="line">ERROR 1062 (23000): Duplicate entry &#x27;2&#x27; for key &#x27;PRIMARY&#x27;</span><br><span class="line">-- 客户端A回滚</span><br><span class="line">mysql&gt; ROLLBACK;</span><br></pre></td></tr></table></figure>
-]]></content>
-      <tags>
-        <tag>数据库</tag>
-        <tag>MySQL</tag>
-        <tag>事务</tag>
       </tags>
   </entry>
   <entry>
