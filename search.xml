@@ -1,21 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>android command line 安装时的坑</title>
-    <url>/2020/03/24/android-command-line-%E5%AE%89%E8%A3%85%E6%97%B6%E7%9A%84%E5%9D%91/</url>
-    <content><![CDATA[<p>很久没有搞过 Android 开发了，Android 的命令行安装方式相比之前发生了一些变化，这里针对安装最新的 Android 命令行时遇到的一些问题，记录一下解决方法。</p>
-<p><em>问题：下载最新的 commandlinetools 在自己指定的目录安装之后，无法使用</em></p>
-<p><strong>原因：最新版本的 commandlinetools 对安装的目录是有要求的</strong></p>
-<ol>
-<li>Download latest Command line tools from android i.e. commandlinetools-win-6200805_latest.zip</li>
-<li>Unzip the downloaded file</li>
-<li>Create directory for storing commandline tools somewhere on your disk, with following path included: android&#x2F;cmdline-tools&#x2F;latest Basically when You unzip this Cmd line tools, just rename tools directory to latest and make sure You put this latest folder in android&#x2F;cmdline-tools directory somewhere on your disk</li>
-<li>Create ANDROID_HOME environment variable for directory that stores the cmdline tools directory location like: <code>C:\YourLocationWhereYouStoreTheDirectory\android\cmdline-tools\latest</code></li>
-<li>Create new entry in Path environment variable as %ANDROID_HOME%\bin</li>
-</ol>
-]]></content>
-  </entry>
-  <entry>
     <title>JaCoCo手册</title>
     <url>/2022/01/26/JaCoCo%E6%89%8B%E5%86%8C/</url>
     <content><![CDATA[<h2 id="JaCoCo-简介"><a href="#JaCoCo-简介" class="headerlink" title="JaCoCo 简介"></a>JaCoCo 简介</h2><blockquote>
@@ -119,6 +104,21 @@
 ]]></content>
   </entry>
   <entry>
+    <title>android command line 安装时的坑</title>
+    <url>/2020/03/24/android-command-line-%E5%AE%89%E8%A3%85%E6%97%B6%E7%9A%84%E5%9D%91/</url>
+    <content><![CDATA[<p>很久没有搞过 Android 开发了，Android 的命令行安装方式相比之前发生了一些变化，这里针对安装最新的 Android 命令行时遇到的一些问题，记录一下解决方法。</p>
+<p><em>问题：下载最新的 commandlinetools 在自己指定的目录安装之后，无法使用</em></p>
+<p><strong>原因：最新版本的 commandlinetools 对安装的目录是有要求的</strong></p>
+<ol>
+<li>Download latest Command line tools from android i.e. commandlinetools-win-6200805_latest.zip</li>
+<li>Unzip the downloaded file</li>
+<li>Create directory for storing commandline tools somewhere on your disk, with following path included: android&#x2F;cmdline-tools&#x2F;latest Basically when You unzip this Cmd line tools, just rename tools directory to latest and make sure You put this latest folder in android&#x2F;cmdline-tools directory somewhere on your disk</li>
+<li>Create ANDROID_HOME environment variable for directory that stores the cmdline tools directory location like: <code>C:\YourLocationWhereYouStoreTheDirectory\android\cmdline-tools\latest</code></li>
+<li>Create new entry in Path environment variable as %ANDROID_HOME%\bin</li>
+</ol>
+]]></content>
+  </entry>
+  <entry>
     <title>Arthas 非常实用的几个命令</title>
     <url>/2020/01/18/arthas-useful-command/</url>
     <content><![CDATA[<p>本文介绍几个非常有用的 Arthas 命令，熟练使用这几个命令，可以让我们在排查线上问题的时候更加轻松。</p>
@@ -210,55 +210,6 @@
         <tag>curl</tag>
         <tag>command</tag>
         <tag>未完待续</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>夏令时问题</title>
-    <url>/2019/10/01/daylight-saving-time/</url>
-    <content><![CDATA[<p>在工作中，遇到一个很有意思的关于时间的问题，这里跟大家分享一下。</p>
-<h2 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h2><p>从数据库里取出用户的生日<code>1990-05-22</code>，接口返回时发现返回值变成了<code>1990-05-21</code>，而对于<code>1992-05-22</code>这样的日期却能正确返回。</p>
-<p>网上很多对于相关问题的分析都是简单粗暴的认为是时区的问题，却没有讲明白问题出现的根本原因。</p>
-<h2 id="排查过程"><a href="#排查过程" class="headerlink" title="排查过程"></a>排查过程</h2><h3 id="问题复现"><a href="#问题复现" class="headerlink" title="问题复现"></a>问题复现</h3><p>为了复现问题现象，我们先快速搭建一个 Spring Boot Application。</p>
-<p>先将配置文件中对日期类型的格式化配置为 <code>yyyy-MM-dd</code>，如下所示：</p>
-<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">spring.jackson.time-zone</span>=<span class="string">GMT+8</span></span><br><span class="line"><span class="attr">spring.jackson.date-format</span>=<span class="string">yyyy-MM-dd</span></span><br></pre></td></tr></table></figure>
-
-<p>写一个接口，直接将有问题的日期输出，代码如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">IndexController</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/dst&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Map&lt;String, Object&gt; <span class="title function_">dst</span><span class="params">(<span class="meta">@RequestParam(&quot;date&quot;)</span> Date date)</span> &#123;</span><br><span class="line">        Map&lt;String, Object&gt; map = Maps.newHashMap();</span><br><span class="line">        System.out.println(<span class="string">&quot;birthday : &quot;</span> + DateFormatUtils.format(date, <span class="string">&quot;yyyy-MM-dd&quot;</span>));</span><br><span class="line">        map.put(<span class="string">&quot;birthday&quot;</span>, date);</span><br><span class="line">        <span class="keyword">return</span> map;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>构造如下请求：</p>
-<figure class="highlight http"><table><tr><td class="code"><pre><span class="line">GET http://localhost:8081/dst?date=1990/05/22</span><br></pre></td></tr></table></figure>
-
-<p>发现服务端日志正确输出<code>1990-05-22</code>，而接口返回值却输出：</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span><span class="attr">&quot;birthday&quot;</span><span class="punctuation">:</span> <span class="string">&quot;1990-05-21&quot;</span><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
-
-<p>构造如下请求：</p>
-<figure class="highlight http"><table><tr><td class="code"><pre><span class="line">GET http://localhost:8081/dst?date=1992/05/22</span><br></pre></td></tr></table></figure>
-
-<p>发现服务端日志正确输出<code>1992-05-22</code>，此时接口的输出与服务端日志一致：</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span><span class="attr">&quot;birthday&quot;</span><span class="punctuation">:</span> <span class="string">&quot;1992-05-22&quot;</span><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
-
-<p>至此，我们复现了本文要讲解的问题。</p>
-<h3 id="输出对应的时间"><a href="#输出对应的时间" class="headerlink" title="输出对应的时间"></a>输出对应的时间</h3><p>为了更精确的知道这两个日期究竟有什么不同，我们更详细的输出这两个 <code>Date</code> 所对应的具体时间。</p>
-<p>修改配置文件为：</p>
-<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">spring.jackson.date-format</span>=<span class="string">yyyy-MM-dd HH:mm:ss</span></span><br></pre></td></tr></table></figure>
-
-<p>重复以上请求，发现对于<code>1990-05-22</code>，服务端日志输出<code>1990-05-22 00:00:00</code>，而接口返回值则为<code>1990-05-21 23:00:00</code>，两者相差了一个小时。而对于<code>1992-05-22</code>，服务端日志与接口返回值完全一致。</p>
-<h3 id="输出系统的时区"><a href="#输出系统的时区" class="headerlink" title="输出系统的时区"></a>输出系统的时区</h3><p>通过上述的现象基本上可以定位问题出现在 <code>Jackson</code> 对日期的序列化上。</p>
-<p>为了排查这个问题，我们在启动 Spring Boot Application 时，先输出当前系统的时区，发现系统时区为 <code>Asia/Shanghai</code>，而我们配置的 <code>Jackson</code> 时区为 <code>GMT+8</code>。</p>
-<p>难道 <code>Asia/Shanghai</code> 与 <code>GMT+8</code> 不是同一个时区？</p>
-<h3 id="求证"><a href="#求证" class="headerlink" title="求证"></a>求证</h3><p>为了证明我们的猜想是正确的，在启动 Spring Boot Application 时，将系统时区设置为 <code>GMT+8</code>。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DSTApplication</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        SpringApplication.run(DSTApplication.class, args);</span><br><span class="line">        TimeZone.setDefault(TimeZone.getTimeZone(<span class="string">&quot;GMT+8&quot;</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>重复以上请求，发现对于<code>1990-05-22</code>，服务端日志和接口均正确输出 <code>1990-05-22 00:00:00</code>。</p>
-<p>若不设置默认时区为 <code>GMT+8</code>，而是将 <code>Jackson</code> 序列化的时区配置修改为 <code>Asia/Shanghai</code>，接口也能正确输出。</p>
-<p>那么 <code>Asia/Shanghai</code> 与 <code>GMT+8</code> 在什么情况下会导致相差一个小时的问题呢？</p>
-<h2 id="夏令时"><a href="#夏令时" class="headerlink" title="夏令时"></a>夏令时</h2><blockquote>
-<p>夏令时，表示为了节约能源，人为规定时间的意思。也叫夏时制，夏时令（Daylight Saving Time：DST），又称“日光节约时制”和“夏令时间”，在这一制度实行期间所采用的统一时间称为“夏令时间”。一般在天亮早的夏季人为将时间调快一小时，可以使人早起早睡，减少照明量，以充分利用光照资源，从而节约照明用电。各个采纳夏时制的国家具体规定不同。目前全世界有近110个国家每年要实行夏令时。1986年4月，中国中央有关部门发出“在全国范围内实行夏时制的通知”，具体作法是：每年从四月中旬第一个星期日的凌晨2时整（北京时间），将时钟拨快一小时，即将表针由2时拨至3时，夏令时开始；到九月中旬第一个星期日的凌晨2时整（北京夏令时），再将时钟拨回一小时，即将表针由2时拨至1时，夏令时结束。从1986年到1991年的六个年度，除1986年因是实行夏时制的第一年，从5月4日开始到9月14日结束外，其它年份均按规定的时段施行。在夏令时开始和结束前几天，新闻媒体均刊登有关部门的通告。1992年起，夏令时暂停实行。</p>
-</blockquote>
-<p>以上内容摘抄自<a href="https://baike.baidu.com/item/%E5%A4%8F%E4%BB%A4%E6%97%B6">百度百科</a>，这也就是为什么在上述例子中为什么<code>1992-05-22</code>即使在系统时区与 <code>Jackson</code> 序列化时区不一致的情况下，仍然能够正确返回，而<code>1990-05-22</code>就会出错。</p>
-]]></content>
-      <tags>
-        <tag>夏令时</tag>
       </tags>
   </entry>
   <entry>
@@ -380,6 +331,55 @@
       </tags>
   </entry>
   <entry>
+    <title>夏令时问题</title>
+    <url>/2019/10/01/daylight-saving-time/</url>
+    <content><![CDATA[<p>在工作中，遇到一个很有意思的关于时间的问题，这里跟大家分享一下。</p>
+<h2 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h2><p>从数据库里取出用户的生日<code>1990-05-22</code>，接口返回时发现返回值变成了<code>1990-05-21</code>，而对于<code>1992-05-22</code>这样的日期却能正确返回。</p>
+<p>网上很多对于相关问题的分析都是简单粗暴的认为是时区的问题，却没有讲明白问题出现的根本原因。</p>
+<h2 id="排查过程"><a href="#排查过程" class="headerlink" title="排查过程"></a>排查过程</h2><h3 id="问题复现"><a href="#问题复现" class="headerlink" title="问题复现"></a>问题复现</h3><p>为了复现问题现象，我们先快速搭建一个 Spring Boot Application。</p>
+<p>先将配置文件中对日期类型的格式化配置为 <code>yyyy-MM-dd</code>，如下所示：</p>
+<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">spring.jackson.time-zone</span>=<span class="string">GMT+8</span></span><br><span class="line"><span class="attr">spring.jackson.date-format</span>=<span class="string">yyyy-MM-dd</span></span><br></pre></td></tr></table></figure>
+
+<p>写一个接口，直接将有问题的日期输出，代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">IndexController</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/dst&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Map&lt;String, Object&gt; <span class="title function_">dst</span><span class="params">(<span class="meta">@RequestParam(&quot;date&quot;)</span> Date date)</span> &#123;</span><br><span class="line">        Map&lt;String, Object&gt; map = Maps.newHashMap();</span><br><span class="line">        System.out.println(<span class="string">&quot;birthday : &quot;</span> + DateFormatUtils.format(date, <span class="string">&quot;yyyy-MM-dd&quot;</span>));</span><br><span class="line">        map.put(<span class="string">&quot;birthday&quot;</span>, date);</span><br><span class="line">        <span class="keyword">return</span> map;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>构造如下请求：</p>
+<figure class="highlight http"><table><tr><td class="code"><pre><span class="line">GET http://localhost:8081/dst?date=1990/05/22</span><br></pre></td></tr></table></figure>
+
+<p>发现服务端日志正确输出<code>1990-05-22</code>，而接口返回值却输出：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span><span class="attr">&quot;birthday&quot;</span><span class="punctuation">:</span> <span class="string">&quot;1990-05-21&quot;</span><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>构造如下请求：</p>
+<figure class="highlight http"><table><tr><td class="code"><pre><span class="line">GET http://localhost:8081/dst?date=1992/05/22</span><br></pre></td></tr></table></figure>
+
+<p>发现服务端日志正确输出<code>1992-05-22</code>，此时接口的输出与服务端日志一致：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span><span class="attr">&quot;birthday&quot;</span><span class="punctuation">:</span> <span class="string">&quot;1992-05-22&quot;</span><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>至此，我们复现了本文要讲解的问题。</p>
+<h3 id="输出对应的时间"><a href="#输出对应的时间" class="headerlink" title="输出对应的时间"></a>输出对应的时间</h3><p>为了更精确的知道这两个日期究竟有什么不同，我们更详细的输出这两个 <code>Date</code> 所对应的具体时间。</p>
+<p>修改配置文件为：</p>
+<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">spring.jackson.date-format</span>=<span class="string">yyyy-MM-dd HH:mm:ss</span></span><br></pre></td></tr></table></figure>
+
+<p>重复以上请求，发现对于<code>1990-05-22</code>，服务端日志输出<code>1990-05-22 00:00:00</code>，而接口返回值则为<code>1990-05-21 23:00:00</code>，两者相差了一个小时。而对于<code>1992-05-22</code>，服务端日志与接口返回值完全一致。</p>
+<h3 id="输出系统的时区"><a href="#输出系统的时区" class="headerlink" title="输出系统的时区"></a>输出系统的时区</h3><p>通过上述的现象基本上可以定位问题出现在 <code>Jackson</code> 对日期的序列化上。</p>
+<p>为了排查这个问题，我们在启动 Spring Boot Application 时，先输出当前系统的时区，发现系统时区为 <code>Asia/Shanghai</code>，而我们配置的 <code>Jackson</code> 时区为 <code>GMT+8</code>。</p>
+<p>难道 <code>Asia/Shanghai</code> 与 <code>GMT+8</code> 不是同一个时区？</p>
+<h3 id="求证"><a href="#求证" class="headerlink" title="求证"></a>求证</h3><p>为了证明我们的猜想是正确的，在启动 Spring Boot Application 时，将系统时区设置为 <code>GMT+8</code>。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DSTApplication</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        SpringApplication.run(DSTApplication.class, args);</span><br><span class="line">        TimeZone.setDefault(TimeZone.getTimeZone(<span class="string">&quot;GMT+8&quot;</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>重复以上请求，发现对于<code>1990-05-22</code>，服务端日志和接口均正确输出 <code>1990-05-22 00:00:00</code>。</p>
+<p>若不设置默认时区为 <code>GMT+8</code>，而是将 <code>Jackson</code> 序列化的时区配置修改为 <code>Asia/Shanghai</code>，接口也能正确输出。</p>
+<p>那么 <code>Asia/Shanghai</code> 与 <code>GMT+8</code> 在什么情况下会导致相差一个小时的问题呢？</p>
+<h2 id="夏令时"><a href="#夏令时" class="headerlink" title="夏令时"></a>夏令时</h2><blockquote>
+<p>夏令时，表示为了节约能源，人为规定时间的意思。也叫夏时制，夏时令（Daylight Saving Time：DST），又称“日光节约时制”和“夏令时间”，在这一制度实行期间所采用的统一时间称为“夏令时间”。一般在天亮早的夏季人为将时间调快一小时，可以使人早起早睡，减少照明量，以充分利用光照资源，从而节约照明用电。各个采纳夏时制的国家具体规定不同。目前全世界有近110个国家每年要实行夏令时。1986年4月，中国中央有关部门发出“在全国范围内实行夏时制的通知”，具体作法是：每年从四月中旬第一个星期日的凌晨2时整（北京时间），将时钟拨快一小时，即将表针由2时拨至3时，夏令时开始；到九月中旬第一个星期日的凌晨2时整（北京夏令时），再将时钟拨回一小时，即将表针由2时拨至1时，夏令时结束。从1986年到1991年的六个年度，除1986年因是实行夏时制的第一年，从5月4日开始到9月14日结束外，其它年份均按规定的时段施行。在夏令时开始和结束前几天，新闻媒体均刊登有关部门的通告。1992年起，夏令时暂停实行。</p>
+</blockquote>
+<p>以上内容摘抄自<a href="https://baike.baidu.com/item/%E5%A4%8F%E4%BB%A4%E6%97%B6">百度百科</a>，这也就是为什么在上述例子中为什么<code>1992-05-22</code>即使在系统时区与 <code>Jackson</code> 序列化时区不一致的情况下，仍然能够正确返回，而<code>1990-05-22</code>就会出错。</p>
+]]></content>
+      <tags>
+        <tag>夏令时</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>使用 Docker 构建 Spring Boot Application</title>
     <url>/2019/06/25/dockerizing-spring-boot-application/</url>
     <content><![CDATA[<h2 id="Docker-amp-Spring-Boot"><a href="#Docker-amp-Spring-Boot" class="headerlink" title="Docker &amp; Spring Boot"></a>Docker &amp; Spring Boot</h2><p><code>Docker</code> 是一种 <code>Linux</code> 容器的实现，具有进程的轻量级资源隔离的特点，每一个容器对应操作系统中的一个进程，但是它又会有自己的网络空间、文件系统、PID 等。<code>Docker</code> 除了实现 <code>Linux</code> 容器，还使得容器具有“社会化”的属性，用户可以将容器镜像发布在 <code>Docker Hub</code> 与其他开发者共享、协作，类似于 <code>Maven</code>。</p>
@@ -453,37 +453,6 @@
       <tags>
         <tag>Docker</tag>
         <tag>Spring Boot</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>git 恢复已删除的分支</title>
-    <url>/2020/03/26/git-%E6%81%A2%E5%A4%8D%E5%B7%B2%E5%88%A0%E9%99%A4%E7%9A%84%E5%88%86%E6%94%AF/</url>
-    <content><![CDATA[<p>在日常开发中，如果我们一不小心删除了某个分支，又想重新使用这个分支，该怎么找回该分支上的代码呢？</p>
-<h2 id="场景还原"><a href="#场景还原" class="headerlink" title="场景还原"></a>场景还原</h2><ol>
-<li>有一个 git 仓库，从 <code>master</code> 分支新建 <code>feature/delete_branch</code> 分支，并进行一次提交，如下：</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">新建一个 feature/delete_branch 分支</span></span><br><span class="line">git branch feature/delete_branch</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">切换到 feature/delete_branch 分支</span></span><br><span class="line">git checkout feature/delete_branch</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">新建一个文件，进行一次提交并推送至远程分支</span></span><br><span class="line">git add delete-file.md</span><br><span class="line">git commit -m &#x27;:sparkles: add a delete-file.md file&#x27;</span><br><span class="line">git push origin feature/delete_branch:feature/delete_branch</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看当前分支图</span></span><br><span class="line">git log --all --decorate --oneline --graph</span><br><span class="line">* 88ac246 (HEAD -&gt; feature/delete_branch, origin/feature/delete_branch) :sparkles: add a delete-file.md file</span><br><span class="line">* 8693480 (origin/master, master) :sparkles: add a hello-git.md file</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>切换到 <code>master</code> 分支，并删除 <code>feature/delete_branch</code> 分支</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">切换到 master 分支</span></span><br><span class="line">git checkout master</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">删除 feature/delete_branch 分支</span></span><br><span class="line">git branch -d feature/delete_branch</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">将删除的分支同步只至远程</span></span><br><span class="line">git push origin --delete feature/delete_branch</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">此时无论是本地还是远程都已经删除了 feature/delete_branch</span></span><br><span class="line">git log --all --decorate --oneline --graph</span><br><span class="line">* 8693480 (HEAD -&gt; master, origin/master) :sparkles: add a hello-git.md file</span><br></pre></td></tr></table></figure>
-
-<h2 id="还原删除的分支"><a href="#还原删除的分支" class="headerlink" title="还原删除的分支"></a>还原删除的分支</h2><ol>
-<li>通过 <code>git reflog</code> 或 <code>git log</code> 命令找到我们需要恢复的 <code>commit id</code></li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">这里演示 git reflog 命令展示出来的提交</span></span><br><span class="line">git reflog</span><br><span class="line">8693480 (HEAD -&gt; master, origin/master) HEAD@&#123;0&#125;: checkout: moving from feature/delete_branch to master</span><br><span class="line">88ac246 (feature/delete_branch) HEAD@&#123;1&#125;: commit: :sparkles: add a delete-file.md file</span><br><span class="line">8693480 (HEAD -&gt; master, origin/master) HEAD@&#123;2&#125;: checkout: moving from master to feature/delete_branch</span><br><span class="line">8693480 (HEAD -&gt; master, origin/master) HEAD@&#123;3&#125;: commit (initial): :sparkles: add a hello-git.md file</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">这里演示 git <span class="built_in">log</span> 命令 展示出来的提交</span></span><br><span class="line">git log -g</span><br><span class="line">commit 86934803092ae7ae7266f9ebff3429437e423b80 (HEAD -&gt; master, origin/master)</span><br><span class="line">Reflog: HEAD@&#123;0&#125; (fuyongde &lt;fuyongde@foxmail.com&gt;)</span><br><span class="line">Reflog message: checkout: moving from feature/delete_branch to master</span><br><span class="line">Author: fuyongde &lt;fuyongde@foxmail.com&gt;</span><br><span class="line">Date:   Thu Mar 26 18:36:35 2020 +0800</span><br><span class="line"></span><br><span class="line">    :sparkles: add a hello-git.md file</span><br><span class="line"></span><br><span class="line">commit 88ac246020a0cc25071fb7fd3ac88363f4bf2beb (feature/delete_branch)</span><br><span class="line">Reflog: HEAD@&#123;1&#125; (fuyongde &lt;fuyongde@foxmail.com&gt;)</span><br><span class="line">Reflog message: commit: :sparkles: add a delete-file.md file</span><br><span class="line">Author: fuyongde &lt;fuyongde@foxmail.com&gt;</span><br><span class="line">Date:   Thu Mar 26 18:44:01 2020 +0800</span><br><span class="line"></span><br><span class="line">    :sparkles: add a delete-file.md file</span><br><span class="line"></span><br><span class="line">commit 86934803092ae7ae7266f9ebff3429437e423b80 (HEAD -&gt; master, origin/master)</span><br><span class="line">Reflog: HEAD@&#123;2&#125; (fuyongde &lt;fuyongde@foxmail.com&gt;)</span><br><span class="line">Reflog message: checkout: moving from master to feature/delete_branch</span><br><span class="line">Author: fuyongde &lt;fuyongde@foxmail.com&gt;</span><br><span class="line">Date:   Thu Mar 26 18:36:35 2020 +0800</span><br><span class="line"></span><br><span class="line">    :sparkles: add a hello-git.md file</span><br><span class="line"></span><br><span class="line">commit 86934803092ae7ae7266f9ebff3429437e423b80 (HEAD -&gt; master, origin/master)</span><br><span class="line">Reflog: HEAD@&#123;3&#125; (fuyongde &lt;fuyongde@foxmail.com&gt;)</span><br><span class="line">Reflog message: commit (initial): :sparkles: add a hello-git.md file</span><br><span class="line">Author: fuyongde &lt;fuyongde@foxmail.com&gt;</span><br><span class="line">Date:   Thu Mar 26 18:36:35 2020 +0800</span><br><span class="line"></span><br><span class="line">    :sparkles: add a hello-git.md file</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>通过 <code>git branch [branch name] [commit id]</code> 命令来恢复删除的分支</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">恢复 feature/delete_branch 分支到 88ac246 版本</span></span><br><span class="line">git branch feature/delete_branch 88ac246</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">检出 feature/delete_branch 分支</span></span><br><span class="line">git checkout feature/delete_branch</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">此时可以看到已经删除的分支都找回来了，将分支推送的远程</span></span><br><span class="line">git push origin feature/delete_branch:feature/delete_branch</span><br></pre></td></tr></table></figure>
-
-<h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><p>当我们删除一个分支时，git 只是删除了指向相关提交的指针，但该提交对象依然会留在版本库中，因此，如果我们知道删除分支时的 <code>commit id</code>，就可以将某个删除的分支恢复过来。</p>
-]]></content>
-      <tags>
-        <tag>git</tag>
-        <tag>骚操作</tag>
       </tags>
   </entry>
   <entry>
@@ -603,6 +572,37 @@
       </tags>
   </entry>
   <entry>
+    <title>git 恢复已删除的分支</title>
+    <url>/2020/03/26/git-%E6%81%A2%E5%A4%8D%E5%B7%B2%E5%88%A0%E9%99%A4%E7%9A%84%E5%88%86%E6%94%AF/</url>
+    <content><![CDATA[<p>在日常开发中，如果我们一不小心删除了某个分支，又想重新使用这个分支，该怎么找回该分支上的代码呢？</p>
+<h2 id="场景还原"><a href="#场景还原" class="headerlink" title="场景还原"></a>场景还原</h2><ol>
+<li>有一个 git 仓库，从 <code>master</code> 分支新建 <code>feature/delete_branch</code> 分支，并进行一次提交，如下：</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">新建一个 feature/delete_branch 分支</span></span><br><span class="line">git branch feature/delete_branch</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">切换到 feature/delete_branch 分支</span></span><br><span class="line">git checkout feature/delete_branch</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">新建一个文件，进行一次提交并推送至远程分支</span></span><br><span class="line">git add delete-file.md</span><br><span class="line">git commit -m &#x27;:sparkles: add a delete-file.md file&#x27;</span><br><span class="line">git push origin feature/delete_branch:feature/delete_branch</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看当前分支图</span></span><br><span class="line">git log --all --decorate --oneline --graph</span><br><span class="line">* 88ac246 (HEAD -&gt; feature/delete_branch, origin/feature/delete_branch) :sparkles: add a delete-file.md file</span><br><span class="line">* 8693480 (origin/master, master) :sparkles: add a hello-git.md file</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>切换到 <code>master</code> 分支，并删除 <code>feature/delete_branch</code> 分支</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">切换到 master 分支</span></span><br><span class="line">git checkout master</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">删除 feature/delete_branch 分支</span></span><br><span class="line">git branch -d feature/delete_branch</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">将删除的分支同步只至远程</span></span><br><span class="line">git push origin --delete feature/delete_branch</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">此时无论是本地还是远程都已经删除了 feature/delete_branch</span></span><br><span class="line">git log --all --decorate --oneline --graph</span><br><span class="line">* 8693480 (HEAD -&gt; master, origin/master) :sparkles: add a hello-git.md file</span><br></pre></td></tr></table></figure>
+
+<h2 id="还原删除的分支"><a href="#还原删除的分支" class="headerlink" title="还原删除的分支"></a>还原删除的分支</h2><ol>
+<li>通过 <code>git reflog</code> 或 <code>git log</code> 命令找到我们需要恢复的 <code>commit id</code></li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">这里演示 git reflog 命令展示出来的提交</span></span><br><span class="line">git reflog</span><br><span class="line">8693480 (HEAD -&gt; master, origin/master) HEAD@&#123;0&#125;: checkout: moving from feature/delete_branch to master</span><br><span class="line">88ac246 (feature/delete_branch) HEAD@&#123;1&#125;: commit: :sparkles: add a delete-file.md file</span><br><span class="line">8693480 (HEAD -&gt; master, origin/master) HEAD@&#123;2&#125;: checkout: moving from master to feature/delete_branch</span><br><span class="line">8693480 (HEAD -&gt; master, origin/master) HEAD@&#123;3&#125;: commit (initial): :sparkles: add a hello-git.md file</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">这里演示 git <span class="built_in">log</span> 命令 展示出来的提交</span></span><br><span class="line">git log -g</span><br><span class="line">commit 86934803092ae7ae7266f9ebff3429437e423b80 (HEAD -&gt; master, origin/master)</span><br><span class="line">Reflog: HEAD@&#123;0&#125; (fuyongde &lt;fuyongde@foxmail.com&gt;)</span><br><span class="line">Reflog message: checkout: moving from feature/delete_branch to master</span><br><span class="line">Author: fuyongde &lt;fuyongde@foxmail.com&gt;</span><br><span class="line">Date:   Thu Mar 26 18:36:35 2020 +0800</span><br><span class="line"></span><br><span class="line">    :sparkles: add a hello-git.md file</span><br><span class="line"></span><br><span class="line">commit 88ac246020a0cc25071fb7fd3ac88363f4bf2beb (feature/delete_branch)</span><br><span class="line">Reflog: HEAD@&#123;1&#125; (fuyongde &lt;fuyongde@foxmail.com&gt;)</span><br><span class="line">Reflog message: commit: :sparkles: add a delete-file.md file</span><br><span class="line">Author: fuyongde &lt;fuyongde@foxmail.com&gt;</span><br><span class="line">Date:   Thu Mar 26 18:44:01 2020 +0800</span><br><span class="line"></span><br><span class="line">    :sparkles: add a delete-file.md file</span><br><span class="line"></span><br><span class="line">commit 86934803092ae7ae7266f9ebff3429437e423b80 (HEAD -&gt; master, origin/master)</span><br><span class="line">Reflog: HEAD@&#123;2&#125; (fuyongde &lt;fuyongde@foxmail.com&gt;)</span><br><span class="line">Reflog message: checkout: moving from master to feature/delete_branch</span><br><span class="line">Author: fuyongde &lt;fuyongde@foxmail.com&gt;</span><br><span class="line">Date:   Thu Mar 26 18:36:35 2020 +0800</span><br><span class="line"></span><br><span class="line">    :sparkles: add a hello-git.md file</span><br><span class="line"></span><br><span class="line">commit 86934803092ae7ae7266f9ebff3429437e423b80 (HEAD -&gt; master, origin/master)</span><br><span class="line">Reflog: HEAD@&#123;3&#125; (fuyongde &lt;fuyongde@foxmail.com&gt;)</span><br><span class="line">Reflog message: commit (initial): :sparkles: add a hello-git.md file</span><br><span class="line">Author: fuyongde &lt;fuyongde@foxmail.com&gt;</span><br><span class="line">Date:   Thu Mar 26 18:36:35 2020 +0800</span><br><span class="line"></span><br><span class="line">    :sparkles: add a hello-git.md file</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>通过 <code>git branch [branch name] [commit id]</code> 命令来恢复删除的分支</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">恢复 feature/delete_branch 分支到 88ac246 版本</span></span><br><span class="line">git branch feature/delete_branch 88ac246</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">检出 feature/delete_branch 分支</span></span><br><span class="line">git checkout feature/delete_branch</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">此时可以看到已经删除的分支都找回来了，将分支推送的远程</span></span><br><span class="line">git push origin feature/delete_branch:feature/delete_branch</span><br></pre></td></tr></table></figure>
+
+<h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><p>当我们删除一个分支时，git 只是删除了指向相关提交的指针，但该提交对象依然会留在版本库中，因此，如果我们知道删除分支时的 <code>commit id</code>，就可以将某个删除的分支恢复过来。</p>
+]]></content>
+      <tags>
+        <tag>git</tag>
+        <tag>骚操作</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Gradle 手册</title>
     <url>/2020/03/08/gradle-%E6%89%8B%E5%86%8C/</url>
     <content><![CDATA[<h2 id="Gradle-是什么"><a href="#Gradle-是什么" class="headerlink" title="Gradle 是什么"></a>Gradle 是什么</h2><blockquote>
@@ -655,24 +655,6 @@
         <tag>Gradle</tag>
         <tag>构建工具</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>如何使用Hexo？</title>
-    <url>/2010/05/24/hexo/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/deployment.html">Deployment</a></p>
-]]></content>
   </entry>
   <entry>
     <title>如何使用 Java 的 HttpClient 请求 Https 服务</title>
@@ -734,6 +716,24 @@
       </tags>
   </entry>
   <entry>
+    <title>如何使用Hexo？</title>
+    <url>/2010/05/24/hexo/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/deployment.html">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
     <title>Java 多线程死锁问题</title>
     <url>/2019/11/19/java-deadlock/</url>
     <content><![CDATA[<p>本文描述一个 Java 多线程死锁问题，并演示使用 <code>jstack</code>、<code>arthas</code> 工具来发现应用程序中的线程死锁。</p>
@@ -768,6 +768,21 @@
         <tag>Java</tag>
         <tag>jstack</tag>
         <tag>死锁</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>javaagent 使用指南</title>
+    <url>/2022/01/08/javaagent-%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/</url>
+    <content><![CDATA[<p>最近在做基于 JaCoCo 的代码覆盖率工具，了解到了一下 javaagent 相关的一些知识点。</p>
+<h2 id="javaagent-是什么？"><a href="#javaagent-是什么？" class="headerlink" title="javaagent 是什么？"></a>javaagent 是什么？</h2><p>javaagent 是 java 命令的一个参数选项，可以用于加载 Java 语言的代理。</p>
+<p>那么这个参数加载的 Java 语言的代理需要满足什么样的规范呢？</p>
+<ol>
+<li>代理 jar 包中的 MANIFEST.MF 文件需指定 Premain-Class；</li>
+<li>Premain-Class 指定的类中必须实现 premain 方法。</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -921,21 +936,6 @@
         <tag>Java</tag>
         <tag>Java8</tag>
         <tag>Stream</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>javaagent 使用指南</title>
-    <url>/2022/01/08/javaagent-%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/</url>
-    <content><![CDATA[<p>最近在做基于 JaCoCo 的代码覆盖率工具，了解到了一下 javaagent 相关的一些知识点。</p>
-<h2 id="javaagent-是什么？"><a href="#javaagent-是什么？" class="headerlink" title="javaagent 是什么？"></a>javaagent 是什么？</h2><p>javaagent 是 java 命令的一个参数选项，可以用于加载 Java 语言的代理。</p>
-<p>那么这个参数加载的 Java 语言的代理需要满足什么样的规范呢？</p>
-<ol>
-<li>代理 jar 包中的 MANIFEST.MF 文件需指定 Premain-Class；</li>
-<li>Premain-Class 指定的类中必须实现 premain 方法。</li>
-</ol>
-]]></content>
-      <tags>
-        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -1126,37 +1126,6 @@
       <tags>
         <tag>未完待续</tag>
         <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Maven Wapper 手册</title>
-    <url>/2019/06/23/maven-wapper-%E6%89%8B%E5%86%8C/</url>
-    <content><![CDATA[<p>我们使用 Maven 时，基本上只会用到 <code>mvn</code> 这一个命令。有些童鞋可能听说过 <code>mvnw</code>，这个是啥？</p>
-<p>mvnw 是 Maven Wrapper 的缩写，我们安装 Maven 时，默认情况下，系统所有项目都会使用全局安装的这个 Maven 版本。但是，对于某些项目来说，它可能必须使用某个特定的 Maven 版本，这个时候，就可以使用 Maven Wrapper，它可以负责给这个特定的项目安装指定版本的 Maven，而其他项目不受影响。</p>
-<p>简单地说，Maven Wrapper 就是给一个项目提供一个独立的，指定版本的 Maven 给它使用。</p>
-<h2 id="安装-Maven-Wrapper"><a href="#安装-Maven-Wrapper" class="headerlink" title="安装 Maven Wrapper"></a>安装 Maven Wrapper</h2><p>安装 Maven Wrapper 最简单的方式是在项目的根目录（即 pom.xml 所在的目录）下运行安装命令：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mvn -N io.takari:maven:0.7.7:wrapper</span><br></pre></td></tr></table></figure>
-
-<p>它会自动使用最新版本的 Maven。注意 0.7.7 是 Maven Wrapper 的版本。最新的 Maven Wrapper 版本可以去<a href="https://github.com/takari/maven-wrapper">官方网站</a>查看。</p>
-<p>如果要指定使用的 Maven 版本，使用下面的安装命令指定版本，例如 3.6.0：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mvn -N io.takari:maven:0.7.7:wrapper -Dmaven=3.6.0</span><br></pre></td></tr></table></figure>
-
-<p>安装后，查看项目结构：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Hello-World</span><br><span class="line">├── .mvn</span><br><span class="line">│   └── wrapper</span><br><span class="line">│       ├── MavenWrapperDownloader.java</span><br><span class="line">│       ├── maven-wrapper.jar</span><br><span class="line">│       └── maven-wrapper.properties</span><br><span class="line">├── mvnw</span><br><span class="line">├── mvnw.cmd</span><br><span class="line">├── pom.xml</span><br><span class="line">└── src</span><br><span class="line">    ├── main</span><br><span class="line">    │   ├── java</span><br><span class="line">    │   └── resources</span><br><span class="line">    └── test</span><br><span class="line">        ├── java</span><br><span class="line">        └── resources</span><br></pre></td></tr></table></figure>
-
-<p>发现多了 <code>mvnw</code>、<code>mvnw.cmd</code> 和 <code>.mvn</code>目录。</p>
-<h2 id="使用-Maven-Wapper"><a href="#使用-Maven-Wapper" class="headerlink" title="使用 Maven Wapper"></a>使用 Maven Wapper</h2><p>我们只需要把 mvn 命令改成 mvnw 就可以使用跟项目关联的 Maven。例如：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mvnw clean package</span><br></pre></td></tr></table></figure>
-
-<p>Maven Wrapper 的另一个作用是把项目的 <code>mvnw</code>、<code>mvnw.cmd</code> 和 <code>.mvn</code> 提交到版本库中，可以使所有开发人员使用统一的 <code>Maven</code> 版本。</p>
-]]></content>
-      <categories>
-        <category>手册</category>
-      </categories>
-      <tags>
-        <tag>构建工具</tag>
-        <tag>Maven</tag>
-        <tag>Maven Wapper</tag>
       </tags>
   </entry>
   <entry>
@@ -1376,6 +1345,37 @@
       <tags>
         <tag>MySQL</tag>
         <tag>索引</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Maven Wapper 手册</title>
+    <url>/2019/06/23/maven-wapper-%E6%89%8B%E5%86%8C/</url>
+    <content><![CDATA[<p>我们使用 Maven 时，基本上只会用到 <code>mvn</code> 这一个命令。有些童鞋可能听说过 <code>mvnw</code>，这个是啥？</p>
+<p>mvnw 是 Maven Wrapper 的缩写，我们安装 Maven 时，默认情况下，系统所有项目都会使用全局安装的这个 Maven 版本。但是，对于某些项目来说，它可能必须使用某个特定的 Maven 版本，这个时候，就可以使用 Maven Wrapper，它可以负责给这个特定的项目安装指定版本的 Maven，而其他项目不受影响。</p>
+<p>简单地说，Maven Wrapper 就是给一个项目提供一个独立的，指定版本的 Maven 给它使用。</p>
+<h2 id="安装-Maven-Wrapper"><a href="#安装-Maven-Wrapper" class="headerlink" title="安装 Maven Wrapper"></a>安装 Maven Wrapper</h2><p>安装 Maven Wrapper 最简单的方式是在项目的根目录（即 pom.xml 所在的目录）下运行安装命令：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mvn -N io.takari:maven:0.7.7:wrapper</span><br></pre></td></tr></table></figure>
+
+<p>它会自动使用最新版本的 Maven。注意 0.7.7 是 Maven Wrapper 的版本。最新的 Maven Wrapper 版本可以去<a href="https://github.com/takari/maven-wrapper">官方网站</a>查看。</p>
+<p>如果要指定使用的 Maven 版本，使用下面的安装命令指定版本，例如 3.6.0：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mvn -N io.takari:maven:0.7.7:wrapper -Dmaven=3.6.0</span><br></pre></td></tr></table></figure>
+
+<p>安装后，查看项目结构：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Hello-World</span><br><span class="line">├── .mvn</span><br><span class="line">│   └── wrapper</span><br><span class="line">│       ├── MavenWrapperDownloader.java</span><br><span class="line">│       ├── maven-wrapper.jar</span><br><span class="line">│       └── maven-wrapper.properties</span><br><span class="line">├── mvnw</span><br><span class="line">├── mvnw.cmd</span><br><span class="line">├── pom.xml</span><br><span class="line">└── src</span><br><span class="line">    ├── main</span><br><span class="line">    │   ├── java</span><br><span class="line">    │   └── resources</span><br><span class="line">    └── test</span><br><span class="line">        ├── java</span><br><span class="line">        └── resources</span><br></pre></td></tr></table></figure>
+
+<p>发现多了 <code>mvnw</code>、<code>mvnw.cmd</code> 和 <code>.mvn</code>目录。</p>
+<h2 id="使用-Maven-Wapper"><a href="#使用-Maven-Wapper" class="headerlink" title="使用 Maven Wapper"></a>使用 Maven Wapper</h2><p>我们只需要把 mvn 命令改成 mvnw 就可以使用跟项目关联的 Maven。例如：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mvnw clean package</span><br></pre></td></tr></table></figure>
+
+<p>Maven Wrapper 的另一个作用是把项目的 <code>mvnw</code>、<code>mvnw.cmd</code> 和 <code>.mvn</code> 提交到版本库中，可以使所有开发人员使用统一的 <code>Maven</code> 版本。</p>
+]]></content>
+      <categories>
+        <category>手册</category>
+      </categories>
+      <tags>
+        <tag>构建工具</tag>
+        <tag>Maven</tag>
+        <tag>Maven Wapper</tag>
       </tags>
   </entry>
   <entry>
@@ -1613,10 +1613,10 @@
   <entry>
     <title>npm-手册</title>
     <url>/2020/07/19/npm-%E6%89%8B%E5%86%8C/</url>
-    <content><![CDATA[<h2 id="配置淘宝镜像"><a href="#配置淘宝镜像" class="headerlink" title="配置淘宝镜像"></a>配置淘宝镜像</h2><ol>
+    <content><![CDATA[<h2 id="配置-npmmirror-镜像"><a href="#配置-npmmirror-镜像" class="headerlink" title="配置 npmmirror 镜像"></a>配置 npmmirror 镜像</h2><ol>
 <li>备份旧镜像</li>
 </ol>
-<p>在替换淘宝镜像之前，我们先查看一下原有的镜像</p>
+<p>在替换 npmmirror 镜像之前，我们先查看一下原有的镜像</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">npm get registry</span><br></pre></td></tr></table></figure>
 
 <p>结果为 <code>https://registry.npmjs.org/</code></p>
@@ -1624,9 +1624,9 @@
 
 <p>结果为 <code>https://registry.yarnpkg.com</code></p>
 <ol start="2">
-<li>替换为淘宝镜像</li>
+<li>替换为 npmmirror 镜像</li>
 </ol>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">设置 npm 的源为淘宝镜像</span></span><br><span class="line">npm config set registry https://registry.npmmirror.com</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">设置 yarn 的源为淘宝镜像</span></span><br><span class="line">yarn config set registry https://registry.npmmirror.com</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">设置 npm 的源为 npmmirror</span></span><br><span class="line">npm config set registry https://registry.npmmirror.com</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">设置 yarn 的源为 npmmirror</span></span><br><span class="line">yarn config set registry https://registry.npmmirror.com</span><br></pre></td></tr></table></figure>
 
 <h2 id="升级版本"><a href="#升级版本" class="headerlink" title="升级版本"></a>升级版本</h2><h3 id="查看-npm-版本"><a href="#查看-npm-版本" class="headerlink" title="查看 npm 版本"></a>查看 npm 版本</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">npm -v</span><br></pre></td></tr></table></figure>
 
@@ -1640,29 +1640,6 @@
       <tags>
         <tag>未完待续</tag>
         <tag>npm</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>pip-手册</title>
-    <url>/2020/03/20/pip-%E6%89%8B%E5%86%8C/</url>
-    <content><![CDATA[<p>PyPI (Python Package Index) 是 <code>Python</code> 编程语言的软件存储库。开发者可以通过 PyPI 查找和安装由 <code>Python</code> 社区开发和共享的软件，也可以将自己开发的库上传至 PyPI 。</p>
-<p>由于国外访问比较慢，我们可以通过配置国内的镜像来进行加速访问。</p>
-<h2 id="配置-Aliyun-的镜像"><a href="#配置-Aliyun-的镜像" class="headerlink" title="配置 Aliyun 的镜像"></a>配置 Aliyun 的镜像</h2><h3 id="Linux-平台"><a href="#Linux-平台" class="headerlink" title="Linux 平台"></a>Linux 平台</h3><ol>
-<li>找到下列文件</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">~/.pip/pip.conf</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>在上述文件中添加或修改:</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[global]</span><br><span class="line">index-url = https://mirrors.aliyun.com/pypi/simple/</span><br><span class="line"></span><br><span class="line">[install]</span><br><span class="line">trusted-host=mirrors.aliyun.com</span><br></pre></td></tr></table></figure>
-
-<h3 id="Windows-平台"><a href="#Windows-平台" class="headerlink" title="Windows 平台"></a>Windows 平台</h3><p>在 <code>exporler</code> 地址栏输入 <code>%AppData%</code>，进入文件夹后，在 <code>pip</code> 文件夹下新建 <code>pip.ini</code> 文件并写入以下配置。</p>
-<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="section">[global]</span></span><br><span class="line"><span class="attr">index-url</span> = http://mirrors.aliyun.com/pypi/simple</span><br><span class="line"><span class="attr">trusted-host</span> = mirrors.aliyun.com</span><br></pre></td></tr></table></figure>
-]]></content>
-      <tags>
-        <tag>pip</tag>
-        <tag>Python</tag>
       </tags>
   </entry>
   <entry>
@@ -1764,82 +1741,6 @@
       <tags>
         <tag>未完待续</tag>
         <tag>PowerShell</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>RPC Introduction</title>
-    <url>/2019/07/11/rpc-introduction/</url>
-    <content><![CDATA[<h2 id="What-is-RPC"><a href="#What-is-RPC" class="headerlink" title="What is RPC"></a>What is RPC</h2><blockquote>
-<p>Remote Procedure Call (RPC) is a protocol that one program can use to request a service from a program located in another computer on a network without having to understand the network’s details. A procedure call is also sometimes known as a function call or a subroutine call. A procedure call is also sometimes known as a function call or a subroutine call.</p>
-</blockquote>
-<p><code>RPC</code> 是一种远程过程调用协议，一个程序可以使用该协议从位于网络上另一台计算机中的程序请求服务，而无需了解网络的详细信息。<code>RPC</code> 有时也称为函数调用或子程序调用。<code>RPC</code> 是进程间通信的一种方式。</p>
-<h2 id="Why-is-RPC"><a href="#Why-is-RPC" class="headerlink" title="Why is RPC"></a>Why is RPC</h2><p>网上很多关于 <code>RPC</code> 的优点，笔者都不太赞同。不能将那些成熟的 <code>RPC</code> 框架解决的问题全部归结为 <code>RPC</code> 的优点。比如 <code>RPC</code> 的概念中并没有提到服务治理等问题，但是常见的 <code>RPC</code> 框架（如 <a href="http://dubbo.apache.org/">DUBBO</a>）均解决了服务治理的相关问题，这显然不能作为 <code>RPC</code> 的优点。要解释“Why is RPC?”的问题，还是要回归到 <code>RPC</code> 的概念上来。</p>
-<ul>
-<li><code>RPC</code> 可以使<em>远程过程调用</em>变得像本地调用一样简单。</li>
-<li>方便计算能力的横向扩展。</li>
-</ul>
-<p>有兴趣可以阅读 <a href="http://dubbo.apache.org/zh-cn/docs/user/preface/background.html">dubbo 诞生的背景</a> 以及<a href="http://dubbo.apache.org/zh-cn/docs/user/preface/requirements.html">dubbo 解决了哪些需求</a>。</p>
-<h3 id="RPC-vs-HTTP"><a href="#RPC-vs-HTTP" class="headerlink" title="RPC vs HTTP"></a>RPC vs HTTP</h3><p>其实这两者不是同一个维度的概念。从 <code>RPC</code> 的概念上来讲，<code>HTTP</code> 其实就是 <code>RPC</code> 的一种实现。</p>
-<h3 id="RPC-vs-RMI"><a href="#RPC-vs-RMI" class="headerlink" title="RPC vs RMI"></a>RPC vs RMI</h3><p>这两者也不是同一个维度的概念。</p>
-<p><code>RMI</code> 是 <code>JAVA</code> 提供的一种<em>远程方法调用</em>，而 <code>RPC</code> 的变成模型是<em>远程过程调用</em>，<code>RPC</code> 并没有规定采用哪种编程语言实现，<strong>我们甚至可以使用 <code>JAVA</code> 语言实现一个具体的 <code>RPC</code> 协议，内部采用 <code>RMI</code> 来实现数据的传输</strong>，例如 <a href="http://dubbo.apache.org/zh-cn/docs/user/references/protocol/rmi.html">dubbo 中就可以采用 rmi 协议</a>。</p>
-<h2 id="How-to-implement-RPC"><a href="#How-to-implement-RPC" class="headerlink" title="How to implement RPC"></a>How to implement RPC</h2><p>我们先思考这么一个问题：要怎么去调用远程的服务呢？</p>
-<ol>
-<li>要知道 ip 和端口，以确定远程唯一的一个进程。</li>
-<li>要知道调用远程的进程中的什么服务，以确定方法和参数</li>
-<li>调用远程的服务之后，要返回结果。</li>
-</ol>
-<p>根据上述的三点，我们来看一下如何实现一个 <code>RPC</code> 框架。</p>
-<h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>在一个 <code>RPC</code> 的架构中包含 4 个组件：</p>
-<ol>
-<li><code>Client</code>：即客户端，服务调用方</li>
-<li><code>Client Stub</code>：客户端存根，用于存方服务端地址信息，将客户端的信息打包成网络消息，再通过网络发送给服务提供者</li>
-<li><code>Server Stub</code>：服务端存根，接收客户端发送过来的消息，并调用本地服务</li>
-<li><code>Server</code>：服务提供者</li>
-</ol>
-<p>一个 <code>RPC</code> 的调用过程：</p>
-<ol>
-<li><code>Client</code> 调用以本地调用方式调用服务；</li>
-<li><code>Client Stub</code> 接收到调用后负责将方法、参数等组装成能够进行网络传输的消息体（在 <code>Java</code> 中是序列化的过程）；</li>
-<li><code>Client Stub</code> 找到服务地址，并将消息体通过网络发送到服务端；</li>
-<li><code>Server Stub</code> 收到消息后进行解码（在 <code>Java</code> 中是反序列化的过程）；</li>
-<li><code>Server Stub</code> 根据解码结果调用 <code>Server</code> 处理；</li>
-<li><code>Server</code> 将结果返回给 <code>Server Stub</code>；</li>
-<li><code>Server Stub</code> 将返回结果打包成消息体（在 <code>Java</code> 中是序列化的过程）；</li>
-<li><code>Server Stub</code> 将打包后的消息通过网络并发送至消费方；</li>
-<li><code>Client Stub</code> 接收到消息，并进行解码（在 <code>Java</code> 中是反序列化的过程）；</li>
-<li><code>Client</code> 得到最终结果。</li>
-</ol>
-<p>一图顶千言</p>
-<img src="/2019/07/11/rpc-introduction/theory.jpg" class="" title="RPC 原理">
-
-<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><p>我们简单的采用 <code>Java</code> 语言来实现一个 <code>RPC</code> 框架。</p>
-<h4 id="命名"><a href="#命名" class="headerlink" title="命名"></a>命名</h4><p>作为钢铁侠粉丝，这里我们将项目命名为 <a href="https://github.com/fuyongde/edith/releases/tag/0.1.0">Edith</a>。</p>
-<blockquote>
-<p>Even dead,I am hero. -<em>Tony Stark</em></p>
-</blockquote>
-<p>伊人已逝，仍是英雄。永远纪念 _Tony Stark_。</p>
-<h4 id="暴露服务"><a href="#暴露服务" class="headerlink" title="暴露服务"></a>暴露服务</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">RpcFramework</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">export</span><span class="params">(<span class="keyword">final</span> Object service, <span class="type">int</span> port)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="keyword">if</span> (service == <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>(<span class="string">&quot;Service instance is null&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (port &lt;= <span class="number">0</span> || port &gt; <span class="number">65535</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>(<span class="string">&quot;Invalid port &quot;</span> + port);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;Export service &quot;</span> + service.getClass().getName() + <span class="string">&quot; on port &quot;</span> + port);</span><br><span class="line">        <span class="type">ServerSocket</span> <span class="variable">server</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ServerSocket</span>(port);</span><br><span class="line">        <span class="keyword">for</span> (; ; ) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="keyword">final</span> <span class="type">Socket</span> <span class="variable">socket</span> <span class="operator">=</span> server.accept();</span><br><span class="line">                <span class="keyword">new</span> <span class="title class_">Thread</span>(() -&gt; &#123;</span><br><span class="line">                    <span class="keyword">try</span> &#123;</span><br><span class="line">                        <span class="keyword">try</span> &#123;</span><br><span class="line">                            <span class="type">ObjectInputStream</span> <span class="variable">input</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ObjectInputStream</span>(socket.getInputStream());</span><br><span class="line">                            <span class="keyword">try</span> &#123;</span><br><span class="line">                                <span class="type">String</span> <span class="variable">methodName</span> <span class="operator">=</span> input.readUTF();</span><br><span class="line">                                Class&lt;?&gt;[] parameterTypes = (Class&lt;?&gt;[]) input.readObject();</span><br><span class="line">                                Object[] arguments = (Object[]) input.readObject();</span><br><span class="line">                                <span class="type">ObjectOutputStream</span> <span class="variable">output</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ObjectOutputStream</span>(socket.getOutputStream());</span><br><span class="line">                                <span class="keyword">try</span> &#123;</span><br><span class="line">                                    <span class="type">Method</span> <span class="variable">method</span> <span class="operator">=</span> service.getClass().getMethod(methodName, parameterTypes);</span><br><span class="line">                                    <span class="type">Object</span> <span class="variable">result</span> <span class="operator">=</span> method.invoke(service, arguments);</span><br><span class="line">                                    output.writeObject(result);</span><br><span class="line">                                &#125; <span class="keyword">catch</span> (Throwable t) &#123;</span><br><span class="line">                                    output.writeObject(t);</span><br><span class="line">                                &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                                    output.close();</span><br><span class="line">                                &#125;</span><br><span class="line">                            &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                                input.close();</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                            socket.close();</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                        e.printStackTrace();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;).start();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="引用服务"><a href="#引用服务" class="headerlink" title="引用服务"></a>引用服务</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">RpcFramework</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; T <span class="title function_">refer</span><span class="params">(<span class="keyword">final</span> Class&lt;T&gt; interfaceClass, <span class="keyword">final</span> String host, <span class="keyword">final</span> <span class="type">int</span> port)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (interfaceClass == <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>(<span class="string">&quot;Interface class is null&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (!interfaceClass.isInterface()) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>(<span class="string">&quot;The &quot;</span> + interfaceClass.getName() + <span class="string">&quot; must be interface class!&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (host == <span class="literal">null</span> || host.length() == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>(<span class="string">&quot;Host is null!&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (port &lt;= PORT_MIN || port &gt; PORT_MAX) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>(<span class="string">&quot;Invalid port &quot;</span> + port);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">&quot;Get remote service &quot;</span> + interfaceClass.getName() + <span class="string">&quot; from server &quot;</span> + host + <span class="string">&quot;:&quot;</span> + port);</span><br><span class="line">        <span class="keyword">return</span> (T) Proxy.newProxyInstance(interfaceClass.getClassLoader(), <span class="keyword">new</span> <span class="title class_">Class</span>&lt;?&gt;[]&#123;interfaceClass&#125;, (proxy, method, arguments) -&gt; &#123;</span><br><span class="line">            <span class="type">Socket</span> <span class="variable">socket</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Socket</span>(host, port);</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="type">ObjectOutputStream</span> <span class="variable">output</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ObjectOutputStream</span>(socket.getOutputStream());</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    output.writeUTF(method.getName());</span><br><span class="line">                    output.writeObject(method.getParameterTypes());</span><br><span class="line">                    output.writeObject(arguments);</span><br><span class="line">                    <span class="type">ObjectInputStream</span> <span class="variable">input</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ObjectInputStream</span>(socket.getInputStream());</span><br><span class="line">                    <span class="keyword">try</span> &#123;</span><br><span class="line">                        <span class="type">Object</span> <span class="variable">result</span> <span class="operator">=</span> input.readObject();</span><br><span class="line">                        <span class="keyword">if</span> (result <span class="keyword">instanceof</span> Throwable) &#123;</span><br><span class="line">                            <span class="keyword">throw</span> (Throwable) result;</span><br><span class="line">                        &#125;</span><br><span class="line">                        <span class="keyword">return</span> result;</span><br><span class="line">                    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                        input.close();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                    output.close();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                socket.close();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="定义接口"><a href="#定义接口" class="headerlink" title="定义接口"></a>定义接口</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">HelloService</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 返回一个字符串</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> name name</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> Hello name</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    String <span class="title function_">hello</span><span class="params">(String name)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="编写服务提供者"><a href="#编写服务提供者" class="headerlink" title="编写服务提供者"></a>编写服务提供者</h4><p>先实现 <code>HelloService</code></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">HelloServiceImpl</span> <span class="keyword">implements</span> <span class="title class_">HelloService</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">hello</span><span class="params">(String name)</span> &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">result</span> <span class="operator">=</span> <span class="string">&quot;Hello &quot;</span> + name;</span><br><span class="line">        System.out.println(Thread.currentThread().getName() + <span class="string">&quot; &quot;</span> + result);</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>启动并暴漏服务</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Provider</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="type">HelloService</span> <span class="variable">helloService</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">HelloServiceImpl</span>();</span><br><span class="line">        RpcFramework.export(helloService, <span class="number">8888</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="编写服务调用者"><a href="#编写服务调用者" class="headerlink" title="编写服务调用者"></a>编写服务调用者</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Consumer</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">HelloService</span> <span class="variable">helloService</span> <span class="operator">=</span> RpcFramework.refer(HelloService.class, <span class="string">&quot;127.0.0.1&quot;</span>, <span class="number">8888</span>);</span><br><span class="line">        <span class="type">String</span> <span class="variable">name</span> <span class="operator">=</span> <span class="string">&quot;Peter Parker&quot;</span>;</span><br><span class="line">        System.out.println(helloService.hello(name));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>执行 <code>Consumer</code>，查看控制台输出：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Hello Peter Parker</span><br></pre></td></tr></table></figure>
-
-<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>本文的例子，采用了阻塞的 Socket IO 流来进行 Client 和 Server 之间的端对端通信。方法的远程调用采用了 <code>Java</code> 的动态代理，参数的序列化与反序列化采用 <code>ObjectStream</code>。成熟的 <code>RPC</code> 框架会对上述的实现方式进行替换，比如采用 <code>Netty</code> 的 <code>NIO</code> 来实现非阻塞通信，采用成熟的注册中心来统一管理服务的注册与发现，采用 <code>hession2</code>，<code>fastjson</code> 等序列化方式等等。成熟的 <code>RPC</code> 框架还会考虑调用过程中的诸多问题，比如重试机制、超时配置等等。</p>
-<p>本文参考了 <a href="https://www.cnkirito.moe/easy-know-rpc/">徐靖峰的博客</a>。</p>
-]]></content>
-      <tags>
-        <tag>RPC</tag>
       </tags>
   </entry>
   <entry>
@@ -2009,6 +1910,105 @@
         <tag>Dubbo</tag>
         <tag>Spring Cloud</tag>
         <tag>Spring Cloud Alibaba</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>pip-手册</title>
+    <url>/2020/03/20/pip-%E6%89%8B%E5%86%8C/</url>
+    <content><![CDATA[<p>PyPI (Python Package Index) 是 <code>Python</code> 编程语言的软件存储库。开发者可以通过 PyPI 查找和安装由 <code>Python</code> 社区开发和共享的软件，也可以将自己开发的库上传至 PyPI 。</p>
+<p>由于国外访问比较慢，我们可以通过配置国内的镜像来进行加速访问。</p>
+<h2 id="配置-Aliyun-的镜像"><a href="#配置-Aliyun-的镜像" class="headerlink" title="配置 Aliyun 的镜像"></a>配置 Aliyun 的镜像</h2><h3 id="Linux-平台"><a href="#Linux-平台" class="headerlink" title="Linux 平台"></a>Linux 平台</h3><ol>
+<li>找到下列文件</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">~/.pip/pip.conf</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>在上述文件中添加或修改:</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[global]</span><br><span class="line">index-url = https://mirrors.aliyun.com/pypi/simple/</span><br><span class="line"></span><br><span class="line">[install]</span><br><span class="line">trusted-host=mirrors.aliyun.com</span><br></pre></td></tr></table></figure>
+
+<h3 id="Windows-平台"><a href="#Windows-平台" class="headerlink" title="Windows 平台"></a>Windows 平台</h3><p>在 <code>exporler</code> 地址栏输入 <code>%AppData%</code>，进入文件夹后，在 <code>pip</code> 文件夹下新建 <code>pip.ini</code> 文件并写入以下配置。</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="section">[global]</span></span><br><span class="line"><span class="attr">index-url</span> = http://mirrors.aliyun.com/pypi/simple</span><br><span class="line"><span class="attr">trusted-host</span> = mirrors.aliyun.com</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>pip</tag>
+        <tag>Python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>RPC Introduction</title>
+    <url>/2019/07/11/rpc-introduction/</url>
+    <content><![CDATA[<h2 id="What-is-RPC"><a href="#What-is-RPC" class="headerlink" title="What is RPC"></a>What is RPC</h2><blockquote>
+<p>Remote Procedure Call (RPC) is a protocol that one program can use to request a service from a program located in another computer on a network without having to understand the network’s details. A procedure call is also sometimes known as a function call or a subroutine call. A procedure call is also sometimes known as a function call or a subroutine call.</p>
+</blockquote>
+<p><code>RPC</code> 是一种远程过程调用协议，一个程序可以使用该协议从位于网络上另一台计算机中的程序请求服务，而无需了解网络的详细信息。<code>RPC</code> 有时也称为函数调用或子程序调用。<code>RPC</code> 是进程间通信的一种方式。</p>
+<h2 id="Why-is-RPC"><a href="#Why-is-RPC" class="headerlink" title="Why is RPC"></a>Why is RPC</h2><p>网上很多关于 <code>RPC</code> 的优点，笔者都不太赞同。不能将那些成熟的 <code>RPC</code> 框架解决的问题全部归结为 <code>RPC</code> 的优点。比如 <code>RPC</code> 的概念中并没有提到服务治理等问题，但是常见的 <code>RPC</code> 框架（如 <a href="http://dubbo.apache.org/">DUBBO</a>）均解决了服务治理的相关问题，这显然不能作为 <code>RPC</code> 的优点。要解释“Why is RPC?”的问题，还是要回归到 <code>RPC</code> 的概念上来。</p>
+<ul>
+<li><code>RPC</code> 可以使<em>远程过程调用</em>变得像本地调用一样简单。</li>
+<li>方便计算能力的横向扩展。</li>
+</ul>
+<p>有兴趣可以阅读 <a href="http://dubbo.apache.org/zh-cn/docs/user/preface/background.html">dubbo 诞生的背景</a> 以及<a href="http://dubbo.apache.org/zh-cn/docs/user/preface/requirements.html">dubbo 解决了哪些需求</a>。</p>
+<h3 id="RPC-vs-HTTP"><a href="#RPC-vs-HTTP" class="headerlink" title="RPC vs HTTP"></a>RPC vs HTTP</h3><p>其实这两者不是同一个维度的概念。从 <code>RPC</code> 的概念上来讲，<code>HTTP</code> 其实就是 <code>RPC</code> 的一种实现。</p>
+<h3 id="RPC-vs-RMI"><a href="#RPC-vs-RMI" class="headerlink" title="RPC vs RMI"></a>RPC vs RMI</h3><p>这两者也不是同一个维度的概念。</p>
+<p><code>RMI</code> 是 <code>JAVA</code> 提供的一种<em>远程方法调用</em>，而 <code>RPC</code> 的变成模型是<em>远程过程调用</em>，<code>RPC</code> 并没有规定采用哪种编程语言实现，<strong>我们甚至可以使用 <code>JAVA</code> 语言实现一个具体的 <code>RPC</code> 协议，内部采用 <code>RMI</code> 来实现数据的传输</strong>，例如 <a href="http://dubbo.apache.org/zh-cn/docs/user/references/protocol/rmi.html">dubbo 中就可以采用 rmi 协议</a>。</p>
+<h2 id="How-to-implement-RPC"><a href="#How-to-implement-RPC" class="headerlink" title="How to implement RPC"></a>How to implement RPC</h2><p>我们先思考这么一个问题：要怎么去调用远程的服务呢？</p>
+<ol>
+<li>要知道 ip 和端口，以确定远程唯一的一个进程。</li>
+<li>要知道调用远程的进程中的什么服务，以确定方法和参数</li>
+<li>调用远程的服务之后，要返回结果。</li>
+</ol>
+<p>根据上述的三点，我们来看一下如何实现一个 <code>RPC</code> 框架。</p>
+<h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>在一个 <code>RPC</code> 的架构中包含 4 个组件：</p>
+<ol>
+<li><code>Client</code>：即客户端，服务调用方</li>
+<li><code>Client Stub</code>：客户端存根，用于存方服务端地址信息，将客户端的信息打包成网络消息，再通过网络发送给服务提供者</li>
+<li><code>Server Stub</code>：服务端存根，接收客户端发送过来的消息，并调用本地服务</li>
+<li><code>Server</code>：服务提供者</li>
+</ol>
+<p>一个 <code>RPC</code> 的调用过程：</p>
+<ol>
+<li><code>Client</code> 调用以本地调用方式调用服务；</li>
+<li><code>Client Stub</code> 接收到调用后负责将方法、参数等组装成能够进行网络传输的消息体（在 <code>Java</code> 中是序列化的过程）；</li>
+<li><code>Client Stub</code> 找到服务地址，并将消息体通过网络发送到服务端；</li>
+<li><code>Server Stub</code> 收到消息后进行解码（在 <code>Java</code> 中是反序列化的过程）；</li>
+<li><code>Server Stub</code> 根据解码结果调用 <code>Server</code> 处理；</li>
+<li><code>Server</code> 将结果返回给 <code>Server Stub</code>；</li>
+<li><code>Server Stub</code> 将返回结果打包成消息体（在 <code>Java</code> 中是序列化的过程）；</li>
+<li><code>Server Stub</code> 将打包后的消息通过网络并发送至消费方；</li>
+<li><code>Client Stub</code> 接收到消息，并进行解码（在 <code>Java</code> 中是反序列化的过程）；</li>
+<li><code>Client</code> 得到最终结果。</li>
+</ol>
+<p>一图顶千言</p>
+<img src="/2019/07/11/rpc-introduction/theory.jpg" class="" title="RPC 原理">
+
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><p>我们简单的采用 <code>Java</code> 语言来实现一个 <code>RPC</code> 框架。</p>
+<h4 id="命名"><a href="#命名" class="headerlink" title="命名"></a>命名</h4><p>作为钢铁侠粉丝，这里我们将项目命名为 <a href="https://github.com/fuyongde/edith/releases/tag/0.1.0">Edith</a>。</p>
+<blockquote>
+<p>Even dead,I am hero. -<em>Tony Stark</em></p>
+</blockquote>
+<p>伊人已逝，仍是英雄。永远纪念 _Tony Stark_。</p>
+<h4 id="暴露服务"><a href="#暴露服务" class="headerlink" title="暴露服务"></a>暴露服务</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">RpcFramework</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">export</span><span class="params">(<span class="keyword">final</span> Object service, <span class="type">int</span> port)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="keyword">if</span> (service == <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>(<span class="string">&quot;Service instance is null&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (port &lt;= <span class="number">0</span> || port &gt; <span class="number">65535</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>(<span class="string">&quot;Invalid port &quot;</span> + port);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;Export service &quot;</span> + service.getClass().getName() + <span class="string">&quot; on port &quot;</span> + port);</span><br><span class="line">        <span class="type">ServerSocket</span> <span class="variable">server</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ServerSocket</span>(port);</span><br><span class="line">        <span class="keyword">for</span> (; ; ) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="keyword">final</span> <span class="type">Socket</span> <span class="variable">socket</span> <span class="operator">=</span> server.accept();</span><br><span class="line">                <span class="keyword">new</span> <span class="title class_">Thread</span>(() -&gt; &#123;</span><br><span class="line">                    <span class="keyword">try</span> &#123;</span><br><span class="line">                        <span class="keyword">try</span> &#123;</span><br><span class="line">                            <span class="type">ObjectInputStream</span> <span class="variable">input</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ObjectInputStream</span>(socket.getInputStream());</span><br><span class="line">                            <span class="keyword">try</span> &#123;</span><br><span class="line">                                <span class="type">String</span> <span class="variable">methodName</span> <span class="operator">=</span> input.readUTF();</span><br><span class="line">                                Class&lt;?&gt;[] parameterTypes = (Class&lt;?&gt;[]) input.readObject();</span><br><span class="line">                                Object[] arguments = (Object[]) input.readObject();</span><br><span class="line">                                <span class="type">ObjectOutputStream</span> <span class="variable">output</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ObjectOutputStream</span>(socket.getOutputStream());</span><br><span class="line">                                <span class="keyword">try</span> &#123;</span><br><span class="line">                                    <span class="type">Method</span> <span class="variable">method</span> <span class="operator">=</span> service.getClass().getMethod(methodName, parameterTypes);</span><br><span class="line">                                    <span class="type">Object</span> <span class="variable">result</span> <span class="operator">=</span> method.invoke(service, arguments);</span><br><span class="line">                                    output.writeObject(result);</span><br><span class="line">                                &#125; <span class="keyword">catch</span> (Throwable t) &#123;</span><br><span class="line">                                    output.writeObject(t);</span><br><span class="line">                                &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                                    output.close();</span><br><span class="line">                                &#125;</span><br><span class="line">                            &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                                input.close();</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                            socket.close();</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                        e.printStackTrace();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;).start();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="引用服务"><a href="#引用服务" class="headerlink" title="引用服务"></a>引用服务</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">RpcFramework</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; T <span class="title function_">refer</span><span class="params">(<span class="keyword">final</span> Class&lt;T&gt; interfaceClass, <span class="keyword">final</span> String host, <span class="keyword">final</span> <span class="type">int</span> port)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (interfaceClass == <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>(<span class="string">&quot;Interface class is null&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (!interfaceClass.isInterface()) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>(<span class="string">&quot;The &quot;</span> + interfaceClass.getName() + <span class="string">&quot; must be interface class!&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (host == <span class="literal">null</span> || host.length() == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>(<span class="string">&quot;Host is null!&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (port &lt;= PORT_MIN || port &gt; PORT_MAX) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>(<span class="string">&quot;Invalid port &quot;</span> + port);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">&quot;Get remote service &quot;</span> + interfaceClass.getName() + <span class="string">&quot; from server &quot;</span> + host + <span class="string">&quot;:&quot;</span> + port);</span><br><span class="line">        <span class="keyword">return</span> (T) Proxy.newProxyInstance(interfaceClass.getClassLoader(), <span class="keyword">new</span> <span class="title class_">Class</span>&lt;?&gt;[]&#123;interfaceClass&#125;, (proxy, method, arguments) -&gt; &#123;</span><br><span class="line">            <span class="type">Socket</span> <span class="variable">socket</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Socket</span>(host, port);</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="type">ObjectOutputStream</span> <span class="variable">output</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ObjectOutputStream</span>(socket.getOutputStream());</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    output.writeUTF(method.getName());</span><br><span class="line">                    output.writeObject(method.getParameterTypes());</span><br><span class="line">                    output.writeObject(arguments);</span><br><span class="line">                    <span class="type">ObjectInputStream</span> <span class="variable">input</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ObjectInputStream</span>(socket.getInputStream());</span><br><span class="line">                    <span class="keyword">try</span> &#123;</span><br><span class="line">                        <span class="type">Object</span> <span class="variable">result</span> <span class="operator">=</span> input.readObject();</span><br><span class="line">                        <span class="keyword">if</span> (result <span class="keyword">instanceof</span> Throwable) &#123;</span><br><span class="line">                            <span class="keyword">throw</span> (Throwable) result;</span><br><span class="line">                        &#125;</span><br><span class="line">                        <span class="keyword">return</span> result;</span><br><span class="line">                    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                        input.close();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                    output.close();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                socket.close();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="定义接口"><a href="#定义接口" class="headerlink" title="定义接口"></a>定义接口</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">HelloService</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 返回一个字符串</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> name name</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> Hello name</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    String <span class="title function_">hello</span><span class="params">(String name)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="编写服务提供者"><a href="#编写服务提供者" class="headerlink" title="编写服务提供者"></a>编写服务提供者</h4><p>先实现 <code>HelloService</code></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">HelloServiceImpl</span> <span class="keyword">implements</span> <span class="title class_">HelloService</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">hello</span><span class="params">(String name)</span> &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">result</span> <span class="operator">=</span> <span class="string">&quot;Hello &quot;</span> + name;</span><br><span class="line">        System.out.println(Thread.currentThread().getName() + <span class="string">&quot; &quot;</span> + result);</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>启动并暴漏服务</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Provider</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="type">HelloService</span> <span class="variable">helloService</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">HelloServiceImpl</span>();</span><br><span class="line">        RpcFramework.export(helloService, <span class="number">8888</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="编写服务调用者"><a href="#编写服务调用者" class="headerlink" title="编写服务调用者"></a>编写服务调用者</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Consumer</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">HelloService</span> <span class="variable">helloService</span> <span class="operator">=</span> RpcFramework.refer(HelloService.class, <span class="string">&quot;127.0.0.1&quot;</span>, <span class="number">8888</span>);</span><br><span class="line">        <span class="type">String</span> <span class="variable">name</span> <span class="operator">=</span> <span class="string">&quot;Peter Parker&quot;</span>;</span><br><span class="line">        System.out.println(helloService.hello(name));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>执行 <code>Consumer</code>，查看控制台输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Hello Peter Parker</span><br></pre></td></tr></table></figure>
+
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>本文的例子，采用了阻塞的 Socket IO 流来进行 Client 和 Server 之间的端对端通信。方法的远程调用采用了 <code>Java</code> 的动态代理，参数的序列化与反序列化采用 <code>ObjectStream</code>。成熟的 <code>RPC</code> 框架会对上述的实现方式进行替换，比如采用 <code>Netty</code> 的 <code>NIO</code> 来实现非阻塞通信，采用成熟的注册中心来统一管理服务的注册与发现，采用 <code>hession2</code>，<code>fastjson</code> 等序列化方式等等。成熟的 <code>RPC</code> 框架还会考虑调用过程中的诸多问题，比如重试机制、超时配置等等。</p>
+<p>本文参考了 <a href="https://www.cnkirito.moe/easy-know-rpc/">徐靖峰的博客</a>。</p>
+]]></content>
+      <tags>
+        <tag>RPC</tag>
       </tags>
   </entry>
   <entry>
