@@ -1643,107 +1643,6 @@
       </tags>
   </entry>
   <entry>
-    <title>PowerShell 手册</title>
-    <url>/2019/09/27/powershell-%E6%89%8B%E5%86%8C/</url>
-    <content><![CDATA[<p>记录一些常见的 <code>Powershell</code> 的使用问题</p>
-<h2 id="别名命令"><a href="#别名命令" class="headerlink" title="别名命令"></a>别名命令</h2><p>在使用 Linux 系统时，我喜欢使用 <code>ll</code> 命令来查看当前目录的文件，但是 Windows 系统的 Powershell 没有这个命令，所以每次用的时候就很不习惯。我们可以通过对命令设置别名来让 Powershell 支持我们的使用习惯。</p>
-<h3 id="查看别名"><a href="#查看别名" class="headerlink" title="查看别名"></a>查看别名</h3><p><code>Get-Alias</code> 或者 <code>gal</code> 命令来查看我们系统命令的别名，如下</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">PS C:\Users\fuyongde&gt; get-alias</span><br><span class="line"></span><br><span class="line">CommandType     Name                                               Version    Source</span><br><span class="line">-----------     ----                                               -------    ------</span><br><span class="line">Alias           % -&gt; ForEach-Object</span><br><span class="line">Alias           ? -&gt; Where-Object</span><br><span class="line">Alias           ac -&gt; Add-Content</span><br><span class="line">Alias           cat -&gt; Get-Content</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>查看某别名的原命令，如 <code>ls</code> 的原命令：<code>Get-Alias ls</code></li>
-<li>查看某原命令的别名，如 <code>Get-ChildItem</code> 的别名：<code>Get-Alias -Definition Get-ChildItem</code></li>
-</ul>
-<h3 id="临时创建或更改别名"><a href="#临时创建或更改别名" class="headerlink" title="临时创建或更改别名"></a>临时创建或更改别名</h3><p>使用 <code>Set-Alias</code> 命令来创建或更改别名，但是改命令只在当前的的 PowerShell Session 中生效。另外还有一个 <code>New-Alias</code> 命令用法类似。</p>
-<h4 id="创建不带参数的别名"><a href="#创建不带参数的别名" class="headerlink" title="创建不带参数的别名"></a>创建不带参数的别名</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">PS C:\Users\fuyongde&gt; Set-Alias -Name ll -Value get-childitem</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">或者简单一些</span></span><br><span class="line">PS C:\Users\fuyongde&gt; Set-Alias ll get-childitem</span><br></pre></td></tr></table></figure>
-
-<h4 id="创建带参数的别名"><a href="#创建带参数的别名" class="headerlink" title="创建带参数的别名"></a>创建带参数的别名</h4><p>如果命令带参数如想为 <code>Get-ChildItem -Name</code> 设定别名为 <code>ll</code> 则我们需要两步，第一步为这个带参数原命令设定一个中间 <code>function</code>，第二步为这个 <code>function</code> 指定别名</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">PS C:\Users\fuyongde&gt; function getlist &#123;Get-ChildItem -Name&#125;</span><br><span class="line">PS C:\Users\fuyongde&gt; Set-Alias ll getlist</span><br></pre></td></tr></table></figure>
-
-<h4 id="创建永久的别名"><a href="#创建永久的别名" class="headerlink" title="创建永久的别名"></a>创建永久的别名</h4><p>在 PowerShell 中直接使用 <code>Set-Alias</code> 或 <code>New-Alias</code> 命令创建的别名在关闭此 Session 后即会失效，防止此现象的方法是将此命令写入 Windows PowerShell profile 文件。</p>
-<p>查看此文件在计算机中的位置：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">PS C:\Users\fuyongde&gt; $profile</span><br></pre></td></tr></table></figure>
-
-<p>结果如下：</p>
-<p><code>C:\Users\fuyongde\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1</code></p>
-<p>但如果安装了 <code>PowerShell6</code> 的话，则结果是：</p>
-<p><code>C:\Users\fuyongde\Documents\PowerShell\Microsoft.PowerShell_profile.ps1</code></p>
-<p>打开对应文件，并写入要预设的别名</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Set-Alias ll get-childitem</span><br></pre></td></tr></table></figure>
-
-<p>注意：该种方式有可能会遇到系统上禁止运行脚本的提示，这是因为 PowerShell 对安全做过充分考量，把脚本的执行分成了几个策略。以下是常用的执行策略：</p>
-<ul>
-<li><code>Restricted</code>：禁止运行任何脚本和配置文件，默认情况下就是该策略。</li>
-<li><code>AllSigned</code>：可以运行脚本，但要求所有脚本和配置文件由可信任的发布者签名，包括在本地计算机编写的脚本。</li>
-<li><code>RemoteSigned</code>：可以运行脚本，但要求从网络上下载的脚本和配置由可信任的发布者签名，不要求对已经运行和在本地计算机编写的脚本进行签名。</li>
-<li><code>Unrestricted</code>：可以运行未签名的脚本，这种策略也是最危险的。</li>
-</ul>
-<p>通过 <code>Get-ExecutionPolicy</code> 命令可查看当前配置的执行策略，通过管理员运行 PowerShell 并执行 <code>Set-ExecutionPolicy RemoteSigned</code> 可更改执行策略。</p>
-<h3 id="删除别名"><a href="#删除别名" class="headerlink" title="删除别名"></a>删除别名</h3><p>使用 <code>Remove-Item alias</code> 命令删除已设定的别名。</p>
-<p>如删除别名 ll ：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">PS C:\Users\fuyongde&gt; Remove-Item alias:\ll</span><br></pre></td></tr></table></figure>
-
-<h2 id="环境变量命令"><a href="#环境变量命令" class="headerlink" title="环境变量命令"></a>环境变量命令</h2><h3 id="切换-PowerShell-的-page-为-UTF-8-代码页"><a href="#切换-PowerShell-的-page-为-UTF-8-代码页" class="headerlink" title="切换 PowerShell 的 page 为 UTF-8 代码页"></a>切换 PowerShell 的 page 为 UTF-8 代码页</h3><p>在最新版本的 windows 操作系统中，powershell 默认的代码页已经是 UTF-8 字符集的代码页了。常见的代码页如下：</p>
-<ul>
-<li><p><code>65001</code>：UTF-8 代码页</p>
-</li>
-<li><p><code>950</code>：繁体中文</p>
-</li>
-<li><p><code>936</code>：简体中文默认的 GBK</p>
-</li>
-<li><p><code>437</code>：MS-DOS 美国英语</p>
-</li>
-</ul>
-<p>命令如下：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">chcp 65001</span><br></pre></td></tr></table></figure>
-
-<h2 id="Modules-管理"><a href="#Modules-管理" class="headerlink" title="Modules 管理"></a>Modules 管理</h2><h3 id="安装-Module"><a href="#安装-Module" class="headerlink" title="安装 Module"></a>安装 Module</h3><p>使用 <code>Install-Module</code> 命令来安装 Module，其支持的参数有很多，具体可以查看<a href="https://docs.microsoft.com/zh-cn/powershell/module/powershellget/install-module?view=powershell-7.2">官方文档</a>，这里我们只列举最常用的参数的使用方法：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">为当前用户安装 posh-git 模块</span></span><br><span class="line">Install-Module -Name posh-git -Scope CurrentUser</span><br></pre></td></tr></table></figure>
-
-<h3 id="查找-Module"><a href="#查找-Module" class="headerlink" title="查找 Module"></a>查找 Module</h3><p>使用 <code>Find-Module</code> 命令可以来查找 Module，其支持的参数有很多，具体可以查看<a href="https://docs.microsoft.com/zh-cn/powershell/module/powershellget/find-module?view=powershell-7.2">官方文档</a>，这里我们只列举最常用的参数的使用方法：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查找名称为 PowerShellGet 的 Module</span></span><br><span class="line">Find-Module -Name PowerShellGet</span><br></pre></td></tr></table></figure>
-
-<h3 id="查看已经安装的-Modules"><a href="#查看已经安装的-Modules" class="headerlink" title="查看已经安装的 Modules"></a>查看已经安装的 Modules</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看已经安装的所有的 Modules</span></span><br><span class="line">Get-InstalledModule</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看已经安装的指定名称、版本的 Modules</span></span><br><span class="line">Get-InstalledModule -Name &quot;AzureRM.Automation&quot; -MinimumVersion 1.0 -MaximumVersion 2.0</span><br></pre></td></tr></table></figure>
-
-<h3 id="卸载-Module"><a href="#卸载-Module" class="headerlink" title="卸载 Module"></a>卸载 Module</h3><p>使用 <code>Uninstall-Module</code> 命令可以来卸载 Module，其支持的参数有很多，具体可以查看<a href="https://docs.microsoft.com/zh-cn/powershell/module/powershellget/uninstall-module?view=powershell-7.2">官方文档</a>，这里我们只列举最常用的参数的使用方法：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">卸载指定名称的模块</span></span><br><span class="line">Uninstall-Module -Name SpeculationControl</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">强制卸载指定名称的模块</span></span><br><span class="line">Uninstall-Module -Name SpeculationControl -Force</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">使用流水线的方式卸载，即先查找到某个模块并卸载</span></span><br><span class="line">Get-InstalledModule -Name SpeculationControl | Uninstall-Module</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">卸载指定版本的模块</span></span><br><span class="line">Uninstall-Module -Name &#x27;oh-my-posh&#x27; -RequiredVersion &#x27;7.31.1&#x27;</span><br></pre></td></tr></table></figure>
-
-<h2 id="美化"><a href="#美化" class="headerlink" title="美化"></a>美化</h2><p>PowerShell 原始的界面是非常丑的，我们可以通过安装一些 modules 来进行美化，网上有很多博客介绍如何美化 PowerShell，但是大部门没有介绍每个 module 的作用。</p>
-<h3 id="oh-my-posh"><a href="#oh-my-posh" class="headerlink" title="oh-my-posh"></a>oh-my-posh</h3><blockquote>
-<p>A prompt theme engine for any shell.</p>
-</blockquote>
-<p>从介绍中可以看出 oh-my-posh 是为任何 shell 提供的一套主题引擎，具体更多的文档可以查阅<a href="https://ohmyposh.dev/">官网</a>。</p>
-<h4 id="安装-oh-my-posh"><a href="#安装-oh-my-posh" class="headerlink" title="安装 oh-my-posh"></a>安装 oh-my-posh</h4><p>为 Powershell 安装 oh-my-posh 非常简单，安装命令如下：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Install-Module oh-my-posh -Scope CurrentUser</span><br></pre></td></tr></table></figure>
-
-<h4 id="更新-oh-my-posh"><a href="#更新-oh-my-posh" class="headerlink" title="更新 oh-my-posh"></a>更新 oh-my-posh</h4><p>如果之前安装过 oh-my-posh 但是想要更新版本，其更新命令如下：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Update-Module oh-my-posh</span><br></pre></td></tr></table></figure>
-
-<h4 id="启用-oh-my-posh"><a href="#启用-oh-my-posh" class="headerlink" title="启用 oh-my-posh"></a>启用 oh-my-posh</h4><p>安装 oh-my-posh 之后，并不会直接启用，跟上文创建别名的方法一样，在 Windows PowerShell profile 文件中启用即可。通过 <code>notepad $PROFILE</code> 命令，打开 Windows PowerShell profile 文件，在文件中添加如下内容：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">引入 oh-my-posh 模块</span></span><br><span class="line">Import-Module oh-my-posh</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">设置 oh-my-posh 的主题为 ys，这里也可以修改为其他主题</span></span><br><span class="line">Set-PoshPrompt -Theme ys</span><br></pre></td></tr></table></figure>
-
-<h4 id="部分主题乱码问题"><a href="#部分主题乱码问题" class="headerlink" title="部分主题乱码问题"></a>部分主题乱码问题</h4><p>由于一些 oh-my-posh 中用到了一些特殊的字符，需要对应的终端更换为支持这种特殊字符的字体，可以在<a href="https://www.nerdfonts.com/">nerdfonts 网站</a>网站下载自己喜欢的字体，个人推荐 <code>DejaVuSansMono Nerd Font</code> 这个字体。</p>
-<h3 id="posh-git"><a href="#posh-git" class="headerlink" title="posh-git"></a>posh-git</h3><p>posh-git 用于在 shell 上提示 git 的一些信息，其安装、更新、卸载过程跟其他的 PowerShell modules 一致。这里只列举安装命令：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Install-Module posh-git -Scope CurrentUser</span><br></pre></td></tr></table></figure>
-
-<h4 id="启用-posh-git"><a href="#启用-posh-git" class="headerlink" title="启用 posh-git"></a>启用 posh-git</h4><p>安装 posh-git 之后，并不会直接启用，跟上文创建别名的方法一样，在 Windows PowerShell profile 文件中启用即可。通过 <code>notepad $PROFILE</code> 命令，打开 Windows PowerShell profile 文件，在文件中添加如下内容：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">引入 oh-my-posh 模块</span></span><br><span class="line">Import-Module posh-git</span><br></pre></td></tr></table></figure>
-
-<h3 id="PSReadLine"><a href="#PSReadLine" class="headerlink" title="PSReadLine"></a>PSReadLine</h3><p>PSReadLine 在 PowerShell 控制台中提供改进的命令行编辑体验。具体说明可参考其<a href="https://docs.microsoft.com/zh-cn/powershell/module/psreadline/about/about_psreadline?view=powershell-7.2">官方文档</a>。</p>
-<h4 id="安装-PSReadLine"><a href="#安装-PSReadLine" class="headerlink" title="安装 PSReadLine"></a>安装 PSReadLine</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Install-Module -Name PSReadLine</span><br></pre></td></tr></table></figure>
-
-<h4 id="启用-PSReadLine"><a href="#启用-PSReadLine" class="headerlink" title="启用 PSReadLine"></a>启用 PSReadLine</h4><p>安装 PSReadLine 之后，并不会直接启用，跟上文创建别名的方法一样，在 Windows PowerShell profile 文件中启用即可。通过 <code>notepad $PROFILE</code> 命令，打开 Windows PowerShell profile 文件，在文件中添加如下内容：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">引入 PSReadLine 模块</span></span><br><span class="line">Import-Module PSReadLine</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">设置编辑模式为 Emacs</span></span><br><span class="line">Set-PSReadlineOption -EditMode Emacs</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">开启预测 IntelliSense，其模式为历史命令，即历史敲过的命令都会进行提示</span></span><br><span class="line">Set-PSReadLineOption -PredictionSource History</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">开启预测 IntelliSense 之后，使用快捷键快速选中命令</span></span><br><span class="line">Set-PSReadlineKeyHandler -Key UpArrow -Function HistorySearchBackward</span><br><span class="line">Set-PSReadlineKeyHandler -Key DownArrow -Function HistorySearchForward</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>手册</category>
-      </categories>
-      <tags>
-        <tag>未完待续</tag>
-        <tag>PowerShell</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>RPC Introduction</title>
     <url>/2019/07/11/rpc-introduction/</url>
     <content><![CDATA[<h2 id="What-is-RPC"><a href="#What-is-RPC" class="headerlink" title="What is RPC"></a>What is RPC</h2><blockquote>
@@ -2286,6 +2185,110 @@
         <tag>源码</tag>
         <tag>Guava</tag>
         <tag>限流</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>PowerShell 手册</title>
+    <url>/2019/09/27/powershell-%E6%89%8B%E5%86%8C/</url>
+    <content><![CDATA[<p>记录一些常见的 <code>Powershell</code> 的使用问题</p>
+<h2 id="别名命令"><a href="#别名命令" class="headerlink" title="别名命令"></a>别名命令</h2><p>在使用 Linux 系统时，我喜欢使用 <code>ll</code> 命令来查看当前目录的文件，但是 Windows 系统的 Powershell 没有这个命令，所以每次用的时候就很不习惯。我们可以通过对命令设置别名来让 Powershell 支持我们的使用习惯。</p>
+<h3 id="查看别名"><a href="#查看别名" class="headerlink" title="查看别名"></a>查看别名</h3><p><code>Get-Alias</code> 或者 <code>gal</code> 命令来查看我们系统命令的别名，如下</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">PS</span> C:\Users\fuyongde&gt; <span class="built_in">get-alias</span></span><br><span class="line"></span><br><span class="line">CommandType     Name                         Version    Source</span><br><span class="line"><span class="literal">-----------</span>     <span class="literal">----</span>                         <span class="literal">-------</span>    <span class="literal">------</span></span><br><span class="line">Alias           % -&gt; <span class="built_in">ForEach-Object</span></span><br><span class="line">Alias           ? -&gt; <span class="built_in">Where-Object</span></span><br><span class="line">Alias           <span class="built_in">ac</span> -&gt; <span class="built_in">Add-Content</span></span><br><span class="line">Alias           <span class="built_in">cat</span> -&gt; <span class="built_in">Get-Content</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>查看某别名的原命令，如 <code>ls</code> 的原命令：<code>Get-Alias ls</code></li>
+<li>查看某原命令的别名，如 <code>Get-ChildItem</code> 的别名：<code>Get-Alias -Definition Get-ChildItem</code></li>
+</ul>
+<h3 id="临时创建或更改别名"><a href="#临时创建或更改别名" class="headerlink" title="临时创建或更改别名"></a>临时创建或更改别名</h3><p>使用 <code>Set-Alias</code> 命令来创建或更改别名，但是改命令只在当前的的 PowerShell Session 中生效。另外还有一个 <code>New-Alias</code> 命令用法类似。</p>
+<h4 id="创建不带参数的别名"><a href="#创建不带参数的别名" class="headerlink" title="创建不带参数的别名"></a>创建不带参数的别名</h4><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">PS</span> C:\Users\fuyongde&gt; <span class="built_in">Set-Alias</span> <span class="literal">-Name</span> ll <span class="literal">-Value</span> <span class="built_in">get-childitem</span></span><br><span class="line"><span class="comment"># 或者简单一些</span></span><br><span class="line"><span class="built_in">PS</span> C:\Users\fuyongde&gt; <span class="built_in">Set-Alias</span> ll <span class="built_in">get-childitem</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="创建带参数的别名"><a href="#创建带参数的别名" class="headerlink" title="创建带参数的别名"></a>创建带参数的别名</h4><p>如果命令带参数如想为 <code>Get-ChildItem -Name</code> 设定别名为 <code>ll</code> 则我们需要两步，第一步为这个带参数原命令设定一个中间 <code>function</code>，第二步为这个 <code>function</code> 指定别名</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">PS</span> C:\Users\fuyongde&gt; <span class="function"><span class="keyword">function</span> <span class="title">getlist</span></span> &#123;<span class="built_in">Get-ChildItem</span> <span class="literal">-Name</span>&#125;</span><br><span class="line"><span class="built_in">PS</span> C:\Users\fuyongde&gt; <span class="built_in">Set-Alias</span> ll getlist</span><br></pre></td></tr></table></figure>
+
+<h4 id="创建永久的别名"><a href="#创建永久的别名" class="headerlink" title="创建永久的别名"></a>创建永久的别名</h4><p>在 PowerShell 中直接使用 <code>Set-Alias</code> 或 <code>New-Alias</code> 命令创建的别名在关闭此 Session 后即会失效，防止此现象的方法是将此命令写入 Windows PowerShell profile 文件。</p>
+<p>查看此文件在计算机中的位置：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">PS</span> C:\Users\fuyongde&gt; <span class="variable">$profile</span></span><br></pre></td></tr></table></figure>
+
+<p>结果如下：</p>
+<p><code>C:\Users\fuyongde\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1</code></p>
+<p>但如果安装了 <code>PowerShell6</code> 的话，则结果是：</p>
+<p><code>C:\Users\fuyongde\Documents\PowerShell\Microsoft.PowerShell_profile.ps1</code></p>
+<p>打开对应文件，并写入要预设的别名</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">Set-Alias</span> ll <span class="built_in">get-childitem</span></span><br></pre></td></tr></table></figure>
+
+<p>注意：该种方式有可能会遇到系统上禁止运行脚本的提示，这是因为 PowerShell 对安全做过充分考量，把脚本的执行分成了几个策略。以下是常用的执行策略：</p>
+<ul>
+<li><code>Restricted</code>：禁止运行任何脚本和配置文件，默认情况下就是该策略。</li>
+<li><code>AllSigned</code>：可以运行脚本，但要求所有脚本和配置文件由可信任的发布者签名，包括在本地计算机编写的脚本。</li>
+<li><code>RemoteSigned</code>：可以运行脚本，但要求从网络上下载的脚本和配置由可信任的发布者签名，不要求对已经运行和在本地计算机编写的脚本进行签名。</li>
+<li><code>Unrestricted</code>：可以运行未签名的脚本，这种策略也是最危险的。</li>
+</ul>
+<p>通过 <code>Get-ExecutionPolicy</code> 命令可查看当前配置的执行策略，通过管理员运行 PowerShell 并执行 <code>Set-ExecutionPolicy RemoteSigned</code> 可更改执行策略。</p>
+<h3 id="删除别名"><a href="#删除别名" class="headerlink" title="删除别名"></a>删除别名</h3><p>使用 <code>Remove-Item alias</code> 命令删除已设定的别名。</p>
+<p>如删除别名 ll ：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">PS</span> C:\Users\fuyongde&gt; <span class="built_in">Remove-Item</span> alias:\ll</span><br></pre></td></tr></table></figure>
+
+<h2 id="环境变量命令"><a href="#环境变量命令" class="headerlink" title="环境变量命令"></a>环境变量命令</h2><h3 id="切换-PowerShell-的-page-为-UTF-8-代码页"><a href="#切换-PowerShell-的-page-为-UTF-8-代码页" class="headerlink" title="切换 PowerShell 的 page 为 UTF-8 代码页"></a>切换 PowerShell 的 page 为 UTF-8 代码页</h3><p>在最新版本的 windows 操作系统中，powershell 默认的代码页已经是 UTF-8 字符集的代码页了。常见的代码页如下：</p>
+<ul>
+<li><p><code>65001</code>：UTF-8 代码页</p>
+</li>
+<li><p><code>950</code>：繁体中文</p>
+</li>
+<li><p><code>936</code>：简体中文默认的 GBK</p>
+</li>
+<li><p><code>437</code>：MS-DOS 美国英语</p>
+</li>
+</ul>
+<p>命令如下：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">chcp <span class="number">65001</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Modules-管理"><a href="#Modules-管理" class="headerlink" title="Modules 管理"></a>Modules 管理</h2><h3 id="安装-Module"><a href="#安装-Module" class="headerlink" title="安装 Module"></a>安装 Module</h3><p>使用 <code>Install-Module</code> 命令来安装 Module，其支持的参数有很多，具体可以查看<a href="https://docs.microsoft.com/zh-cn/powershell/module/powershellget/install-module?view=powershell-7.2">官方文档</a>，这里我们只列举最常用的参数的使用方法：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 为当前用户安装 posh-git 模块</span></span><br><span class="line"><span class="built_in">Install-Module</span> <span class="literal">-Name</span> posh<span class="literal">-git</span> <span class="literal">-Scope</span> CurrentUser</span><br></pre></td></tr></table></figure>
+
+<h3 id="查找-Module"><a href="#查找-Module" class="headerlink" title="查找 Module"></a>查找 Module</h3><p>使用 <code>Find-Module</code> 命令可以来查找 Module，其支持的参数有很多，具体可以查看<a href="https://docs.microsoft.com/zh-cn/powershell/module/powershellget/find-module?view=powershell-7.2">官方文档</a>，这里我们只列举最常用的参数的使用方法：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查找名称为 PowerShellGet 的 Module</span></span><br><span class="line"><span class="built_in">Find-Module</span> <span class="literal">-Name</span> PowerShellGet</span><br></pre></td></tr></table></figure>
+
+<h3 id="查看已经安装的-Modules"><a href="#查看已经安装的-Modules" class="headerlink" title="查看已经安装的 Modules"></a>查看已经安装的 Modules</h3><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查看已经安装的所有的 Modules</span></span><br><span class="line"><span class="built_in">Get-InstalledModule</span></span><br><span class="line"><span class="comment"># 查看已经安装的指定名称、版本的 Modules</span></span><br><span class="line"><span class="built_in">Get-InstalledModule</span> <span class="literal">-Name</span> <span class="string">&quot;AzureRM.Automation&quot;</span> <span class="literal">-MinimumVersion</span> <span class="number">1.0</span> <span class="literal">-MaximumVersion</span> <span class="number">2.0</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="卸载-Module"><a href="#卸载-Module" class="headerlink" title="卸载 Module"></a>卸载 Module</h3><p>使用 <code>Uninstall-Module</code> 命令可以来卸载 Module，其支持的参数有很多，具体可以查看<a href="https://docs.microsoft.com/zh-cn/powershell/module/powershellget/uninstall-module?view=powershell-7.2">官方文档</a>，这里我们只列举最常用的参数的使用方法：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 卸载指定名称的模块</span></span><br><span class="line"><span class="built_in">Uninstall-Module</span> <span class="literal">-Name</span> SpeculationControl</span><br><span class="line"><span class="comment"># 强制卸载指定名称的模块</span></span><br><span class="line"><span class="built_in">Uninstall-Module</span> <span class="literal">-Name</span> SpeculationControl <span class="literal">-Force</span></span><br><span class="line"><span class="comment"># 使用流水线的方式卸载，即先查找到某个模块并卸载</span></span><br><span class="line"><span class="built_in">Get-InstalledModule</span> <span class="literal">-Name</span> SpeculationControl | <span class="built_in">Uninstall-Module</span></span><br><span class="line"><span class="comment"># 卸载指定版本的模块</span></span><br><span class="line"><span class="built_in">Uninstall-Module</span> <span class="literal">-Name</span> <span class="string">&#x27;oh-my-posh&#x27;</span> <span class="literal">-RequiredVersion</span> <span class="string">&#x27;7.31.1&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="美化"><a href="#美化" class="headerlink" title="美化"></a>美化</h2><p>PowerShell 原始的界面是非常丑的，我们可以通过安装一些 modules 来进行美化，网上有很多博客介绍如何美化 PowerShell，但是大部门没有介绍每个 module 的作用。</p>
+<h3 id="oh-my-posh"><a href="#oh-my-posh" class="headerlink" title="oh-my-posh"></a>oh-my-posh</h3><blockquote>
+<p>A prompt theme engine for any shell.</p>
+</blockquote>
+<p>从介绍中可以看出 oh-my-posh 是为任何 shell 提供的一套主题引擎，具体更多的文档可以查阅<a href="https://ohmyposh.dev/">官网</a>。</p>
+<h4 id="安装-oh-my-posh"><a href="#安装-oh-my-posh" class="headerlink" title="安装 oh-my-posh"></a>安装 oh-my-posh</h4><p>最新版本的 oh-my-posh 已经作为一个独立的应用来安装了，这里我们使用 winget 命令来安装 oh-my-posh ，安装命令如下：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">winget install JanDeDobbeleer.OhMyPosh <span class="literal">-s</span> winget</span><br></pre></td></tr></table></figure>
+
+<p>安装完成之后，需要将 oh-my-posh 添加到环境变量的 path 里面</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="variable">$env:Path</span> += <span class="string">&quot;;C:\Users\user\AppData\Local\Programs\oh-my-posh\bin&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="更新-oh-my-posh"><a href="#更新-oh-my-posh" class="headerlink" title="更新 oh-my-posh"></a>更新 oh-my-posh</h4><p>如果之前安装过 oh-my-posh 但是想要更新版本，其更新命令如下：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">winget upgrade JanDeDobbeleer.OhMyPosh <span class="literal">-s</span> winget</span><br></pre></td></tr></table></figure>
+
+<h4 id="启用-oh-my-posh"><a href="#启用-oh-my-posh" class="headerlink" title="启用 oh-my-posh"></a>启用 oh-my-posh</h4><p>安装 oh-my-posh 之后，并不会直接启用，跟上文创建别名的方法一样，在 Windows PowerShell profile 文件中启用即可。通过 <code>notepad $PROFILE</code> 命令，打开 Windows PowerShell profile 文件，在文件中添加如下内容：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 使用 oh-my-posh 来初始化 powershell</span></span><br><span class="line"><span class="built_in">oh</span><span class="literal">-my-posh</span> init pwsh | <span class="built_in">Invoke-Expression</span></span><br><span class="line"><span class="comment"># 指定使用的主题</span></span><br><span class="line"><span class="built_in">oh</span><span class="literal">-my-posh</span> init pwsh <span class="literal">--config</span> <span class="string">&quot;<span class="variable">$env:POSH_THEMES_PATH</span>\yyds.omp.json&quot;</span> | <span class="built_in">Invoke-Expression</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="部分主题乱码问题"><a href="#部分主题乱码问题" class="headerlink" title="部分主题乱码问题"></a>部分主题乱码问题</h4><p>由于一些 oh-my-posh 中用到了一些特殊的字符，需要对应的终端更换为支持这种特殊字符的字体，可以在<a href="https://www.nerdfonts.com/">nerdfonts 网站</a>网站下载自己喜欢的字体，个人推荐 <code>DejaVuSansMono Nerd Font</code> 这个字体。</p>
+<h3 id="posh-git"><a href="#posh-git" class="headerlink" title="posh-git"></a>posh-git</h3><p>posh-git 用于在 shell 上提示 git 的一些信息，其安装、更新、卸载过程跟其他的 PowerShell modules 一致。这里只列举安装命令：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">Install-Module</span> posh<span class="literal">-git</span> <span class="literal">-Scope</span> CurrentUser</span><br></pre></td></tr></table></figure>
+
+<h4 id="启用-posh-git"><a href="#启用-posh-git" class="headerlink" title="启用 posh-git"></a>启用 posh-git</h4><p>安装 posh-git 之后，并不会直接启用，跟上文创建别名的方法一样，在 Windows PowerShell profile 文件中启用即可。通过 <code>notepad $PROFILE</code> 命令，打开 Windows PowerShell profile 文件，在文件中添加如下内容：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 引入 oh-my-posh 模块</span></span><br><span class="line"><span class="built_in">Import-Module</span> posh<span class="literal">-git</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="PSReadLine"><a href="#PSReadLine" class="headerlink" title="PSReadLine"></a>PSReadLine</h3><p>PSReadLine 在 PowerShell 控制台中提供改进的命令行编辑体验。具体说明可参考其<a href="https://docs.microsoft.com/zh-cn/powershell/module/psreadline/about/about_psreadline?view=powershell-7.2">官方文档</a>。</p>
+<h4 id="安装-PSReadLine"><a href="#安装-PSReadLine" class="headerlink" title="安装 PSReadLine"></a>安装 PSReadLine</h4><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 需要注意的是：由于最新的 windows 版本自带了 PSReadLine，但是其版本较低，无法启用跟 oh-my-posh 配合的功能，故我们采用为当前用户强制安装新版本的方式</span></span><br><span class="line"><span class="built_in">Install-Module</span> <span class="literal">-Name</span> PSReadLine <span class="literal">-Scope</span> CurrentUser <span class="literal">-Force</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="启用-PSReadLine"><a href="#启用-PSReadLine" class="headerlink" title="启用 PSReadLine"></a>启用 PSReadLine</h4><p>安装 PSReadLine 之后，并不会直接启用，跟上文创建别名的方法一样，在 Windows PowerShell profile 文件中启用即可。通过 <code>notepad $PROFILE</code> 命令，打开 Windows PowerShell profile 文件，在文件中添加如下内容：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 引入 PSReadLine 模块</span></span><br><span class="line"><span class="built_in">Import-Module</span> PSReadLine</span><br><span class="line"><span class="comment"># 设置编辑模式为 Emacs</span></span><br><span class="line"><span class="built_in">Set-PSReadlineOption</span> <span class="literal">-EditMode</span> Emacs</span><br><span class="line"><span class="comment"># 开启预测 IntelliSense，其模式为历史命令，即历史敲过的命令都会进行提示</span></span><br><span class="line"><span class="built_in">Set-PSReadLineOption</span> <span class="literal">-PredictionSource</span> <span class="built_in">History</span></span><br><span class="line"><span class="comment"># 开启预测 IntelliSense 之后，使用快捷键快速选中命令</span></span><br><span class="line"><span class="built_in">Set-PSReadlineKeyHandler</span> <span class="literal">-Key</span> UpArrow <span class="literal">-Function</span> HistorySearchBackward</span><br><span class="line"><span class="built_in">Set-PSReadlineKeyHandler</span> <span class="literal">-Key</span> DownArrow <span class="literal">-Function</span> HistorySearchForward</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>手册</category>
+      </categories>
+      <tags>
+        <tag>未完待续</tag>
+        <tag>PowerShell</tag>
       </tags>
   </entry>
 </search>
