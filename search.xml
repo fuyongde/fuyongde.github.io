@@ -1,21 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>android command line 安装时的坑</title>
-    <url>/2020/03/24/android-command-line-%E5%AE%89%E8%A3%85%E6%97%B6%E7%9A%84%E5%9D%91/</url>
-    <content><![CDATA[<p>很久没有搞过 Android 开发了，Android 的命令行安装方式相比之前发生了一些变化，这里针对安装最新的 Android 命令行时遇到的一些问题，记录一下解决方法。</p>
-<p><em>问题：下载最新的 commandlinetools 在自己指定的目录安装之后，无法使用</em></p>
-<p><strong>原因：最新版本的 commandlinetools 对安装的目录是有要求的</strong></p>
-<ol>
-<li>Download latest Command line tools from android i.e. commandlinetools-win-6200805_latest.zip</li>
-<li>Unzip the downloaded file</li>
-<li>Create directory for storing commandline tools somewhere on your disk, with following path included: android&#x2F;cmdline-tools&#x2F;latest Basically when You unzip this Cmd line tools, just rename tools directory to latest and make sure You put this latest folder in android&#x2F;cmdline-tools directory somewhere on your disk</li>
-<li>Create ANDROID_HOME environment variable for directory that stores the cmdline tools directory location like: <code>C:\YourLocationWhereYouStoreTheDirectory\android\cmdline-tools\latest</code></li>
-<li>Create new entry in Path environment variable as %ANDROID_HOME%\bin</li>
-</ol>
-]]></content>
-  </entry>
-  <entry>
     <title>JaCoCo手册</title>
     <url>/2022/01/26/JaCoCo%E6%89%8B%E5%86%8C/</url>
     <content><![CDATA[<h2 id="JaCoCo-简介"><a href="#JaCoCo-简介" class="headerlink" title="JaCoCo 简介"></a>JaCoCo 简介</h2><blockquote>
@@ -116,6 +101,21 @@
 </tr>
 </tbody></table>
 <h4 id="jacococli"><a href="#jacococli" class="headerlink" title="jacococli"></a>jacococli</h4><p>jacoco 的命令行工具，可以用于链接 jacocoagent 用于采集回文件的存储、对指定的类进行插桩、合并 dump 文件、生成报告等功能，具体使用方法不再一一列举，可以查看<a href="https://www.jacoco.org/jacoco/trunk/doc/cli.html">官方文档</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>android command line 安装时的坑</title>
+    <url>/2020/03/24/android-command-line-%E5%AE%89%E8%A3%85%E6%97%B6%E7%9A%84%E5%9D%91/</url>
+    <content><![CDATA[<p>很久没有搞过 Android 开发了，Android 的命令行安装方式相比之前发生了一些变化，这里针对安装最新的 Android 命令行时遇到的一些问题，记录一下解决方法。</p>
+<p><em>问题：下载最新的 commandlinetools 在自己指定的目录安装之后，无法使用</em></p>
+<p><strong>原因：最新版本的 commandlinetools 对安装的目录是有要求的</strong></p>
+<ol>
+<li>Download latest Command line tools from android i.e. commandlinetools-win-6200805_latest.zip</li>
+<li>Unzip the downloaded file</li>
+<li>Create directory for storing commandline tools somewhere on your disk, with following path included: android&#x2F;cmdline-tools&#x2F;latest Basically when You unzip this Cmd line tools, just rename tools directory to latest and make sure You put this latest folder in android&#x2F;cmdline-tools directory somewhere on your disk</li>
+<li>Create ANDROID_HOME environment variable for directory that stores the cmdline tools directory location like: <code>C:\YourLocationWhereYouStoreTheDirectory\android\cmdline-tools\latest</code></li>
+<li>Create new entry in Path environment variable as %ANDROID_HOME%\bin</li>
+</ol>
 ]]></content>
   </entry>
   <entry>
@@ -305,82 +305,6 @@
       </tags>
   </entry>
   <entry>
-    <title>使用 Docker 构建 Spring Boot Application</title>
-    <url>/2019/06/25/dockerizing-spring-boot-application/</url>
-    <content><![CDATA[<h2 id="Docker-amp-Spring-Boot"><a href="#Docker-amp-Spring-Boot" class="headerlink" title="Docker &amp; Spring Boot"></a>Docker &amp; Spring Boot</h2><p><code>Docker</code> 是一种 <code>Linux</code> 容器的实现，具有进程的轻量级资源隔离的特点，每一个容器对应操作系统中的一个进程，但是它又会有自己的网络空间、文件系统、PID 等。<code>Docker</code> 除了实现 <code>Linux</code> 容器，还使得容器具有“社会化”的属性，用户可以将容器镜像发布在 <code>Docker Hub</code> 与其他开发者共享、协作，类似于 <code>Maven</code>。</p>
-<p><code>Spring Boot</code> 简化了 Spring 应用程序的开发过程，遵循约定优先配置的原则提供了各类 <em>开箱即用（out-of-the-box）</em> 的框架配置。另一方面，<code>Spring Boot</code> 还具备将代码直接构建为可执行 jar 包的能力，这个 jar 包是一个可以独立运行的部署单元。基于以上特性，现在普遍认为 <code>Spring Boot</code> 提供了一种快速构造<strong>微服务（Micro-Service）</strong>的能力。</p>
-<p><code>Spring Boot</code> 的运行环境非常简单，将 Spring Boot Application 打包为 <code>Docker</code> 镜像，对于自动化部署、运维都非常方便。</p>
-<h2 id="Dockerizing-Spring-Boot-Application"><a href="#Dockerizing-Spring-Boot-Application" class="headerlink" title="Dockerizing Spring Boot Application"></a>Dockerizing Spring Boot Application</h2><p>使用 Docker 发布 Spring Boot Application，需要经历简单的几步，即可实现。</p>
-<p>如有需要，可参考本文所涉及 <a href="https://github.com/fuyongde/marvel/tree/master/thanos">Demo</a>。</p>
-<h3 id="常规操作"><a href="#常规操作" class="headerlink" title="常规操作"></a>常规操作</h3><h4 id="编写-Spring-Boot-Application"><a href="#编写-Spring-Boot-Application" class="headerlink" title="编写 Spring Boot Application"></a>编写 Spring Boot Application</h4><p>本文不是为了讲解如何编写 Spring Boot Application，故建议读者直接采用脚手架快速构建出一个 Spring Boot Application。</p>
-<h4 id="编写-Dockerfile"><a href="#编写-Dockerfile" class="headerlink" title="编写 Dockerfile"></a>编写 Dockerfile</h4><p><code>Dockerfile</code> 对于 <code>Docker</code> 的意义如同 <code>POM</code> 之于 <code>Maven</code>。</p>
-<p>在 <code>pom.xml</code> 同级目录新建文件 <code>Dockerfile</code>。</p>
-<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 基础运行环境，建议采用 openjdk alpine 作为基础的镜像</span></span><br><span class="line"><span class="keyword">FROM</span> openjdk:<span class="number">8</span>-jdk-alpine</span><br><span class="line"></span><br><span class="line"><span class="comment"># 标记作者</span></span><br><span class="line"><span class="keyword">LABEL</span><span class="language-bash"> maintainer=<span class="string">&quot;fuyongde@foxmail.com&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 挂载 /tmp 目录，因为 Spring Boot 内嵌的 Tomcat 默认使用 /tmp 作为工作目录</span></span><br><span class="line"><span class="keyword">VOLUME</span><span class="language-bash"> [ <span class="string">&quot;/tmp&quot;</span> ]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 容器对外映射 8080 端口</span></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">8080</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义要打包的 jar</span></span><br><span class="line"><span class="keyword">ARG</span> JAR_FILE=target/thanos-<span class="number">0.0</span>.<span class="number">1</span>-SNAPSHOT.jar</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将指定的 jar 添加到目标镜像并重命名</span></span><br><span class="line"><span class="keyword">ADD</span><span class="language-bash"> <span class="variable">$&#123;JAR_FILE&#125;</span> thanos-0.0.1.jar</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用 java -jar 命令运行目标程序</span></span><br><span class="line"><span class="keyword">ENTRYPOINT</span><span class="language-bash"> [ <span class="string">&quot;java&quot;</span>, <span class="string">&quot;-jar&quot;</span>, <span class="string">&quot;/thanos-0.0.1.jar&quot;</span> ]</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><code>FROM</code>：指定一个构建镜像的基础源镜像，如果本地没有就会从公共库中拉取，没有指定镜像的标签会使用默认的 latest 标签，如果需要在一个 <code>Dockerfile</code> 中构建多个镜像，该选项可以出现多次。</li>
-<li><code>LABEL</code>：为镜像指定标签</li>
-<li><code>VOLUME</code>：可实现挂载功能，可以将内地文件夹或者其他容器种得文件夹挂在到这个容器种</li>
-<li><code>EXPOSE</code>：暴漏容器运行时的监听端口给外部，但是 EXPOSE 并不会使容器访问主机的端口，如果想使得容器与主机的端口有映射关系，必须在容器启动的时候加上 <code>-p</code> 参数</li>
-<li><code>ARG</code>：设置变量</li>
-<li><code>ADD</code>：将文件添加到目标镜像中</li>
-<li><code>ENTRYPOINT</code>：启动时的默认命令</li>
-</ul>
-<h4 id="构建-Docker-镜像"><a href="#构建-Docker-镜像" class="headerlink" title="构建 Docker 镜像"></a>构建 Docker 镜像</h4><p>由于 <code>Docker</code> 依赖我们程序编译的结果，故在构建 <code>Docker</code> 镜像之前，需要先构建我们的工程。</p>
-<p>如本文所讲例子，需要依次执行</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">采用 Maven 构建 Spring Boot Application</span></span><br><span class="line">mvnw install</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">构建 Docker Image</span></span><br><span class="line">docker build -t thanos .</span><br></pre></td></tr></table></figure>
-
-<p>构建完成之后，可以通过 <code>docker image ls</code> 查看。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">REPOSITORY    TAG       IMAGE ID        CREATED              SIZE</span><br><span class="line">thanos        latest    5f30b11b5088    About an hour ago    122MB</span><br></pre></td></tr></table></figure>
-
-<h4 id="运行-Docker-镜像"><a href="#运行-Docker-镜像" class="headerlink" title="运行 Docker 镜像"></a>运行 Docker 镜像</h4><p>和正常的运行 Docker 镜像的命令一致。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker run -p 8080:8080 thanos</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">也可以采用后台运行的方式运行容器</span></span><br><span class="line">docker run -d -p 8080:8080 thanos</span><br></pre></td></tr></table></figure>
-
-<p>运行之后，通过 <code>docker ps</code> 命令来查看当前运行的容器。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">CONTAINER ID   IMAGE    COMMAND                  CREATED             STATUS             PORTS                    NAMES</span><br><span class="line">9f20a76e22fa   thanos   &quot;java -jar /thanos-0…&quot;   About an hour ago   Up About an hour   0.0.0.0:8080-&gt;8080/tcp   xenodochial_noyce</span><br></pre></td></tr></table></figure>
-
-<h4 id="将-Docker-镜像推送到镜像仓库"><a href="#将-Docker-镜像推送到镜像仓库" class="headerlink" title="将 Docker 镜像推送到镜像仓库"></a>将 Docker 镜像推送到镜像仓库</h4><p>由于众所周知的原因，我们访问 <code>docker hub</code> 并不稳定，而且速度比较慢，本文采用阿里云的容器镜像服务。</p>
-<ol>
-<li>登录到阿里云容器镜像服务</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">登录</span></span><br><span class="line">docker login --username=fuyongde@foxmail.com registry.cn-hangzhou.aliyuncs.com</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">输入密码，当看到 Login Succeeded 表示登录成功</span></span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>为当前镜像打 <code>tag</code></li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker tag thanos registry.cn-hangzhou.aliyuncs.com/fuyongde/thanos:v1</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>推送到容器镜像服务</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker push registry.cn-hangzhou.aliyuncs.com/fuyongde/thanos:v1</span><br></pre></td></tr></table></figure>
-
-<p>按照上述步骤操作完成之后，登录到阿里云的<code>控制台</code> &gt; <code>容器镜像服务</code> &gt; <code>镜像仓库</code> 即可查看已经推送好的镜像。</p>
-<h3 id="dockerfile-maven-plugin"><a href="#dockerfile-maven-plugin" class="headerlink" title="dockerfile-maven-plugin"></a>dockerfile-maven-plugin</h3><p>经过上述的操作我们发现，要将我们的 Spring Boot Application 打包为 Docker 镜像，必须先将我们的工程构建，然后才能执行 Docker 的 <code>build</code>、<code>push</code>。那么能否将工程的构建与 Docker 的操作合二为一呢？</p>
-<p>答案是肯定的，这就需要用到 <code>dockerfile-maven-plugin</code>。</p>
-<h4 id="引入-dockerfile-maven-plugin"><a href="#引入-dockerfile-maven-plugin" class="headerlink" title="引入 dockerfile-maven-plugin"></a>引入 dockerfile-maven-plugin</h4><p>基于上述工程，在 <code>pom.xml</code> 中添加插件：</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.spotify<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>dockerfile-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.4.10<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">repository</span>&gt;</span>registry.cn-hangzhou.aliyuncs.com/fuyongde/thanos<span class="tag">&lt;/<span class="name">repository</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">tag</span>&gt;</span>$&#123;project.version&#125;<span class="tag">&lt;/<span class="name">tag</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">useMavenSettingsForAuth</span>&gt;</span>true<span class="tag">&lt;/<span class="name">useMavenSettingsForAuth</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">executions</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">execution</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">id</span>&gt;</span>default<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">phase</span>&gt;</span>install<span class="tag">&lt;/<span class="name">phase</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">goals</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">goal</span>&gt;</span>build<span class="tag">&lt;/<span class="name">goal</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">goal</span>&gt;</span>push<span class="tag">&lt;/<span class="name">goal</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">goals</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">execution</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">executions</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>其中：</p>
-<ul>
-<li>repository：表示要上传的容器镜像服务，可以是阿里云、Docker Hub 等</li>
-<li>tag：镜像打包的 tag</li>
-<li>execution：这个标签下的配置表示，在 <code>Maven</code> 的 <code>install</code> 阶段，进行 <code>Docker</code> 的 <code>build</code>、<code>push</code> 操作</li>
-<li>useMavenSettingsForAuth：表示使用 <code>Maven</code> 的配置的账号密码来认证 <code>Docker</code> 容器镜像服务，需要在 <code>Maven</code> 的 <code>settings.xml</code> 文件中加入以下配置：</li>
-</ul>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">servers</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">server</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">id</span>&gt;</span>registry.cn-hangzhou.aliyuncs.com<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">username</span>&gt;</span>username<span class="tag">&lt;/<span class="name">username</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">password</span>&gt;</span>password<span class="tag">&lt;/<span class="name">password</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">server</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servers</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="构建"><a href="#构建" class="headerlink" title="构建"></a>构建</h4><p>执行 <code>mvn install</code> 命令，<code>Docker</code> 镜像就打包并上传好了 ✌。</p>
-<h2 id="One-more-thing"><a href="#One-more-thing" class="headerlink" title="One more thing"></a>One more thing</h2><p>你以为上述构建 <code>Docker</code> 镜像方法就非常方便了吗？</p>
-<p>Too young!</p>
-<p><a href="https://fuyongde.github.io/2019/06/26/jib-make-docker-simple-again/">下一篇</a>，带你了解 <code>Jib</code>，Make docker simple again✨!</p>
-]]></content>
-      <tags>
-        <tag>Docker</tag>
-        <tag>Spring Boot</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Docker 手册</title>
     <url>/2019/11/14/docker-%E6%89%8B%E5%86%8C/</url>
     <content><![CDATA[<h2 id="镜像管理"><a href="#镜像管理" class="headerlink" title="镜像管理"></a>镜像管理</h2><h3 id="查询所需的镜像"><a href="#查询所需的镜像" class="headerlink" title="查询所需的镜像"></a>查询所需的镜像</h3><ul>
@@ -456,30 +380,79 @@
       </tags>
   </entry>
   <entry>
-    <title>RPC 进阶 - 线程池</title>
-    <url>/2019/07/16/edith-with-thread-pool/</url>
-    <content><![CDATA[<p>在 <a href="https://fuyongde.github.io/2019/07/11/rpc-introduction/">Rpc Introduction</a> 中简单写了一个 <code>RPC Framework</code>。在本节中，对 <code>Edith</code> 新增采用线程池支持多线程的特性。</p>
-<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>实际开发中，我们的应用程序是不能盲目的开辟线程的，这样会造成资源的极大浪费。若采用线程池，可以减少创建和销毁线程的次数，让每个线程可以多次使用，并且可以根据系统的承受能力，调整线程池中工作线程的数量，方式消耗过多的内存。</p>
-<p>如有需要可以阅读 <code>Dubbo</code> 中关于线程池的设计（位于 <code>org.apache.dubbo.common.threadpool</code> 包）。</p>
-<h2 id="开发"><a href="#开发" class="headerlink" title="开发"></a>开发</h2><h3 id="依赖"><a href="#依赖" class="headerlink" title="依赖"></a>依赖</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;com.google.guava&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;guava&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+    <title>使用 Docker 构建 Spring Boot Application</title>
+    <url>/2019/06/25/dockerizing-spring-boot-application/</url>
+    <content><![CDATA[<h2 id="Docker-Spring-Boot"><a href="#Docker-Spring-Boot" class="headerlink" title="Docker &amp; Spring Boot"></a>Docker &amp; Spring Boot</h2><p><code>Docker</code> 是一种 <code>Linux</code> 容器的实现，具有进程的轻量级资源隔离的特点，每一个容器对应操作系统中的一个进程，但是它又会有自己的网络空间、文件系统、PID 等。<code>Docker</code> 除了实现 <code>Linux</code> 容器，还使得容器具有“社会化”的属性，用户可以将容器镜像发布在 <code>Docker Hub</code> 与其他开发者共享、协作，类似于 <code>Maven</code>。</p>
+<p><code>Spring Boot</code> 简化了 Spring 应用程序的开发过程，遵循约定优先配置的原则提供了各类 <em>开箱即用（out-of-the-box）</em> 的框架配置。另一方面，<code>Spring Boot</code> 还具备将代码直接构建为可执行 jar 包的能力，这个 jar 包是一个可以独立运行的部署单元。基于以上特性，现在普遍认为 <code>Spring Boot</code> 提供了一种快速构造<strong>微服务（Micro-Service）</strong>的能力。</p>
+<p><code>Spring Boot</code> 的运行环境非常简单，将 Spring Boot Application 打包为 <code>Docker</code> 镜像，对于自动化部署、运维都非常方便。</p>
+<h2 id="Dockerizing-Spring-Boot-Application"><a href="#Dockerizing-Spring-Boot-Application" class="headerlink" title="Dockerizing Spring Boot Application"></a>Dockerizing Spring Boot Application</h2><p>使用 Docker 发布 Spring Boot Application，需要经历简单的几步，即可实现。</p>
+<p>如有需要，可参考本文所涉及 <a href="https://github.com/fuyongde/marvel/tree/master/thanos">Demo</a>。</p>
+<h3 id="常规操作"><a href="#常规操作" class="headerlink" title="常规操作"></a>常规操作</h3><h4 id="编写-Spring-Boot-Application"><a href="#编写-Spring-Boot-Application" class="headerlink" title="编写 Spring Boot Application"></a>编写 Spring Boot Application</h4><p>本文不是为了讲解如何编写 Spring Boot Application，故建议读者直接采用脚手架快速构建出一个 Spring Boot Application。</p>
+<h4 id="编写-Dockerfile"><a href="#编写-Dockerfile" class="headerlink" title="编写 Dockerfile"></a>编写 Dockerfile</h4><p><code>Dockerfile</code> 对于 <code>Docker</code> 的意义如同 <code>POM</code> 之于 <code>Maven</code>。</p>
+<p>在 <code>pom.xml</code> 同级目录新建文件 <code>Dockerfile</code>。</p>
+<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 基础运行环境，建议采用 openjdk alpine 作为基础的镜像</span></span><br><span class="line"><span class="keyword">FROM</span> openjdk:<span class="number">8</span>-jdk-alpine</span><br><span class="line"></span><br><span class="line"><span class="comment"># 标记作者</span></span><br><span class="line"><span class="keyword">LABEL</span><span class="language-bash"> maintainer=<span class="string">&quot;fuyongde@foxmail.com&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 挂载 /tmp 目录，因为 Spring Boot 内嵌的 Tomcat 默认使用 /tmp 作为工作目录</span></span><br><span class="line"><span class="keyword">VOLUME</span><span class="language-bash"> [ <span class="string">&quot;/tmp&quot;</span> ]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 容器对外映射 8080 端口</span></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">8080</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义要打包的 jar</span></span><br><span class="line"><span class="keyword">ARG</span> JAR_FILE=target/thanos-<span class="number">0.0</span>.<span class="number">1</span>-SNAPSHOT.jar</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将指定的 jar 添加到目标镜像并重命名</span></span><br><span class="line"><span class="keyword">ADD</span><span class="language-bash"> <span class="variable">$&#123;JAR_FILE&#125;</span> thanos-0.0.1.jar</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用 java -jar 命令运行目标程序</span></span><br><span class="line"><span class="keyword">ENTRYPOINT</span><span class="language-bash"> [ <span class="string">&quot;java&quot;</span>, <span class="string">&quot;-jar&quot;</span>, <span class="string">&quot;/thanos-0.0.1.jar&quot;</span> ]</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h3><p>本文代码可以从<a href="https://github.com/fuyongde/edith/releases/tag/0.1.1">这里</a>获取。</p>
-<h4 id="新增-ThreadUtils-java"><a href="#新增-ThreadUtils-java" class="headerlink" title="新增 ThreadUtils.java"></a>新增 ThreadUtils.java</h4><p>用于创建 <code>ExecutorService</code></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ThreadUtils</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 用于对线程分配一个名字，方便排查问题</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> format format</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> Edith-1</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> ThreadFactory <span class="title function_">buildThreadFactory</span><span class="params">(String format)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">ThreadFactoryBuilder</span>().setNameFormat(format).build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> ExecutorService <span class="title function_">newCachedThreadPool</span><span class="params">(<span class="type">int</span> maximumPoolSize)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">ThreadPoolExecutor</span>(THREAD_CORE_POOL_SIZE, maximumPoolSize &gt; <span class="number">0</span> ? maximumPoolSize : THREAD_MAXIMUM_POOL_SIZE,</span><br><span class="line">                Long.MAX_VALUE, TimeUnit.MICROSECONDS, <span class="keyword">new</span> <span class="title class_">SynchronousQueue</span>&lt;&gt;(), buildThreadFactory(THREAD_NAME), <span class="keyword">new</span> <span class="title class_">ThreadPoolExecutor</span>.AbortPolicy());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>FROM</code>：指定一个构建镜像的基础源镜像，如果本地没有就会从公共库中拉取，没有指定镜像的标签会使用默认的 latest 标签，如果需要在一个 <code>Dockerfile</code> 中构建多个镜像，该选项可以出现多次。</li>
+<li><code>LABEL</code>：为镜像指定标签</li>
+<li><code>VOLUME</code>：可实现挂载功能，可以将内地文件夹或者其他容器种得文件夹挂在到这个容器种</li>
+<li><code>EXPOSE</code>：暴漏容器运行时的监听端口给外部，但是 EXPOSE 并不会使容器访问主机的端口，如果想使得容器与主机的端口有映射关系，必须在容器启动的时候加上 <code>-p</code> 参数</li>
+<li><code>ARG</code>：设置变量</li>
+<li><code>ADD</code>：将文件添加到目标镜像中</li>
+<li><code>ENTRYPOINT</code>：启动时的默认命令</li>
+</ul>
+<h4 id="构建-Docker-镜像"><a href="#构建-Docker-镜像" class="headerlink" title="构建 Docker 镜像"></a>构建 Docker 镜像</h4><p>由于 <code>Docker</code> 依赖我们程序编译的结果，故在构建 <code>Docker</code> 镜像之前，需要先构建我们的工程。</p>
+<p>如本文所讲例子，需要依次执行</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">采用 Maven 构建 Spring Boot Application</span></span><br><span class="line">mvnw install</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">构建 Docker Image</span></span><br><span class="line">docker build -t thanos .</span><br></pre></td></tr></table></figure>
 
-<h4 id="修改-RpcFramework-java"><a href="#修改-RpcFramework-java" class="headerlink" title="修改 RpcFramework.java"></a>修改 RpcFramework.java</h4><p>将原代码中 <code>new Thread()</code> 部分替换为线程池。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">ExecutorService</span> <span class="variable">executorService</span> <span class="operator">=</span> ThreadUtils.newCachedThreadPool(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">export</span><span class="params">(<span class="keyword">final</span> Object service, <span class="type">int</span> port)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">    Objects.requireNonNull(service, <span class="string">&quot;Service instance is null!&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (port &lt;= PORT_MIN || port &gt; PORT_MAX) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>(<span class="string">&quot;Invalid port &quot;</span> + port);</span><br><span class="line">    &#125;</span><br><span class="line">    System.out.println(<span class="string">&quot;Export service &quot;</span> + service.getClass().getName() + <span class="string">&quot; on port &quot;</span> + port);</span><br><span class="line">    <span class="type">ServerSocket</span> <span class="variable">server</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ServerSocket</span>(port);</span><br><span class="line">    <span class="keyword">for</span> (; ; ) &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;application is running&quot;</span>);</span><br><span class="line">        <span class="type">Socket</span> <span class="variable">socket</span> <span class="operator">=</span> server.accept();</span><br><span class="line">        executorService.execute(() -&gt; &#123;</span><br><span class="line">            <span class="comment">// do something ...</span></span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>构建完成之后，可以通过 <code>docker image ls</code> 查看。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">REPOSITORY    TAG       IMAGE ID        CREATED              SIZE</span><br><span class="line">thanos        latest    5f30b11b5088    About an hour ago    122MB</span><br></pre></td></tr></table></figure>
 
-<p>经过以上修改，我们在例子中的 <code>HelloServiceImpl</code> 打印一下线程名称</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">hello</span><span class="params">(String name)</span> &#123;</span><br><span class="line">    <span class="type">String</span> <span class="variable">result</span> <span class="operator">=</span> <span class="string">&quot;Hello &quot;</span> + name;</span><br><span class="line">    System.out.println(Thread.currentThread().getName() + <span class="string">&quot; &quot;</span> + result);</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="运行-Docker-镜像"><a href="#运行-Docker-镜像" class="headerlink" title="运行 Docker 镜像"></a>运行 Docker 镜像</h4><p>和正常的运行 Docker 镜像的命令一致。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker run -p 8080:8080 thanos</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">也可以采用后台运行的方式运行容器</span></span><br><span class="line">docker run -d -p 8080:8080 thanos</span><br></pre></td></tr></table></figure>
 
-<p>启动 <code>provider</code>，然后用 <code>consumer</code> 调用一次，观察 <code>provider</code> 的控制台输出</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Edith-0 Hello Peter Parker</span><br></pre></td></tr></table></figure>
+<p>运行之后，通过 <code>docker ps</code> 命令来查看当前运行的容器。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">CONTAINER ID   IMAGE    COMMAND                  CREATED             STATUS             PORTS                    NAMES</span><br><span class="line">9f20a76e22fa   thanos   &quot;java -jar /thanos-0…&quot;   About an hour ago   Up About an hour   0.0.0.0:8080-&gt;8080/tcp   xenodochial_noyce</span><br></pre></td></tr></table></figure>
 
-<p>Done.</p>
+<h4 id="将-Docker-镜像推送到镜像仓库"><a href="#将-Docker-镜像推送到镜像仓库" class="headerlink" title="将 Docker 镜像推送到镜像仓库"></a>将 Docker 镜像推送到镜像仓库</h4><p>由于众所周知的原因，我们访问 <code>docker hub</code> 并不稳定，而且速度比较慢，本文采用阿里云的容器镜像服务。</p>
+<ol>
+<li>登录到阿里云容器镜像服务</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">登录</span></span><br><span class="line">docker login --username=fuyongde@foxmail.com registry.cn-hangzhou.aliyuncs.com</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">输入密码，当看到 Login Succeeded 表示登录成功</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>为当前镜像打 <code>tag</code></li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker tag thanos registry.cn-hangzhou.aliyuncs.com/fuyongde/thanos:v1</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>推送到容器镜像服务</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker push registry.cn-hangzhou.aliyuncs.com/fuyongde/thanos:v1</span><br></pre></td></tr></table></figure>
+
+<p>按照上述步骤操作完成之后，登录到阿里云的<code>控制台</code> &gt; <code>容器镜像服务</code> &gt; <code>镜像仓库</code> 即可查看已经推送好的镜像。</p>
+<h3 id="dockerfile-maven-plugin"><a href="#dockerfile-maven-plugin" class="headerlink" title="dockerfile-maven-plugin"></a>dockerfile-maven-plugin</h3><p>经过上述的操作我们发现，要将我们的 Spring Boot Application 打包为 Docker 镜像，必须先将我们的工程构建，然后才能执行 Docker 的 <code>build</code>、<code>push</code>。那么能否将工程的构建与 Docker 的操作合二为一呢？</p>
+<p>答案是肯定的，这就需要用到 <code>dockerfile-maven-plugin</code>。</p>
+<h4 id="引入-dockerfile-maven-plugin"><a href="#引入-dockerfile-maven-plugin" class="headerlink" title="引入 dockerfile-maven-plugin"></a>引入 dockerfile-maven-plugin</h4><p>基于上述工程，在 <code>pom.xml</code> 中添加插件：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.spotify<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>dockerfile-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.4.10<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">repository</span>&gt;</span>registry.cn-hangzhou.aliyuncs.com/fuyongde/thanos<span class="tag">&lt;/<span class="name">repository</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">tag</span>&gt;</span>$&#123;project.version&#125;<span class="tag">&lt;/<span class="name">tag</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">useMavenSettingsForAuth</span>&gt;</span>true<span class="tag">&lt;/<span class="name">useMavenSettingsForAuth</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">executions</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">execution</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">id</span>&gt;</span>default<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">phase</span>&gt;</span>install<span class="tag">&lt;/<span class="name">phase</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">goals</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">goal</span>&gt;</span>build<span class="tag">&lt;/<span class="name">goal</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">goal</span>&gt;</span>push<span class="tag">&lt;/<span class="name">goal</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">goals</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">execution</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">executions</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>其中：</p>
+<ul>
+<li>repository：表示要上传的容器镜像服务，可以是阿里云、Docker Hub 等</li>
+<li>tag：镜像打包的 tag</li>
+<li>execution：这个标签下的配置表示，在 <code>Maven</code> 的 <code>install</code> 阶段，进行 <code>Docker</code> 的 <code>build</code>、<code>push</code> 操作</li>
+<li>useMavenSettingsForAuth：表示使用 <code>Maven</code> 的配置的账号密码来认证 <code>Docker</code> 容器镜像服务，需要在 <code>Maven</code> 的 <code>settings.xml</code> 文件中加入以下配置：</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">servers</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">server</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">id</span>&gt;</span>registry.cn-hangzhou.aliyuncs.com<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">username</span>&gt;</span>username<span class="tag">&lt;/<span class="name">username</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">password</span>&gt;</span>password<span class="tag">&lt;/<span class="name">password</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">server</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servers</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="构建"><a href="#构建" class="headerlink" title="构建"></a>构建</h4><p>执行 <code>mvn install</code> 命令，<code>Docker</code> 镜像就打包并上传好了 ✌。</p>
+<h2 id="One-more-thing"><a href="#One-more-thing" class="headerlink" title="One more thing"></a>One more thing</h2><p>你以为上述构建 <code>Docker</code> 镜像方法就非常方便了吗？</p>
+<p>Too young!</p>
+<p><a href="https://fuyongde.github.io/2019/06/26/jib-make-docker-simple-again/">下一篇</a>，带你了解 <code>Jib</code>，Make docker simple again✨!</p>
 ]]></content>
       <tags>
-        <tag>rpc</tag>
+        <tag>Docker</tag>
+        <tag>Spring Boot</tag>
       </tags>
   </entry>
   <entry>
@@ -600,6 +573,33 @@
       <tags>
         <tag>git</tag>
         <tag>骚操作</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>RPC 进阶 - 线程池</title>
+    <url>/2019/07/16/edith-with-thread-pool/</url>
+    <content><![CDATA[<p>在 <a href="https://fuyongde.github.io/2019/07/11/rpc-introduction/">Rpc Introduction</a> 中简单写了一个 <code>RPC Framework</code>。在本节中，对 <code>Edith</code> 新增采用线程池支持多线程的特性。</p>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>实际开发中，我们的应用程序是不能盲目的开辟线程的，这样会造成资源的极大浪费。若采用线程池，可以减少创建和销毁线程的次数，让每个线程可以多次使用，并且可以根据系统的承受能力，调整线程池中工作线程的数量，方式消耗过多的内存。</p>
+<p>如有需要可以阅读 <code>Dubbo</code> 中关于线程池的设计（位于 <code>org.apache.dubbo.common.threadpool</code> 包）。</p>
+<h2 id="开发"><a href="#开发" class="headerlink" title="开发"></a>开发</h2><h3 id="依赖"><a href="#依赖" class="headerlink" title="依赖"></a>依赖</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;com.google.guava&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;guava&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h3><p>本文代码可以从<a href="https://github.com/fuyongde/edith/releases/tag/0.1.1">这里</a>获取。</p>
+<h4 id="新增-ThreadUtils-java"><a href="#新增-ThreadUtils-java" class="headerlink" title="新增 ThreadUtils.java"></a>新增 ThreadUtils.java</h4><p>用于创建 <code>ExecutorService</code></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ThreadUtils</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 用于对线程分配一个名字，方便排查问题</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> format format</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> Edith-1</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> ThreadFactory <span class="title function_">buildThreadFactory</span><span class="params">(String format)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">ThreadFactoryBuilder</span>().setNameFormat(format).build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> ExecutorService <span class="title function_">newCachedThreadPool</span><span class="params">(<span class="type">int</span> maximumPoolSize)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">ThreadPoolExecutor</span>(THREAD_CORE_POOL_SIZE, maximumPoolSize &gt; <span class="number">0</span> ? maximumPoolSize : THREAD_MAXIMUM_POOL_SIZE,</span><br><span class="line">                Long.MAX_VALUE, TimeUnit.MICROSECONDS, <span class="keyword">new</span> <span class="title class_">SynchronousQueue</span>&lt;&gt;(), buildThreadFactory(THREAD_NAME), <span class="keyword">new</span> <span class="title class_">ThreadPoolExecutor</span>.AbortPolicy());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="修改-RpcFramework-java"><a href="#修改-RpcFramework-java" class="headerlink" title="修改 RpcFramework.java"></a>修改 RpcFramework.java</h4><p>将原代码中 <code>new Thread()</code> 部分替换为线程池。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">ExecutorService</span> <span class="variable">executorService</span> <span class="operator">=</span> ThreadUtils.newCachedThreadPool(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">export</span><span class="params">(<span class="keyword">final</span> Object service, <span class="type">int</span> port)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">    Objects.requireNonNull(service, <span class="string">&quot;Service instance is null!&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (port &lt;= PORT_MIN || port &gt; PORT_MAX) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>(<span class="string">&quot;Invalid port &quot;</span> + port);</span><br><span class="line">    &#125;</span><br><span class="line">    System.out.println(<span class="string">&quot;Export service &quot;</span> + service.getClass().getName() + <span class="string">&quot; on port &quot;</span> + port);</span><br><span class="line">    <span class="type">ServerSocket</span> <span class="variable">server</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ServerSocket</span>(port);</span><br><span class="line">    <span class="keyword">for</span> (; ; ) &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;application is running&quot;</span>);</span><br><span class="line">        <span class="type">Socket</span> <span class="variable">socket</span> <span class="operator">=</span> server.accept();</span><br><span class="line">        executorService.execute(() -&gt; &#123;</span><br><span class="line">            <span class="comment">// do something ...</span></span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>经过以上修改，我们在例子中的 <code>HelloServiceImpl</code> 打印一下线程名称</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">hello</span><span class="params">(String name)</span> &#123;</span><br><span class="line">    <span class="type">String</span> <span class="variable">result</span> <span class="operator">=</span> <span class="string">&quot;Hello &quot;</span> + name;</span><br><span class="line">    System.out.println(Thread.currentThread().getName() + <span class="string">&quot; &quot;</span> + result);</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>启动 <code>provider</code>，然后用 <code>consumer</code> 调用一次，观察 <code>provider</code> 的控制台输出</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Edith-0 Hello Peter Parker</span><br></pre></td></tr></table></figure>
+
+<p>Done.</p>
+]]></content>
+      <tags>
+        <tag>rpc</tag>
       </tags>
   </entry>
   <entry>
@@ -939,6 +939,40 @@
       </tags>
   </entry>
   <entry>
+    <title>Jenkins-手册</title>
+    <url>/2020/02/18/jenkins-%E6%89%8B%E5%86%8C/</url>
+    <content><![CDATA[<p>Jenkins 是常见的 CI 平台</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="Windows-平台"><a href="#Windows-平台" class="headerlink" title="Windows 平台"></a>Windows 平台</h3><p>略</p>
+<h3 id="CentOS-平台"><a href="#CentOS-平台" class="headerlink" title="CentOS 平台"></a>CentOS 平台</h3><p>更为详细的步骤及说明可查看<a href="https://pkg.jenkins.io/redhat-stable/">官网</a></p>
+<h4 id="添加-jenkins-源"><a href="#添加-jenkins-源" class="headerlink" title="添加 jenkins 源"></a>添加 jenkins 源</h4><p>命令如下：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo</span><br><span class="line">sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key</span><br></pre></td></tr></table></figure>
+
+<h4 id="yum-安装"><a href="#yum-安装" class="headerlink" title="yum 安装"></a>yum 安装</h4><p>命令如下：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">在线安装的方式</span></span><br><span class="line">yum install jenkins</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">离线安装的方式，由于国内连接 jenkins 网站较慢，可先行下载 rpm 文件格式的离线安装包，采用离线的方式安装</span></span><br><span class="line">yum install jenkins-2.204.2-1.1.noarch.rpm</span><br></pre></td></tr></table></figure>
+
+<h4 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h4><p>命令如下：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">systemctl start jenkins</span><br></pre></td></tr></table></figure>
+
+<h4 id="解决插件中心安装慢的问题"><a href="#解决插件中心安装慢的问题" class="headerlink" title="解决插件中心安装慢的问题"></a>解决插件中心安装慢的问题</h4><p>第一次登陆 Jenkins 会出现初始化缓慢的问题，产生这个问题的原因有两个，一个是因为首次打开 Jenkins 会尝试连接 Google，另外一个原因是因为连接插件中心缓慢。</p>
+<h5 id="将插件中心修改为清华的源"><a href="#将插件中心修改为清华的源" class="headerlink" title="将插件中心修改为清华的源"></a>将插件中心修改为清华的源</h5><p>修改文件 <code>$JENKINS_HOME/hudson.model.UpdateCenter.xml</code>，将 url 从 <code>https://updates.jenkins.io/update-center.json</code> 修改为 <code>https://mirrors.tuna.tsinghua.edu.cn/jenkins/updates/update-center.json</code></p>
+<h5 id="将-Google-的地址修改为-Baidu"><a href="#将-Google-的地址修改为-Baidu" class="headerlink" title="将 Google 的地址修改为 Baidu"></a>将 Google 的地址修改为 Baidu</h5><p>修改文件 <code>$JENKINS_HOME/updates/default.json</code></p>
+<ul>
+<li>将 <code>connectionCheckUrl</code> 的值修改为 <code>http://www.baidu.com/</code></li>
+<li>替换文件中 <code>updates.jenkins-ci.org/download</code> 为 <code>mirrors.tuna.tsinghua.edu.cn/jenkins</code></li>
+</ul>
+<p>未完待续…</p>
+]]></content>
+      <categories>
+        <category>手册</category>
+      </categories>
+      <tags>
+        <tag>未完待续</tag>
+        <tag>Jenkins</tag>
+        <tag>CI</tag>
+        <tag>持续集成</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Jib - Make docker simple again</title>
     <url>/2019/06/26/jib-make-docker-simple-again/</url>
     <content><![CDATA[<p>在 <a href="https://fuyongde.github.io/2019/06/25/Dockerizing-Spring-Boot-Application/">使用 Docker 构建 Spring Boot Application</a> 中简单介绍了如何使用 <code>Docker</code> 构建 <code>Spring Boot Application</code>。本文探讨如何更简单的构建 <code>Docker</code> 镜像。</p>
@@ -971,40 +1005,6 @@
         <tag>Docker</tag>
         <tag>Spring Boot</tag>
         <tag>Jib</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Jenkins-手册</title>
-    <url>/2020/02/18/jenkins-%E6%89%8B%E5%86%8C/</url>
-    <content><![CDATA[<p>Jenkins 是常见的 CI 平台</p>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="Windows-平台"><a href="#Windows-平台" class="headerlink" title="Windows 平台"></a>Windows 平台</h3><p>略</p>
-<h3 id="CentOS-平台"><a href="#CentOS-平台" class="headerlink" title="CentOS 平台"></a>CentOS 平台</h3><p>更为详细的步骤及说明可查看<a href="https://pkg.jenkins.io/redhat-stable/">官网</a></p>
-<h4 id="添加-jenkins-源"><a href="#添加-jenkins-源" class="headerlink" title="添加 jenkins 源"></a>添加 jenkins 源</h4><p>命令如下：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo</span><br><span class="line">sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key</span><br></pre></td></tr></table></figure>
-
-<h4 id="yum-安装"><a href="#yum-安装" class="headerlink" title="yum 安装"></a>yum 安装</h4><p>命令如下：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">在线安装的方式</span></span><br><span class="line">yum install jenkins</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">离线安装的方式，由于国内连接 jenkins 网站较慢，可先行下载 rpm 文件格式的离线安装包，采用离线的方式安装</span></span><br><span class="line">yum install jenkins-2.204.2-1.1.noarch.rpm</span><br></pre></td></tr></table></figure>
-
-<h4 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h4><p>命令如下：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">systemctl start jenkins</span><br></pre></td></tr></table></figure>
-
-<h4 id="解决插件中心安装慢的问题"><a href="#解决插件中心安装慢的问题" class="headerlink" title="解决插件中心安装慢的问题"></a>解决插件中心安装慢的问题</h4><p>第一次登陆 Jenkins 会出现初始化缓慢的问题，产生这个问题的原因有两个，一个是因为首次打开 Jenkins 会尝试连接 Google，另外一个原因是因为连接插件中心缓慢。</p>
-<h5 id="将插件中心修改为清华的源"><a href="#将插件中心修改为清华的源" class="headerlink" title="将插件中心修改为清华的源"></a>将插件中心修改为清华的源</h5><p>修改文件 <code>$JENKINS_HOME/hudson.model.UpdateCenter.xml</code>，将 url 从 <code>https://updates.jenkins.io/update-center.json</code> 修改为 <code>https://mirrors.tuna.tsinghua.edu.cn/jenkins/updates/update-center.json</code></p>
-<h5 id="将-Google-的地址修改为-Baidu"><a href="#将-Google-的地址修改为-Baidu" class="headerlink" title="将 Google 的地址修改为 Baidu"></a>将 Google 的地址修改为 Baidu</h5><p>修改文件 <code>$JENKINS_HOME/updates/default.json</code></p>
-<ul>
-<li>将 <code>connectionCheckUrl</code> 的值修改为 <code>http://www.baidu.com/</code></li>
-<li>替换文件中 <code>updates.jenkins-ci.org/download</code> 为 <code>mirrors.tuna.tsinghua.edu.cn/jenkins</code></li>
-</ul>
-<p>未完待续…</p>
-]]></content>
-      <categories>
-        <category>手册</category>
-      </categories>
-      <tags>
-        <tag>未完待续</tag>
-        <tag>Jenkins</tag>
-        <tag>CI</tag>
-        <tag>持续集成</tag>
       </tags>
   </entry>
   <entry>
@@ -1056,76 +1056,34 @@
       </tags>
   </entry>
   <entry>
-    <title>Linux 手册</title>
-    <url>/2019/09/24/linux-%E6%89%8B%E5%86%8C/</url>
-    <content><![CDATA[<p>记录一些常用的 Linux 操作，持续更新 …</p>
-<h3 id="查看系统版本"><a href="#查看系统版本" class="headerlink" title="查看系统版本"></a>查看系统版本</h3><p>常用的查看系统版本有以下命令</p>
-<ul>
-<li><code>cat /etc/os-release</code></li>
-<li><code>uname -a</code></li>
-<li><code>cat /proc/version</code></li>
-<li><code>cat /etc/issue</code></li>
-</ul>
-<p>下面演示一下 <code>cat /etc/os-release</code>，其他不详细说明。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cat /etc/os-release</span><br></pre></td></tr></table></figure>
+    <title>Maven Wapper 手册</title>
+    <url>/2019/06/23/maven-wapper-%E6%89%8B%E5%86%8C/</url>
+    <content><![CDATA[<p>我们使用 Maven 时，基本上只会用到 <code>mvn</code> 这一个命令。有些童鞋可能听说过 <code>mvnw</code>，这个是啥？</p>
+<p>mvnw 是 Maven Wrapper 的缩写，我们安装 Maven 时，默认情况下，系统所有项目都会使用全局安装的这个 Maven 版本。但是，对于某些项目来说，它可能必须使用某个特定的 Maven 版本，这个时候，就可以使用 Maven Wrapper，它可以负责给这个特定的项目安装指定版本的 Maven，而其他项目不受影响。</p>
+<p>简单地说，Maven Wrapper 就是给一个项目提供一个独立的，指定版本的 Maven 给它使用。</p>
+<h2 id="安装-Maven-Wrapper"><a href="#安装-Maven-Wrapper" class="headerlink" title="安装 Maven Wrapper"></a>安装 Maven Wrapper</h2><p>安装 Maven Wrapper 最简单的方式是在项目的根目录（即 pom.xml 所在的目录）下运行安装命令：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mvn -N io.takari:maven:0.7.7:wrapper</span><br></pre></td></tr></table></figure>
 
-<p>输出如下</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">PRETTY_NAME=&quot;Debian GNU/Linux 9 (stretch)&quot;</span><br><span class="line">NAME=&quot;Debian GNU/Linux&quot;</span><br><span class="line">VERSION_ID=&quot;9&quot;</span><br><span class="line">VERSION=&quot;9 (stretch)&quot;</span><br><span class="line">ID=debian</span><br><span class="line">HOME_URL=&quot;https://www.debian.org/&quot;</span><br><span class="line">SUPPORT_URL=&quot;https://www.debian.org/support&quot;</span><br><span class="line">BUG_REPORT_URL=&quot;https://bugs.debian.org/&quot;</span><br></pre></td></tr></table></figure>
+<p>它会自动使用最新版本的 Maven。注意 0.7.7 是 Maven Wrapper 的版本。最新的 Maven Wrapper 版本可以去<a href="https://github.com/takari/maven-wrapper">官方网站</a>查看。</p>
+<p>如果要指定使用的 Maven 版本，使用下面的安装命令指定版本，例如 3.6.0：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mvn -N io.takari:maven:0.7.7:wrapper -Dmaven=3.6.0</span><br></pre></td></tr></table></figure>
 
-<h3 id="替换源"><a href="#替换源" class="headerlink" title="替换源"></a>替换源</h3><p>由于网络的原因，国内部分 Linux 在安装软件时非常缓慢，将源替换为国内的镜像可以方便很多。</p>
-<p>国内常见的镜像如清华大学、阿里云、163 等等，大家可自行选择。由于大部分网络上的博客，只写了具体源的地址，对很多没有基础的同学来说，由于系统版本的差异，反而会适得其反。</p>
-<p>替换源一定要遵循下面的步骤：</p>
-<ol>
-<li>确认操作系统版本。如何查看可参考上文。</li>
-<li>备份默认的源。不同的操作系统版本，源的文件位置各不一样，直接采用备份文件的方式备份即可。</li>
-<li>选择对应版本的源并替换。</li>
-</ol>
-<p>下面针对常见的 <code>Debian</code>、<code>Ubuntu</code>、<code>CentOS</code>，这里以说明一下如何正确的查找并替换源。</p>
-<h4 id="Debian"><a href="#Debian" class="headerlink" title="Debian"></a>Debian</h4><p><code>Debian</code> 系统的源文件目录位于 <code>/etc/apt/sources.list</code>，这里我们以清华大学的镜像为例。清华大学开源镜像站 <a href="https://mirror.tuna.tsinghua.edu.cn/help/debian/">Debian 系统的帮助页面</a> 详细列举了常用版本的源的信息。</p>
-<p>例如，我们系统的版本是 <code>9 (stretch)</code>，则选择 <code>stretch</code>，替换掉对应的源即可。</p>
-<p>stretch 版本的源信息如下：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line"># 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/debian/ stretch main contrib non-free</span><br><span class="line"># deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ stretch main contrib non-free</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/debian/ stretch-updates main contrib non-free</span><br><span class="line"># deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ stretch-updates main contrib non-free</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/debian/ stretch-backports main contrib non-free</span><br><span class="line"># deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ stretch-backports main contrib non-free</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/debian-security stretch/updates main contrib non-free</span><br><span class="line"># deb-src https://mirrors.tuna.tsinghua.edu.cn/debian-security stretch/updates main contrib non-free</span><br></pre></td></tr></table></figure>
+<p>安装后，查看项目结构：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Hello-World</span><br><span class="line">├── .mvn</span><br><span class="line">│   └── wrapper</span><br><span class="line">│       ├── MavenWrapperDownloader.java</span><br><span class="line">│       ├── maven-wrapper.jar</span><br><span class="line">│       └── maven-wrapper.properties</span><br><span class="line">├── mvnw</span><br><span class="line">├── mvnw.cmd</span><br><span class="line">├── pom.xml</span><br><span class="line">└── src</span><br><span class="line">    ├── main</span><br><span class="line">    │   ├── java</span><br><span class="line">    │   └── resources</span><br><span class="line">    └── test</span><br><span class="line">        ├── java</span><br><span class="line">        └── resources</span><br></pre></td></tr></table></figure>
 
-<p>buster 版本的源信息如下</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line"># 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/debian/ buster main contrib non-free</span><br><span class="line"># deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ buster main contrib non-free</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/debian/ buster-updates main contrib non-free</span><br><span class="line"># deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ buster-updates main contrib non-free</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/debian/ buster-backports main contrib non-free</span><br><span class="line"># deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ buster-backports main contrib non-free</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/debian-security buster/updates main contrib non-free</span><br><span class="line"># deb-src https://mirrors.tuna.tsinghua.edu.cn/debian-security buster/updates main contrib non-free</span><br></pre></td></tr></table></figure>
+<p>发现多了 <code>mvnw</code>、<code>mvnw.cmd</code> 和 <code>.mvn</code>目录。</p>
+<h2 id="使用-Maven-Wapper"><a href="#使用-Maven-Wapper" class="headerlink" title="使用 Maven Wapper"></a>使用 Maven Wapper</h2><p>我们只需要把 mvn 命令改成 mvnw 就可以使用跟项目关联的 Maven。例如：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mvnw clean package</span><br></pre></td></tr></table></figure>
 
-<p>其他版本不一一列举。</p>
-<h4 id="Ubuntu"><a href="#Ubuntu" class="headerlink" title="Ubuntu"></a>Ubuntu</h4><p><code>Ubuntu</code> 也是基于 <code>Debian</code> 的，故源的目录位置也是 <code>/etc/apt/sources.list</code>。清华大学开源镜像站 <a href="https://mirror.tuna.tsinghua.edu.cn/help/ubuntu/">Ubuntu 系统的帮助页面</a> 详细列举了常用版本的源的信息。</p>
-<p>例如，我们系统的版本是 <code>18.04 LTS</code>，则选择 <code>18.04 LTS</code>，替换掉对应的源即可。</p>
-<p>18.04 LTS 版本的源信息如下：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line"># 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic main restricted universe multiverse</span><br><span class="line"># deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic main restricted universe multiverse</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-updates main restricted universe multiverse</span><br><span class="line"># deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-updates main restricted universe multiverse</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-backports main restricted universe multiverse</span><br><span class="line"># deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-backports main restricted universe multiverse</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-security main restricted universe multiverse</span><br><span class="line"># deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-security main restricted universe multiverse</span><br><span class="line"></span><br><span class="line"># 预发布软件源，不建议启用</span><br><span class="line"># deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-proposed main restricted universe multiverse</span><br><span class="line"># deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-proposed main restricted universe multiverse</span><br></pre></td></tr></table></figure>
-
-<p><code>Ubuntu</code> 若安装了图形界面，也可以采用图形界面的方式。</p>
-<h5 id="图形界面配置"><a href="#图形界面配置" class="headerlink" title="图形界面配置"></a>图形界面配置</h5><p>新手推荐使用图形界面配置： 系统设置 -&gt; 软件和更新 选择下载服务器 -&gt; “mirrors.aliyun.com”</p>
-<h4 id="CentOS"><a href="#CentOS" class="headerlink" title="CentOS"></a>CentOS</h4><p><code>CentOS</code> 的源文件位于 <code>/etc/yum.repos.d/CentOS-Base.repo</code>，清华大学开源镜像站 <a href="https://mirror.tuna.tsinghua.edu.cn/help/centos/">CentOS 系统的帮助页面</a> 详细列举了常用版本的源的信息。</p>
-<p>与 Debian 的不同，CentOS 替换源之后，需要运行 <code>yum makecache</code> 生成缓存。</p>
-<p>此外阿里云提供了更为简单的方式，直接下载阿里云的 <code>CentOS-Base.repo</code> 文件到对应目录即可，命令如下：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">CentOS 6</span></span><br><span class="line">wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-6.repo</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">或者</span></span><br><span class="line">curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-6.repo</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">CentOS 7</span></span><br><span class="line">wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">或者</span></span><br><span class="line">curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">由于非阿里云 ECS 用户会出现 Couldn<span class="string">&#x27;t resolve host &#x27;</span>mirrors.cloud.aliyuncs.com<span class="string">&#x27; 信息，不影响使用。用户也可自行修改相关配置: eg:</span></span></span><br><span class="line">sed -i -e &#x27;/mirrors.cloud.aliyuncs.com/d&#x27; -e &#x27;/mirrors.aliyuncs.com/d&#x27; /etc/yum.repos.d/CentOS-Base.repo</span><br></pre></td></tr></table></figure>
-
-<p>CentOS 7 版本的清华大学源信息如下：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line"># CentOS-Base.repo</span><br><span class="line">#</span><br><span class="line"># The mirror system uses the connecting IP address of the client and the</span><br><span class="line"># update status of each mirror to pick mirrors that are updated to and</span><br><span class="line"># geographically close to the client.  You should use this for CentOS updates</span><br><span class="line"># unless you are manually picking other mirrors.</span><br><span class="line">#</span><br><span class="line"># If the mirrorlist= does not work for you, as a fall back you can try the</span><br><span class="line"># remarked out baseurl= line instead.</span><br><span class="line">#</span><br><span class="line">#</span><br><span class="line"></span><br><span class="line">[base]</span><br><span class="line">name=CentOS-$releasever - Base</span><br><span class="line">baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos/$releasever/os/$basearch/</span><br><span class="line">#mirrorlist=http://mirrorlist.centos.org/?release=$releasever&amp;arch=$basearch&amp;repo=os</span><br><span class="line">gpgcheck=1</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7</span><br><span class="line"></span><br><span class="line">#released updates</span><br><span class="line">[updates]</span><br><span class="line">name=CentOS-$releasever - Updates</span><br><span class="line">baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos/$releasever/updates/$basearch/</span><br><span class="line">#mirrorlist=http://mirrorlist.centos.org/?release=$releasever&amp;arch=$basearch&amp;repo=updates</span><br><span class="line">gpgcheck=1</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7</span><br><span class="line"></span><br><span class="line">#additional packages that may be useful</span><br><span class="line">[extras]</span><br><span class="line">name=CentOS-$releasever - Extras</span><br><span class="line">baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos/$releasever/extras/$basearch/</span><br><span class="line">#mirrorlist=http://mirrorlist.centos.org/?release=$releasever&amp;arch=$basearch&amp;repo=extras</span><br><span class="line">gpgcheck=1</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7</span><br><span class="line"></span><br><span class="line">#additional packages that extend functionality of existing packages</span><br><span class="line">[centosplus]</span><br><span class="line">name=CentOS-$releasever - Plus</span><br><span class="line">baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos/$releasever/centosplus/$basearch/</span><br><span class="line">#mirrorlist=http://mirrorlist.centos.org/?release=$releasever&amp;arch=$basearch&amp;repo=centosplus</span><br><span class="line">gpgcheck=1</span><br><span class="line">enabled=0</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7</span><br></pre></td></tr></table></figure>
-
-<h3 id="配置免密登录"><a href="#配置免密登录" class="headerlink" title="配置免密登录"></a>配置免密登录</h3><p>场景：A 主机实现免密登录 B 主机</p>
-<ol>
-<li>A 主机生成公私钥对 <code>ssh-keygen</code>；</li>
-<li>将生成的公钥传输给 B 机器 <code>scp /root/.ssh/id_rsp.pub remoteUser@remoteIp:remoteFolder</code>；</li>
-<li>登录 B 机器，将 A 机器的公钥追加到 B 主机用户目录下的 <code>.ssh/authorized_keys</code> 文件，执行 <code>cat id_rsa.pub &gt;&gt; .ssh/.ssh/authorized_keys</code> 命令即可。若没有<code>authorized_keys</code>文件，则需要创建，且其权限要为 <code>600</code>。</li>
-</ol>
-<h3 id="查看系统负载"><a href="#查看系统负载" class="headerlink" title="查看系统负载"></a>查看系统负载</h3><p><code>top</code>：重点关注 CPU、内存的使用率，以及 average（平均负载，三个值分别是 CPU 最近 1 分钟、5 分钟、15 分钟的平均负载）</p>
-<p><code>vmstat</code>：</p>
-<h3 id="Linux-子系统"><a href="#Linux-子系统" class="headerlink" title="Linux 子系统"></a>Linux 子系统</h3><p>在 <code>Windows 10</code> 中使用 Linux 子系统时，经常会需要用到 <code>root</code> 账号，初始情况下，该账号时没有设定密码的，需要设定之后才能正常使用。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">设置 root 账户的密码</span></span><br><span class="line">sudo passwd</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">切换 root 账户</span></span><br><span class="line">su</span><br></pre></td></tr></table></figure>
-
-<h3 id="软件管理"><a href="#软件管理" class="headerlink" title="软件管理"></a>软件管理</h3><h4 id="Ubuntu-软件管理"><a href="#Ubuntu-软件管理" class="headerlink" title="Ubuntu 软件管理"></a>Ubuntu 软件管理</h4><h5 id="查看安装了那些软件"><a href="#查看安装了那些软件" class="headerlink" title="查看安装了那些软件"></a>查看安装了那些软件</h5><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看安装了哪些软件包</span></span><br><span class="line">apt list --installed</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">也可以使用 dpkg 命令来查看安装了哪些软件包</span></span><br><span class="line">dpkg --list</span><br></pre></td></tr></table></figure>
-
-<h5 id="卸载已经安装的软件"><a href="#卸载已经安装的软件" class="headerlink" title="卸载已经安装的软件"></a>卸载已经安装的软件</h5><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">卸载某个软件包</span></span><br><span class="line">apt remove packagename</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">也可以使用自动卸载</span></span><br><span class="line">apt autoremove packagename</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">使用 dpkg 命令卸载</span></span><br><span class="line">dpkg --remove packagename</span><br></pre></td></tr></table></figure>
+<p>Maven Wrapper 的另一个作用是把项目的 <code>mvnw</code>、<code>mvnw.cmd</code> 和 <code>.mvn</code> 提交到版本库中，可以使所有开发人员使用统一的 <code>Maven</code> 版本。</p>
 ]]></content>
       <categories>
         <category>手册</category>
       </categories>
       <tags>
-        <tag>未完待续</tag>
-        <tag>Linux</tag>
+        <tag>构建工具</tag>
+        <tag>Maven</tag>
+        <tag>Maven Wapper</tag>
       </tags>
   </entry>
   <entry>
@@ -1159,7 +1117,7 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">PS C:\Users\fuyongde&gt; mvn --version</span><br><span class="line">Apache Maven 3.5.2 (138edd61fd100ec658bfa2d307c43b76940a5d7d; 2017-10-18T15:58:13+08:00)</span><br><span class="line">Maven home: C:\apache-maven-3.5.2\bin\..</span><br><span class="line">Java version: 1.8.0_162, vendor: Oracle Corporation</span><br><span class="line">Java home: C:\Program Files\Java\jdk1.8.0_162\jre</span><br><span class="line">Default locale: zh_CN, platform encoding: GBK</span><br><span class="line">OS name: &quot;windows 10&quot;, version: &quot;10.0&quot;, arch: &quot;amd64&quot;, family: &quot;windows&quot;</span><br></pre></td></tr></table></figure>
 
 <p>表示安装成功</p>
-<h3 id="Linux-amp-Mac-OS"><a href="#Linux-amp-Mac-OS" class="headerlink" title="Linux &amp; Mac OS"></a>Linux &amp; Mac OS</h3><p>你都用这操作系统了，那肯定会安装吧 🤣。</p>
+<h3 id="Linux-Mac-OS"><a href="#Linux-Mac-OS" class="headerlink" title="Linux &amp; Mac OS"></a>Linux &amp; Mac OS</h3><p>你都用这操作系统了，那肯定会安装吧 🤣。</p>
 <h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h3 id="快速开始"><a href="#快速开始" class="headerlink" title="快速开始"></a>快速开始</h3><p>Maven 提供了丰富的模板，以供我们快速创建一个工程。其命令如下：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mvn archetype:generate</span><br><span class="line"> -DgroupId=com.demo</span><br><span class="line"> -DartifactId=hello-maven</span><br><span class="line"> -DarchetypeArtifactId=maven-archetype-quickstart</span><br><span class="line"> -DinteractiveMode=false</span><br></pre></td></tr></table></figure>
 
@@ -1311,33 +1269,146 @@
       </tags>
   </entry>
   <entry>
-    <title>MySQL 优化器成本模型</title>
-    <url>/2019/12/04/mysql-optimizer-cost-model/</url>
-    <content><![CDATA[<p>本文探讨一下 MySQL5.7 版本中 优化器的代价模型。相关内容也可查看<a href="https://dev.mysql.com/doc/refman/5.7/en/cost-model.html">官网</a></p>
-<p>MySQL 优化器成本模型由两个表组成，分别位于 mysql.server_cost 和 mysql.engine_cost 中。</p>
+    <title>Linux 手册</title>
+    <url>/2019/09/24/linux-%E6%89%8B%E5%86%8C/</url>
+    <content><![CDATA[<p>记录一些常用的 Linux 操作，持续更新 …</p>
+<h3 id="查看系统版本"><a href="#查看系统版本" class="headerlink" title="查看系统版本"></a>查看系统版本</h3><p>常用的查看系统版本有以下命令</p>
 <ul>
-<li>server_cost: 针对服务器操作的优化器成本估算</li>
-<li>engine_cose: 针对特定存储引擎的特定操作的优化器成本估算</li>
+<li><code>cat /etc/os-release</code></li>
+<li><code>uname -a</code></li>
+<li><code>cat /proc/version</code></li>
+<li><code>cat /etc/issue</code></li>
 </ul>
-<h2 id="server-cost"><a href="#server-cost" class="headerlink" title="server_cost"></a>server_cost</h2><p>server_cost 包含以下值：</p>
-<ul>
-<li>disk_temptable_create_cost：缺省值 40.0，该字段标识基于磁盘的存储引擎（InnoDB 和 MyISAM）中创建临时表的成本估算。从缺省值也可以看出，默认情况下创建临时表的代价是非常昂贵的。</li>
-<li>disk_temptable_row_cost：缺省值 1.0，该字段标识基于磁盘的存储引擎（InnoDB 和 MyISAM）中创建临时行的成本估算。</li>
-<li>key_compare_cost：缺省值 0.1，该字段表示比较记录的成本。</li>
-<li>memory_temptable_create_cost：缺省值 2.0，MEMORY 存储引擎创建临时表的成本，从与 disk_temptable_create_cost 的对比中可以看出，默认情况下 MEMORY 存储引擎创建临时表的成本是远小于 InnoDB 和 MyISAM 存储引擎的。</li>
-<li>memory_temptable_row_cost：缺省值 0.2，MEMORY 存储引擎创建临时行的成本。</li>
-<li>row_evaluate_cost：缺省值 0.2，行评估成本，即扫描了多少行的成本。</li>
-</ul>
-<h2 id="engine-cost"><a href="#engine-cost" class="headerlink" title="engine_cost"></a>engine_cost</h2><ul>
-<li>io_block_read_cost：缺省值 1.0，从磁盘读取索引或数据块的成本。</li>
-<li>memory_block_read_cost：缺省值 1.0，从内存数据库缓冲区读取索引说数据块的成本。</li>
-</ul>
-<h3 id="修改成本模型"><a href="#修改成本模型" class="headerlink" title="修改成本模型"></a>修改成本模型</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 修改所有的 io_block_read_cost 成本</span><br><span class="line">UPDATE mysql.engine_cost</span><br><span class="line">  SET cost_value = 2.0</span><br><span class="line">  WHERE cost_name = &#x27;io_block_read_cost&#x27;;</span><br><span class="line">FLUSH OPTIMIZER_COSTS;</span><br><span class="line"></span><br><span class="line">-- 仅修改 InnoDB 存储引擎的成本</span><br><span class="line">INSERT INTO mysql.engine_cost</span><br><span class="line">  VALUES (&#x27;InnoDB&#x27;, 0, &#x27;io_block_read_cost&#x27;, 3.0,</span><br><span class="line">  CURRENT_TIMESTAMP, &#x27;Using a slower disk for InnoDB&#x27;);</span><br><span class="line">FLUSH OPTIMIZER_COSTS;</span><br></pre></td></tr></table></figure>
+<p>下面演示一下 <code>cat /etc/os-release</code>，其他不详细说明。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cat /etc/os-release</span><br></pre></td></tr></table></figure>
 
-<h2 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h2><h3 id="打开优化器跟踪"><a href="#打开优化器跟踪" class="headerlink" title="打开优化器跟踪"></a>打开优化器跟踪</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 查看优化器跟踪的开关</span><br><span class="line">SHOW VARIABLES LIKE &#x27;%optimizer_trace%&#x27;;</span><br><span class="line">-- 打开优化器跟踪</span><br><span class="line">SET GLOBAL optimizer_trace = &#x27;enabled=on,one_line=on&#x27;;</span><br></pre></td></tr></table></figure>
+<p>输出如下</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">PRETTY_NAME=&quot;Debian GNU/Linux 9 (stretch)&quot;</span><br><span class="line">NAME=&quot;Debian GNU/Linux&quot;</span><br><span class="line">VERSION_ID=&quot;9&quot;</span><br><span class="line">VERSION=&quot;9 (stretch)&quot;</span><br><span class="line">ID=debian</span><br><span class="line">HOME_URL=&quot;https://www.debian.org/&quot;</span><br><span class="line">SUPPORT_URL=&quot;https://www.debian.org/support&quot;</span><br><span class="line">BUG_REPORT_URL=&quot;https://bugs.debian.org/&quot;</span><br></pre></td></tr></table></figure>
 
-<p>未完待续 …</p>
+<h3 id="替换源"><a href="#替换源" class="headerlink" title="替换源"></a>替换源</h3><p>由于网络的原因，国内部分 Linux 在安装软件时非常缓慢，将源替换为国内的镜像可以方便很多。</p>
+<p>国内常见的镜像如清华大学、阿里云、163 等等，大家可自行选择。由于大部分网络上的博客，只写了具体源的地址，对很多没有基础的同学来说，由于系统版本的差异，反而会适得其反。</p>
+<p>替换源一定要遵循下面的步骤：</p>
+<ol>
+<li>确认操作系统版本。如何查看可参考上文。</li>
+<li>备份默认的源。不同的操作系统版本，源的文件位置各不一样，直接采用备份文件的方式备份即可。</li>
+<li>选择对应版本的源并替换。</li>
+</ol>
+<p>下面针对常见的 <code>Debian</code>、<code>Ubuntu</code>、<code>CentOS</code>，这里以说明一下如何正确的查找并替换源。</p>
+<h4 id="Debian"><a href="#Debian" class="headerlink" title="Debian"></a>Debian</h4><p><code>Debian</code> 系统的源文件目录位于 <code>/etc/apt/sources.list</code>，这里我们以清华大学的镜像为例。清华大学开源镜像站 <a href="https://mirror.tuna.tsinghua.edu.cn/help/debian/">Debian 系统的帮助页面</a> 详细列举了常用版本的源的信息。</p>
+<p>例如，我们系统的版本是 <code>9 (stretch)</code>，则选择 <code>stretch</code>，替换掉对应的源即可。</p>
+<p>stretch 版本的源信息如下：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line"># 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/debian/ stretch main contrib non-free</span><br><span class="line"># deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ stretch main contrib non-free</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/debian/ stretch-updates main contrib non-free</span><br><span class="line"># deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ stretch-updates main contrib non-free</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/debian/ stretch-backports main contrib non-free</span><br><span class="line"># deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ stretch-backports main contrib non-free</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/debian-security stretch/updates main contrib non-free</span><br><span class="line"># deb-src https://mirrors.tuna.tsinghua.edu.cn/debian-security stretch/updates main contrib non-free</span><br></pre></td></tr></table></figure>
+
+<p>buster 版本的源信息如下</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line"># 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/debian/ buster main contrib non-free</span><br><span class="line"># deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ buster main contrib non-free</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/debian/ buster-updates main contrib non-free</span><br><span class="line"># deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ buster-updates main contrib non-free</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/debian/ buster-backports main contrib non-free</span><br><span class="line"># deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ buster-backports main contrib non-free</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/debian-security buster/updates main contrib non-free</span><br><span class="line"># deb-src https://mirrors.tuna.tsinghua.edu.cn/debian-security buster/updates main contrib non-free</span><br></pre></td></tr></table></figure>
+
+<p>其他版本不一一列举。</p>
+<h4 id="Ubuntu"><a href="#Ubuntu" class="headerlink" title="Ubuntu"></a>Ubuntu</h4><p><code>Ubuntu</code> 也是基于 <code>Debian</code> 的，故源的目录位置也是 <code>/etc/apt/sources.list</code>。清华大学开源镜像站 <a href="https://mirror.tuna.tsinghua.edu.cn/help/ubuntu/">Ubuntu 系统的帮助页面</a> 详细列举了常用版本的源的信息。</p>
+<p>例如，我们系统的版本是 <code>18.04 LTS</code>，则选择 <code>18.04 LTS</code>，替换掉对应的源即可。</p>
+<p>18.04 LTS 版本的源信息如下：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line"># 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic main restricted universe multiverse</span><br><span class="line"># deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic main restricted universe multiverse</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-updates main restricted universe multiverse</span><br><span class="line"># deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-updates main restricted universe multiverse</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-backports main restricted universe multiverse</span><br><span class="line"># deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-backports main restricted universe multiverse</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-security main restricted universe multiverse</span><br><span class="line"># deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-security main restricted universe multiverse</span><br><span class="line"></span><br><span class="line"># 预发布软件源，不建议启用</span><br><span class="line"># deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-proposed main restricted universe multiverse</span><br><span class="line"># deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-proposed main restricted universe multiverse</span><br></pre></td></tr></table></figure>
+
+<p><code>Ubuntu</code> 若安装了图形界面，也可以采用图形界面的方式。</p>
+<h5 id="图形界面配置"><a href="#图形界面配置" class="headerlink" title="图形界面配置"></a>图形界面配置</h5><p>新手推荐使用图形界面配置： 系统设置 -&gt; 软件和更新 选择下载服务器 -&gt; “mirrors.aliyun.com”</p>
+<h4 id="CentOS"><a href="#CentOS" class="headerlink" title="CentOS"></a>CentOS</h4><p><code>CentOS</code> 的源文件位于 <code>/etc/yum.repos.d/CentOS-Base.repo</code>，清华大学开源镜像站 <a href="https://mirror.tuna.tsinghua.edu.cn/help/centos/">CentOS 系统的帮助页面</a> 详细列举了常用版本的源的信息。</p>
+<p>与 Debian 的不同，CentOS 替换源之后，需要运行 <code>yum makecache</code> 生成缓存。</p>
+<p>此外阿里云提供了更为简单的方式，直接下载阿里云的 <code>CentOS-Base.repo</code> 文件到对应目录即可，命令如下：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">CentOS 6</span></span><br><span class="line">wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-6.repo</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">或者</span></span><br><span class="line">curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-6.repo</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">CentOS 7</span></span><br><span class="line">wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">或者</span></span><br><span class="line">curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">由于非阿里云 ECS 用户会出现 Couldn<span class="string">&#x27;t resolve host &#x27;</span>mirrors.cloud.aliyuncs.com<span class="string">&#x27; 信息，不影响使用。用户也可自行修改相关配置: eg:</span></span></span><br><span class="line">sed -i -e &#x27;/mirrors.cloud.aliyuncs.com/d&#x27; -e &#x27;/mirrors.aliyuncs.com/d&#x27; /etc/yum.repos.d/CentOS-Base.repo</span><br></pre></td></tr></table></figure>
+
+<p>CentOS 7 版本的清华大学源信息如下：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line"># CentOS-Base.repo</span><br><span class="line">#</span><br><span class="line"># The mirror system uses the connecting IP address of the client and the</span><br><span class="line"># update status of each mirror to pick mirrors that are updated to and</span><br><span class="line"># geographically close to the client.  You should use this for CentOS updates</span><br><span class="line"># unless you are manually picking other mirrors.</span><br><span class="line">#</span><br><span class="line"># If the mirrorlist= does not work for you, as a fall back you can try the</span><br><span class="line"># remarked out baseurl= line instead.</span><br><span class="line">#</span><br><span class="line">#</span><br><span class="line"></span><br><span class="line">[base]</span><br><span class="line">name=CentOS-$releasever - Base</span><br><span class="line">baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos/$releasever/os/$basearch/</span><br><span class="line">#mirrorlist=http://mirrorlist.centos.org/?release=$releasever&amp;arch=$basearch&amp;repo=os</span><br><span class="line">gpgcheck=1</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7</span><br><span class="line"></span><br><span class="line">#released updates</span><br><span class="line">[updates]</span><br><span class="line">name=CentOS-$releasever - Updates</span><br><span class="line">baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos/$releasever/updates/$basearch/</span><br><span class="line">#mirrorlist=http://mirrorlist.centos.org/?release=$releasever&amp;arch=$basearch&amp;repo=updates</span><br><span class="line">gpgcheck=1</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7</span><br><span class="line"></span><br><span class="line">#additional packages that may be useful</span><br><span class="line">[extras]</span><br><span class="line">name=CentOS-$releasever - Extras</span><br><span class="line">baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos/$releasever/extras/$basearch/</span><br><span class="line">#mirrorlist=http://mirrorlist.centos.org/?release=$releasever&amp;arch=$basearch&amp;repo=extras</span><br><span class="line">gpgcheck=1</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7</span><br><span class="line"></span><br><span class="line">#additional packages that extend functionality of existing packages</span><br><span class="line">[centosplus]</span><br><span class="line">name=CentOS-$releasever - Plus</span><br><span class="line">baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos/$releasever/centosplus/$basearch/</span><br><span class="line">#mirrorlist=http://mirrorlist.centos.org/?release=$releasever&amp;arch=$basearch&amp;repo=centosplus</span><br><span class="line">gpgcheck=1</span><br><span class="line">enabled=0</span><br><span class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7</span><br></pre></td></tr></table></figure>
+
+<h3 id="配置免密登录"><a href="#配置免密登录" class="headerlink" title="配置免密登录"></a>配置免密登录</h3><p>场景：A 主机实现免密登录 B 主机</p>
+<ol>
+<li>A 主机生成公私钥对 <code>ssh-keygen</code>；</li>
+<li>将生成的公钥传输给 B 机器 <code>scp /root/.ssh/id_rsp.pub remoteUser@remoteIp:remoteFolder</code>；</li>
+<li>登录 B 机器，将 A 机器的公钥追加到 B 主机用户目录下的 <code>.ssh/authorized_keys</code> 文件，执行 <code>cat id_rsa.pub &gt;&gt; .ssh/.ssh/authorized_keys</code> 命令即可。若没有<code>authorized_keys</code>文件，则需要创建，且其权限要为 <code>600</code>。</li>
+</ol>
+<h3 id="查看系统负载"><a href="#查看系统负载" class="headerlink" title="查看系统负载"></a>查看系统负载</h3><p><code>top</code>：重点关注 CPU、内存的使用率，以及 average（平均负载，三个值分别是 CPU 最近 1 分钟、5 分钟、15 分钟的平均负载）</p>
+<p><code>vmstat</code>：</p>
+<h3 id="Linux-子系统"><a href="#Linux-子系统" class="headerlink" title="Linux 子系统"></a>Linux 子系统</h3><p>在 <code>Windows 10</code> 中使用 Linux 子系统时，经常会需要用到 <code>root</code> 账号，初始情况下，该账号时没有设定密码的，需要设定之后才能正常使用。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">设置 root 账户的密码</span></span><br><span class="line">sudo passwd</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">切换 root 账户</span></span><br><span class="line">su</span><br></pre></td></tr></table></figure>
+
+<h3 id="软件管理"><a href="#软件管理" class="headerlink" title="软件管理"></a>软件管理</h3><h4 id="Ubuntu-软件管理"><a href="#Ubuntu-软件管理" class="headerlink" title="Ubuntu 软件管理"></a>Ubuntu 软件管理</h4><h5 id="查看安装了那些软件"><a href="#查看安装了那些软件" class="headerlink" title="查看安装了那些软件"></a>查看安装了那些软件</h5><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看安装了哪些软件包</span></span><br><span class="line">apt list --installed</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">也可以使用 dpkg 命令来查看安装了哪些软件包</span></span><br><span class="line">dpkg --list</span><br></pre></td></tr></table></figure>
+
+<h5 id="卸载已经安装的软件"><a href="#卸载已经安装的软件" class="headerlink" title="卸载已经安装的软件"></a>卸载已经安装的软件</h5><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">卸载某个软件包</span></span><br><span class="line">apt remove packagename</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">也可以使用自动卸载</span></span><br><span class="line">apt autoremove packagename</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">使用 dpkg 命令卸载</span></span><br><span class="line">dpkg --remove packagename</span><br></pre></td></tr></table></figure>
 ]]></content>
+      <categories>
+        <category>手册</category>
+      </categories>
+      <tags>
+        <tag>未完待续</tag>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MySQL 索引</title>
+    <url>/2019/11/23/mysql-index-categories/</url>
+    <content><![CDATA[<p>本文粗略说以下 MySQL 中常见的索引分类。</p>
+<h2 id="物理存储角度"><a href="#物理存储角度" class="headerlink" title="物理存储角度"></a>物理存储角度</h2><ul>
+<li>聚簇索引</li>
+<li>非聚簇索引</li>
+</ul>
+<p><strong>聚簇索引</strong>将数据存储与索引放到了一起，找到索引也就找到了数据。<strong>非聚簇索引</strong>将数据存储与索引分开，索引结构的叶子结点指向了数据对应的行。</p>
+<p>在 <code>InnoDB</code> 中，在聚簇索引之上创建的索引，称之为<strong>辅助索引</strong>，辅助索引叶子结点存储的不是行的物理位置，而是主键值，因此辅助索引访问数据总是需要二次查找的。</p>
+<p>一图顶千言，如下图所示：</p>
+<img src="/2019/11/23/mysql-index-categories/%E8%81%9A%E7%B0%87%E7%B4%A2%E5%BC%95%E4%B8%8E%E9%9D%9E%E8%81%9A%E7%B0%87%E7%B4%A2%E5%BC%95.jpg" class="" title="聚簇索引与非聚簇索引的区别">
+
+<p>由于聚簇索引是将数据跟索引结构放在一起的，因此一个表仅有一个聚簇索引。</p>
+<p><strong>聚簇索引默认是主键</strong>，如果表中没有定义主键，<code>InnoDB</code> 会选择一个<strong>唯一非空索引</strong>，如果没有这样的索引，<code>InnoDB</code> 会隐式定义一个主键来作为聚簇索引。</p>
+<h2 id="数据结构角度"><a href="#数据结构角度" class="headerlink" title="数据结构角度"></a>数据结构角度</h2><ul>
+<li>B-Tree 索引（技术上来说是 B+树）</li>
+<li>hash 索引</li>
+<li>FULLTEXT 索引（全文索引）</li>
+<li>R-Tree 索引</li>
+</ul>
+<p>这里着重说以下 B-Tree 索引，B-Tree 索引之所以能加快访问数据的速度，是因为存储引擎不在需要进行全表扫描来获取数据，而是从索引的跟结点开始进行搜索，根节点的槽中存放了指向子节点的指针，存储引擎根据这些指针向下层查找，通过比较节点页的值和要查找的值找到合适的指针进入下层子节点，这些指针定义了子节点页中值的上限和下限。最终存储引擎要么找到对应的值，要么对应的记录不存在。</p>
+<p><strong>叶子结点</strong>比较特别，它们的指针指向的是被索引的数据，而不是其他的结点页。同时所有的叶子结点到根节点的距离相同，所以 B-Tree 的查询效率非常的稳定。</p>
+<p>相较于二叉查找树，B-Tree 在比较次数上并不占优，但是把磁盘里数据加载到内存的时候，是以<strong>页</strong>为单位来加载的，节点与节点之间的数据是不连续的，所以不同的节点，有可能分布在不同的磁盘页中。B-Tree 的每一个节点可以存放多个元素，所以磁盘寻址加载次数会比较少。所以总体来说 B-Tree 还是比二叉查找树快。</p>
+<p>B-Tree 适用于全键值、键值范围或建前缀查找（只适用于最左前缀查找）。</p>
+<h2 id="逻辑角度"><a href="#逻辑角度" class="headerlink" title="逻辑角度"></a>逻辑角度</h2><ul>
+<li>主键索引</li>
+<li>普通索引（单列索引）</li>
+<li>复合索引（多列索引）</li>
+<li>唯一索引</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>MySQL</tag>
+        <tag>索引</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>npm-手册</title>
+    <url>/2020/07/19/npm-%E6%89%8B%E5%86%8C/</url>
+    <content><![CDATA[<h2 id="配置-npmmirror-镜像"><a href="#配置-npmmirror-镜像" class="headerlink" title="配置 npmmirror 镜像"></a>配置 npmmirror 镜像</h2><ol>
+<li>备份旧镜像</li>
+</ol>
+<p>在替换 npmmirror 镜像之前，我们先查看一下原有的镜像</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">npm get registry</span><br></pre></td></tr></table></figure>
+
+<p>结果为 <code>https://registry.npmjs.org/</code></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yarn get registry</span><br></pre></td></tr></table></figure>
+
+<p>结果为 <code>https://registry.yarnpkg.com</code></p>
+<ol start="2">
+<li>替换为 npmmirror 镜像</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">设置 npm 的源为 npmmirror</span></span><br><span class="line">npm config set registry https://registry.npmmirror.com</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">设置 yarn 的源为 npmmirror</span></span><br><span class="line">yarn config set registry https://registry.npmmirror.com</span><br></pre></td></tr></table></figure>
+
+<h2 id="升级版本"><a href="#升级版本" class="headerlink" title="升级版本"></a>升级版本</h2><h3 id="查看-npm-版本"><a href="#查看-npm-版本" class="headerlink" title="查看 npm 版本"></a>查看 npm 版本</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">npm -v</span><br></pre></td></tr></table></figure>
+
+<h3 id="升级到最新的-npm-版本"><a href="#升级到最新的-npm-版本" class="headerlink" title="升级到最新的 npm 版本"></a>升级到最新的 npm 版本</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">npm install -g npm</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装指定版本的-npm"><a href="#安装指定版本的-npm" class="headerlink" title="安装指定版本的 npm"></a>安装指定版本的 npm</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">npm install -g npm@版本号</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>手册</category>
+      </categories>
+      <tags>
+        <tag>未完待续</tag>
+        <tag>npm</tag>
+      </tags>
   </entry>
   <entry>
     <title>MySQL 手册</title>
@@ -1543,103 +1614,159 @@
       </tags>
   </entry>
   <entry>
-    <title>Maven Wapper 手册</title>
-    <url>/2019/06/23/maven-wapper-%E6%89%8B%E5%86%8C/</url>
-    <content><![CDATA[<p>我们使用 Maven 时，基本上只会用到 <code>mvn</code> 这一个命令。有些童鞋可能听说过 <code>mvnw</code>，这个是啥？</p>
-<p>mvnw 是 Maven Wrapper 的缩写，我们安装 Maven 时，默认情况下，系统所有项目都会使用全局安装的这个 Maven 版本。但是，对于某些项目来说，它可能必须使用某个特定的 Maven 版本，这个时候，就可以使用 Maven Wrapper，它可以负责给这个特定的项目安装指定版本的 Maven，而其他项目不受影响。</p>
-<p>简单地说，Maven Wrapper 就是给一个项目提供一个独立的，指定版本的 Maven 给它使用。</p>
-<h2 id="安装-Maven-Wrapper"><a href="#安装-Maven-Wrapper" class="headerlink" title="安装 Maven Wrapper"></a>安装 Maven Wrapper</h2><p>安装 Maven Wrapper 最简单的方式是在项目的根目录（即 pom.xml 所在的目录）下运行安装命令：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mvn -N io.takari:maven:0.7.7:wrapper</span><br></pre></td></tr></table></figure>
+    <title>MySQL 优化器成本模型</title>
+    <url>/2019/12/04/mysql-optimizer-cost-model/</url>
+    <content><![CDATA[<p>本文探讨一下 MySQL5.7 版本中 优化器的代价模型。相关内容也可查看<a href="https://dev.mysql.com/doc/refman/5.7/en/cost-model.html">官网</a></p>
+<p>MySQL 优化器成本模型由两个表组成，分别位于 mysql.server_cost 和 mysql.engine_cost 中。</p>
+<ul>
+<li>server_cost: 针对服务器操作的优化器成本估算</li>
+<li>engine_cose: 针对特定存储引擎的特定操作的优化器成本估算</li>
+</ul>
+<h2 id="server-cost"><a href="#server-cost" class="headerlink" title="server_cost"></a>server_cost</h2><p>server_cost 包含以下值：</p>
+<ul>
+<li>disk_temptable_create_cost：缺省值 40.0，该字段标识基于磁盘的存储引擎（InnoDB 和 MyISAM）中创建临时表的成本估算。从缺省值也可以看出，默认情况下创建临时表的代价是非常昂贵的。</li>
+<li>disk_temptable_row_cost：缺省值 1.0，该字段标识基于磁盘的存储引擎（InnoDB 和 MyISAM）中创建临时行的成本估算。</li>
+<li>key_compare_cost：缺省值 0.1，该字段表示比较记录的成本。</li>
+<li>memory_temptable_create_cost：缺省值 2.0，MEMORY 存储引擎创建临时表的成本，从与 disk_temptable_create_cost 的对比中可以看出，默认情况下 MEMORY 存储引擎创建临时表的成本是远小于 InnoDB 和 MyISAM 存储引擎的。</li>
+<li>memory_temptable_row_cost：缺省值 0.2，MEMORY 存储引擎创建临时行的成本。</li>
+<li>row_evaluate_cost：缺省值 0.2，行评估成本，即扫描了多少行的成本。</li>
+</ul>
+<h2 id="engine-cost"><a href="#engine-cost" class="headerlink" title="engine_cost"></a>engine_cost</h2><ul>
+<li>io_block_read_cost：缺省值 1.0，从磁盘读取索引或数据块的成本。</li>
+<li>memory_block_read_cost：缺省值 1.0，从内存数据库缓冲区读取索引说数据块的成本。</li>
+</ul>
+<h3 id="修改成本模型"><a href="#修改成本模型" class="headerlink" title="修改成本模型"></a>修改成本模型</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 修改所有的 io_block_read_cost 成本</span><br><span class="line">UPDATE mysql.engine_cost</span><br><span class="line">  SET cost_value = 2.0</span><br><span class="line">  WHERE cost_name = &#x27;io_block_read_cost&#x27;;</span><br><span class="line">FLUSH OPTIMIZER_COSTS;</span><br><span class="line"></span><br><span class="line">-- 仅修改 InnoDB 存储引擎的成本</span><br><span class="line">INSERT INTO mysql.engine_cost</span><br><span class="line">  VALUES (&#x27;InnoDB&#x27;, 0, &#x27;io_block_read_cost&#x27;, 3.0,</span><br><span class="line">  CURRENT_TIMESTAMP, &#x27;Using a slower disk for InnoDB&#x27;);</span><br><span class="line">FLUSH OPTIMIZER_COSTS;</span><br></pre></td></tr></table></figure>
 
-<p>它会自动使用最新版本的 Maven。注意 0.7.7 是 Maven Wrapper 的版本。最新的 Maven Wrapper 版本可以去<a href="https://github.com/takari/maven-wrapper">官方网站</a>查看。</p>
-<p>如果要指定使用的 Maven 版本，使用下面的安装命令指定版本，例如 3.6.0：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mvn -N io.takari:maven:0.7.7:wrapper -Dmaven=3.6.0</span><br></pre></td></tr></table></figure>
+<h2 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h2><h3 id="打开优化器跟踪"><a href="#打开优化器跟踪" class="headerlink" title="打开优化器跟踪"></a>打开优化器跟踪</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 查看优化器跟踪的开关</span><br><span class="line">SHOW VARIABLES LIKE &#x27;%optimizer_trace%&#x27;;</span><br><span class="line">-- 打开优化器跟踪</span><br><span class="line">SET GLOBAL optimizer_trace = &#x27;enabled=on,one_line=on&#x27;;</span><br></pre></td></tr></table></figure>
 
-<p>安装后，查看项目结构：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Hello-World</span><br><span class="line">├── .mvn</span><br><span class="line">│   └── wrapper</span><br><span class="line">│       ├── MavenWrapperDownloader.java</span><br><span class="line">│       ├── maven-wrapper.jar</span><br><span class="line">│       └── maven-wrapper.properties</span><br><span class="line">├── mvnw</span><br><span class="line">├── mvnw.cmd</span><br><span class="line">├── pom.xml</span><br><span class="line">└── src</span><br><span class="line">    ├── main</span><br><span class="line">    │   ├── java</span><br><span class="line">    │   └── resources</span><br><span class="line">    └── test</span><br><span class="line">        ├── java</span><br><span class="line">        └── resources</span><br></pre></td></tr></table></figure>
-
-<p>发现多了 <code>mvnw</code>、<code>mvnw.cmd</code> 和 <code>.mvn</code>目录。</p>
-<h2 id="使用-Maven-Wapper"><a href="#使用-Maven-Wapper" class="headerlink" title="使用 Maven Wapper"></a>使用 Maven Wapper</h2><p>我们只需要把 mvn 命令改成 mvnw 就可以使用跟项目关联的 Maven。例如：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mvnw clean package</span><br></pre></td></tr></table></figure>
-
-<p>Maven Wrapper 的另一个作用是把项目的 <code>mvnw</code>、<code>mvnw.cmd</code> 和 <code>.mvn</code> 提交到版本库中，可以使所有开发人员使用统一的 <code>Maven</code> 版本。</p>
+<p>未完待续 …</p>
 ]]></content>
-      <categories>
-        <category>手册</category>
-      </categories>
-      <tags>
-        <tag>构建工具</tag>
-        <tag>Maven</tag>
-        <tag>Maven Wapper</tag>
-      </tags>
   </entry>
   <entry>
-    <title>MySQL 索引</title>
-    <url>/2019/11/23/mysql-index-categories/</url>
-    <content><![CDATA[<p>本文粗略说以下 MySQL 中常见的索引分类。</p>
-<h2 id="物理存储角度"><a href="#物理存储角度" class="headerlink" title="物理存储角度"></a>物理存储角度</h2><ul>
-<li>聚簇索引</li>
-<li>非聚簇索引</li>
+    <title>PowerShell 手册</title>
+    <url>/2019/09/27/powershell-%E6%89%8B%E5%86%8C/</url>
+    <content><![CDATA[<p>记录一些常见的 <code>Powershell</code> 的使用问题</p>
+<h2 id="别名命令"><a href="#别名命令" class="headerlink" title="别名命令"></a>别名命令</h2><p>在使用 Linux 系统时，我喜欢使用 <code>ll</code> 命令来查看当前目录的文件，但是 Windows 系统的 Powershell 没有这个命令，所以每次用的时候就很不习惯。我们可以通过对命令设置别名来让 Powershell 支持我们的使用习惯。</p>
+<h3 id="查看别名"><a href="#查看别名" class="headerlink" title="查看别名"></a>查看别名</h3><p><code>Get-Alias</code> 或者 <code>gal</code> 命令来查看我们系统命令的别名，如下</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">PS</span> C:\Users\fuyongde&gt; <span class="built_in">get-alias</span></span><br><span class="line"></span><br><span class="line">CommandType     Name                         Version    Source</span><br><span class="line"><span class="literal">-----------</span>     <span class="literal">----</span>                         <span class="literal">-------</span>    <span class="literal">------</span></span><br><span class="line">Alias           % -&gt; <span class="built_in">ForEach-Object</span></span><br><span class="line">Alias           ? -&gt; <span class="built_in">Where-Object</span></span><br><span class="line">Alias           <span class="built_in">ac</span> -&gt; <span class="built_in">Add-Content</span></span><br><span class="line">Alias           <span class="built_in">cat</span> -&gt; <span class="built_in">Get-Content</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>查看某别名的原命令，如 <code>ls</code> 的原命令：<code>Get-Alias ls</code></li>
+<li>查看某原命令的别名，如 <code>Get-ChildItem</code> 的别名：<code>Get-Alias -Definition Get-ChildItem</code></li>
 </ul>
-<p><strong>聚簇索引</strong>将数据存储与索引放到了一起，找到索引也就找到了数据。<strong>非聚簇索引</strong>将数据存储与索引分开，索引结构的叶子结点指向了数据对应的行。</p>
-<p>在 <code>InnoDB</code> 中，在聚簇索引之上创建的索引，称之为<strong>辅助索引</strong>，辅助索引叶子结点存储的不是行的物理位置，而是主键值，因此辅助索引访问数据总是需要二次查找的。</p>
-<p>一图顶千言，如下图所示：</p>
-<img src="/2019/11/23/mysql-index-categories/%E8%81%9A%E7%B0%87%E7%B4%A2%E5%BC%95%E4%B8%8E%E9%9D%9E%E8%81%9A%E7%B0%87%E7%B4%A2%E5%BC%95.jpg" class="" title="聚簇索引与非聚簇索引的区别">
+<h3 id="临时创建或更改别名"><a href="#临时创建或更改别名" class="headerlink" title="临时创建或更改别名"></a>临时创建或更改别名</h3><p>使用 <code>Set-Alias</code> 命令来创建或更改别名，但是改命令只在当前的的 PowerShell Session 中生效。另外还有一个 <code>New-Alias</code> 命令用法类似。</p>
+<h4 id="创建不带参数的别名"><a href="#创建不带参数的别名" class="headerlink" title="创建不带参数的别名"></a>创建不带参数的别名</h4><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">PS</span> C:\Users\fuyongde&gt; <span class="built_in">Set-Alias</span> <span class="literal">-Name</span> ll <span class="literal">-Value</span> <span class="built_in">get-childitem</span></span><br><span class="line"><span class="comment"># 或者简单一些</span></span><br><span class="line"><span class="built_in">PS</span> C:\Users\fuyongde&gt; <span class="built_in">Set-Alias</span> ll <span class="built_in">get-childitem</span></span><br></pre></td></tr></table></figure>
 
-<p>由于聚簇索引是将数据跟索引结构放在一起的，因此一个表仅有一个聚簇索引。</p>
-<p><strong>聚簇索引默认是主键</strong>，如果表中没有定义主键，<code>InnoDB</code> 会选择一个<strong>唯一非空索引</strong>，如果没有这样的索引，<code>InnoDB</code> 会隐式定义一个主键来作为聚簇索引。</p>
-<h2 id="数据结构角度"><a href="#数据结构角度" class="headerlink" title="数据结构角度"></a>数据结构角度</h2><ul>
-<li>B-Tree 索引（技术上来说是 B+树）</li>
-<li>hash 索引</li>
-<li>FULLTEXT 索引（全文索引）</li>
-<li>R-Tree 索引</li>
+<h4 id="创建带参数的别名"><a href="#创建带参数的别名" class="headerlink" title="创建带参数的别名"></a>创建带参数的别名</h4><p>如果命令带参数如想为 <code>Get-ChildItem -Name</code> 设定别名为 <code>ll</code> 则我们需要两步，第一步为这个带参数原命令设定一个中间 <code>function</code>，第二步为这个 <code>function</code> 指定别名</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">PS</span> C:\Users\fuyongde&gt; <span class="function"><span class="keyword">function</span> <span class="title">getlist</span></span> &#123;<span class="built_in">Get-ChildItem</span> <span class="literal">-Name</span>&#125;</span><br><span class="line"><span class="built_in">PS</span> C:\Users\fuyongde&gt; <span class="built_in">Set-Alias</span> ll getlist</span><br></pre></td></tr></table></figure>
+
+<h4 id="创建永久的别名"><a href="#创建永久的别名" class="headerlink" title="创建永久的别名"></a>创建永久的别名</h4><p>在 PowerShell 中直接使用 <code>Set-Alias</code> 或 <code>New-Alias</code> 命令创建的别名在关闭此 Session 后即会失效，防止此现象的方法是将此命令写入 Windows PowerShell profile 文件。</p>
+<p>查看此文件在计算机中的位置：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">PS</span> C:\Users\fuyongde&gt; <span class="variable">$profile</span></span><br></pre></td></tr></table></figure>
+
+<p>结果如下：</p>
+<p><code>C:\Users\fuyongde\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1</code></p>
+<p>但如果安装了 <code>PowerShell6</code> 的话，则结果是：</p>
+<p><code>C:\Users\fuyongde\Documents\PowerShell\Microsoft.PowerShell_profile.ps1</code></p>
+<p>打开对应文件，并写入要预设的别名</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">Set-Alias</span> ll <span class="built_in">get-childitem</span></span><br></pre></td></tr></table></figure>
+
+<p>注意：该种方式有可能会遇到系统上禁止运行脚本的提示，这是因为 PowerShell 对安全做过充分考量，把脚本的执行分成了几个策略。以下是常用的执行策略：</p>
+<ul>
+<li><code>Restricted</code>：禁止运行任何脚本和配置文件，默认情况下就是该策略。</li>
+<li><code>AllSigned</code>：可以运行脚本，但要求所有脚本和配置文件由可信任的发布者签名，包括在本地计算机编写的脚本。</li>
+<li><code>RemoteSigned</code>：可以运行脚本，但要求从网络上下载的脚本和配置由可信任的发布者签名，不要求对已经运行和在本地计算机编写的脚本进行签名。</li>
+<li><code>Unrestricted</code>：可以运行未签名的脚本，这种策略也是最危险的。</li>
 </ul>
-<p>这里着重说以下 B-Tree 索引，B-Tree 索引之所以能加快访问数据的速度，是因为存储引擎不在需要进行全表扫描来获取数据，而是从索引的跟结点开始进行搜索，根节点的槽中存放了指向子节点的指针，存储引擎根据这些指针向下层查找，通过比较节点页的值和要查找的值找到合适的指针进入下层子节点，这些指针定义了子节点页中值的上限和下限。最终存储引擎要么找到对应的值，要么对应的记录不存在。</p>
-<p><strong>叶子结点</strong>比较特别，它们的指针指向的是被索引的数据，而不是其他的结点页。同时所有的叶子结点到根节点的距离相同，所以 B-Tree 的查询效率非常的稳定。</p>
-<p>相较于二叉查找树，B-Tree 在比较次数上并不占优，但是把磁盘里数据加载到内存的时候，是以<strong>页</strong>为单位来加载的，节点与节点之间的数据是不连续的，所以不同的节点，有可能分布在不同的磁盘页中。B-Tree 的每一个节点可以存放多个元素，所以磁盘寻址加载次数会比较少。所以总体来说 B-Tree 还是比二叉查找树快。</p>
-<p>B-Tree 适用于全键值、键值范围或建前缀查找（只适用于最左前缀查找）。</p>
-<h2 id="逻辑角度"><a href="#逻辑角度" class="headerlink" title="逻辑角度"></a>逻辑角度</h2><ul>
-<li>主键索引</li>
-<li>普通索引（单列索引）</li>
-<li>复合索引（多列索引）</li>
-<li>唯一索引</li>
+<p>通过 <code>Get-ExecutionPolicy</code> 命令可查看当前配置的执行策略，通过管理员运行 PowerShell 并执行 <code>Set-ExecutionPolicy RemoteSigned</code> 可更改执行策略。</p>
+<h3 id="删除别名"><a href="#删除别名" class="headerlink" title="删除别名"></a>删除别名</h3><p>使用 <code>Remove-Item alias</code> 命令删除已设定的别名。</p>
+<p>如删除别名 ll ：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">PS</span> C:\Users\fuyongde&gt; <span class="built_in">Remove-Item</span> alias:\ll</span><br></pre></td></tr></table></figure>
+
+<h2 id="环境变量命令"><a href="#环境变量命令" class="headerlink" title="环境变量命令"></a>环境变量命令</h2><h3 id="切换-PowerShell-的-page-为-UTF-8-代码页"><a href="#切换-PowerShell-的-page-为-UTF-8-代码页" class="headerlink" title="切换 PowerShell 的 page 为 UTF-8 代码页"></a>切换 PowerShell 的 page 为 UTF-8 代码页</h3><p>在最新版本的 windows 操作系统中，powershell 默认的代码页已经是 UTF-8 字符集的代码页了。常见的代码页如下：</p>
+<ul>
+<li><p><code>65001</code>：UTF-8 代码页</p>
+</li>
+<li><p><code>950</code>：繁体中文</p>
+</li>
+<li><p><code>936</code>：简体中文默认的 GBK</p>
+</li>
+<li><p><code>437</code>：MS-DOS 美国英语</p>
+</li>
 </ul>
-]]></content>
-      <tags>
-        <tag>MySQL</tag>
-        <tag>索引</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>npm-手册</title>
-    <url>/2020/07/19/npm-%E6%89%8B%E5%86%8C/</url>
-    <content><![CDATA[<h2 id="配置-npmmirror-镜像"><a href="#配置-npmmirror-镜像" class="headerlink" title="配置 npmmirror 镜像"></a>配置 npmmirror 镜像</h2><ol>
-<li>备份旧镜像</li>
-</ol>
-<p>在替换 npmmirror 镜像之前，我们先查看一下原有的镜像</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">npm get registry</span><br></pre></td></tr></table></figure>
+<p>命令如下：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">chcp <span class="number">65001</span></span><br></pre></td></tr></table></figure>
 
-<p>结果为 <code>https://registry.npmjs.org/</code></p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yarn get registry</span><br></pre></td></tr></table></figure>
+<h2 id="Modules-管理"><a href="#Modules-管理" class="headerlink" title="Modules 管理"></a>Modules 管理</h2><h3 id="安装-Module"><a href="#安装-Module" class="headerlink" title="安装 Module"></a>安装 Module</h3><p>使用 <code>Install-Module</code> 命令来安装 Module，其支持的参数有很多，具体可以查看<a href="https://docs.microsoft.com/zh-cn/powershell/module/powershellget/install-module?view=powershell-7.2">官方文档</a>，这里我们只列举最常用的参数的使用方法：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 为当前用户安装 posh-git 模块</span></span><br><span class="line"><span class="built_in">Install-Module</span> <span class="literal">-Name</span> posh<span class="literal">-git</span> <span class="literal">-Scope</span> CurrentUser</span><br></pre></td></tr></table></figure>
 
-<p>结果为 <code>https://registry.yarnpkg.com</code></p>
-<ol start="2">
-<li>替换为 npmmirror 镜像</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">设置 npm 的源为 npmmirror</span></span><br><span class="line">npm config set registry https://registry.npmmirror.com</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">设置 yarn 的源为 npmmirror</span></span><br><span class="line">yarn config set registry https://registry.npmmirror.com</span><br></pre></td></tr></table></figure>
+<h3 id="查找-Module"><a href="#查找-Module" class="headerlink" title="查找 Module"></a>查找 Module</h3><p>使用 <code>Find-Module</code> 命令可以来查找 Module，其支持的参数有很多，具体可以查看<a href="https://docs.microsoft.com/zh-cn/powershell/module/powershellget/find-module?view=powershell-7.2">官方文档</a>，这里我们只列举最常用的参数的使用方法：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查找名称为 PowerShellGet 的 Module</span></span><br><span class="line"><span class="built_in">Find-Module</span> <span class="literal">-Name</span> PowerShellGet</span><br></pre></td></tr></table></figure>
 
-<h2 id="升级版本"><a href="#升级版本" class="headerlink" title="升级版本"></a>升级版本</h2><h3 id="查看-npm-版本"><a href="#查看-npm-版本" class="headerlink" title="查看 npm 版本"></a>查看 npm 版本</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">npm -v</span><br></pre></td></tr></table></figure>
+<h3 id="查看已经安装的-Modules"><a href="#查看已经安装的-Modules" class="headerlink" title="查看已经安装的 Modules"></a>查看已经安装的 Modules</h3><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查看已经安装的所有的 Modules</span></span><br><span class="line"><span class="built_in">Get-InstalledModule</span></span><br><span class="line"><span class="comment"># 查看已经安装的指定名称、版本的 Modules</span></span><br><span class="line"><span class="built_in">Get-InstalledModule</span> <span class="literal">-Name</span> <span class="string">&quot;AzureRM.Automation&quot;</span> <span class="literal">-MinimumVersion</span> <span class="number">1.0</span> <span class="literal">-MaximumVersion</span> <span class="number">2.0</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="升级到最新的-npm-版本"><a href="#升级到最新的-npm-版本" class="headerlink" title="升级到最新的 npm 版本"></a>升级到最新的 npm 版本</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">npm install -g npm</span><br></pre></td></tr></table></figure>
+<h3 id="卸载-Module"><a href="#卸载-Module" class="headerlink" title="卸载 Module"></a>卸载 Module</h3><p>使用 <code>Uninstall-Module</code> 命令可以来卸载 Module，其支持的参数有很多，具体可以查看<a href="https://docs.microsoft.com/zh-cn/powershell/module/powershellget/uninstall-module?view=powershell-7.2">官方文档</a>，这里我们只列举最常用的参数的使用方法：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 卸载指定名称的模块</span></span><br><span class="line"><span class="built_in">Uninstall-Module</span> <span class="literal">-Name</span> SpeculationControl</span><br><span class="line"><span class="comment"># 强制卸载指定名称的模块</span></span><br><span class="line"><span class="built_in">Uninstall-Module</span> <span class="literal">-Name</span> SpeculationControl <span class="literal">-Force</span></span><br><span class="line"><span class="comment"># 使用流水线的方式卸载，即先查找到某个模块并卸载</span></span><br><span class="line"><span class="built_in">Get-InstalledModule</span> <span class="literal">-Name</span> SpeculationControl | <span class="built_in">Uninstall-Module</span></span><br><span class="line"><span class="comment"># 卸载指定版本的模块</span></span><br><span class="line"><span class="built_in">Uninstall-Module</span> <span class="literal">-Name</span> <span class="string">&#x27;oh-my-posh&#x27;</span> <span class="literal">-RequiredVersion</span> <span class="string">&#x27;7.31.1&#x27;</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="安装指定版本的-npm"><a href="#安装指定版本的-npm" class="headerlink" title="安装指定版本的 npm"></a>安装指定版本的 npm</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">npm install -g npm@版本号</span><br></pre></td></tr></table></figure>
+<h2 id="美化"><a href="#美化" class="headerlink" title="美化"></a>美化</h2><p>PowerShell 原始的界面是非常丑的，我们可以通过安装一些 modules 来进行美化，网上有很多博客介绍如何美化 PowerShell，但是大部门没有介绍每个 module 的作用。</p>
+<h3 id="oh-my-posh"><a href="#oh-my-posh" class="headerlink" title="oh-my-posh"></a>oh-my-posh</h3><blockquote>
+<p>A prompt theme engine for any shell.</p>
+</blockquote>
+<p>从介绍中可以看出 oh-my-posh 是为任何 shell 提供的一套主题引擎，具体更多的文档可以查阅<a href="https://ohmyposh.dev/">官网</a>。</p>
+<h4 id="安装-oh-my-posh"><a href="#安装-oh-my-posh" class="headerlink" title="安装 oh-my-posh"></a>安装 oh-my-posh</h4><p>最新版本的 oh-my-posh 已经作为一个独立的应用来安装了，这里我们使用 winget 命令来安装 oh-my-posh ，安装命令如下：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">winget install JanDeDobbeleer.OhMyPosh <span class="literal">-s</span> winget</span><br></pre></td></tr></table></figure>
+
+<p>安装完成之后，需要将 oh-my-posh 添加到环境变量的 path 里面</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="variable">$env:Path</span> += <span class="string">&quot;;C:\Users\user\AppData\Local\Programs\oh-my-posh\bin&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="更新-oh-my-posh"><a href="#更新-oh-my-posh" class="headerlink" title="更新 oh-my-posh"></a>更新 oh-my-posh</h4><p>如果之前安装过 oh-my-posh 但是想要更新版本，其更新命令如下：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">winget upgrade JanDeDobbeleer.OhMyPosh <span class="literal">-s</span> winget</span><br></pre></td></tr></table></figure>
+
+<h4 id="启用-oh-my-posh"><a href="#启用-oh-my-posh" class="headerlink" title="启用 oh-my-posh"></a>启用 oh-my-posh</h4><p>安装 oh-my-posh 之后，并不会直接启用，跟上文创建别名的方法一样，在 Windows PowerShell profile 文件中启用即可。通过 <code>notepad $PROFILE</code> 命令，打开 Windows PowerShell profile 文件，在文件中添加如下内容：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 使用 oh-my-posh 来初始化 powershell</span></span><br><span class="line"><span class="built_in">oh</span><span class="literal">-my-posh</span> init pwsh | <span class="built_in">Invoke-Expression</span></span><br><span class="line"><span class="comment"># 指定使用的主题</span></span><br><span class="line"><span class="built_in">oh</span><span class="literal">-my-posh</span> init pwsh <span class="literal">--config</span> <span class="string">&quot;<span class="variable">$env:POSH_THEMES_PATH</span>\yyds.omp.json&quot;</span> | <span class="built_in">Invoke-Expression</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="部分主题乱码问题"><a href="#部分主题乱码问题" class="headerlink" title="部分主题乱码问题"></a>部分主题乱码问题</h4><p>由于一些 oh-my-posh 中用到了一些特殊的字符，需要对应的终端更换为支持这种特殊字符的字体，可以在<a href="https://www.nerdfonts.com/">nerdfonts 网站</a>网站下载自己喜欢的字体，个人推荐 <code>DejaVuSansMono Nerd Font</code> 这个字体。</p>
+<h3 id="posh-git"><a href="#posh-git" class="headerlink" title="posh-git"></a>posh-git</h3><p>posh-git 用于在 shell 上提示 git 的一些信息，其安装、更新、卸载过程跟其他的 PowerShell modules 一致。这里只列举安装命令：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">Install-Module</span> posh<span class="literal">-git</span> <span class="literal">-Scope</span> CurrentUser</span><br></pre></td></tr></table></figure>
+
+<h4 id="启用-posh-git"><a href="#启用-posh-git" class="headerlink" title="启用 posh-git"></a>启用 posh-git</h4><p>安装 posh-git 之后，并不会直接启用，跟上文创建别名的方法一样，在 Windows PowerShell profile 文件中启用即可。通过 <code>notepad $PROFILE</code> 命令，打开 Windows PowerShell profile 文件，在文件中添加如下内容：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 引入 oh-my-posh 模块</span></span><br><span class="line"><span class="built_in">Import-Module</span> posh<span class="literal">-git</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="PSReadLine"><a href="#PSReadLine" class="headerlink" title="PSReadLine"></a>PSReadLine</h3><p>PSReadLine 在 PowerShell 控制台中提供改进的命令行编辑体验。具体说明可参考其<a href="https://docs.microsoft.com/zh-cn/powershell/module/psreadline/about/about_psreadline?view=powershell-7.2">官方文档</a>。</p>
+<h4 id="安装-PSReadLine"><a href="#安装-PSReadLine" class="headerlink" title="安装 PSReadLine"></a>安装 PSReadLine</h4><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 需要注意的是：由于最新的 windows 版本自带了 PSReadLine，但是其版本较低，无法启用跟 oh-my-posh 配合的功能，故我们采用为当前用户强制安装新版本的方式</span></span><br><span class="line"><span class="built_in">Install-Module</span> <span class="literal">-Name</span> PSReadLine <span class="literal">-Scope</span> CurrentUser <span class="literal">-Force</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="启用-PSReadLine"><a href="#启用-PSReadLine" class="headerlink" title="启用 PSReadLine"></a>启用 PSReadLine</h4><p>安装 PSReadLine 之后，并不会直接启用，跟上文创建别名的方法一样，在 Windows PowerShell profile 文件中启用即可。通过 <code>notepad $PROFILE</code> 命令，打开 Windows PowerShell profile 文件，在文件中添加如下内容：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 引入 PSReadLine 模块</span></span><br><span class="line"><span class="built_in">Import-Module</span> PSReadLine</span><br><span class="line"><span class="comment"># 设置编辑模式为 Emacs</span></span><br><span class="line"><span class="built_in">Set-PSReadlineOption</span> <span class="literal">-EditMode</span> Emacs</span><br><span class="line"><span class="comment"># 开启预测 IntelliSense，其模式为历史命令，即历史敲过的命令都会进行提示</span></span><br><span class="line"><span class="built_in">Set-PSReadLineOption</span> <span class="literal">-PredictionSource</span> <span class="built_in">History</span></span><br><span class="line"><span class="comment"># 开启预测 IntelliSense 之后，使用快捷键快速选中命令</span></span><br><span class="line"><span class="built_in">Set-PSReadlineKeyHandler</span> <span class="literal">-Key</span> UpArrow <span class="literal">-Function</span> HistorySearchBackward</span><br><span class="line"><span class="built_in">Set-PSReadlineKeyHandler</span> <span class="literal">-Key</span> DownArrow <span class="literal">-Function</span> HistorySearchForward</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>手册</category>
       </categories>
       <tags>
         <tag>未完待续</tag>
-        <tag>npm</tag>
+        <tag>PowerShell</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>pip-手册</title>
+    <url>/2020/03/20/pip-%E6%89%8B%E5%86%8C/</url>
+    <content><![CDATA[<p>PyPI (Python Package Index) 是 <code>Python</code> 编程语言的软件存储库。开发者可以通过 PyPI 查找和安装由 <code>Python</code> 社区开发和共享的软件，也可以将自己开发的库上传至 PyPI 。</p>
+<p>由于国外访问比较慢，我们可以通过配置国内的镜像来进行加速访问。</p>
+<h2 id="配置-Aliyun-的镜像"><a href="#配置-Aliyun-的镜像" class="headerlink" title="配置 Aliyun 的镜像"></a>配置 Aliyun 的镜像</h2><h3 id="Linux-平台"><a href="#Linux-平台" class="headerlink" title="Linux 平台"></a>Linux 平台</h3><ol>
+<li>找到下列文件</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">~/.pip/pip.conf</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>在上述文件中添加或修改:</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[global]</span><br><span class="line">index-url = https://mirrors.aliyun.com/pypi/simple/</span><br><span class="line"></span><br><span class="line">[install]</span><br><span class="line">trusted-host=mirrors.aliyun.com</span><br></pre></td></tr></table></figure>
+
+<h3 id="Windows-平台"><a href="#Windows-平台" class="headerlink" title="Windows 平台"></a>Windows 平台</h3><p>在 <code>exporler</code> 地址栏输入 <code>%AppData%</code>，进入文件夹后，在 <code>pip</code> 文件夹下新建 <code>pip.ini</code> 文件并写入以下配置。</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="section">[global]</span></span><br><span class="line"><span class="attr">index-url</span> = http://mirrors.aliyun.com/pypi/simple</span><br><span class="line"><span class="attr">trusted-host</span> = mirrors.aliyun.com</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>pip</tag>
+        <tag>Python</tag>
       </tags>
   </entry>
   <entry>
@@ -1888,29 +2015,6 @@
       </tags>
   </entry>
   <entry>
-    <title>pip-手册</title>
-    <url>/2020/03/20/pip-%E6%89%8B%E5%86%8C/</url>
-    <content><![CDATA[<p>PyPI (Python Package Index) 是 <code>Python</code> 编程语言的软件存储库。开发者可以通过 PyPI 查找和安装由 <code>Python</code> 社区开发和共享的软件，也可以将自己开发的库上传至 PyPI 。</p>
-<p>由于国外访问比较慢，我们可以通过配置国内的镜像来进行加速访问。</p>
-<h2 id="配置-Aliyun-的镜像"><a href="#配置-Aliyun-的镜像" class="headerlink" title="配置 Aliyun 的镜像"></a>配置 Aliyun 的镜像</h2><h3 id="Linux-平台"><a href="#Linux-平台" class="headerlink" title="Linux 平台"></a>Linux 平台</h3><ol>
-<li>找到下列文件</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">~/.pip/pip.conf</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>在上述文件中添加或修改:</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[global]</span><br><span class="line">index-url = https://mirrors.aliyun.com/pypi/simple/</span><br><span class="line"></span><br><span class="line">[install]</span><br><span class="line">trusted-host=mirrors.aliyun.com</span><br></pre></td></tr></table></figure>
-
-<h3 id="Windows-平台"><a href="#Windows-平台" class="headerlink" title="Windows 平台"></a>Windows 平台</h3><p>在 <code>exporler</code> 地址栏输入 <code>%AppData%</code>，进入文件夹后，在 <code>pip</code> 文件夹下新建 <code>pip.ini</code> 文件并写入以下配置。</p>
-<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="section">[global]</span></span><br><span class="line"><span class="attr">index-url</span> = http://mirrors.aliyun.com/pypi/simple</span><br><span class="line"><span class="attr">trusted-host</span> = mirrors.aliyun.com</span><br></pre></td></tr></table></figure>
-]]></content>
-      <tags>
-        <tag>pip</tag>
-        <tag>Python</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>事务隔离级别</title>
     <url>/2019/11/14/transaction-isolation/</url>
     <content><![CDATA[<p>本文简单介绍一下数据库的事务隔离级别，所用数据库采用 <code>MySQL</code>，<code>MySQL</code> 提供了两种事务性的存储引擎 <code>InnoDB</code> 和 <code>NDB Cluster</code>，本文示例采用 <code>InnoDB</code> 存储引擎。</p>
@@ -1996,6 +2100,56 @@
       </tags>
   </entry>
   <entry>
+    <title>一个 Spring 依赖注入的问题浅析</title>
+    <url>/2021/08/08/%E4%B8%80%E4%B8%AA-Spring-%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5%E7%9A%84%E9%97%AE%E9%A2%98%E6%B5%85%E6%9E%90/</url>
+    <content><![CDATA[<p>使用 Spring 做项目的先思考一个问题，一个接口有在多个实现类的情况下，在成员变量的声明上如果没有指定注入那个别名的 Bean 的时候 Spring 会如何选择对应的 Bean 来进行注入？</p>
+<h2 id="问题模拟"><a href="#问题模拟" class="headerlink" title="问题模拟"></a>问题模拟</h2><p>先来简单说明一下示例代码。</p>
+<p>定义一个接口，用于打印当前注入的 Bean 的名称</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">TestService</span> &#123;</span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">printBeanName</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>针对上面定义的接口编写两个实现类，并分别定义其 beanName 为 testService 和 testService2</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Service(&quot;testService&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestServiceImpl</span> <span class="keyword">implements</span> <span class="title class_">TestService</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">printBeanName</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;testService&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Service(&quot;testService2&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestServiceImpl2</span> <span class="keyword">implements</span> <span class="title class_">TestService</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">printBeanName</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;testService2&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编写 Handler，并注入 TestService</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestHandler</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> TestService testService;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">test</span><span class="params">()</span> &#123;</span><br><span class="line">        testService.printBeanName();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编写单元测试，并观察输出</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@SpringBootTest</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">TestHandlerTest</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> TestHandler testHandler;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">test</span><span class="params">()</span> &#123;</span><br><span class="line">        testHandler.test();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>执行该单元测试，发现其打印的 beanName 为 testService。从输出结果可以看出在这种情况下最终注入的是 beanName 为 testService 的 bean，与组合交易子系统的现象一致。</p>
+<h2 id="源码分析与验证"><a href="#源码分析与验证" class="headerlink" title="源码分析与验证"></a>源码分析与验证</h2><p>根据 Spring 的文档，使用 Autowired 注解在自动装配时会通过 <code>org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor#postProcessProperties</code> 方法来对属性进行赋值操作。我们可以在该方法入口打上断点，并对断点指定条件，如下图：</p>
+<img src="/2021/08/08/%E4%B8%80%E4%B8%AA-Spring-%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5%E7%9A%84%E9%97%AE%E9%A2%98%E6%B5%85%E6%9E%90/debug.png" class="" title="debug">
+
+<p>由于方法深度较深，调试的过程这里不再赘述，我们直接分析影响我们最终结果的方法 <code>org.springframework.beans.factory.support.DefaultListableBeanFactory#determineAutowireCandidate</code>，其源码及分析如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> candidates 为我们要注入的属性对应的所有 Bean 组成的 map</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> descriptor 描述了我们要注入的属性的一些信息，包含了属性对应的类、方法、fieldName 等信息</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">protected</span> String <span class="title function_">determineAutowireCandidate</span><span class="params">(Map&lt;String, Object&gt; candidates, DependencyDescriptor descriptor)</span> &#123;</span><br><span class="line">    <span class="comment">// requiredType 为我们要注入的属性的类型，针对本的例子 requiredType 的值为 TestService 这个类</span></span><br><span class="line">    Class&lt;?&gt; requiredType = descriptor.getDependencyType();</span><br><span class="line">    <span class="comment">// 如果 candidates 中有 Bean 添加了 @Primary 注解，则会返回该 Bean 对应的 beanName</span></span><br><span class="line">    <span class="type">String</span> <span class="variable">primaryCandidate</span> <span class="operator">=</span> determinePrimaryCandidate(candidates, requiredType);</span><br><span class="line">    <span class="keyword">if</span> (primaryCandidate != <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> primaryCandidate;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 如果 candidates 中的 Bean 没有 @Primary 注解，但是添加了 @Priority 注解，会解析 Bean 的优先级，返回优先级最高的 Bean 对应的 beanName</span></span><br><span class="line">    <span class="type">String</span> <span class="variable">priorityCandidate</span> <span class="operator">=</span> determineHighestPriorityCandidate(candidates, requiredType);</span><br><span class="line">    <span class="keyword">if</span> (priorityCandidate != <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> priorityCandidate;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 降级逻辑</span></span><br><span class="line">    <span class="keyword">for</span> (Map.Entry&lt;String, Object&gt; entry : candidates.entrySet()) &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">candidateName</span> <span class="operator">=</span> entry.getKey();</span><br><span class="line">        <span class="type">Object</span> <span class="variable">beanInstance</span> <span class="operator">=</span> entry.getValue();</span><br><span class="line">        <span class="comment">// 此时的 this.resolvableDependencies 是不包含本例子中的 TestService 对应的任一 bean 的</span></span><br><span class="line">        <span class="comment">// descriptor.getDependencyName() 方法的处理中会返回要注入的属性所对应的 fieldName，本例子中的 fieldName 为 testService</span></span><br><span class="line">        <span class="comment">// 最终如果要注入属性名跟 candidates 的 Bean 的 beanName 相同，则会返回对应的 beanName</span></span><br><span class="line">        <span class="keyword">if</span> ((beanInstance != <span class="literal">null</span> &amp;&amp; <span class="built_in">this</span>.resolvableDependencies.containsValue(beanInstance)) ||</span><br><span class="line">                matchesBeanName(candidateName, descriptor.getDependencyName())) &#123;</span><br><span class="line">            <span class="keyword">return</span> candidateName;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>下面我们来验证一下源码中的我们未验证到的情况</p>
+<h3 id="使用-Primary-注解来标识主要的类"><a href="#使用-Primary-注解来标识主要的类" class="headerlink" title="使用 Primary 注解来标识主要的类"></a>使用 Primary 注解来标识主要的类</h3><p>将 beanName 为 testService2 的 Bean 加上 Primary 注解并运行单元测试，其打印的 beanName 为 testService2。</p>
+<h3 id="使用-Priority-来标识-Bean-的优先级"><a href="#使用-Priority-来标识-Bean-的优先级" class="headerlink" title="使用 Priority 来标识 Bean 的优先级"></a>使用 Priority 来标识 Bean 的优先级</h3><p>去掉上面操作所添加的 Primary 注解，来验证使用 Priority 时的情况。</p>
+<ul>
+<li>将 beanName 为 testService2 的 bean 加上 @Priority(2) 注解并运行单元测试，其打印的 beanName 为 testService2；</li>
+<li>将 beanName 为 testService 的 bean 加上 @Priority(1) 注解，将 beanName 为 testService2 的 bean 加上 @Priority(2) 注解并运行单元测试，其打印的 beanName 为 testService；</li>
+<li>将 beanName 为 testService 的 bean 加上 @Priority(3) 注解，将 beanName 为 testService2 的 bean 加上 @Priority(2) 注解并运行单元测试，其打印的 beanName 为 testService2。</li>
+</ul>
+<h3 id="修改-TestHandler-中的属性名"><a href="#修改-TestHandler-中的属性名" class="headerlink" title="修改 TestHandler 中的属性名"></a>修改 TestHandler 中的属性名</h3><p>去掉上面操作所添加的 Primary 和 Priority 注解，来验证根据属性名注入时的情况。</p>
+<ul>
+<li>将 TestHandler 中的属性名修改为 testServcie2 并运行并运行单元测试，其打印的 beanName 为 testService2；</li>
+<li>将 TestHandler 中的属性名修改为 testServcie3 并运行并运行单元测试，程序抛出 NoUniqueBeanDefinitionException 异常。</li>
+</ul>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>根据上面源码的分析与实践，同一类型存在多个 Bean 的情况下，在使用 Autowired 注解时 Spring 会采用以下装配顺序来选择要装配的 Bean</p>
+<ol>
+<li>使用了 Primary 注解的 Bean;</li>
+<li>查找使用了 Priority 注解的 Bean，并选择优先级最高的；</li>
+<li>要注入的属性的属性名称与 Bean 名称相同的；</li>
+</ol>
+<p>在我们平时写代码时，为了代码的可读性，建议使用 Qualifier 注解来明确指明要注入 Bean。</p>
+]]></content>
+      <tags>
+        <tag>Spring</tag>
+        <tag>源码</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>zsh 手册</title>
     <url>/2021/08/24/zsh-%E6%89%8B%E5%86%8C/</url>
     <content><![CDATA[<p>zsh 可能是目前最好用的终端。</p>
@@ -2049,56 +2203,6 @@
         <tag>shell</tag>
         <tag>bash</tag>
         <tag>zsh</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>一个 Spring 依赖注入的问题浅析</title>
-    <url>/2021/08/08/%E4%B8%80%E4%B8%AA-Spring-%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5%E7%9A%84%E9%97%AE%E9%A2%98%E6%B5%85%E6%9E%90/</url>
-    <content><![CDATA[<p>使用 Spring 做项目的先思考一个问题，一个接口有在多个实现类的情况下，在成员变量的声明上如果没有指定注入那个别名的 Bean 的时候 Spring 会如何选择对应的 Bean 来进行注入？</p>
-<h2 id="问题模拟"><a href="#问题模拟" class="headerlink" title="问题模拟"></a>问题模拟</h2><p>先来简单说明一下示例代码。</p>
-<p>定义一个接口，用于打印当前注入的 Bean 的名称</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">TestService</span> &#123;</span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">printBeanName</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>针对上面定义的接口编写两个实现类，并分别定义其 beanName 为 testService 和 testService2</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Service(&quot;testService&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestServiceImpl</span> <span class="keyword">implements</span> <span class="title class_">TestService</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">printBeanName</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;testService&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Service(&quot;testService2&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestServiceImpl2</span> <span class="keyword">implements</span> <span class="title class_">TestService</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">printBeanName</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;testService2&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>编写 Handler，并注入 TestService</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestHandler</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> TestService testService;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">test</span><span class="params">()</span> &#123;</span><br><span class="line">        testService.printBeanName();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>编写单元测试，并观察输出</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@SpringBootTest</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">TestHandlerTest</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> TestHandler testHandler;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">test</span><span class="params">()</span> &#123;</span><br><span class="line">        testHandler.test();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>执行该单元测试，发现其打印的 beanName 为 testService。从输出结果可以看出在这种情况下最终注入的是 beanName 为 testService 的 bean，与组合交易子系统的现象一致。</p>
-<h2 id="源码分析与验证"><a href="#源码分析与验证" class="headerlink" title="源码分析与验证"></a>源码分析与验证</h2><p>根据 Spring 的文档，使用 Autowired 注解在自动装配时会通过 <code>org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor#postProcessProperties</code> 方法来对属性进行赋值操作。我们可以在该方法入口打上断点，并对断点指定条件，如下图：</p>
-<img src="/2021/08/08/%E4%B8%80%E4%B8%AA-Spring-%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5%E7%9A%84%E9%97%AE%E9%A2%98%E6%B5%85%E6%9E%90/debug.png" class="" title="debug">
-
-<p>由于方法深度较深，调试的过程这里不再赘述，我们直接分析影响我们最终结果的方法 <code>org.springframework.beans.factory.support.DefaultListableBeanFactory#determineAutowireCandidate</code>，其源码及分析如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> candidates 为我们要注入的属性对应的所有 Bean 组成的 map</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> descriptor 描述了我们要注入的属性的一些信息，包含了属性对应的类、方法、fieldName 等信息</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">protected</span> String <span class="title function_">determineAutowireCandidate</span><span class="params">(Map&lt;String, Object&gt; candidates, DependencyDescriptor descriptor)</span> &#123;</span><br><span class="line">    <span class="comment">// requiredType 为我们要注入的属性的类型，针对本的例子 requiredType 的值为 TestService 这个类</span></span><br><span class="line">    Class&lt;?&gt; requiredType = descriptor.getDependencyType();</span><br><span class="line">    <span class="comment">// 如果 candidates 中有 Bean 添加了 @Primary 注解，则会返回该 Bean 对应的 beanName</span></span><br><span class="line">    <span class="type">String</span> <span class="variable">primaryCandidate</span> <span class="operator">=</span> determinePrimaryCandidate(candidates, requiredType);</span><br><span class="line">    <span class="keyword">if</span> (primaryCandidate != <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> primaryCandidate;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 如果 candidates 中的 Bean 没有 @Primary 注解，但是添加了 @Priority 注解，会解析 Bean 的优先级，返回优先级最高的 Bean 对应的 beanName</span></span><br><span class="line">    <span class="type">String</span> <span class="variable">priorityCandidate</span> <span class="operator">=</span> determineHighestPriorityCandidate(candidates, requiredType);</span><br><span class="line">    <span class="keyword">if</span> (priorityCandidate != <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> priorityCandidate;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 降级逻辑</span></span><br><span class="line">    <span class="keyword">for</span> (Map.Entry&lt;String, Object&gt; entry : candidates.entrySet()) &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">candidateName</span> <span class="operator">=</span> entry.getKey();</span><br><span class="line">        <span class="type">Object</span> <span class="variable">beanInstance</span> <span class="operator">=</span> entry.getValue();</span><br><span class="line">        <span class="comment">// 此时的 this.resolvableDependencies 是不包含本例子中的 TestService 对应的任一 bean 的</span></span><br><span class="line">        <span class="comment">// descriptor.getDependencyName() 方法的处理中会返回要注入的属性所对应的 fieldName，本例子中的 fieldName 为 testService</span></span><br><span class="line">        <span class="comment">// 最终如果要注入属性名跟 candidates 的 Bean 的 beanName 相同，则会返回对应的 beanName</span></span><br><span class="line">        <span class="keyword">if</span> ((beanInstance != <span class="literal">null</span> &amp;&amp; <span class="built_in">this</span>.resolvableDependencies.containsValue(beanInstance)) ||</span><br><span class="line">                matchesBeanName(candidateName, descriptor.getDependencyName())) &#123;</span><br><span class="line">            <span class="keyword">return</span> candidateName;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>下面我们来验证一下源码中的我们未验证到的情况</p>
-<h3 id="使用-Primary-注解来标识主要的类"><a href="#使用-Primary-注解来标识主要的类" class="headerlink" title="使用 Primary 注解来标识主要的类"></a>使用 Primary 注解来标识主要的类</h3><p>将 beanName 为 testService2 的 Bean 加上 Primary 注解并运行单元测试，其打印的 beanName 为 testService2。</p>
-<h3 id="使用-Priority-来标识-Bean-的优先级"><a href="#使用-Priority-来标识-Bean-的优先级" class="headerlink" title="使用 Priority 来标识 Bean 的优先级"></a>使用 Priority 来标识 Bean 的优先级</h3><p>去掉上面操作所添加的 Primary 注解，来验证使用 Priority 时的情况。</p>
-<ul>
-<li>将 beanName 为 testService2 的 bean 加上 @Priority(2) 注解并运行单元测试，其打印的 beanName 为 testService2；</li>
-<li>将 beanName 为 testService 的 bean 加上 @Priority(1) 注解，将 beanName 为 testService2 的 bean 加上 @Priority(2) 注解并运行单元测试，其打印的 beanName 为 testService；</li>
-<li>将 beanName 为 testService 的 bean 加上 @Priority(3) 注解，将 beanName 为 testService2 的 bean 加上 @Priority(2) 注解并运行单元测试，其打印的 beanName 为 testService2。</li>
-</ul>
-<h3 id="修改-TestHandler-中的属性名"><a href="#修改-TestHandler-中的属性名" class="headerlink" title="修改 TestHandler 中的属性名"></a>修改 TestHandler 中的属性名</h3><p>去掉上面操作所添加的 Primary 和 Priority 注解，来验证根据属性名注入时的情况。</p>
-<ul>
-<li>将 TestHandler 中的属性名修改为 testServcie2 并运行并运行单元测试，其打印的 beanName 为 testService2；</li>
-<li>将 TestHandler 中的属性名修改为 testServcie3 并运行并运行单元测试，程序抛出 NoUniqueBeanDefinitionException 异常。</li>
-</ul>
-<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>根据上面源码的分析与实践，同一类型存在多个 Bean 的情况下，在使用 Autowired 注解时 Spring 会采用以下装配顺序来选择要装配的 Bean</p>
-<ol>
-<li>使用了 Primary 注解的 Bean;</li>
-<li>查找使用了 Priority 注解的 Bean，并选择优先级最高的；</li>
-<li>要注入的属性的属性名称与 Bean 名称相同的；</li>
-</ol>
-<p>在我们平时写代码时，为了代码的可读性，建议使用 Qualifier 注解来明确指明要注入 Bean。</p>
-]]></content>
-      <tags>
-        <tag>Spring</tag>
-        <tag>源码</tag>
       </tags>
   </entry>
   <entry>
@@ -2158,7 +2262,7 @@
 </ul>
 <p>我们项目中使用了默认的平滑突发限流（SmoothBursty）算法，这里我们只针对该算法进行分析。</p>
 <h3 id="tryAcquire-方法"><a href="#tryAcquire-方法" class="headerlink" title="tryAcquire 方法"></a>tryAcquire 方法</h3><p>其源码</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">tryAcquire</span><span class="params">(<span class="type">int</span> permits, <span class="type">long</span> timeout, TimeUnit unit)</span> &#123;</span><br><span class="line">  <span class="type">long</span> <span class="variable">timeoutMicros</span> <span class="operator">=</span> max(unit.toMicros(timeout), <span class="number">0</span>);</span><br><span class="line">  checkPermits(permits);</span><br><span class="line">  <span class="type">long</span> microsToWait;</span><br><span class="line">  <span class="keyword">synchronized</span> (mutex()) &#123;</span><br><span class="line">    <span class="type">long</span> <span class="variable">nowMicros</span> <span class="operator">=</span> stopwatch.readMicros();</span><br><span class="line">    <span class="keyword">if</span> (!canAcquire(nowMicros, timeoutMicros)) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      microsToWait = reserveAndGetWaitLength(permits, nowMicros);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  stopwatch.sleepMicrosUninterruptibly(microsToWait);</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">tryAcquire</span><span class="params">(<span class="type">int</span> <span class="keyword">permits</span>, <span class="type">long</span> timeout, TimeUnit unit)</span> &#123;</span><br><span class="line">  <span class="type">long</span> <span class="variable">timeoutMicros</span> <span class="operator">=</span> max(unit.toMicros(timeout), <span class="number">0</span>);</span><br><span class="line">  checkPermits(<span class="keyword">permits</span>);</span><br><span class="line">  <span class="type">long</span> microsToWait;</span><br><span class="line">  <span class="keyword">synchronized</span> (mutex()) &#123;</span><br><span class="line">    <span class="type">long</span> <span class="variable">nowMicros</span> <span class="operator">=</span> stopwatch.readMicros();</span><br><span class="line">    <span class="keyword">if</span> (!canAcquire(nowMicros, timeoutMicros)) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      microsToWait = reserveAndGetWaitLength(<span class="keyword">permits</span>, nowMicros);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  stopwatch.sleepMicrosUninterruptibly(microsToWait);</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>可以观察到只有在 canAcquire 方法返回 false 的情况下，才会返回 false，通过阅读 canAcquire 方法可知该方法跟 SmoothBursty 中的成员变量 nextFreeTicketMicros 有关，该成员变量的释义如下：</p>
 <blockquote>
@@ -2185,110 +2289,6 @@
         <tag>源码</tag>
         <tag>Guava</tag>
         <tag>限流</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>PowerShell 手册</title>
-    <url>/2019/09/27/powershell-%E6%89%8B%E5%86%8C/</url>
-    <content><![CDATA[<p>记录一些常见的 <code>Powershell</code> 的使用问题</p>
-<h2 id="别名命令"><a href="#别名命令" class="headerlink" title="别名命令"></a>别名命令</h2><p>在使用 Linux 系统时，我喜欢使用 <code>ll</code> 命令来查看当前目录的文件，但是 Windows 系统的 Powershell 没有这个命令，所以每次用的时候就很不习惯。我们可以通过对命令设置别名来让 Powershell 支持我们的使用习惯。</p>
-<h3 id="查看别名"><a href="#查看别名" class="headerlink" title="查看别名"></a>查看别名</h3><p><code>Get-Alias</code> 或者 <code>gal</code> 命令来查看我们系统命令的别名，如下</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">PS</span> C:\Users\fuyongde&gt; <span class="built_in">get-alias</span></span><br><span class="line"></span><br><span class="line">CommandType     Name                         Version    Source</span><br><span class="line"><span class="literal">-----------</span>     <span class="literal">----</span>                         <span class="literal">-------</span>    <span class="literal">------</span></span><br><span class="line">Alias           % -&gt; <span class="built_in">ForEach-Object</span></span><br><span class="line">Alias           ? -&gt; <span class="built_in">Where-Object</span></span><br><span class="line">Alias           <span class="built_in">ac</span> -&gt; <span class="built_in">Add-Content</span></span><br><span class="line">Alias           <span class="built_in">cat</span> -&gt; <span class="built_in">Get-Content</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>查看某别名的原命令，如 <code>ls</code> 的原命令：<code>Get-Alias ls</code></li>
-<li>查看某原命令的别名，如 <code>Get-ChildItem</code> 的别名：<code>Get-Alias -Definition Get-ChildItem</code></li>
-</ul>
-<h3 id="临时创建或更改别名"><a href="#临时创建或更改别名" class="headerlink" title="临时创建或更改别名"></a>临时创建或更改别名</h3><p>使用 <code>Set-Alias</code> 命令来创建或更改别名，但是改命令只在当前的的 PowerShell Session 中生效。另外还有一个 <code>New-Alias</code> 命令用法类似。</p>
-<h4 id="创建不带参数的别名"><a href="#创建不带参数的别名" class="headerlink" title="创建不带参数的别名"></a>创建不带参数的别名</h4><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">PS</span> C:\Users\fuyongde&gt; <span class="built_in">Set-Alias</span> <span class="literal">-Name</span> ll <span class="literal">-Value</span> <span class="built_in">get-childitem</span></span><br><span class="line"><span class="comment"># 或者简单一些</span></span><br><span class="line"><span class="built_in">PS</span> C:\Users\fuyongde&gt; <span class="built_in">Set-Alias</span> ll <span class="built_in">get-childitem</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="创建带参数的别名"><a href="#创建带参数的别名" class="headerlink" title="创建带参数的别名"></a>创建带参数的别名</h4><p>如果命令带参数如想为 <code>Get-ChildItem -Name</code> 设定别名为 <code>ll</code> 则我们需要两步，第一步为这个带参数原命令设定一个中间 <code>function</code>，第二步为这个 <code>function</code> 指定别名</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">PS</span> C:\Users\fuyongde&gt; <span class="function"><span class="keyword">function</span> <span class="title">getlist</span></span> &#123;<span class="built_in">Get-ChildItem</span> <span class="literal">-Name</span>&#125;</span><br><span class="line"><span class="built_in">PS</span> C:\Users\fuyongde&gt; <span class="built_in">Set-Alias</span> ll getlist</span><br></pre></td></tr></table></figure>
-
-<h4 id="创建永久的别名"><a href="#创建永久的别名" class="headerlink" title="创建永久的别名"></a>创建永久的别名</h4><p>在 PowerShell 中直接使用 <code>Set-Alias</code> 或 <code>New-Alias</code> 命令创建的别名在关闭此 Session 后即会失效，防止此现象的方法是将此命令写入 Windows PowerShell profile 文件。</p>
-<p>查看此文件在计算机中的位置：</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">PS</span> C:\Users\fuyongde&gt; <span class="variable">$profile</span></span><br></pre></td></tr></table></figure>
-
-<p>结果如下：</p>
-<p><code>C:\Users\fuyongde\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1</code></p>
-<p>但如果安装了 <code>PowerShell6</code> 的话，则结果是：</p>
-<p><code>C:\Users\fuyongde\Documents\PowerShell\Microsoft.PowerShell_profile.ps1</code></p>
-<p>打开对应文件，并写入要预设的别名</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">Set-Alias</span> ll <span class="built_in">get-childitem</span></span><br></pre></td></tr></table></figure>
-
-<p>注意：该种方式有可能会遇到系统上禁止运行脚本的提示，这是因为 PowerShell 对安全做过充分考量，把脚本的执行分成了几个策略。以下是常用的执行策略：</p>
-<ul>
-<li><code>Restricted</code>：禁止运行任何脚本和配置文件，默认情况下就是该策略。</li>
-<li><code>AllSigned</code>：可以运行脚本，但要求所有脚本和配置文件由可信任的发布者签名，包括在本地计算机编写的脚本。</li>
-<li><code>RemoteSigned</code>：可以运行脚本，但要求从网络上下载的脚本和配置由可信任的发布者签名，不要求对已经运行和在本地计算机编写的脚本进行签名。</li>
-<li><code>Unrestricted</code>：可以运行未签名的脚本，这种策略也是最危险的。</li>
-</ul>
-<p>通过 <code>Get-ExecutionPolicy</code> 命令可查看当前配置的执行策略，通过管理员运行 PowerShell 并执行 <code>Set-ExecutionPolicy RemoteSigned</code> 可更改执行策略。</p>
-<h3 id="删除别名"><a href="#删除别名" class="headerlink" title="删除别名"></a>删除别名</h3><p>使用 <code>Remove-Item alias</code> 命令删除已设定的别名。</p>
-<p>如删除别名 ll ：</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">PS</span> C:\Users\fuyongde&gt; <span class="built_in">Remove-Item</span> alias:\ll</span><br></pre></td></tr></table></figure>
-
-<h2 id="环境变量命令"><a href="#环境变量命令" class="headerlink" title="环境变量命令"></a>环境变量命令</h2><h3 id="切换-PowerShell-的-page-为-UTF-8-代码页"><a href="#切换-PowerShell-的-page-为-UTF-8-代码页" class="headerlink" title="切换 PowerShell 的 page 为 UTF-8 代码页"></a>切换 PowerShell 的 page 为 UTF-8 代码页</h3><p>在最新版本的 windows 操作系统中，powershell 默认的代码页已经是 UTF-8 字符集的代码页了。常见的代码页如下：</p>
-<ul>
-<li><p><code>65001</code>：UTF-8 代码页</p>
-</li>
-<li><p><code>950</code>：繁体中文</p>
-</li>
-<li><p><code>936</code>：简体中文默认的 GBK</p>
-</li>
-<li><p><code>437</code>：MS-DOS 美国英语</p>
-</li>
-</ul>
-<p>命令如下：</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">chcp <span class="number">65001</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="Modules-管理"><a href="#Modules-管理" class="headerlink" title="Modules 管理"></a>Modules 管理</h2><h3 id="安装-Module"><a href="#安装-Module" class="headerlink" title="安装 Module"></a>安装 Module</h3><p>使用 <code>Install-Module</code> 命令来安装 Module，其支持的参数有很多，具体可以查看<a href="https://docs.microsoft.com/zh-cn/powershell/module/powershellget/install-module?view=powershell-7.2">官方文档</a>，这里我们只列举最常用的参数的使用方法：</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 为当前用户安装 posh-git 模块</span></span><br><span class="line"><span class="built_in">Install-Module</span> <span class="literal">-Name</span> posh<span class="literal">-git</span> <span class="literal">-Scope</span> CurrentUser</span><br></pre></td></tr></table></figure>
-
-<h3 id="查找-Module"><a href="#查找-Module" class="headerlink" title="查找 Module"></a>查找 Module</h3><p>使用 <code>Find-Module</code> 命令可以来查找 Module，其支持的参数有很多，具体可以查看<a href="https://docs.microsoft.com/zh-cn/powershell/module/powershellget/find-module?view=powershell-7.2">官方文档</a>，这里我们只列举最常用的参数的使用方法：</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查找名称为 PowerShellGet 的 Module</span></span><br><span class="line"><span class="built_in">Find-Module</span> <span class="literal">-Name</span> PowerShellGet</span><br></pre></td></tr></table></figure>
-
-<h3 id="查看已经安装的-Modules"><a href="#查看已经安装的-Modules" class="headerlink" title="查看已经安装的 Modules"></a>查看已经安装的 Modules</h3><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查看已经安装的所有的 Modules</span></span><br><span class="line"><span class="built_in">Get-InstalledModule</span></span><br><span class="line"><span class="comment"># 查看已经安装的指定名称、版本的 Modules</span></span><br><span class="line"><span class="built_in">Get-InstalledModule</span> <span class="literal">-Name</span> <span class="string">&quot;AzureRM.Automation&quot;</span> <span class="literal">-MinimumVersion</span> <span class="number">1.0</span> <span class="literal">-MaximumVersion</span> <span class="number">2.0</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="卸载-Module"><a href="#卸载-Module" class="headerlink" title="卸载 Module"></a>卸载 Module</h3><p>使用 <code>Uninstall-Module</code> 命令可以来卸载 Module，其支持的参数有很多，具体可以查看<a href="https://docs.microsoft.com/zh-cn/powershell/module/powershellget/uninstall-module?view=powershell-7.2">官方文档</a>，这里我们只列举最常用的参数的使用方法：</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 卸载指定名称的模块</span></span><br><span class="line"><span class="built_in">Uninstall-Module</span> <span class="literal">-Name</span> SpeculationControl</span><br><span class="line"><span class="comment"># 强制卸载指定名称的模块</span></span><br><span class="line"><span class="built_in">Uninstall-Module</span> <span class="literal">-Name</span> SpeculationControl <span class="literal">-Force</span></span><br><span class="line"><span class="comment"># 使用流水线的方式卸载，即先查找到某个模块并卸载</span></span><br><span class="line"><span class="built_in">Get-InstalledModule</span> <span class="literal">-Name</span> SpeculationControl | <span class="built_in">Uninstall-Module</span></span><br><span class="line"><span class="comment"># 卸载指定版本的模块</span></span><br><span class="line"><span class="built_in">Uninstall-Module</span> <span class="literal">-Name</span> <span class="string">&#x27;oh-my-posh&#x27;</span> <span class="literal">-RequiredVersion</span> <span class="string">&#x27;7.31.1&#x27;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="美化"><a href="#美化" class="headerlink" title="美化"></a>美化</h2><p>PowerShell 原始的界面是非常丑的，我们可以通过安装一些 modules 来进行美化，网上有很多博客介绍如何美化 PowerShell，但是大部门没有介绍每个 module 的作用。</p>
-<h3 id="oh-my-posh"><a href="#oh-my-posh" class="headerlink" title="oh-my-posh"></a>oh-my-posh</h3><blockquote>
-<p>A prompt theme engine for any shell.</p>
-</blockquote>
-<p>从介绍中可以看出 oh-my-posh 是为任何 shell 提供的一套主题引擎，具体更多的文档可以查阅<a href="https://ohmyposh.dev/">官网</a>。</p>
-<h4 id="安装-oh-my-posh"><a href="#安装-oh-my-posh" class="headerlink" title="安装 oh-my-posh"></a>安装 oh-my-posh</h4><p>最新版本的 oh-my-posh 已经作为一个独立的应用来安装了，这里我们使用 winget 命令来安装 oh-my-posh ，安装命令如下：</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">winget install JanDeDobbeleer.OhMyPosh <span class="literal">-s</span> winget</span><br></pre></td></tr></table></figure>
-
-<p>安装完成之后，需要将 oh-my-posh 添加到环境变量的 path 里面</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="variable">$env:Path</span> += <span class="string">&quot;;C:\Users\user\AppData\Local\Programs\oh-my-posh\bin&quot;</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="更新-oh-my-posh"><a href="#更新-oh-my-posh" class="headerlink" title="更新 oh-my-posh"></a>更新 oh-my-posh</h4><p>如果之前安装过 oh-my-posh 但是想要更新版本，其更新命令如下：</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">winget upgrade JanDeDobbeleer.OhMyPosh <span class="literal">-s</span> winget</span><br></pre></td></tr></table></figure>
-
-<h4 id="启用-oh-my-posh"><a href="#启用-oh-my-posh" class="headerlink" title="启用 oh-my-posh"></a>启用 oh-my-posh</h4><p>安装 oh-my-posh 之后，并不会直接启用，跟上文创建别名的方法一样，在 Windows PowerShell profile 文件中启用即可。通过 <code>notepad $PROFILE</code> 命令，打开 Windows PowerShell profile 文件，在文件中添加如下内容：</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 使用 oh-my-posh 来初始化 powershell</span></span><br><span class="line"><span class="built_in">oh</span><span class="literal">-my-posh</span> init pwsh | <span class="built_in">Invoke-Expression</span></span><br><span class="line"><span class="comment"># 指定使用的主题</span></span><br><span class="line"><span class="built_in">oh</span><span class="literal">-my-posh</span> init pwsh <span class="literal">--config</span> <span class="string">&quot;<span class="variable">$env:POSH_THEMES_PATH</span>\yyds.omp.json&quot;</span> | <span class="built_in">Invoke-Expression</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="部分主题乱码问题"><a href="#部分主题乱码问题" class="headerlink" title="部分主题乱码问题"></a>部分主题乱码问题</h4><p>由于一些 oh-my-posh 中用到了一些特殊的字符，需要对应的终端更换为支持这种特殊字符的字体，可以在<a href="https://www.nerdfonts.com/">nerdfonts 网站</a>网站下载自己喜欢的字体，个人推荐 <code>DejaVuSansMono Nerd Font</code> 这个字体。</p>
-<h3 id="posh-git"><a href="#posh-git" class="headerlink" title="posh-git"></a>posh-git</h3><p>posh-git 用于在 shell 上提示 git 的一些信息，其安装、更新、卸载过程跟其他的 PowerShell modules 一致。这里只列举安装命令：</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">Install-Module</span> posh<span class="literal">-git</span> <span class="literal">-Scope</span> CurrentUser</span><br></pre></td></tr></table></figure>
-
-<h4 id="启用-posh-git"><a href="#启用-posh-git" class="headerlink" title="启用 posh-git"></a>启用 posh-git</h4><p>安装 posh-git 之后，并不会直接启用，跟上文创建别名的方法一样，在 Windows PowerShell profile 文件中启用即可。通过 <code>notepad $PROFILE</code> 命令，打开 Windows PowerShell profile 文件，在文件中添加如下内容：</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 引入 oh-my-posh 模块</span></span><br><span class="line"><span class="built_in">Import-Module</span> posh<span class="literal">-git</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="PSReadLine"><a href="#PSReadLine" class="headerlink" title="PSReadLine"></a>PSReadLine</h3><p>PSReadLine 在 PowerShell 控制台中提供改进的命令行编辑体验。具体说明可参考其<a href="https://docs.microsoft.com/zh-cn/powershell/module/psreadline/about/about_psreadline?view=powershell-7.2">官方文档</a>。</p>
-<h4 id="安装-PSReadLine"><a href="#安装-PSReadLine" class="headerlink" title="安装 PSReadLine"></a>安装 PSReadLine</h4><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 需要注意的是：由于最新的 windows 版本自带了 PSReadLine，但是其版本较低，无法启用跟 oh-my-posh 配合的功能，故我们采用为当前用户强制安装新版本的方式</span></span><br><span class="line"><span class="built_in">Install-Module</span> <span class="literal">-Name</span> PSReadLine <span class="literal">-Scope</span> CurrentUser <span class="literal">-Force</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="启用-PSReadLine"><a href="#启用-PSReadLine" class="headerlink" title="启用 PSReadLine"></a>启用 PSReadLine</h4><p>安装 PSReadLine 之后，并不会直接启用，跟上文创建别名的方法一样，在 Windows PowerShell profile 文件中启用即可。通过 <code>notepad $PROFILE</code> 命令，打开 Windows PowerShell profile 文件，在文件中添加如下内容：</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 引入 PSReadLine 模块</span></span><br><span class="line"><span class="built_in">Import-Module</span> PSReadLine</span><br><span class="line"><span class="comment"># 设置编辑模式为 Emacs</span></span><br><span class="line"><span class="built_in">Set-PSReadlineOption</span> <span class="literal">-EditMode</span> Emacs</span><br><span class="line"><span class="comment"># 开启预测 IntelliSense，其模式为历史命令，即历史敲过的命令都会进行提示</span></span><br><span class="line"><span class="built_in">Set-PSReadLineOption</span> <span class="literal">-PredictionSource</span> <span class="built_in">History</span></span><br><span class="line"><span class="comment"># 开启预测 IntelliSense 之后，使用快捷键快速选中命令</span></span><br><span class="line"><span class="built_in">Set-PSReadlineKeyHandler</span> <span class="literal">-Key</span> UpArrow <span class="literal">-Function</span> HistorySearchBackward</span><br><span class="line"><span class="built_in">Set-PSReadlineKeyHandler</span> <span class="literal">-Key</span> DownArrow <span class="literal">-Function</span> HistorySearchForward</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>手册</category>
-      </categories>
-      <tags>
-        <tag>未完待续</tag>
-        <tag>PowerShell</tag>
       </tags>
   </entry>
 </search>
