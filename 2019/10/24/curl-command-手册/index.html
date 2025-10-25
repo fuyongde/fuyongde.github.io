@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"fuyongde.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":"auto","version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="curl 是十分常用的命令，通常我们用这个命令来请求 Web 服务器。一些常见的构造 HTTP 请求的客户端（如 Postman）关于项目协作的功能都是商业化版本才有的，团队开发过程中通过维护接口的 curl 命令脚本可以低成本的代替一些商业化软件的功能。 下面介绍一下 curl 命令的常见用法。 基础用法请求一个 URL1curl http:&#x2F;&#x2F;www.baidu.com&#x2F;  -X使用 -X 参">
+<meta property="og:type" content="article">
+<meta property="og:title" content="curl-command 手册">
+<meta property="og:url" content="https://fuyongde.github.io/2019/10/24/curl-command-%E6%89%8B%E5%86%8C/index.html">
+<meta property="og:site_name" content="傅永德 | 个人博客">
+<meta property="og:description" content="curl 是十分常用的命令，通常我们用这个命令来请求 Web 服务器。一些常见的构造 HTTP 请求的客户端（如 Postman）关于项目协作的功能都是商业化版本才有的，团队开发过程中通过维护接口的 curl 命令脚本可以低成本的代替一些商业化软件的功能。 下面介绍一下 curl 命令的常见用法。 基础用法请求一个 URL1curl http:&#x2F;&#x2F;www.baidu.com&#x2F;  -X使用 -X 参">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-10-24T02:40:15.000Z">
+<meta property="article:modified_time" content="2025-10-25T03:46:33.034Z">
+<meta property="article:author" content="傅永德">
+<meta property="article:tag" content="curl">
+<meta property="article:tag" content="command">
+<meta property="article:tag" content="未完待续">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://fuyongde.github.io/2019/10/24/curl-command-%E6%89%8B%E5%86%8C/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://fuyongde.github.io/2019/10/24/curl-command-%E6%89%8B%E5%86%8C/","path":"2019/10/24/curl-command-手册/","title":"curl-command 手册"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>curl-command 手册 | 傅永德 | 个人博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">傅永德 | 个人博客</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E7%94%A8%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">基础用法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%B7%E6%B1%82%E4%B8%80%E4%B8%AA-URL"><span class="nav-number">1.1.</span> <span class="nav-text">请求一个 URL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#X"><span class="nav-number">1.2.</span> <span class="nav-text">-X</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#H-%E2%80%93header"><span class="nav-number">1.3.</span> <span class="nav-text">-H, –header</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#d-%E2%80%93data"><span class="nav-number">1.4.</span> <span class="nav-text">-d, –data</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#F-%E2%80%93form"><span class="nav-number">1.5.</span> <span class="nav-text">-F, –form</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E9%98%B6%E7%94%A8%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">进阶用法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#i-I"><span class="nav-number">2.1.</span> <span class="nav-text">-i, -I</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#e-%E2%80%93referer"><span class="nav-number">2.2.</span> <span class="nav-text">-e, –referer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#A-%E2%80%93user-agent"><span class="nav-number">2.3.</span> <span class="nav-text">-A, –user-agent</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cookie"><span class="nav-number">2.4.</span> <span class="nav-text">cookie</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%98%BE%E7%A4%BA%E9%80%9A%E4%BF%A1%E8%BF%87%E7%A8%8B"><span class="nav-number">2.5.</span> <span class="nav-text">显示通信过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%9D%E5%AD%98%E5%93%8D%E5%BA%94"><span class="nav-number">2.6.</span> <span class="nav-text">保存响应</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E4%BB%A3%E7%90%86"><span class="nav-number">2.7.</span> <span class="nav-text">使用代理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#L-%E2%80%93location"><span class="nav-number">2.8.</span> <span class="nav-text">-L, –location</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%80%93limit-rate"><span class="nav-number">2.9.</span> <span class="nav-text">–limit-rate</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="傅永德"
+      src="/images/header.jpg">
+  <p class="site-author-name" itemprop="name">傅永德</p>
+  <div class="site-description" itemprop="description">苟利国家生死以，岂因祸福避趋之</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/fuyongde" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;fuyongde" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:fuyongde@foxmail.com" title="E-Mail → mailto:fuyongde@foxmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          友链
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://www.xiaokunli.com/" title="https:&#x2F;&#x2F;www.xiaokunli.com&#x2F;" rel="noopener" target="_blank">xiaokun</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://konekos.github.io/" title="https:&#x2F;&#x2F;konekos.github.io&#x2F;" rel="noopener" target="_blank">Tree</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://fuyongde.github.io/2019/10/24/curl-command-%E6%89%8B%E5%86%8C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/header.jpg">
+      <meta itemprop="name" content="傅永德">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="傅永德 | 个人博客">
+      <meta itemprop="description" content="苟利国家生死以，岂因祸福避趋之">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="curl-command 手册 | 傅永德 | 个人博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          curl-command 手册
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-10-24 10:40:15" itemprop="dateCreated datePublished" datetime="2019-10-24T10:40:15+08:00">2019-10-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-10-25 11:46:33" itemprop="dateModified" datetime="2025-10-25T11:46:33+08:00">2025-10-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%89%8B%E5%86%8C/" itemprop="url" rel="index"><span itemprop="name">手册</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>curl 是十分常用的命令，通常我们用这个命令来请求 Web 服务器。一些常见的构造 HTTP 请求的客户端（如 Postman）关于项目协作的功能都是商业化版本才有的，团队开发过程中通过维护接口的 curl 命令脚本可以低成本的代替一些商业化软件的功能。</p>
+<p>下面介绍一下 curl 命令的常见用法。</p>
+<h2 id="基础用法"><a href="#基础用法" class="headerlink" title="基础用法"></a>基础用法</h2><h3 id="请求一个-URL"><a href="#请求一个-URL" class="headerlink" title="请求一个 URL"></a>请求一个 URL</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl http://www.baidu.com/</span><br></pre></td></tr></table></figure>
+
+<h3 id="X"><a href="#X" class="headerlink" title="-X"></a>-X</h3><p>使用 -X 参数可以指定 HTTP Method</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -X POST http://www.baidu.com/</span><br></pre></td></tr></table></figure>
+
+<h3 id="H-–header"><a href="#H-–header" class="headerlink" title="-H, –header"></a>-H, –header</h3><p>使用 -H 或者 –header 参数可以添加 HTTP 的请求头</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -H &quot;Content-Type:application/json&quot; http://www.baidu.com/</span><br></pre></td></tr></table></figure>
+
+<h3 id="d-–data"><a href="#d-–data" class="headerlink" title="-d, –data"></a>-d, –data</h3><p>使用 -d 或 –data 可以发送 HTTP 的请求参数，可以是 form 表单，也可以是二进制的 request body</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">发送 form 表单</span></span><br><span class="line">curl -X POST -d &quot;name=jasonfu&amp;age=20&amp;birthday=1990/06/01&quot; &quot;http://localhost:8080/http/post?type=form&quot;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">也可以使用多个 -d 参数</span></span><br><span class="line">curl -X POST -d &quot;name=jasonfu&quot; -d &quot;age=20&quot; -d &quot;birthday=1990/06/01&quot; &quot;http://localhost:8080/http/post?type=form&quot;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">## 发送 request body</span></span></span><br><span class="line">curl -X POST -H &quot;Content-Type:application/json&quot; -d &quot;&#123;\&quot;name\&quot;:\&quot;jasonfu\&quot;,\&quot;age\&quot;:19,\&quot;birthday\&quot;:12345678911&#125;&quot; &quot;http://localhost:8080/http/post?type=body&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="F-–form"><a href="#F-–form" class="headerlink" title="-F, –form"></a>-F, –form</h3><p>使用 -F 或 –form 参数可以上传文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">## 上传文件</span></span></span><br><span class="line">curl -F &quot;file=@alias.bat&quot; -X POST &quot;http://localhost:8080/http/post?type=upload&quot;</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment">## 上传文件 带参数</span></span></span><br><span class="line">curl --form &quot;file=@alias.bat&quot; --form &quot;id=1&quot; -X POST &quot;http://localhost:8080/http/post?type=upload&quot;</span><br></pre></td></tr></table></figure>
+
+<h2 id="进阶用法"><a href="#进阶用法" class="headerlink" title="进阶用法"></a>进阶用法</h2><h3 id="i-I"><a href="#i-I" class="headerlink" title="-i, -I"></a>-i, -I</h3><p>使用 -i 参数可以输出 HTTP 的响应头</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -i http://www.baidu.com/</span><br></pre></td></tr></table></figure>
+
+<p>使用 -I 参数只输出 HTTP 的响应头</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -I http://www.baidu.com/</span><br></pre></td></tr></table></figure>
+
+<h3 id="e-–referer"><a href="#e-–referer" class="headerlink" title="-e, –referer"></a>-e, –referer</h3><p>使用 -e 或者 –referer 参数可以在 HTTP 请求头中添加 referer 字段，标识从哪里跳转过来的</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl --referer http://www.baidu.com/ http://www.qq.com/</span><br></pre></td></tr></table></figure>
+
+<h3 id="A-–user-agent"><a href="#A-–user-agent" class="headerlink" title="-A, –user-agent"></a>-A, –user-agent</h3><p>使用 -A 或者 –user-agent 参数可以指定 HTTP 请求头中的 User-Agent 字段</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl --user-agent curl-client http://www.baidu.com/</span><br></pre></td></tr></table></figure>
+
+<h3 id="cookie"><a href="#cookie" class="headerlink" title="cookie"></a>cookie</h3><p>使用 -b 或者 –cookie 可以发送 cookie 给 Web 服务器。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl --cookie &quot;user=fuyongde&quot; http://www.baidu.com/</span><br></pre></td></tr></table></figure>
+
+<p>使用 -c 参数可以保存服务端返回的 cookie 到指定的文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -c baidu-cookie.txt http://www.baidu.com/</span><br></pre></td></tr></table></figure>
+
+<h3 id="显示通信过程"><a href="#显示通信过程" class="headerlink" title="显示通信过程"></a>显示通信过程</h3><p>使用 -v 或者 –verbose 参数可以展示完整的 HTTP 通信过程</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -v http://www.baidu.com/</span><br></pre></td></tr></table></figure>
+
+<p>使用 –trace 或者 –trace-ascii 参数可以展示更详细的通信过程</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl --trace trace.txt http://www.baidu.com/</span><br></pre></td></tr></table></figure>
+
+<h3 id="保存响应"><a href="#保存响应" class="headerlink" title="保存响应"></a>保存响应</h3><p>使用 -o 或者 -O 参数可以将 http 响应保存为文件，区别在于 -o 可以指定文件名，-O 则是使用 URL 中最后一段 path 作为文件名来进行保存，其下载文件的效果等同于 <code>wget</code> 命令。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">将 http://www.baidu.com/ 响应保存至文件 baidu.html 中</span></span><br><span class="line">curl -o baidu.html http://www.baidu.com/</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">将 http://localhost:8080/ping 响应保存至文件 ping 中</span></span><br><span class="line">curl -O http://localhost:8080/ping</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用代理"><a href="#使用代理" class="headerlink" title="使用代理"></a>使用代理</h3><p>一些 Web 服务器是仅支持某些特定的 ip 来访问的，这种情况下，我们就需要使用代理来发送我们的 HTTP 请求，使用 -x 参数可以指定代理服务器来发送我们的请求。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">使用 socks5 协议的代理服务器来发送请求</span></span><br><span class="line">curl -x socks5://username:password@proxyhost:8080 http://www.baidu.com/</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">默认情况下使用 http 协议的代理服务器来发送请求</span></span><br><span class="line">curl -x username:password@proxyhost:8080 http://www.baidu.com/</span><br></pre></td></tr></table></figure>
+
+<h3 id="L-–location"><a href="#L-–location" class="headerlink" title="-L, –location"></a>-L, –location</h3><p>对于一些 HTTP 响应码为 302 的情况，可以使用 -L 或者 –location 参数来实现自动跳转的效果</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -L -i http://localhost:8080/http/redirect</span><br></pre></td></tr></table></figure>
+
+<p>其输出如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 302</span><br><span class="line">Location: http://localhost:8080/http/get/jasonfu</span><br><span class="line">Content-Length: 0</span><br><span class="line">Date: Tue, 24 Aug 2021 10:22:10 GMT</span><br><span class="line"></span><br><span class="line">HTTP/1.1 200</span><br><span class="line">Content-Type: application/json</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line">Date: Tue, 24 Aug 2021 10:22:10 GMT</span><br><span class="line"></span><br><span class="line">&#123;&quot;name&quot;:&quot;jasonfu&quot;,&quot;age&quot;:18,&quot;birthday&quot;:&quot;2021-08-24T10:22:10.713+00:00&quot;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到已经实现了自动跳转的效果</p>
+<h3 id="–limit-rate"><a href="#–limit-rate" class="headerlink" title="–limit-rate"></a>–limit-rate</h3><p>使用 –limit-rate 参数可以限制访问 HTTP 请求和响应的带宽。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">将带宽限制为每秒 1k 字节</span></span><br><span class="line">curl --limit-rate 1k http://www.baidu.com/</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="傅永德 微信">
+        <span>微信</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/curl/" rel="tag"><i class="fa fa-tag"></i> curl</a>
+              <a href="/tags/command/" rel="tag"><i class="fa fa-tag"></i> command</a>
+              <a href="/tags/%E6%9C%AA%E5%AE%8C%E5%BE%85%E7%BB%AD/" rel="tag"><i class="fa fa-tag"></i> 未完待续</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/10/11/spring-cloud-alibaba-introduction/" rel="prev" title="Spring Cloud Alibaba Introduction">
+                  <i class="fa fa-angle-left"></i> Spring Cloud Alibaba Introduction
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/11/10/jvm-%E6%89%8B%E5%86%8C/" rel="next" title="JVM 手册">
+                  JVM 手册 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2018 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">傅永德</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/fuyongde" class="github-corner" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

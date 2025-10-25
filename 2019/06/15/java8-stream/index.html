@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"fuyongde.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":"auto","version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="A sequence of elements supporting sequential and parallel aggregate operations.  从 Stream 的定义可以看出  Stream 是一组元素的集合 Stream 支持顺序和并行地对元素进行操作  How it work先看示例： 12345678public void method1() &#123;    Lis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java8 Stream">
+<meta property="og:url" content="https://fuyongde.github.io/2019/06/15/java8-stream/index.html">
+<meta property="og:site_name" content="傅永德 | 个人博客">
+<meta property="og:description" content="A sequence of elements supporting sequential and parallel aggregate operations.  从 Stream 的定义可以看出  Stream 是一组元素的集合 Stream 支持顺序和并行地对元素进行操作  How it work先看示例： 12345678public void method1() &#123;    Lis">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-06-15T09:23:29.000Z">
+<meta property="article:modified_time" content="2025-10-25T03:37:02.856Z">
+<meta property="article:author" content="傅永德">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="Java8">
+<meta property="article:tag" content="Stream">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://fuyongde.github.io/2019/06/15/java8-stream/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://fuyongde.github.io/2019/06/15/java8-stream/","path":"2019/06/15/java8-stream/","title":"Java8 Stream"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Java8 Stream | 傅永德 | 个人博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">傅永德 | 个人博客</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#How-it-work"><span class="nav-number">1.</span> <span class="nav-text">How it work</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.1.</span> <span class="nav-text">操作类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%AD%E9%97%B4%E6%93%8D%E4%BD%9C"><span class="nav-number">1.1.1.</span> <span class="nav-text">中间操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E6%9D%9F%E6%93%8D%E4%BD%9C"><span class="nav-number">1.1.2.</span> <span class="nav-text">结束操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%89%E4%BB%80%E4%B9%88%E4%BC%98%E7%82%B9"><span class="nav-number">1.2.</span> <span class="nav-text">有什么优点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%83%E7%B4%A0%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F"><span class="nav-number">1.3.</span> <span class="nav-text">元素执行顺序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F%E5%A6%82%E6%AD%A4%E9%87%8D%E8%A6%81"><span class="nav-number">1.3.1.</span> <span class="nav-text">为什么执行顺序如此重要</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BB%B6%E6%97%B6%E6%80%A7"><span class="nav-number">1.4.</span> <span class="nav-text">延时性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AB%98%E9%98%B6%E6%93%8D%E4%BD%9C"><span class="nav-number">1.5.</span> <span class="nav-text">高阶操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9F%AD%E8%B7%AF%E6%93%8D%E4%BD%9C"><span class="nav-number">1.5.1.</span> <span class="nav-text">短路操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#collect"><span class="nav-number">1.5.2.</span> <span class="nav-text">collect</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#flatMap"><span class="nav-number">1.5.3.</span> <span class="nav-text">flatMap</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#reduce"><span class="nav-number">1.5.4.</span> <span class="nav-text">reduce</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B9%B6%E8%A1%8C%E6%B5%81"><span class="nav-number">1.6.</span> <span class="nav-text">并行流</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="傅永德"
+      src="/images/header.jpg">
+  <p class="site-author-name" itemprop="name">傅永德</p>
+  <div class="site-description" itemprop="description">苟利国家生死以，岂因祸福避趋之</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/fuyongde" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;fuyongde" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:fuyongde@foxmail.com" title="E-Mail → mailto:fuyongde@foxmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          友链
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://www.xiaokunli.com/" title="https:&#x2F;&#x2F;www.xiaokunli.com&#x2F;" rel="noopener" target="_blank">xiaokun</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://konekos.github.io/" title="https:&#x2F;&#x2F;konekos.github.io&#x2F;" rel="noopener" target="_blank">Tree</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://fuyongde.github.io/2019/06/15/java8-stream/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/header.jpg">
+      <meta itemprop="name" content="傅永德">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="傅永德 | 个人博客">
+      <meta itemprop="description" content="苟利国家生死以，岂因祸福避趋之">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Java8 Stream | 傅永德 | 个人博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Java8 Stream
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-06-15 17:23:29" itemprop="dateCreated datePublished" datetime="2019-06-15T17:23:29+08:00">2019-06-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-10-25 11:37:02" itemprop="dateModified" datetime="2025-10-25T11:37:02+08:00">2025-10-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Java8/" itemprop="url" rel="index"><span itemprop="name">Java8</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p>A sequence of elements supporting sequential and parallel aggregate operations.</p>
+</blockquote>
+<p>从 <code>Stream</code> 的定义可以看出</p>
+<ul>
+<li>Stream 是一组元素的集合</li>
+<li>Stream 支持顺序和并行地对元素进行操作</li>
+</ul>
+<h1 id="How-it-work"><a href="#How-it-work" class="headerlink" title="How it work"></a>How it work</h1><p>先看示例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">method1</span><span class="params">()</span> &#123;</span><br><span class="line">    List&lt;String&gt; list = Stream.of(<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;c&quot;</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line">            .peek(System.out::print)</span><br><span class="line">            .map(String::valueOf)</span><br><span class="line">            .sorted()</span><br><span class="line">            .collect(Collectors.toList());</span><br><span class="line">    System.out.println(<span class="string">&quot;\n&quot;</span> + JSON.toJSONString(list));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上述程序输出结果：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">abc123</span><br><span class="line">[&quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;a&quot;,&quot;b&quot;,&quot;c&quot;]</span><br></pre></td></tr></table></figure>
+
+<p>通过上述例子：</p>
+<ol>
+<li><code>Stream.of()</code> 产生一个流；</li>
+<li><code>peek</code> 将所有元素进行打印；</li>
+<li><code>map</code> 将所有元素转化为 String；</li>
+<li><code>sorted</code> 将所有元素进行排需；</li>
+<li><code>collect</code> 将所有元素聚合为一个 List。</li>
+</ol>
+<p>由此总结对流的操作可分为 3 个阶段</p>
+<ol>
+<li>创建流</li>
+<li>转化流（每次转化，原有的 Stream 不变，产生一个新的 Stream 对象，可以对流进行多次转化）</li>
+<li>消耗流（获取最终的结果）</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">+--------------------+   +------+   +-----+   +--------+   +-------+</span><br><span class="line">| stream of elements |-&gt; | peek |-&gt; | map |-&gt; | sorted |-&gt; |collect|</span><br><span class="line">+--------------------+   +------+   +-----+   +--------+   +-------+</span><br></pre></td></tr></table></figure>
+
+<p><code>Stream</code> 的操作就像一条流水线。我们可以对流进行不同地操作（如 <code>peek</code> 、 <code>map</code> 等），最终得到前面处理的结果。</p>
+<h2 id="操作类型"><a href="#操作类型" class="headerlink" title="操作类型"></a>操作类型</h2><p><code>Stream</code> 的操作分为两大类 <em>中间操作（intermediate）</em> 和 _结束操作（terminal）_。</p>
+<h3 id="中间操作"><a href="#中间操作" class="headerlink" title="中间操作"></a>中间操作</h3><p>中间操作可进一步区分为 <em>无状态（stateless）</em> 和 _有状态（stateful）_。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>方法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>无状态</td>
+<td>peek、filter、map、mapToInt、mapToLong、mapToDouble、flatMap、flatMapToInt、flatMapToLong、flatMapToDouble</td>
+</tr>
+<tr>
+<td>有状态</td>
+<td>sorted、distinct、limit、skip</td>
+</tr>
+</tbody></table>
+<h3 id="结束操作"><a href="#结束操作" class="headerlink" title="结束操作"></a>结束操作</h3><p>结束操作中有一部分操作可以视为 _短路操作（short-circuiting）_。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>方法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>非短路</td>
+<td>forEach、forEachOrdered、toArray、collect、min、max、reduce、count</td>
+</tr>
+<tr>
+<td>短路</td>
+<td>anyMatch、noneMatch、findFirst、findAny</td>
+</tr>
+</tbody></table>
+<h2 id="有什么优点"><a href="#有什么优点" class="headerlink" title="有什么优点"></a>有什么优点</h2><p>一般来说，Java8 之前的编程方式，对数组、集合中元素遍历是显示的在外部进行，我们称之为 _外部迭代_，而 <code>Stream</code> 的方式叫做<em>内部迭代</em>，采用了 <em>访问者模式（Visitor）</em> 实现。<code>外部迭代</code>我们的关注点是怎么做，<code>内部迭代</code>我们的关注点是做什么。通过 <code>Stream</code> 对元素的 <em>内部迭代</em> 我们更容易清晰的看到一个方法对元素做了什么操作。</p>
+<h2 id="元素执行顺序"><a href="#元素执行顺序" class="headerlink" title="元素执行顺序"></a>元素执行顺序</h2><p>在 <code>Stream</code> 编程中，元素的执行顺序非常重要。</p>
+<p>还是先看例子</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">method3</span><span class="params">()</span> &#123;</span><br><span class="line">    Stream.of(<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;c&quot;</span>)</span><br><span class="line">            .peek(s -&gt; System.out.println(<span class="string">&quot;peek -&gt; &quot;</span> + s))</span><br><span class="line">            .map(s -&gt; &#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;map -&gt; &quot;</span> + s);</span><br><span class="line">                <span class="keyword">return</span> s.toUpperCase();</span><br><span class="line">            &#125;)</span><br><span class="line">            .forEach(s -&gt; System.out.println(<span class="string">&quot;forEach -&gt; &quot;</span> + s));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>直接看这段程序的输出</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">peek -&gt; a</span><br><span class="line">map -&gt; a</span><br><span class="line">forEach -&gt; A</span><br><span class="line">peek -&gt; b</span><br><span class="line">map -&gt; b</span><br><span class="line">forEach -&gt; B</span><br><span class="line">peek -&gt; c</span><br><span class="line">map -&gt; c</span><br><span class="line">forEach -&gt; C</span><br></pre></td></tr></table></figure>
+
+<p>是不是与想象中的不一样？</p>
+<p><code>Stream</code> 对元素的操作是一个元素执行完所有的操作在执行下一个元素，而不是一个操作执行完所有的元素再进行下一个操作。这就更加证明了 <code>Stream</code> 对元素的操作是像流水线那样。</p>
+<h3 id="为什么执行顺序如此重要"><a href="#为什么执行顺序如此重要" class="headerlink" title="为什么执行顺序如此重要"></a>为什么执行顺序如此重要</h3><p>通过上文，还不足以说明执行顺序为什么非常重要。</p>
+<p>再看一个例子</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">method4</span><span class="params">()</span> &#123;</span><br><span class="line">    Stream.of(<span class="number">2</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">3</span>, <span class="number">1</span>)</span><br><span class="line">            .sorted((i1, i2)-&gt;&#123;</span><br><span class="line">                System.out.format(<span class="string">&quot;sorted -&gt; %d %d \n&quot;</span>, i1, i2);</span><br><span class="line">                <span class="keyword">return</span> i1.compareTo(i2);</span><br><span class="line">            &#125;)</span><br><span class="line">            .map(i -&gt; &#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;map -&gt; &quot;</span> + i);</span><br><span class="line">                <span class="keyword">return</span> i * <span class="number">2</span>;</span><br><span class="line">            &#125;)</span><br><span class="line">            .filter(i -&gt; &#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;filter -&gt; &quot;</span> + i);</span><br><span class="line">                <span class="keyword">return</span> i &gt; <span class="number">8</span>;</span><br><span class="line">            &#125;)</span><br><span class="line">            .forEach(i -&gt; System.out.println(<span class="string">&quot;forEach -&gt; &quot;</span> + i));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">sorted -&gt; 4 2</span><br><span class="line">sorted -&gt; 5 4</span><br><span class="line">sorted -&gt; 3 5</span><br><span class="line">sorted -&gt; 3 4</span><br><span class="line">sorted -&gt; 3 2</span><br><span class="line">sorted -&gt; 1 4</span><br><span class="line">sorted -&gt; 1 3</span><br><span class="line">sorted -&gt; 1 2</span><br><span class="line">map -&gt; 1</span><br><span class="line">filter -&gt; 2</span><br><span class="line">map -&gt; 2</span><br><span class="line">filter -&gt; 4</span><br><span class="line">map -&gt; 3</span><br><span class="line">filter -&gt; 6</span><br><span class="line">map -&gt; 4</span><br><span class="line">filter -&gt; 8</span><br><span class="line">map -&gt; 5</span><br><span class="line">filter -&gt; 10</span><br><span class="line">forEach -&gt; 10</span><br></pre></td></tr></table></figure>
+
+<p>从上述输出可以看出，每个元素都进行了 <code>sorted</code>、<code>map</code> 操作，那么我们对上述程序做一个变形，如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">method4</span><span class="params">()</span> &#123;</span><br><span class="line">    Stream.of(<span class="number">2</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">3</span>, <span class="number">1</span>)</span><br><span class="line">            .filter(i -&gt; &#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;filter -&gt; &quot;</span> + i);</span><br><span class="line">                <span class="keyword">return</span> i * <span class="number">2</span> &gt; <span class="number">8</span>;</span><br><span class="line">            &#125;)</span><br><span class="line">            .map(i -&gt; &#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;map -&gt; &quot;</span> + i);</span><br><span class="line">                <span class="keyword">return</span> i * <span class="number">2</span>;</span><br><span class="line">            &#125;)</span><br><span class="line">            .sorted((i1, i2)-&gt;&#123;</span><br><span class="line">                System.out.format(<span class="string">&quot;sorted -&gt; %d %d \n&quot;</span>, i1, i2);</span><br><span class="line">                <span class="keyword">return</span> i1.compareTo(i2);</span><br><span class="line">            &#125;)</span><br><span class="line">            .forEach(i -&gt; System.out.println(<span class="string">&quot;forEach -&gt; &quot;</span> + i));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>变形之后该段程序输出为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">filter -&gt; 2</span><br><span class="line">filter -&gt; 4</span><br><span class="line">filter -&gt; 5</span><br><span class="line">map -&gt; 5</span><br><span class="line">filter -&gt; 3</span><br><span class="line">filter -&gt; 1</span><br><span class="line">forEach -&gt; 10</span><br></pre></td></tr></table></figure>
+
+<p>可以看出，元素[1, 2, 3, 4]并未进行 <code>map</code> 操作，所有的元素都未进行 <code>sorted</code> 操作，因为 <code>filter</code> 操作将不满足条件的元素都过滤掉了，只剩下一个元素，故不会进行 <code>sorted</code> 操作。</p>
+<p>所以在使用<code>Stream</code>对元素进行操作时，<strong>合理的调整操作顺序，可以提升性能</strong>。</p>
+<h2 id="延时性"><a href="#延时性" class="headerlink" title="延时性"></a>延时性</h2><p><code>Stream</code> 对元素的操作有一个非常重要的特性：延时性。为了更加直观的看到这个特性，我们先看一个例子</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">method5</span><span class="params">()</span> &#123;</span><br><span class="line">    Stream.of(<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;c&quot;</span>).peek(System.out::print);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>按照我们的预期，上述程序应该输出</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">abc</span><br></pre></td></tr></table></figure>
+
+<p>可是在实际执行过程中却发现并没有任何输出，这是为什么？</p>
+<p>这是因为<strong>在对 stream 操作过程中，没有调用结束操作的时候，所有的中间操作都不会执行。</strong></p>
+<h2 id="高阶操作"><a href="#高阶操作" class="headerlink" title="高阶操作"></a>高阶操作</h2><h3 id="短路操作"><a href="#短路操作" class="headerlink" title="短路操作"></a>短路操作</h3><p>在遇到 <em>短路操作</em> 时，一旦满足 <em>短路操作</em> 的条件时，<code>Stream</code> 会马上终止。例如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">method6</span><span class="params">()</span> &#123;</span><br><span class="line">    Stream.of(<span class="string">&quot;x&quot;</span>, <span class="string">&quot;y&quot;</span>, <span class="string">&quot;z&quot;</span>)</span><br><span class="line">        .map(s -&gt; &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;map -&gt; &quot;</span> + s);</span><br><span class="line">            <span class="keyword">return</span> s.toUpperCase();</span><br><span class="line">        &#125;)</span><br><span class="line">        .anyMatch(s -&gt; &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;anyMatch -&gt; &quot;</span> + s);</span><br><span class="line">            <span class="keyword">return</span> s.startsWith(<span class="string">&quot;X&quot;</span>);</span><br><span class="line">        &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">map -&gt; x</span><br><span class="line">anyMatch -&gt; X</span><br></pre></td></tr></table></figure>
+
+<p>上述例子中，第一个元素即满足了 <code>anyMatch</code> 的条件，后续的元素便不再进行 <code>Stream</code> 上的各种操作，其余 <em>短路操作</em> 不再一一举例。</p>
+<h3 id="collect"><a href="#collect" class="headerlink" title="collect"></a>collect</h3><p><code>collect</code>操作是十分常用的 _终止操作_，可以将流中的元素聚合成我们想要的集合类（如 <code>List</code>、<code>Set</code>、<code>Map</code> 等），也可以对元素做一些拼接、汇总等。下面的例子演示了 <code>collect</code> 一些常用的场景。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">method7</span><span class="params">()</span> &#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;---聚合为List---&quot;</span>);</span><br><span class="line">    List&lt;String&gt; list = Stream.of(<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;c&quot;</span>).collect(Collectors.toList());</span><br><span class="line">    list.forEach(System.out::print);</span><br><span class="line"></span><br><span class="line">    System.out.println(<span class="string">&quot;---拼接为字符串---&quot;</span>);</span><br><span class="line">    <span class="type">String</span> <span class="variable">str</span> <span class="operator">=</span> Stream.of(<span class="string">&quot;x&quot;</span>, <span class="string">&quot;y&quot;</span>, <span class="string">&quot;z&quot;</span>).collect(Collectors.joining(<span class="string">&quot;,&quot;</span>));</span><br><span class="line">    System.out.println(str);</span><br><span class="line"></span><br><span class="line">    System.out.println(<span class="string">&quot;---聚合为汇总信息---&quot;</span>);</span><br><span class="line">    <span class="type">IntSummaryStatistics</span> <span class="variable">intSummaryStatistics</span> <span class="operator">=</span> Stream.of(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>).collect(Collectors.summarizingInt(value -&gt; value));</span><br><span class="line">    System.out.println(intSummaryStatistics);</span><br><span class="line"></span><br><span class="line">    System.out.println(<span class="string">&quot;---求平均值---&quot;</span>);</span><br><span class="line">    <span class="type">Double</span> <span class="variable">average</span> <span class="operator">=</span> Stream.of(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>).collect(Collectors.averagingInt(value -&gt; value));</span><br><span class="line">    System.out.println(average);</span><br><span class="line"></span><br><span class="line">    System.out.println(<span class="string">&quot;---分组---&quot;</span>);</span><br><span class="line">    Map&lt;Integer, List&lt;Integer&gt;&gt; map1 = Stream.of(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>).collect(Collectors.groupingBy(value -&gt; value));</span><br><span class="line">    System.out.println(JSON.toJSONString(map1));</span><br><span class="line"></span><br><span class="line">    System.out.println(<span class="string">&quot;---将元素聚合为Map--&quot;</span>);</span><br><span class="line">    Map&lt;Integer, String&gt; map2 = Stream.of(<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;c&quot;</span>).collect(Collectors.toMap(String::hashCode, Function.identity()));</span><br><span class="line">    System.out.println(JSON.toJSONString(map2));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="flatMap"><a href="#flatMap" class="headerlink" title="flatMap"></a>flatMap</h3><p>通过上文，我们已经知道如何使用 <code>map</code>，但是有的时候 <code>map</code> 使用起来十分受限，因为 <code>map</code> 只能将一个对象映射为另一个对象，但是当我们希望将一个对象转化对多个或零个对象的时候，就需要用到 <code>flatMap</code> 。</p>
+<p>看例子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">method8</span><span class="params">()</span> &#123;</span><br><span class="line">    List&lt;Foo&gt; foos = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">    IntStream.range(<span class="number">1</span>, <span class="number">4</span>).forEach(i -&gt; foos.add(<span class="keyword">new</span> <span class="title class_">Foo</span>(<span class="string">&quot;Foo&quot;</span> + <span class="string">&quot; -&gt; &quot;</span> + i)));</span><br><span class="line">    foos.forEach(foo -&gt; IntStream.range(<span class="number">1</span>, <span class="number">4</span>).forEach(i -&gt; foo.bars.add(<span class="keyword">new</span> <span class="title class_">Bar</span>(foo.name + <span class="string">&quot; -&gt; &quot;</span> + <span class="string">&quot;Bar&quot;</span> + <span class="string">&quot; -&gt; &quot;</span> + i))));</span><br><span class="line">    List&lt;Bar&gt; bars = foos.stream()</span><br><span class="line">            .flatMap(foo -&gt; foo.bars.stream())</span><br><span class="line">            .collect(Collectors.toList());</span><br><span class="line">    bars.forEach(bar -&gt; System.out.println(bar.name));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Foo</span> &#123;</span><br><span class="line">    String name;</span><br><span class="line">    List&lt;Bar&gt; bars = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Foo</span><span class="params">(String name)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Bar</span> &#123;</span><br><span class="line">    String name;</span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Bar</span><span class="params">(String name)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Foo -&gt; 1 -&gt; Bar -&gt; 1</span><br><span class="line">Foo -&gt; 1 -&gt; Bar -&gt; 2</span><br><span class="line">Foo -&gt; 1 -&gt; Bar -&gt; 3</span><br><span class="line">Foo -&gt; 2 -&gt; Bar -&gt; 1</span><br><span class="line">Foo -&gt; 2 -&gt; Bar -&gt; 2</span><br><span class="line">Foo -&gt; 2 -&gt; Bar -&gt; 3</span><br><span class="line">Foo -&gt; 3 -&gt; Bar -&gt; 1</span><br><span class="line">Foo -&gt; 3 -&gt; Bar -&gt; 2</span><br><span class="line">Foo -&gt; 3 -&gt; Bar -&gt; 3</span><br></pre></td></tr></table></figure>
+
+<p>可以看出，上述例子通过 <code>flatMap</code> 操作，我们成功地将一个含有 3 个 foo 元素的流转化为了含有 9 个 bar 元素的流。</p>
+<h3 id="reduce"><a href="#reduce" class="headerlink" title="reduce"></a>reduce</h3><p><code>reduce</code> 操作是将所有流中的元素组合为单一结果。</p>
+<p>下面例子演示了两种常见的规约操作。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">method9</span><span class="params">()</span> &#123;</span><br><span class="line">    List&lt;Foo&gt; foos = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">    IntStream.range(<span class="number">1</span>, <span class="number">4</span>).forEach(i -&gt; foos.add(<span class="keyword">new</span> <span class="title class_">Foo</span>(<span class="string">&quot;Foo&quot;</span> + <span class="string">&quot; -&gt; &quot;</span> + i)));</span><br><span class="line">    foos.forEach(foo -&gt; IntStream.range(<span class="number">1</span>, <span class="number">4</span>).forEach(i -&gt; foo.bars.add(<span class="keyword">new</span> <span class="title class_">Bar</span>(foo.name + <span class="string">&quot; -&gt; &quot;</span> + <span class="string">&quot;Bar&quot;</span> + <span class="string">&quot; -&gt; &quot;</span> + i))));</span><br><span class="line">    System.out.println(<span class="string">&quot;---foos中的元素---&quot;</span>);</span><br><span class="line">    foos.forEach(o -&gt; System.out.println(JSON.toJSONString(o)));</span><br><span class="line">    System.out.println(<span class="string">&quot;---foos进行规约之后---&quot;</span>);</span><br><span class="line">    foos.stream()</span><br><span class="line">            .reduce((foo1, foo2) -&gt; foo1.name.hashCode() &gt; foo2.name.hashCode() ? foo1 : foo2)</span><br><span class="line">            .ifPresent(foo -&gt; System.out.println(JSON.toJSONString(foo)));</span><br><span class="line"></span><br><span class="line">    System.out.println(<span class="string">&quot;---foos将元素规约成一个新的对象---&quot;</span>);</span><br><span class="line">    <span class="type">Foo</span> <span class="variable">foo</span> <span class="operator">=</span> foos.stream()</span><br><span class="line">            .reduce(<span class="keyword">new</span> <span class="title class_">Foo</span>(<span class="string">&quot;&quot;</span>), (foo1, foo2) -&gt; &#123;</span><br><span class="line">                foo1.name += foo2.name;</span><br><span class="line">                <span class="keyword">return</span> foo1;</span><br><span class="line">            &#125;);</span><br><span class="line">    System.out.println(JSON.toJSONString(foo));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="并行流"><a href="#并行流" class="headerlink" title="并行流"></a>并行流</h2><p>从流的定义中我们得知流是支持并行地对元素进行操作地。在流中存在大量元素地情况下，使用并行流可以极大的提升运行时的性能。</p>
+<p>并行流使用公共的<code>ForkJoinPool</code>，由<code>ForkJoinPool.commonPool()</code>方法提供。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">ForkJoinPool</span> <span class="variable">commonPool</span> <span class="operator">=</span> ForkJoinPool.commonPool();</span><br><span class="line">System.out.println(commonPool.getParallelism());</span><br></pre></td></tr></table></figure>
+
+<p>通过上述方法可以查看公共池的默认线程数，也可以通过 JVM 参数<code>-Djava.util.concurrent.ForkJoinPool.common.parallelism=5</code>来调整。</p>
+<p>看下面的例子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">method10</span><span class="params">()</span> &#123;</span><br><span class="line">    List&lt;String&gt; list = Arrays.asList(<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;c&quot;</span>, <span class="string">&quot;d&quot;</span>)</span><br><span class="line">            .parallelStream()</span><br><span class="line">            .filter(s -&gt; &#123;</span><br><span class="line">                System.out.format(<span class="string">&quot;filter: %s [%s]\n&quot;</span>, s, Thread.currentThread().getName());</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    Thread.sleep(<span class="number">10</span>);</span><br><span class="line">                &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            &#125;)</span><br><span class="line">            .map(s -&gt; &#123;</span><br><span class="line">                System.out.format(<span class="string">&quot;map: %s [%s]\n&quot;</span>, s, Thread.currentThread().getName());</span><br><span class="line">                <span class="keyword">return</span> s.toUpperCase();</span><br><span class="line">            &#125;)</span><br><span class="line">            .collect(Collectors.toList());</span><br><span class="line">    list.forEach(System.out::print);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">filter: c [main]</span><br><span class="line">filter: b [ForkJoinPool.commonPool-worker-2]</span><br><span class="line">filter: a [ForkJoinPool.commonPool-worker-3]</span><br><span class="line">filter: d [ForkJoinPool.commonPool-worker-1]</span><br><span class="line">map: c [main]</span><br><span class="line">map: d [ForkJoinPool.commonPool-worker-1]</span><br><span class="line">map: b [ForkJoinPool.commonPool-worker-2]</span><br><span class="line">map: a [ForkJoinPool.commonPool-worker-3]</span><br><span class="line">ABCD</span><br></pre></td></tr></table></figure>
+
+<p>上述例子中，为了使对元素的操作能在 <code>ForkJoinPool.commonPool-worker-*</code> 的线程上执行，我们针对 <code>filter</code> 操作进行了 _sleep_，通过观察发现并行流使用的线程确实是由 <code>ForkJoinPool.commonPool()</code> 提供。</p>
+<p>让我们对上述程序增加一个 <code>sorted</code> 操作，看会发生什么变化：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">method11</span><span class="params">()</span> &#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;\n-----&quot;</span>);</span><br><span class="line">    Arrays.asList(<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;c&quot;</span>, <span class="string">&quot;d&quot;</span>)</span><br><span class="line">            .parallelStream()</span><br><span class="line">            .filter(s -&gt; &#123;</span><br><span class="line">                System.out.format(<span class="string">&quot;filter: %s [%s]\n&quot;</span>, s, Thread.currentThread().getName());</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    Thread.sleep(<span class="number">10</span>);</span><br><span class="line">                &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            &#125;)</span><br><span class="line">            .map(s -&gt; &#123;</span><br><span class="line">                System.out.format(<span class="string">&quot;map: %s [%s]\n&quot;</span>, s, Thread.currentThread().getName());</span><br><span class="line">                <span class="keyword">return</span> s.toUpperCase();</span><br><span class="line">            &#125;)</span><br><span class="line">            .sorted((s1, s2) -&gt; &#123;</span><br><span class="line">                System.out.format(<span class="string">&quot;sort: %s &lt;&gt; %s [%s]\n&quot;</span>, s1, s2, Thread.currentThread().getName());</span><br><span class="line">                <span class="keyword">return</span> s1.compareTo(s2);</span><br><span class="line">            &#125;)</span><br><span class="line">            .collect(Collectors.toList()).forEach(System.out::print);</span><br><span class="line">    System.out.println(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">filter: d [ForkJoinPool.commonPool-worker-1]</span><br><span class="line">filter: c [main]</span><br><span class="line">filter: b [ForkJoinPool.commonPool-worker-3]</span><br><span class="line">filter: a [ForkJoinPool.commonPool-worker-2]</span><br><span class="line">map: c [main]</span><br><span class="line">map: d [ForkJoinPool.commonPool-worker-1]</span><br><span class="line">map: a [ForkJoinPool.commonPool-worker-2]</span><br><span class="line">map: b [ForkJoinPool.commonPool-worker-3]</span><br><span class="line">sort: B &lt;&gt; A [main]</span><br><span class="line">sort: C &lt;&gt; B [main]</span><br><span class="line">sort: D &lt;&gt; C [main]</span><br><span class="line">ABCD</span><br></pre></td></tr></table></figure>
+
+<p>我们发现在经经过 <code>sorted</code> 操作时，全部元素都在 <code>main</code> 线程中执行了。实际上，并行流上的 <code>sorted</code> 在背后使用了 Java8 中新的方法 <code>Arrays.parallelSort()</code>，这个方法会根据流中元素的长度来决定是以串行还是并行的方式来执行。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="傅永德 微信">
+        <span>微信</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Java/" rel="tag"><i class="fa fa-tag"></i> Java</a>
+              <a href="/tags/Java8/" rel="tag"><i class="fa fa-tag"></i> Java8</a>
+              <a href="/tags/Stream/" rel="tag"><i class="fa fa-tag"></i> Stream</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2010/05/24/hexo/" rel="prev" title="如何使用Hexo？">
+                  <i class="fa fa-angle-left"></i> 如何使用Hexo？
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/06/22/maven-%E6%89%8B%E5%86%8C/" rel="next" title="Maven 手册">
+                  Maven 手册 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2018 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">傅永德</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/fuyongde" class="github-corner" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

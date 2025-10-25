@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"fuyongde.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":"auto","version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="参数配置查看所有参数1mysql&gt; SHOW VARIABLES;  慢查询、索引相关的参数查看慢查询日志是否打开Usage: 1mysql&gt; SHOW VARIABLES LIKE &#x27;%slow_query_log%&#x27;;  Result:    Variable_name Value    slow_query_log OFF   slow_query_log_f">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL 手册">
+<meta property="og:url" content="https://fuyongde.github.io/2019/11/14/mysql-%E6%89%8B%E5%86%8C/index.html">
+<meta property="og:site_name" content="傅永德 | 个人博客">
+<meta property="og:description" content="参数配置查看所有参数1mysql&gt; SHOW VARIABLES;  慢查询、索引相关的参数查看慢查询日志是否打开Usage: 1mysql&gt; SHOW VARIABLES LIKE &#x27;%slow_query_log%&#x27;;  Result:    Variable_name Value    slow_query_log OFF   slow_query_log_f">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-11-14T09:20:42.000Z">
+<meta property="article:modified_time" content="2025-10-25T03:37:02.860Z">
+<meta property="article:author" content="傅永德">
+<meta property="article:tag" content="MySQL">
+<meta property="article:tag" content="未完待续">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://fuyongde.github.io/2019/11/14/mysql-%E6%89%8B%E5%86%8C/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://fuyongde.github.io/2019/11/14/mysql-%E6%89%8B%E5%86%8C/","path":"2019/11/14/mysql-手册/","title":"MySQL 手册"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>MySQL 手册 | 傅永德 | 个人博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">傅永德 | 个人博客</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E6%95%B0%E9%85%8D%E7%BD%AE"><span class="nav-number">1.</span> <span class="nav-text">参数配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E6%89%80%E6%9C%89%E5%8F%82%E6%95%B0"><span class="nav-number">1.1.</span> <span class="nav-text">查看所有参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%85%A2%E6%9F%A5%E8%AF%A2%E3%80%81%E7%B4%A2%E5%BC%95%E7%9B%B8%E5%85%B3%E7%9A%84%E5%8F%82%E6%95%B0"><span class="nav-number">1.2.</span> <span class="nav-text">慢查询、索引相关的参数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E6%85%A2%E6%9F%A5%E8%AF%A2%E6%97%A5%E5%BF%97%E6%98%AF%E5%90%A6%E6%89%93%E5%BC%80"><span class="nav-number">1.2.1.</span> <span class="nav-text">查看慢查询日志是否打开</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%89%93%E5%BC%80%E6%85%A2%E6%9F%A5%E8%AF%A2%E6%97%A5%E5%BF%97"><span class="nav-number">1.2.2.</span> <span class="nav-text">打开慢查询日志</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%85%A2%E6%9F%A5%E8%AF%A2%E9%98%88%E5%80%BC"><span class="nav-number">1.2.3.</span> <span class="nav-text">慢查询阈值</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E6%85%A2%E6%9F%A5%E8%AF%A2%E9%98%88%E5%80%BC"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">查看慢查询阈值</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E6%85%A2%E6%9F%A5%E8%AF%A2%E9%98%88%E5%80%BC"><span class="nav-number">1.2.3.2.</span> <span class="nav-text">设置慢查询阈值</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%AA%E4%BD%BF%E7%94%A8%E7%B4%A2%E5%BC%95%E7%9A%84%E6%83%85%E5%86%B5"><span class="nav-number">1.2.4.</span> <span class="nav-text">未使用索引的情况</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E6%9C%AA%E4%BD%BF%E7%94%A8%E7%B4%A2%E5%BC%95%E7%9A%84%E6%9F%A5%E8%AF%A2%E6%98%AF%E5%90%A6%E8%AE%A1%E5%85%A5%E6%85%A2%E6%9F%A5%E8%AF%A2%E6%97%A5%E5%BF%97"><span class="nav-number">1.2.4.1.</span> <span class="nav-text">查看未使用索引的查询是否计入慢查询日志</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%89%93%E5%BC%80%E6%9C%AA%E4%BD%BF%E7%94%A8%E7%B4%A2%E5%BC%95%E8%AE%B0%E5%85%A5%E6%85%A2%E6%9F%A5%E8%AF%A2%E6%97%A5%E5%BF%97"><span class="nav-number">1.2.4.2.</span> <span class="nav-text">打开未使用索引记入慢查询日志</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%85%A2%E6%9F%A5%E8%AF%A2%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90"><span class="nav-number">1.2.5.</span> <span class="nav-text">慢查询日志分析</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#mysqldumpslow"><span class="nav-number">1.2.5.1.</span> <span class="nav-text">mysqldumpslow</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%A8%E6%9E%90-MySQL-%E6%9F%A5%E8%AF%A2"><span class="nav-number">1.2.6.</span> <span class="nav-text">刨析 MySQL 查询</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BC%80%E5%90%AF"><span class="nav-number">1.2.6.1.</span> <span class="nav-text">开启</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%A8%E6%9E%90%E6%9F%A5%E8%AF%A2%E8%80%97%E6%97%B6"><span class="nav-number">1.2.6.2.</span> <span class="nav-text">刨析查询耗时</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8B%E5%8A%A1%E7%9B%B8%E5%85%B3%E7%9A%84%E5%8F%82%E6%95%B0"><span class="nav-number">1.3.</span> <span class="nav-text">事务相关的参数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB"><span class="nav-number">1.3.1.</span> <span class="nav-text">事务隔离级别</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E4%BA%8B%E5%8A%A1%E7%9A%84%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">查看事务的隔离级别</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E4%BA%8B%E5%8A%A1%E7%9A%84%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">设置事务的隔离级别</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8B%E5%8A%A1%E8%87%AA%E5%8A%A8%E6%8F%90%E4%BA%A4"><span class="nav-number">1.3.2.</span> <span class="nav-text">事务自动提交</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E4%BA%8B%E5%8A%A1%E8%87%AA%E5%8A%A8%E6%8F%90%E4%BA%A4%E7%8A%B6%E6%80%81"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">查看事务自动提交状态</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%85%B3%E9%97%AD%E4%BA%8B%E5%8A%A1%E8%87%AA%E5%8A%A8%E6%8F%90%E4%BA%A4"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">关闭事务自动提交</span></a></li></ol></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="傅永德"
+      src="/images/header.jpg">
+  <p class="site-author-name" itemprop="name">傅永德</p>
+  <div class="site-description" itemprop="description">苟利国家生死以，岂因祸福避趋之</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/fuyongde" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;fuyongde" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:fuyongde@foxmail.com" title="E-Mail → mailto:fuyongde@foxmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          友链
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://www.xiaokunli.com/" title="https:&#x2F;&#x2F;www.xiaokunli.com&#x2F;" rel="noopener" target="_blank">xiaokun</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://konekos.github.io/" title="https:&#x2F;&#x2F;konekos.github.io&#x2F;" rel="noopener" target="_blank">Tree</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://fuyongde.github.io/2019/11/14/mysql-%E6%89%8B%E5%86%8C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/header.jpg">
+      <meta itemprop="name" content="傅永德">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="傅永德 | 个人博客">
+      <meta itemprop="description" content="苟利国家生死以，岂因祸福避趋之">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="MySQL 手册 | 傅永德 | 个人博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MySQL 手册
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-11-14 17:20:42" itemprop="dateCreated datePublished" datetime="2019-11-14T17:20:42+08:00">2019-11-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-10-25 11:37:02" itemprop="dateModified" datetime="2025-10-25T11:37:02+08:00">2025-10-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%89%8B%E5%86%8C/" itemprop="url" rel="index"><span itemprop="name">手册</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="参数配置"><a href="#参数配置" class="headerlink" title="参数配置"></a>参数配置</h2><h3 id="查看所有参数"><a href="#查看所有参数" class="headerlink" title="查看所有参数"></a>查看所有参数</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SHOW VARIABLES;</span><br></pre></td></tr></table></figure>
+
+<h3 id="慢查询、索引相关的参数"><a href="#慢查询、索引相关的参数" class="headerlink" title="慢查询、索引相关的参数"></a>慢查询、索引相关的参数</h3><h4 id="查看慢查询日志是否打开"><a href="#查看慢查询日志是否打开" class="headerlink" title="查看慢查询日志是否打开"></a>查看慢查询日志是否打开</h4><p>Usage:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SHOW VARIABLES LIKE &#x27;%slow_query_log%&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p>Result:</p>
+<table>
+<thead>
+<tr>
+<th>Variable_name</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>slow_query_log</td>
+<td>OFF</td>
+</tr>
+<tr>
+<td>slow_query_log_file</td>
+<td>&#x2F;var&#x2F;lib&#x2F;mysql&#x2F;17998065ff2d-slow.log</td>
+</tr>
+</tbody></table>
+<h4 id="打开慢查询日志"><a href="#打开慢查询日志" class="headerlink" title="打开慢查询日志"></a>打开慢查询日志</h4><p>Usage:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-- 打开MySQL慢查询日志</span><br><span class="line">mysql&gt; SET GLOBAL slow_query_log = ON;</span><br><span class="line">-- 或者用这种方式</span><br><span class="line">mysql&gt; SET GLOBAL slow_query_log = 1;</span><br></pre></td></tr></table></figure>
+
+<h4 id="慢查询阈值"><a href="#慢查询阈值" class="headerlink" title="慢查询阈值"></a>慢查询阈值</h4><h5 id="查看慢查询阈值"><a href="#查看慢查询阈值" class="headerlink" title="查看慢查询阈值"></a>查看慢查询阈值</h5><p>Usage:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SHOW VARIABLES LIKE &#x27;long_query_time&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p>Result:</p>
+<table>
+<thead>
+<tr>
+<th>Variable_name</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>long_query_time</td>
+<td>10.000000</td>
+</tr>
+</tbody></table>
+<h5 id="设置慢查询阈值"><a href="#设置慢查询阈值" class="headerlink" title="设置慢查询阈值"></a>设置慢查询阈值</h5><p>Usage:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-- 设置完之后，在当前窗口查询，可能存在值不变的情况，重新打开窗口查询即可。</span><br><span class="line">mysql&gt; SET GLOBAL long_query_time = 0.1;</span><br></pre></td></tr></table></figure>
+
+<h4 id="未使用索引的情况"><a href="#未使用索引的情况" class="headerlink" title="未使用索引的情况"></a>未使用索引的情况</h4><h5 id="查看未使用索引的查询是否计入慢查询日志"><a href="#查看未使用索引的查询是否计入慢查询日志" class="headerlink" title="查看未使用索引的查询是否计入慢查询日志"></a>查看未使用索引的查询是否计入慢查询日志</h5><p>Usage:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SHOW VARIABLES LIKE &#x27;%log_queries_not_using_indexes%&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p>Result:</p>
+<table>
+<thead>
+<tr>
+<th>Variable_name</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>log_queries_not_using_indexes</td>
+<td>OFF</td>
+</tr>
+</tbody></table>
+<h5 id="打开未使用索引记入慢查询日志"><a href="#打开未使用索引记入慢查询日志" class="headerlink" title="打开未使用索引记入慢查询日志"></a>打开未使用索引记入慢查询日志</h5><p>Usage:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SET GLOBAL log_queries_not_using_indexes = ON;</span><br><span class="line">-- 或者</span><br><span class="line">mysql&gt; SET GLOBAL log_queries_not_using_indexes = 1;</span><br></pre></td></tr></table></figure>
+
+<h4 id="慢查询日志分析"><a href="#慢查询日志分析" class="headerlink" title="慢查询日志分析"></a>慢查询日志分析</h4><p><code>MySQL</code> 自带了 <code>mysqldumpslow</code> 可以帮助我们快速得分析慢查询日志。<code>pt-query-digest</code> 是一个非常优秀的第三方工具来版主我们分析 <code>MySQL</code> 的 binlog、generallog、slowlog。</p>
+<h5 id="mysqldumpslow"><a href="#mysqldumpslow" class="headerlink" title="mysqldumpslow"></a>mysqldumpslow</h5><p>Usage：</p>
+<p><code>mysqldumpslow [ OPTS... ] [ LOGS... ]</code></p>
+<p>具体的参数，可自行查看其对应的含义</p>
+<p>示例：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">得到返回记录集最多的 10 个 SQL。</span></span><br><span class="line">mysqldumpslow -s r -t 10 /var/lib/mysql/izwz9ezwhlhq4hy1wzw9oqz-slow.log</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">得到访问次数最多的 10 个 SQL</span></span><br><span class="line">mysqldumpslow -s c -t 10 /var/lib/mysql/izwz9ezwhlhq4hy1wzw9oqz-slow.log</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">得到按照时间排序的前10条里面含有左连接的查询语句。</span></span><br><span class="line">mysqldumpslow -s t -t 10 -g &quot;left join&quot; /var/lib/mysql/izwz9ezwhlhq4hy1wzw9oqz-slow.log</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">另外建议在使用这些命令时结合 | 和 more 使用 ，否则有可能出现刷屏的情况。</span></span><br><span class="line">mysqldumpslow -s r -t 20 /var/lib/mysql/izwz9ezwhlhq4hy1wzw9oqz-slow.log | more</span><br></pre></td></tr></table></figure>
+
+<h4 id="刨析-MySQL-查询"><a href="#刨析-MySQL-查询" class="headerlink" title="刨析 MySQL 查询"></a>刨析 MySQL 查询</h4><p>在实际项目中，我们通过慢查询日志，只是找到对应的慢查询，那么如何对慢查询进行刨析呢？</p>
+<p>MySQL 在 5.1 版本之后引入了 <code>SHOW PROFILE</code> 命令，默认是禁用的，但可以在会话级别动态的修改。</p>
+<h5 id="开启"><a href="#开启" class="headerlink" title="开启"></a>开启</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-- 设置为 ON 或 1 均可</span><br><span class="line">mysql&gt; SET PROFILING = ON;</span><br></pre></td></tr></table></figure>
+
+<h5 id="刨析查询耗时"><a href="#刨析查询耗时" class="headerlink" title="刨析查询耗时"></a>刨析查询耗时</h5><p>开启之后执行任意一个查询，然后在执行 <code>SHOW PROFILING</code>，观察对应的结果。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SHOW PROFILING;</span><br></pre></td></tr></table></figure>
+
+<p>其结果如下</p>
+<table>
+<thead>
+<tr>
+<th>Query_ID</th>
+<th>Duration</th>
+<th>Query</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>0.00060525</td>
+<td>SELECT * FROM <code>actor</code></td>
+</tr>
+</tbody></table>
+<p>如果需要看更为详细的信息</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SHOW PROFILE FOR QUERY 1;</span><br></pre></td></tr></table></figure>
+
+<p>其结果如下，可以看到详细的记录了该次查询各个阶段的耗时情况</p>
+<table>
+<thead>
+<tr>
+<th>Status</th>
+<th>Duration</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>starting</td>
+<td>0.000069</td>
+</tr>
+<tr>
+<td>checking permissions</td>
+<td>0.000009</td>
+</tr>
+<tr>
+<td>Opening tables</td>
+<td>0.000021</td>
+</tr>
+<tr>
+<td>init</td>
+<td>0.000022</td>
+</tr>
+<tr>
+<td>System lock</td>
+<td>0.000010</td>
+</tr>
+<tr>
+<td>optimizing</td>
+<td>0.000006</td>
+</tr>
+<tr>
+<td>statistics</td>
+<td>0.000017</td>
+</tr>
+<tr>
+<td>preparing</td>
+<td>0.000015</td>
+</tr>
+<tr>
+<td>executing</td>
+<td>0.000004</td>
+</tr>
+<tr>
+<td>Sending data</td>
+<td>0.000298</td>
+</tr>
+<tr>
+<td>end</td>
+<td>0.000006</td>
+</tr>
+<tr>
+<td>query end</td>
+<td>0.000008</td>
+</tr>
+<tr>
+<td>closing tables</td>
+<td>0.000009</td>
+</tr>
+<tr>
+<td>freeing items</td>
+<td>0.000020</td>
+</tr>
+<tr>
+<td>logging slow query</td>
+<td>0.000074</td>
+</tr>
+<tr>
+<td>cleaning up</td>
+<td>0.000019</td>
+</tr>
+</tbody></table>
+<h3 id="事务相关的参数"><a href="#事务相关的参数" class="headerlink" title="事务相关的参数"></a>事务相关的参数</h3><h4 id="事务隔离级别"><a href="#事务隔离级别" class="headerlink" title="事务隔离级别"></a>事务隔离级别</h4><h5 id="查看事务的隔离级别"><a href="#查看事务的隔离级别" class="headerlink" title="查看事务的隔离级别"></a>查看事务的隔离级别</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">-- 查看当前数据库事务隔离级别</span><br><span class="line">mysql&gt; SHOW VARIABLES LIKE &#x27;%transaction_isolation%&#x27;;</span><br><span class="line">-- 或者</span><br><span class="line">mysql&gt; SELECT @@transaction_isolation;</span><br><span class="line">-- 低版本的MySQL属性是不一样的</span><br><span class="line">mysql&gt; SHOW VARIABLES LIKE &#x27;%tx_isolation%&#x27;;</span><br><span class="line">-- 或者</span><br><span class="line">mysql&gt; SELECT @@tx_isolation;</span><br></pre></td></tr></table></figure>
+
+<h5 id="设置事务的隔离级别"><a href="#设置事务的隔离级别" class="headerlink" title="设置事务的隔离级别"></a>设置事务的隔离级别</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">-- 设置当前会话级别为`read-uncommitted`</span><br><span class="line">mysql&gt; SET SESSION TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;</span><br><span class="line">-- 设置当前会话级别为`read-committed`</span><br><span class="line">mysql&gt; SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED;</span><br><span class="line">-- 设置当前会话级别为`repeatable-read`</span><br><span class="line">mysql&gt; SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ;</span><br><span class="line">-- 设置当前会话级别为`serializable`</span><br><span class="line">mysql&gt; SET SESSION TRANSACTION ISOLATION LEVEL SERIALIZABLE;</span><br></pre></td></tr></table></figure>
+
+<h4 id="事务自动提交"><a href="#事务自动提交" class="headerlink" title="事务自动提交"></a>事务自动提交</h4><p><code>MySQL</code> 默认采用自动提交模式，也就是说如果不是显式地开始一个事务，则每个查询都被当做一个事务执行提交操作。另外还有一些命令，在执行之前会强制 <code>COMMIT</code> 提交当前活动地事务，典型的例子如 <code>DDL</code> 语言中会导致大量数据改变的操作，又比如 <code>ALTER TABLE</code> 等，此外还有 <code>LOCK TABLES</code> 等语句。</p>
+<h5 id="查看事务自动提交状态"><a href="#查看事务自动提交状态" class="headerlink" title="查看事务自动提交状态"></a>查看事务自动提交状态</h5><p>Useage:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-- 查看事务自动提交的参数</span><br><span class="line">mysql&gt; SHOW VARIABLES LIKE &#x27;AUTOCOMMIT&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p>Result:</p>
+<table>
+<thead>
+<tr>
+<th>Variable_name</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>autocommit</td>
+<td>ON</td>
+</tr>
+</tbody></table>
+<h5 id="关闭事务自动提交"><a href="#关闭事务自动提交" class="headerlink" title="关闭事务自动提交"></a>关闭事务自动提交</h5><p>Useage:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-- 关闭事务自动提交</span><br><span class="line">mysql&gt; SET AUTOCOMMIT = OFF;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="傅永德 微信">
+        <span>微信</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/MySQL/" rel="tag"><i class="fa fa-tag"></i> MySQL</a>
+              <a href="/tags/%E6%9C%AA%E5%AE%8C%E5%BE%85%E7%BB%AD/" rel="tag"><i class="fa fa-tag"></i> 未完待续</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/11/14/transaction-isolation/" rel="prev" title="事务隔离级别">
+                  <i class="fa fa-angle-left"></i> 事务隔离级别
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/11/14/docker-%E6%89%8B%E5%86%8C/" rel="next" title="Docker 手册">
+                  Docker 手册 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2018 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">傅永德</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/fuyongde" class="github-corner" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
