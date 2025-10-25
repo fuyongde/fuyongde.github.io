@@ -157,7 +157,7 @@
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -251,7 +251,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-10-25 11:37:02" itemprop="dateModified" datetime="2025-10-25T11:37:02+08:00">2025-10-25</time>
+      <time title="修改时间：2025-10-25 20:43:21" itemprop="dateModified" datetime="2025-10-25T20:43:21+08:00">2025-10-25</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -494,7 +494,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-10-25 11:37:02" itemprop="dateModified" datetime="2025-10-25T11:37:02+08:00">2025-10-25</time>
+      <time title="修改时间：2025-10-25 20:53:44" itemprop="dateModified" datetime="2025-10-25T20:53:44+08:00">2025-10-25</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -790,7 +790,16 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-10-25 11:37:02" itemprop="dateModified" datetime="2025-10-25T11:37:02+08:00">2025-10-25</time>
+      <time title="修改时间：2025-10-25 21:01:52" itemprop="dateModified" datetime="2025-10-25T21:01:52+08:00">2025-10-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5/" itemprop="url" rel="index"><span itemprop="name">问题排查</span></a>
+        </span>
     </span>
 
   
@@ -880,7 +889,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-10-25 11:37:02" itemprop="dateModified" datetime="2025-10-25T11:37:02+08:00">2025-10-25</time>
+      <time title="修改时间：2025-10-25 20:48:58" itemprop="dateModified" datetime="2025-10-25T20:48:58+08:00">2025-10-25</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -902,8 +911,8 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>记录一些常见的 <code>Powershell</code> 的使用问题</p>
-<h2 id="别名命令"><a href="#别名命令" class="headerlink" title="别名命令"></a>别名命令</h2><p>在使用 Linux 系统时，我喜欢使用 <code>ll</code> 命令来查看当前目录的文件，但是 Windows 系统的 Powershell 没有这个命令，所以每次用的时候就很不习惯。我们可以通过对命令设置别名来让 Powershell 支持我们的使用习惯。</p>
+          <p>记录一些常见的 <code>PowerShell</code> 的使用问题</p>
+<h2 id="别名命令"><a href="#别名命令" class="headerlink" title="别名命令"></a>别名命令</h2><p>在使用 Linux 系统时，我喜欢使用 <code>ll</code> 命令来查看当前目录的文件，但是 Windows 系统的 PowerShell 没有这个命令，所以每次用的时候就很不习惯。我们可以通过对命令设置别名来让 PowerShell 支持我们的使用习惯。</p>
 <h3 id="查看别名"><a href="#查看别名" class="headerlink" title="查看别名"></a>查看别名</h3><p><code>Get-Alias</code> 或者 <code>gal</code> 命令来查看我们系统命令的别名，如下</p>
 <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">PS</span> C:\Users\fuyongde&gt; <span class="built_in">get-alias</span></span><br><span class="line"></span><br><span class="line">CommandType     Name                         Version    Source</span><br><span class="line"><span class="literal">-----------</span>     <span class="literal">----</span>                         <span class="literal">-------</span>    <span class="literal">------</span></span><br><span class="line">Alias           % -&gt; <span class="built_in">ForEach-Object</span></span><br><span class="line">Alias           ? -&gt; <span class="built_in">Where-Object</span></span><br><span class="line">Alias           <span class="built_in">ac</span> -&gt; <span class="built_in">Add-Content</span></span><br><span class="line">Alias           <span class="built_in">cat</span> -&gt; <span class="built_in">Get-Content</span></span><br></pre></td></tr></table></figure>
 
@@ -911,7 +920,7 @@
 <li>查看某别名的原命令，如 <code>ls</code> 的原命令：<code>Get-Alias ls</code></li>
 <li>查看某原命令的别名，如 <code>Get-ChildItem</code> 的别名：<code>Get-Alias -Definition Get-ChildItem</code></li>
 </ul>
-<h3 id="临时创建或更改别名"><a href="#临时创建或更改别名" class="headerlink" title="临时创建或更改别名"></a>临时创建或更改别名</h3><p>使用 <code>Set-Alias</code> 命令来创建或更改别名，但是改命令只在当前的的 PowerShell Session 中生效。另外还有一个 <code>New-Alias</code> 命令用法类似。</p>
+<h3 id="临时创建或更改别名"><a href="#临时创建或更改别名" class="headerlink" title="临时创建或更改别名"></a>临时创建或更改别名</h3><p>使用 <code>Set-Alias</code> 命令来创建或更改别名，但是该命令只在当前的 PowerShell Session 中生效。另外还有一个 <code>New-Alias</code> 命令用法类似。</p>
 <h4 id="创建不带参数的别名"><a href="#创建不带参数的别名" class="headerlink" title="创建不带参数的别名"></a>创建不带参数的别名</h4>
           <!--noindex-->
             <div class="post-button">
@@ -982,7 +991,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-10-25 11:37:02" itemprop="dateModified" datetime="2025-10-25T11:37:02+08:00">2025-10-25</time>
+      <time title="修改时间：2025-10-25 20:55:08" itemprop="dateModified" datetime="2025-10-25T20:55:08+08:00">2025-10-25</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">

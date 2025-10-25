@@ -22,13 +22,13 @@
 
     <meta name="description" content="Jenkins 是常见的 CI 平台 安装Windows 平台略 CentOS 平台更为详细的步骤及说明可查看官网 添加 jenkins 源命令如下： 12sudo wget -O &#x2F;etc&#x2F;yum.repos.d&#x2F;jenkins.repo https:&#x2F;&#x2F;pkg.jenkins.io&#x2F;redhat-stable&#x2F;jenkins.reposudo rpm --import https:&#x2F;&#x2F;pkg.">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Jenkins-手册">
+<meta property="og:title" content="Jenkins 手册">
 <meta property="og:url" content="https://fuyongde.github.io/2020/02/18/jenkins-%E6%89%8B%E5%86%8C/index.html">
 <meta property="og:site_name" content="傅永德 | 个人博客">
 <meta property="og:description" content="Jenkins 是常见的 CI 平台 安装Windows 平台略 CentOS 平台更为详细的步骤及说明可查看官网 添加 jenkins 源命令如下： 12sudo wget -O &#x2F;etc&#x2F;yum.repos.d&#x2F;jenkins.repo https:&#x2F;&#x2F;pkg.jenkins.io&#x2F;redhat-stable&#x2F;jenkins.reposudo rpm --import https:&#x2F;&#x2F;pkg.">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-02-18T08:54:55.000Z">
-<meta property="article:modified_time" content="2025-10-25T03:37:02.856Z">
+<meta property="article:modified_time" content="2025-10-25T12:51:06.332Z">
 <meta property="article:author" content="傅永德">
 <meta property="article:tag" content="未完待续">
 <meta property="article:tag" content="Jenkins">
@@ -41,10 +41,10 @@
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://fuyongde.github.io/2020/02/18/jenkins-%E6%89%8B%E5%86%8C/","path":"2020/02/18/jenkins-手册/","title":"Jenkins-手册"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://fuyongde.github.io/2020/02/18/jenkins-%E6%89%8B%E5%86%8C/","path":"2020/02/18/jenkins-手册/","title":"Jenkins 手册"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Jenkins-手册 | 傅永德 | 个人博客</title>
+<title>Jenkins 手册 | 傅永德 | 个人博客</title>
   
 
 
@@ -164,7 +164,7 @@
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -236,12 +236,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="Jenkins-手册 | 傅永德 | 个人博客">
+      <meta itemprop="name" content="Jenkins 手册 | 傅永德 | 个人博客">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Jenkins-手册
+          Jenkins 手册
         </h1>
 
         <div class="post-meta-container">
@@ -259,7 +259,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-10-25 11:37:02" itemprop="dateModified" datetime="2025-10-25T11:37:02+08:00">2025-10-25</time>
+      <time title="修改时间：2025-10-25 20:51:06" itemprop="dateModified" datetime="2025-10-25T20:51:06+08:00">2025-10-25</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -292,7 +292,7 @@
 <h4 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h4><p>命令如下：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start jenkins</span><br></pre></td></tr></table></figure>
 
-<h4 id="解决插件中心安装慢的问题"><a href="#解决插件中心安装慢的问题" class="headerlink" title="解决插件中心安装慢的问题"></a>解决插件中心安装慢的问题</h4><p>第一次登陆 Jenkins 会出现初始化缓慢的问题，产生这个问题的原因有两个，一个是因为首次打开 Jenkins 会尝试连接 Google，另外一个原因是因为连接插件中心缓慢。</p>
+<h4 id="解决插件中心安装慢的问题"><a href="#解决插件中心安装慢的问题" class="headerlink" title="解决插件中心安装慢的问题"></a>解决插件中心安装慢的问题</h4><p>第一次登录 Jenkins 会出现初始化缓慢的问题，产生这个问题的原因有两个，一个是因为首次打开 Jenkins 会尝试连接 Google，另外一个原因是因为连接插件中心缓慢。</p>
 <h5 id="将插件中心修改为清华的源"><a href="#将插件中心修改为清华的源" class="headerlink" title="将插件中心修改为清华的源"></a>将插件中心修改为清华的源</h5><p>修改文件 <code>$JENKINS_HOME/hudson.model.UpdateCenter.xml</code>，将 url 从 <code>https://updates.jenkins.io/update-center.json</code> 修改为 <code>https://mirrors.tuna.tsinghua.edu.cn/jenkins/updates/update-center.json</code></p>
 <h5 id="将-Google-的地址修改为-Baidu"><a href="#将-Google-的地址修改为-Baidu" class="headerlink" title="将 Google 的地址修改为 Baidu"></a>将 Google 的地址修改为 Baidu</h5><p>修改文件 <code>$JENKINS_HOME/updates/default.json</code></p>
 <ul>

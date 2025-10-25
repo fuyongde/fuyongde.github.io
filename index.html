@@ -157,7 +157,7 @@
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -251,7 +251,16 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-10-25 11:37:02" itemprop="dateModified" datetime="2025-10-25T11:37:02+08:00">2025-10-25</time>
+      <time title="修改时间：2025-10-25 21:04:26" itemprop="dateModified" datetime="2025-10-25T21:04:26+08:00">2025-10-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Guava/" itemprop="url" rel="index"><span itemprop="name">Guava</span></a>
+        </span>
     </span>
 
   
@@ -527,7 +536,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-10-25 11:37:02" itemprop="dateModified" datetime="2025-10-25T11:37:02+08:00">2025-10-25</time>
+      <time title="修改时间：2025-10-25 20:50:12" itemprop="dateModified" datetime="2025-10-25T20:50:12+08:00">2025-10-25</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -550,7 +559,7 @@
     
     <div class="post-body" itemprop="articleBody">
           <p>zsh 可能是目前最好用的终端。</p>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="Mac-OS"><a href="#Mac-OS" class="headerlink" title="Mac OS"></a>Mac OS</h3><p>MacOS 自带 zsh，并且当前最新版本 MasOS 默认终端即为 zsh</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="Mac-OS"><a href="#Mac-OS" class="headerlink" title="Mac OS"></a>Mac OS</h3><p>macOS 自带 zsh，并且当前最新版本 macOS 默认终端即为 zsh</p>
 <h3 id="Ubuntu"><a href="#Ubuntu" class="headerlink" title="Ubuntu"></a>Ubuntu</h3><p>使用 <code>sudo apt install zsh</code> 命令即可安装 zsh</p>
 <h3 id="CentOS"><a href="#CentOS" class="headerlink" title="CentOS"></a>CentOS</h3><p>使用 <code>sudo yum install zsh</code> 命令即可安装 zsh</p>
 <p>在安装好 zsh 之后，第一次使用的时候，会有如下的提示：</p>
@@ -624,7 +633,16 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-10-25 11:37:02" itemprop="dateModified" datetime="2025-10-25T11:37:02+08:00">2025-10-25</time>
+      <time title="修改时间：2025-10-25 21:03:42" itemprop="dateModified" datetime="2025-10-25T21:03:42+08:00">2025-10-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Spring/" itemprop="url" rel="index"><span itemprop="name">Spring</span></a>
+        </span>
     </span>
 
   
@@ -718,7 +736,16 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-10-25 11:37:02" itemprop="dateModified" datetime="2025-10-25T11:37:02+08:00">2025-10-25</time>
+      <time title="修改时间：2025-10-25 21:06:19" itemprop="dateModified" datetime="2025-10-25T21:06:19+08:00">2025-10-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Guava/" itemprop="url" rel="index"><span itemprop="name">Guava</span></a>
+        </span>
     </span>
 
   
@@ -738,10 +765,10 @@
 <p>启动工程，我们模拟一下出现问题时的操作。</p>
 <ol>
 <li>构造 HTTP 请求调用 <code>/setRate</code> 接口，将 loan 对应的限流的值修改为 5；</li>
-<li>构造 HTTP 请求快速调用 <code>/testLimit</code> 接口 2 次，发现第一调用接口返回 SUCCESS， 第二次接口返回 FAIL，说明第 2 次请求触发了限流；</li>
+<li>构造 HTTP 请求快速调用 <code>/testLimit</code> 接口 2 次，发现第一次调用接口返回 SUCCESS，第二次接口返回 FAIL，说明第 2 次请求触发了限流；</li>
 <li>构造 HTTP 请求调用 <code>/testLimit</code> 5 次，保证 5 次请求在 1 秒内接收，发现这 5 次请求接口均返回 SUCCESS，说明这 5 次请求均未触发限流；</li>
 <li>构造 HTTP 请求调用 <code>/testLimit</code> 6 次，保证 6 次请求均在 1 秒内接收，发现前 6 次请求接口均返回 SUCCESS，说明这 6 次请求均未触发限流；</li>
-<li>构造 HTTP 请求调用 <code>/testLimit</code> 7 次，保证 7 次请求均在 1 秒内接收，发发现前 6 次请求接口均返回 SUCCESS，第 7 次请求接口返回 FAIL，说明前 6 次请求均未触发限流，第 7 次请求触发限流。</li>
+<li>构造 HTTP 请求调用 <code>/testLimit</code> 7 次，保证 7 次请求均在 1 秒内接收，发现前 6 次请求接口均返回 SUCCESS，第 7 次请求接口返回 FAIL，说明前 6 次请求均未触发限流，第 7 次请求触发限流。</li>
 </ol>
 <p>至此，我们模拟的现象与线上一致。步骤 3 是我们预期的结果，步骤 2 中在未超过限流配置的情况下触发了限流，步骤 4、5 中的第 6 次请求在超过了限流配置的情况下，仍然允许通过，我们直观上认为这些是不合理的。</p>
 <h2 id="排查与分析"><a href="#排查与分析" class="headerlink" title="排查与分析"></a>排查与分析</h2><p>Guava 中 RateLimiter 提供了两种令牌桶的算法实现：</p>
@@ -893,7 +920,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2020/07/19/npm-%E6%89%8B%E5%86%8C/" class="post-title-link" itemprop="url">npm-手册</a>
+          <a href="/2020/07/19/npm-%E6%89%8B%E5%86%8C/" class="post-title-link" itemprop="url">npm 手册</a>
         </h2>
 
         <div class="post-meta-container">
@@ -911,7 +938,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-10-25 11:37:02" itemprop="dateModified" datetime="2025-10-25T11:37:02+08:00">2025-10-25</time>
+      <time title="修改时间：2025-10-25 20:44:43" itemprop="dateModified" datetime="2025-10-25T20:44:43+08:00">2025-10-25</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -933,20 +960,14 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="配置-npmmirror-镜像"><a href="#配置-npmmirror-镜像" class="headerlink" title="配置 npmmirror 镜像"></a>配置 npmmirror 镜像</h2><ol>
-<li>备份旧镜像</li>
-</ol>
-<p>在替换 npmmirror 镜像之前，我们先查看一下原有的镜像</p>
+          <h2 id="配置-npmmirror-镜像"><a href="#配置-npmmirror-镜像" class="headerlink" title="配置 npmmirror 镜像"></a>配置 npmmirror 镜像</h2><h3 id="1-备份旧镜像"><a href="#1-备份旧镜像" class="headerlink" title="1. 备份旧镜像"></a>1. 备份旧镜像</h3><p>在替换 npmmirror 镜像之前，我们先查看一下原有的镜像</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm get registry</span><br></pre></td></tr></table></figure>
 
 <p>结果为 <code>https://registry.npmjs.org/</code></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn get registry</span><br></pre></td></tr></table></figure>
 
 <p>结果为 <code>https://registry.yarnpkg.com</code></p>
-<ol start="2">
-<li>替换为 npmmirror 镜像</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">设置 npm 的源为 npmmirror</span></span><br><span class="line">npm config set registry https://registry.npmmirror.com</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">设置 yarn 的源为 npmmirror</span></span><br><span class="line">yarn config set registry https://registry.npmmirror.com</span><br></pre></td></tr></table></figure>
+<h3 id="2-替换为-npmmirror-镜像"><a href="#2-替换为-npmmirror-镜像" class="headerlink" title="2. 替换为 npmmirror 镜像"></a>2. 替换为 npmmirror 镜像</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">设置 npm 的源为 npmmirror</span></span><br><span class="line">npm config set registry https://registry.npmmirror.com</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">设置 yarn 的源为 npmmirror</span></span><br><span class="line">yarn config set registry https://registry.npmmirror.com</span><br></pre></td></tr></table></figure>
 
 <h2 id="升级版本"><a href="#升级版本" class="headerlink" title="升级版本"></a>升级版本</h2>
           <!--noindex-->
