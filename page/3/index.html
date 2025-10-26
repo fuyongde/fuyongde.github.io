@@ -151,7 +151,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-count">37</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -206,6 +206,126 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://fuyongde.github.io/2019/11/14/docker-%E6%89%8B%E5%86%8C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/header.jpg">
+      <meta itemprop="name" content="傅永德">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="傅永德 | 个人博客">
+      <meta itemprop="description" content="苟利国家生死以，岂因祸福避趋之">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 傅永德 | 个人博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/11/14/docker-%E6%89%8B%E5%86%8C/" class="post-title-link" itemprop="url">Docker 手册</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-11-14 17:31:52" itemprop="dateCreated datePublished" datetime="2019-11-14T17:31:52+08:00">2019-11-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-10-25 20:59:33" itemprop="dateModified" datetime="2025-10-25T20:59:33+08:00">2025-10-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%89%8B%E5%86%8C/" itemprop="url" rel="index"><span itemprop="name">手册</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="镜像管理"><a href="#镜像管理" class="headerlink" title="镜像管理"></a>镜像管理</h2><h3 id="查询所需的镜像"><a href="#查询所需的镜像" class="headerlink" title="查询所需的镜像"></a>查询所需的镜像</h3><ul>
+<li><p>Usage：</p>
+<p><code>docker search [OPTIONS] TERM</code></p>
+</li>
+<li><p>Options：</p>
+<p><code>-f --filter</code> ：根据提供的条件过滤输出</p>
+<p><code>--format</code> ：使用 Go 模板进行漂亮的打印搜索</p>
+<p><code>--limit</code> ：最大搜索结果数（默认为 25）</p>
+<p><code>--no-trunc</code>：不要截断输出</p>
+</li>
+<li><p>Example：</p>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker search mysql</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装镜像"><a href="#安装镜像" class="headerlink" title="安装镜像"></a>安装镜像</h3><ul>
+<li><p>Usage：</p>
+<p><code>docker pull [OPTIONS] NAME[:TAG|@DIGEST]</code></p>
+</li>
+<li><p>Options：</p>
+<p><code>-a --all-tags</code>：下载存储库中的所有标记镜像</p>
+<p><code>--disable-content-trust</code>：跳过图像验证（默认为 true）</p>
+</li>
+<li><p>Example：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安装MySQL的5.7.24版本</span></span><br><span class="line">docker pull mysql:5.7.24</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">缺省TAG时默认安装最新版本</span></span><br><span class="line">docker pull mysql</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安装所有版本</span></span><br><span class="line">docker pull -a mysql</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安装zookeeper</span></span><br><span class="line">docker pull zookeeper</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="查看镜像信息"><a href="#查看镜像信息" class="headerlink" title="查看镜像信息"></a>查看镜像信息</h3><p>Usage：</p>
+<p><code>docker images [OPTIONS] [REPOSITORY[:TAG]]</code></p>
+<p>Options：</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/11/14/docker-%E6%89%8B%E5%86%8C/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1120,100 +1240,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2019/07/16/edith-with-thread-pool/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://fuyongde.github.io/2019/07/11/rpc-introduction/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/header.jpg">
-      <meta itemprop="name" content="傅永德">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="傅永德 | 个人博客">
-      <meta itemprop="description" content="苟利国家生死以，岂因祸福避趋之">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 傅永德 | 个人博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/07/11/rpc-introduction/" class="post-title-link" itemprop="url">RPC Introduction</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2019-07-11 15:36:43" itemprop="dateCreated datePublished" datetime="2019-07-11T15:36:43+08:00">2019-07-11</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-10-25 11:37:02" itemprop="dateModified" datetime="2025-10-25T11:37:02+08:00">2025-10-25</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="What-is-RPC"><a href="#What-is-RPC" class="headerlink" title="What is RPC"></a>What is RPC</h2><blockquote>
-<p>Remote Procedure Call (RPC) is a protocol that one program can use to request a service from a program located in another computer on a network without having to understand the network’s details. A procedure call is also sometimes known as a function call or a subroutine call. A procedure call is also sometimes known as a function call or a subroutine call.</p>
-</blockquote>
-<p><code>RPC</code> 是一种远程过程调用协议，一个程序可以使用该协议从位于网络上另一台计算机中的程序请求服务，而无需了解网络的详细信息。<code>RPC</code> 有时也称为函数调用或子程序调用。<code>RPC</code> 是进程间通信的一种方式。</p>
-<h2 id="Why-is-RPC"><a href="#Why-is-RPC" class="headerlink" title="Why is RPC"></a>Why is RPC</h2><p>网上很多关于 <code>RPC</code> 的优点，笔者都不太赞同。不能将那些成熟的 <code>RPC</code> 框架解决的问题全部归结为 <code>RPC</code> 的优点。比如 <code>RPC</code> 的概念中并没有提到服务治理等问题，但是常见的 <code>RPC</code> 框架（如 <a target="_blank" rel="noopener" href="http://dubbo.apache.org/">DUBBO</a>）均解决了服务治理的相关问题，这显然不能作为 <code>RPC</code> 的优点。要解释“Why is RPC?”的问题，还是要回归到 <code>RPC</code> 的概念上来。</p>
-<ul>
-<li><code>RPC</code> 可以使<em>远程过程调用</em>变得像本地调用一样简单。</li>
-<li>方便计算能力的横向扩展。</li>
-</ul>
-<p>有兴趣可以阅读 <a target="_blank" rel="noopener" href="http://dubbo.apache.org/zh-cn/docs/user/preface/background.html">dubbo 诞生的背景</a> 以及<a target="_blank" rel="noopener" href="http://dubbo.apache.org/zh-cn/docs/user/preface/requirements.html">dubbo 解决了哪些需求</a>。</p>
-<h3 id="RPC-vs-HTTP"><a href="#RPC-vs-HTTP" class="headerlink" title="RPC vs HTTP"></a>RPC vs HTTP</h3><p>其实这两者不是同一个维度的概念。从 <code>RPC</code> 的概念上来讲，<code>HTTP</code> 其实就是 <code>RPC</code> 的一种实现。</p>
-<h3 id="RPC-vs-RMI"><a href="#RPC-vs-RMI" class="headerlink" title="RPC vs RMI"></a>RPC vs RMI</h3>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/07/11/rpc-introduction/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>

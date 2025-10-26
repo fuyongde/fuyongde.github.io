@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"fuyongde.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":"auto","version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Windows 系统如何安装 Python 绿色版以下为适配 Windows 系统（以 Windows11 X64 为例）的 Python 3.13.9 绿色版安装步骤，安装路径统一为 C:\devtools\python\Python313，可实现多 Python 版本共存，适合需要灵活管理多个 Python 环境的场景。 一、下载并解压 Python 3.13.9 绿色版获取绿色版解压包访问">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How Install Embed Python On Windows">
+<meta property="og:url" content="https://fuyongde.github.io/2020/03/19/How-Install-Embed-Python-On-Windows/index.html">
+<meta property="og:site_name" content="傅永德 | 个人博客">
+<meta property="og:description" content="Windows 系统如何安装 Python 绿色版以下为适配 Windows 系统（以 Windows11 X64 为例）的 Python 3.13.9 绿色版安装步骤，安装路径统一为 C:\devtools\python\Python313，可实现多 Python 版本共存，适合需要灵活管理多个 Python 环境的场景。 一、下载并解压 Python 3.13.9 绿色版获取绿色版解压包访问">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-03-19T06:42:33.000Z">
+<meta property="article:modified_time" content="2025-10-26T13:14:17.855Z">
+<meta property="article:author" content="傅永德">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://fuyongde.github.io/2020/03/19/How-Install-Embed-Python-On-Windows/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://fuyongde.github.io/2020/03/19/How-Install-Embed-Python-On-Windows/","path":"2020/03/19/How-Install-Embed-Python-On-Windows/","title":"How Install Embed Python On Windows"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>How Install Embed Python On Windows | 傅永德 | 个人博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">傅永德 | 个人博客</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Windows-%E7%B3%BB%E7%BB%9F%E5%A6%82%E4%BD%95%E5%AE%89%E8%A3%85-Python-%E7%BB%BF%E8%89%B2%E7%89%88"><span class="nav-number">1.</span> <span class="nav-text">Windows 系统如何安装 Python 绿色版</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E4%B8%8B%E8%BD%BD%E5%B9%B6%E8%A7%A3%E5%8E%8B-Python-3-13-9-%E7%BB%BF%E8%89%B2%E7%89%88"><span class="nav-number">1.1.</span> <span class="nav-text">一、下载并解压 Python 3.13.9 绿色版</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E7%BB%BF%E8%89%B2%E7%89%88%E8%A7%A3%E5%8E%8B%E5%8C%85"><span class="nav-number">1.1.1.</span> <span class="nav-text">获取绿色版解压包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%8E%8B%E5%88%B0%E6%8C%87%E5%AE%9A%E8%B7%AF%E5%BE%84"><span class="nav-number">1.1.2.</span> <span class="nav-text">解压到指定路径</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%AE%89%E8%A3%85-pip-%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%EF%BC%88%E7%BB%BF%E8%89%B2%E7%89%88%E9%BB%98%E8%AE%A4%E4%B8%8D%E5%90%AB-pip%EF%BC%89"><span class="nav-number">1.2.</span> <span class="nav-text">二、安装 pip 包管理器（绿色版默认不含 pip）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD-get-pip-py-%E8%84%9A%E6%9C%AC"><span class="nav-number">1.2.1.</span> <span class="nav-text">下载 get-pip.py 脚本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%A7%E8%A1%8C-pip-%E5%AE%89%E8%A3%85%E5%91%BD%E4%BB%A4"><span class="nav-number">1.2.2.</span> <span class="nav-text">执行 pip 安装命令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E8%A7%A3%E5%86%B3-%E2%80%9C%E6%89%BE%E4%B8%8D%E5%88%B0%E6%A8%A1%E5%9D%97%E2%80%9D-%E9%97%AE%E9%A2%98%EF%BC%88%E5%85%B3%E9%94%AE%E6%AD%A5%E9%AA%A4%EF%BC%89"><span class="nav-number">1.3.</span> <span class="nav-text">三、解决 “找不到模块” 问题（关键步骤）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E9%AA%8C%E8%AF%81%EF%BC%88%E7%A1%AE%E8%AE%A4%E9%97%AE%E9%A2%98%EF%BC%89"><span class="nav-number">1.3.1.</span> <span class="nav-text">初始验证（确认问题）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9-python313-pth-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">1.3.2.</span> <span class="nav-text">修改 python313._pth 配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%8D%E6%AC%A1%E9%AA%8C%E8%AF%81%EF%BC%88%E7%A1%AE%E8%AE%A4%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%EF%BC%89"><span class="nav-number">1.3.3.</span> <span class="nav-text">再次验证（确认问题解决）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E5%8F%AF%E9%80%89%E6%93%8D%E4%BD%9C%EF%BC%9A%E6%B7%BB%E5%8A%A0%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%EF%BC%88%E5%AE%9E%E7%8E%B0%E5%85%A8%E5%B1%80%E4%BE%BF%E6%8D%B7%E8%B0%83%E7%94%A8%EF%BC%89"><span class="nav-number">1.4.</span> <span class="nav-text">四、可选操作：添加环境变量（实现全局便捷调用）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%93%E5%BC%80%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%85%8D%E7%BD%AE%E7%AA%97%E5%8F%A3"><span class="nav-number">1.4.1.</span> <span class="nav-text">打开环境变量配置窗口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0-Python-%E7%9B%B8%E5%85%B3%E8%B7%AF%E5%BE%84"><span class="nav-number">1.4.2.</span> <span class="nav-text">添加 Python 相关路径</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%AA%8C%E8%AF%81%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E6%98%AF%E5%90%A6%E7%94%9F%E6%95%88"><span class="nav-number">1.4.3.</span> <span class="nav-text">验证环境变量是否生效</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E5%AE%89%E8%A3%85%E5%AE%8C%E6%88%90%E5%90%8E%E7%9A%84%E9%AA%8C%E8%AF%81%E6%93%8D%E4%BD%9C"><span class="nav-number">1.5.</span> <span class="nav-text">五、安装完成后的验证操作</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="傅永德"
+      src="/images/header.jpg">
+  <p class="site-author-name" itemprop="name">傅永德</p>
+  <div class="site-description" itemprop="description">苟利国家生死以，岂因祸福避趋之</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/fuyongde" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;fuyongde" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:fuyongde@foxmail.com" title="E-Mail → mailto:fuyongde@foxmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          友链
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://www.xiaokunli.com/" title="https:&#x2F;&#x2F;www.xiaokunli.com&#x2F;" rel="noopener" target="_blank">xiaokun</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://konekos.github.io/" title="https:&#x2F;&#x2F;konekos.github.io&#x2F;" rel="noopener" target="_blank">Tree</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://fuyongde.github.io/2020/03/19/How-Install-Embed-Python-On-Windows/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/header.jpg">
+      <meta itemprop="name" content="傅永德">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="傅永德 | 个人博客">
+      <meta itemprop="description" content="苟利国家生死以，岂因祸福避趋之">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="How Install Embed Python On Windows | 傅永德 | 个人博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          How Install Embed Python On Windows
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-03-19 14:42:33" itemprop="dateCreated datePublished" datetime="2020-03-19T14:42:33+08:00">2020-03-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-10-26 21:14:17" itemprop="dateModified" datetime="2025-10-26T21:14:17+08:00">2025-10-26</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="Windows-系统如何安装-Python-绿色版"><a href="#Windows-系统如何安装-Python-绿色版" class="headerlink" title="Windows 系统如何安装 Python 绿色版"></a>Windows 系统如何安装 Python 绿色版</h1><p>以下为适配 Windows 系统（以 Windows11 X64 为例）的 Python 3.13.9 绿色版安装步骤，安装路径统一为 C:\devtools\python\Python313，可实现多 Python 版本共存，适合需要灵活管理多个 Python 环境的场景。</p>
+<h2 id="一、下载并解压-Python-3-13-9-绿色版"><a href="#一、下载并解压-Python-3-13-9-绿色版" class="headerlink" title="一、下载并解压 Python 3.13.9 绿色版"></a>一、下载并解压 Python 3.13.9 绿色版</h2><h3 id="获取绿色版解压包"><a href="#获取绿色版解压包" class="headerlink" title="获取绿色版解压包"></a>获取绿色版解压包</h3><p>访问 Python 官方下载页面，定位到 Python 3.13.9 版本：</p>
+<ul>
+<li>官方入口：打开 Python 下载首页，在 “Looking for a specific release?” 栏目下找到 “Python 3.13.9” 并点击进入版本详情页</li>
+<li>直接下载：若已知链接，可访问 Python 3.13.9 专属下载页，在 “Files” 区域选择 Windows x86-64 zip file（64 位系统绿色版，文件格式为 .zip，无需安装，解压即可使用）</li>
+</ul>
+<h3 id="解压到指定路径"><a href="#解压到指定路径" class="headerlink" title="解压到指定路径"></a>解压到指定路径</h3><ul>
+<li>找到下载完成的 .zip 压缩包，右键选择 “解压到…”</li>
+<li>在解压路径选择窗口中，手动输入或浏览定位到 <code>C:\devtools\python\Python313</code>（若路径中 “devtools””python” 文件夹不存在，需提前在对应目录手动新建，确保路径无中文、无空格，避免后续出现命令执行错误）</li>
+<li>等待解压完成，打开 <code>C:\devtools\python\Python313</code> 目录，确认包含 <code>python.exe</code> 等核心文件，即解压成功</li>
+</ul>
+<h2 id="二、安装-pip-包管理器（绿色版默认不含-pip）"><a href="#二、安装-pip-包管理器（绿色版默认不含-pip）" class="headerlink" title="二、安装 pip 包管理器（绿色版默认不含 pip）"></a>二、安装 pip 包管理器（绿色版默认不含 pip）</h2><p>pip 是 Python 官方包管理工具，用于安装、卸载第三方库（如 numpy、pandas 等），绿色版 Python 默认不预装，需手动安装：</p>
+<h3 id="下载-get-pip-py-脚本"><a href="#下载-get-pip-py-脚本" class="headerlink" title="下载 get-pip.py 脚本"></a>下载 get-pip.py 脚本</h3><ul>
+<li>访问 pip 官方安装指南页面：<a target="_blank" rel="noopener" href="https://pip.pypa.io/en/stable/installation/">https://pip.pypa.io/en/stable/installation/</a></li>
+<li>在页面中找到 “Download get-pip.py” 链接，右键点击该链接，选择 “链接另存为”</li>
+<li>在保存窗口中，将文件路径定位到 <code>C:\devtools\python\Python313</code>（即 Python 根目录），确保文件名保留为 <code>get-pip.py</code>，点击 “保存”</li>
+</ul>
+<h3 id="执行-pip-安装命令"><a href="#执行-pip-安装命令" class="headerlink" title="执行 pip 安装命令"></a>执行 pip 安装命令</h3><ul>
+<li>按下 Win + R 组合键打开 “运行” 窗口，输入 <code>cmd</code> 后按下回车，打开 Windows 命令提示符（CMD）</li>
+<li>在 CMD 中，通过 cd 命令切换到 Python 根目录，执行命令：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /d C:\devtools\python\Python313</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><code>/d</code> 参数用于跨盘符切换路径，若当前 CMD 已在 C 盘，可省略 <code>/d</code>，直接执行 <code>cd C:\devtools\python\Python313</code></p>
+</blockquote>
+<ul>
+<li>切换路径后，执行 pip 安装命令：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">py get-pip.py</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>等待命令执行完成（过程中会自动下载并安装 pip 及依赖组件），若 Python 根目录新增 <code>Lib</code> 和 <code>Scripts</code> 两个文件夹，且无报错提示，即 pip 安装成功</li>
+</ul>
+<h2 id="三、解决-“找不到模块”-问题（关键步骤）"><a href="#三、解决-“找不到模块”-问题（关键步骤）" class="headerlink" title="三、解决 “找不到模块” 问题（关键步骤）"></a>三、解决 “找不到模块” 问题（关键步骤）</h2><p>绿色版 Python 为避免多版本冲突，默认不自动加载模块路径，导致执行 pip 命令时可能报错（如 “ModuleNotFoundError”），需通过修改配置文件解决：</p>
+<h3 id="初始验证（确认问题）"><a href="#初始验证（确认问题）" class="headerlink" title="初始验证（确认问题）"></a>初始验证（确认问题）</h3><p>在已切换到 Python 根目录的 CMD 窗口中，执行以下两条命令：</p>
+<ul>
+<li>验证 Python 版本：<code>python -V</code><br>（若输出 “Python 3.13.9”，说明 Python 核心程序正常）</li>
+<li>验证 pip 状态：<code>Scripts\pip -V</code><br>（若出现 “找不到模块” 或 “命令无法识别” 等报错，需继续执行后续步骤）</li>
+</ul>
+<h3 id="修改-python313-pth-配置文件"><a href="#修改-python313-pth-配置文件" class="headerlink" title="修改 python313._pth 配置文件"></a>修改 python313._pth 配置文件</h3><ul>
+<li>打开 <code>C:\devtools\python\Python313</code> 目录，找到名为 <code>python313._pth</code> 的文件（文件名格式为 “python [版本号]._pth”，Python 3.13.9 对应此名称）</li>
+<li>右键选择该文件，点击 “打开方式”→”记事本”（或其他文本编辑器）</li>
+<li>在文件内容中找到 <code>#import site</code> 这一行（<code>#</code> 表示注释，该行未生效），删除开头的注释符 <code>#</code>，修改后为 <code>import site</code></li>
+<li>按下 Ctrl + S 保存文件，关闭记事本</li>
+</ul>
+<h3 id="再次验证（确认问题解决）"><a href="#再次验证（确认问题解决）" class="headerlink" title="再次验证（确认问题解决）"></a>再次验证（确认问题解决）</h3><p>在 CMD 窗口中重新执行 <code>Scripts\pip -V</code>，若输出类似以下信息，说明问题已解决，pip 可正常使用：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip X.X.X from C:\devtools\python\Python313\Lib\site-packages\pip (python 3.13)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>“X.X.X” 为 pip 实际版本号，无需关注具体数值，只要无报错即可</p>
+</blockquote>
+<h2 id="四、可选操作：添加环境变量（实现全局便捷调用）"><a href="#四、可选操作：添加环境变量（实现全局便捷调用）" class="headerlink" title="四、可选操作：添加环境变量（实现全局便捷调用）"></a>四、可选操作：添加环境变量（实现全局便捷调用）</h2><p>默认情况下，需在 Python 根目录执行 python 或 pip 命令，若希望在任意目录的 CMD 窗口中直接调用，需将 Python 路径添加到系统环境变量 Path 中：</p>
+<h3 id="打开环境变量配置窗口"><a href="#打开环境变量配置窗口" class="headerlink" title="打开环境变量配置窗口"></a>打开环境变量配置窗口</h3><ul>
+<li>右键点击 “此电脑”→ 选择 “属性”→ 在弹出的 “系统” 窗口中，点击左侧 “高级系统设置”</li>
+<li>在 “系统属性” 窗口的 “高级” 选项卡下，点击右下角 “环境变量”</li>
+<li>在 “环境变量” 窗口中，找到 “系统变量” 区域的 <code>Path</code> 变量，点击 “编辑”</li>
+</ul>
+<h3 id="添加-Python-相关路径"><a href="#添加-Python-相关路径" class="headerlink" title="添加 Python 相关路径"></a>添加 Python 相关路径</h3><p>在 “编辑环境变量” 窗口中，点击 “新建”，分别添加以下两个路径：</p>
+<ul>
+<li><code>C:\devtools\python\Python313</code>（Python 核心程序路径，用于调用 python 命令）</li>
+<li><code>C:\devtools\python\Python313\Scripts</code>（pip 工具路径，用于调用 pip 命令）</li>
+</ul>
+<p>添加完成后，点击 “确定” 关闭所有窗口（需依次关闭 “编辑环境变量””环境变量””系统属性” 窗口，确保配置生效）</p>
+<h3 id="验证环境变量是否生效"><a href="#验证环境变量是否生效" class="headerlink" title="验证环境变量是否生效"></a>验证环境变量是否生效</h3><ul>
+<li>关闭已打开的所有 CMD 窗口（环境变量修改需重启 CMD 生效）</li>
+<li>重新打开一个新的 CMD 窗口，在任意目录下执行以下命令：<ul>
+<li><code>python -V</code>（输出 Python 3.13.9 版本）</li>
+<li><code>pip -V</code>（输出 pip 版本及路径）</li>
+</ul>
+</li>
+<li>若两条命令均无报错且正常输出，说明环境变量配置成功</li>
+</ul>
+<h2 id="五、安装完成后的验证操作"><a href="#五、安装完成后的验证操作" class="headerlink" title="五、安装完成后的验证操作"></a>五、安装完成后的验证操作</h2><p>为确保 Python 及 pip 完全可用，可执行简单的测试命令：</p>
+<ul>
+<li>在 CMD 中执行 <code>python</code>，进入 Python 交互环境（显示 “&gt;&gt;&gt;” 提示符）</li>
+<li>输入 <code>print(&quot;Python 3.13.9 绿色版安装成功！&quot;)</code>，按下回车，若输出对应字符串，说明 Python 交互环境正常</li>
+<li>输入 <code>exit()</code> 退出交互环境，执行 <code>pip list</code>，若显示已安装的包列表（如 pip、setuptools 等），说明 pip 可正常使用</li>
+</ul>
+<p>至此，Python 3.13.9 绿色版在 Windows 系统中的安装全部完成，可根据需求安装第三方库或运行 Python 脚本。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="傅永德 微信">
+        <span>微信</span>
+      </div>
+
+  </div>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/03/08/gradle-%E6%89%8B%E5%86%8C/" rel="prev" title="Gradle 手册">
+                  <i class="fa fa-angle-left"></i> Gradle 手册
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/03/20/pip-%E6%89%8B%E5%86%8C/" rel="next" title="pip 手册">
+                  pip 手册 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2018 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">傅永德</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/fuyongde" class="github-corner" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
