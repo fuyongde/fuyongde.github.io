@@ -28,7 +28,7 @@
 <meta property="og:description" content="参数配置查看所有参数1mysql&gt; SHOW VARIABLES;  慢查询、索引相关的参数查看慢查询日志是否打开Usage: 1mysql&gt; SHOW VARIABLES LIKE &#x27;%slow_query_log%&#x27;;  Result:    Variable_name Value    slow_query_log OFF   slow_query_log_f">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-11-14T09:20:42.000Z">
-<meta property="article:modified_time" content="2025-10-25T12:43:21.159Z">
+<meta property="article:modified_time" content="2025-11-01T02:26:57.396Z">
 <meta property="article:author" content="傅永德">
 <meta property="article:tag" content="MySQL">
 <meta property="article:tag" content="未完待续">
@@ -257,7 +257,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-10-25 20:43:21" itemprop="dateModified" datetime="2025-10-25T20:43:21+08:00">2025-10-25</time>
+      <time title="修改时间：2025-11-01 10:26:57" itemprop="dateModified" datetime="2025-11-01T10:26:57+08:00">2025-11-01</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -320,7 +320,7 @@
 </tr>
 </tbody></table>
 <h5 id="设置慢查询阈值"><a href="#设置慢查询阈值" class="headerlink" title="设置慢查询阈值"></a>设置慢查询阈值</h5><p>Usage:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-- 设置完之后，在当前窗口查询，可能存在值不变的情况，重新打开窗口查询即可。</span><br><span class="line">mysql&gt; SET GLOBAL long_query_time = 0.1;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-- 设置慢查询阈值为0.1秒</span><br><span class="line">mysql&gt; SET GLOBAL long_query_time = 0.1;</span><br><span class="line">-- 注意：对于全局变量的修改，当前会话可能需要重新连接才能看到变化</span><br></pre></td></tr></table></figure>
 
 <h4 id="未使用索引的情况"><a href="#未使用索引的情况" class="headerlink" title="未使用索引的情况"></a>未使用索引的情况</h4><h5 id="查看未使用索引的查询是否计入慢查询日志"><a href="#查看未使用索引的查询是否计入慢查询日志" class="headerlink" title="查看未使用索引的查询是否计入慢查询日志"></a>查看未使用索引的查询是否计入慢查询日志</h5><p>Usage:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SHOW VARIABLES LIKE &#x27;%log_queries_not_using_indexes%&#x27;;</span><br></pre></td></tr></table></figure>
@@ -350,7 +350,7 @@
 
 <h4 id="剖析-MySQL-查询"><a href="#剖析-MySQL-查询" class="headerlink" title="剖析 MySQL 查询"></a>剖析 MySQL 查询</h4><p>在实际项目中，我们通过慢查询日志，只是找到对应的慢查询，那么如何对慢查询进行剖析呢？</p>
 <p>MySQL 在 5.1 版本之后引入了 <code>SHOW PROFILE</code> 命令，默认是禁用的，但可以在会话级别动态地修改。</p>
-<h5 id="开启"><a href="#开启" class="headerlink" title="开启"></a>开启</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-- 设置为 ON 或 1 均可</span><br><span class="line">mysql&gt; SET PROFILING = ON;</span><br></pre></td></tr></table></figure>
+<h5 id="开启"><a href="#开启" class="headerlink" title="开启"></a>开启</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-- 设置为 ON 或 1 均可，启用查询性能分析功能</span><br><span class="line">mysql&gt; SET PROFILING = ON;</span><br></pre></td></tr></table></figure>
 
 <h5 id="剖析查询耗时"><a href="#剖析查询耗时" class="headerlink" title="剖析查询耗时"></a>剖析查询耗时</h5><p>开启之后执行任意一个查询，然后执行 <code>SHOW PROFILING</code>，观察对应的结果。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SHOW PROFILING;</span><br></pre></td></tr></table></figure>

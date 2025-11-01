@@ -28,7 +28,7 @@
 <meta property="og:description" content="在工作中，遇到一个很有意思的关于时间的问题，这里跟大家分享一下。 现象从数据库里取出用户的生日1990-05-22，接口返回时发现返回值变成了1990-05-21，而对于1992-05-22这样的日期却能正确返回。 网上很多对于相关问题的分析都是简单粗暴的认为是时区的问题，却没有讲明白问题出现的根本原因。 排查过程问题复现为了复现问题现象，我们先快速搭建一个 Spring Boot Applica">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-10-01T08:30:30.000Z">
-<meta property="article:modified_time" content="2025-10-25T13:01:52.800Z">
+<meta property="article:modified_time" content="2025-11-01T02:00:05.476Z">
 <meta property="article:author" content="傅永德">
 <meta property="article:tag" content="夏令时">
 <meta name="twitter:card" content="summary">
@@ -140,7 +140,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%B0%E8%B1%A1"><span class="nav-number">1.</span> <span class="nav-text">现象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%92%E6%9F%A5%E8%BF%87%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text">排查过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%A4%8D%E7%8E%B0"><span class="nav-number">2.1.</span> <span class="nav-text">问题复现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BE%93%E5%87%BA%E5%AF%B9%E5%BA%94%E7%9A%84%E6%97%B6%E9%97%B4"><span class="nav-number">2.2.</span> <span class="nav-text">输出对应的时间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BE%93%E5%87%BA%E7%B3%BB%E7%BB%9F%E7%9A%84%E6%97%B6%E5%8C%BA"><span class="nav-number">2.3.</span> <span class="nav-text">输出系统的时区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B1%82%E8%AF%81"><span class="nav-number">2.4.</span> <span class="nav-text">求证</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%8F%E4%BB%A4%E6%97%B6"><span class="nav-number">3.</span> <span class="nav-text">夏令时</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%B0%E8%B1%A1"><span class="nav-number">1.</span> <span class="nav-text">现象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%92%E6%9F%A5%E8%BF%87%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text">排查过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%A4%8D%E7%8E%B0"><span class="nav-number">2.1.</span> <span class="nav-text">问题复现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BE%93%E5%87%BA%E5%AF%B9%E5%BA%94%E7%9A%84%E6%97%B6%E9%97%B4"><span class="nav-number">2.2.</span> <span class="nav-text">输出对应的时间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BE%93%E5%87%BA%E7%B3%BB%E7%BB%9F%E7%9A%84%E6%97%B6%E5%8C%BA"><span class="nav-number">2.3.</span> <span class="nav-text">输出系统的时区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B1%82%E8%AF%81"><span class="nav-number">2.4.</span> <span class="nav-text">求证</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%8F%E4%BB%A4%E6%97%B6"><span class="nav-number">3.</span> <span class="nav-text">夏令时</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E6%9C%AC%E8%B4%A8%E5%88%86%E6%9E%90"><span class="nav-number">4.</span> <span class="nav-text">问题本质分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E5%A5%BD%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">5.</span> <span class="nav-text">更好的解决方案</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -256,7 +256,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-10-25 21:01:52" itemprop="dateModified" datetime="2025-10-25T21:01:52+08:00">2025-10-25</time>
+      <time title="修改时间：2025-11-01 10:00:05" itemprop="dateModified" datetime="2025-11-01T10:00:05+08:00">2025-11-01</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -315,9 +315,21 @@
 <p>若不设置默认时区为 <code>GMT+8</code>，而是将 <code>Jackson</code> 序列化的时区配置修改为 <code>Asia/Shanghai</code>，接口也能正确输出。</p>
 <p>那么 <code>Asia/Shanghai</code> 与 <code>GMT+8</code> 在什么情况下会导致相差一个小时的问题呢？</p>
 <h2 id="夏令时"><a href="#夏令时" class="headerlink" title="夏令时"></a>夏令时</h2><blockquote>
-<p>夏令时，表示为了节约能源，人为规定时间的意思。也叫夏时制，夏时令（Daylight Saving Time：DST），又称“日光节约时制”和“夏令时间”，在这一制度实行期间所采用的统一时间称为“夏令时间”。一般在天亮早的夏季人为将时间调快一小时，可以使人早起早睡，减少照明量，以充分利用光照资源，从而节约照明用电。各个采纳夏时制的国家具体规定不同。目前全世界有近 110 个国家每年要实行夏令时。1986 年 4 月，中国中央有关部门发出“在全国范围内实行夏时制的通知”，具体作法是：每年从四月中旬第一个星期日的凌晨 2 时整（北京时间），将时钟拨快一小时，即将表针由 2 时拨至 3 时，夏令时开始；到九月中旬第一个星期日的凌晨 2 时整（北京夏令时），再将时钟拨回一小时，即将表针由 2 时拨至 1 时，夏令时结束。从 1986 年到 1991 年的六个年度，除 1986 年因是实行夏时制的第一年，从 5 月 4 日开始到 9 月 14 日结束外，其它年份均按规定的时段施行。在夏令时开始和结束前几天，新闻媒体均刊登有关部门的通告。1992 年起，夏令时暂停实行。</p>
+<p>夏令时，表示为了节约能源，人为规定时间的意思。也叫夏时制，夏时令（Daylight Saving Time：DST），又称”日光节约时制”和”夏令时间”，在这一制度实行期间所采用的统一时间称为”夏令时间”。一般在天亮早的夏季人为将时间调快一小时，可以使人早起早睡，减少照明量，以充分利用光照资源，从而节约照明用电。各个采纳夏时制的国家具体规定不同。目前全世界有近 110 个国家每年要实行夏令时。1986 年 4 月，中国中央有关部门发出”在全国范围内实行夏时制的通知”，具体作法是：每年从四月中旬第一个星期日的凌晨 2 时整（北京时间），将时钟拨快一小时，即将表针由 2 时拨至 3 时，夏令时开始；到九月中旬第一个星期日的凌晨 2 时整（北京夏令时），再将时钟拨回一小时，即将表针由 2 时拨至 1 时，夏令时结束。从 1986 年到 1991 年的六个年度，除 1986 年因是实行夏时制的第一年，从 5 月 4 日开始到 9 月 14 日结束外，其它年份均按规定的时段施行。在夏令时开始和结束前几天，新闻媒体均刊登有关部门的通告。1992 年起，夏令时暂停实行。</p>
 </blockquote>
 <p>以上内容摘抄自<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%A4%8F%E4%BB%A4%E6%97%B6">百度百科</a>，这也就是为什么在上述例子中为什么<code>1992-05-22</code>即使在系统时区与 <code>Jackson</code> 序列化时区不一致的情况下，仍然能够正确返回，而<code>1990-05-22</code>就会出错。</p>
+<h2 id="问题本质分析"><a href="#问题本质分析" class="headerlink" title="问题本质分析"></a>问题本质分析</h2><p>实际上，这个问题的根本原因并不是简单的夏令时问题，而是不同时间 zone 表示方式的差异：</p>
+<ol>
+<li><code>Asia/Shanghai</code> 是一个完整的时区 ID，它包含了完整的时区历史信息，包括中国实行夏令时的历史记录</li>
+<li><code>GMT+8</code> 只是一个固定的 UTC 偏移量，不包含任何历史时区变化信息</li>
+</ol>
+<p>当处理 1990 年这样的历史日期时，这两种时区表示方式在夏令时处理上会产生差异，导致序列化结果不一致。</p>
+<h2 id="更好的解决方案"><a href="#更好的解决方案" class="headerlink" title="更好的解决方案"></a>更好的解决方案</h2><p>除了文中提到的两种解决方案外，还有其他更好的处理方式：</p>
+<ol>
+<li><strong>使用 LocalDate 处理纯日期</strong>：对于生日这类不含时区信息的日期，应使用 <code>LocalDate</code> 而不是 <code>Date</code></li>
+<li><strong>统一使用 UTC</strong>：在系统内部统一使用 UTC 时间存储和传输，在展示给用户时再转换为本地时区</li>
+<li><strong>明确时区处理策略</strong>：在序列化配置中明确指定时区处理策略，避免依赖系统默认设置</li>
+</ol>
 
     </div>
 
