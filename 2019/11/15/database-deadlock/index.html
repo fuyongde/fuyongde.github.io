@@ -20,15 +20,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"fuyongde.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":"auto","version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="死锁是指两个或者多个事务在同一个资源上相互占用，并请求锁定对方占用的资源，从而导致恶性循环的现象  示例先用一个示例来演示一下数据库死锁的情况。本示例基于 MySQL 的 InnoDB 存储引擎。 表结构我们先建一个 wallet 表，表结构如下 12345678mysql&gt; DESC wallet;+---------+---------------------+------+-----">
+    <meta name="description" content="死锁是指两个或多个事务在同一个资源上相互占用，并请求锁定对方占用的资源，从而导致恶性循环的现象  示例先用一个示例来演示一下数据库死锁的情况。本示例基于 MySQL 的 InnoDB 存储引擎。 表结构我们先建一个 wallet 表，表结构如下 12345678mysql&gt; DESC wallet;+---------+---------------------+------+-----+">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数据库死锁">
 <meta property="og:url" content="https://fuyongde.github.io/2019/11/15/database-deadlock/index.html">
 <meta property="og:site_name" content="傅永德 | 个人博客">
-<meta property="og:description" content="死锁是指两个或者多个事务在同一个资源上相互占用，并请求锁定对方占用的资源，从而导致恶性循环的现象  示例先用一个示例来演示一下数据库死锁的情况。本示例基于 MySQL 的 InnoDB 存储引擎。 表结构我们先建一个 wallet 表，表结构如下 12345678mysql&gt; DESC wallet;+---------+---------------------+------+-----">
+<meta property="og:description" content="死锁是指两个或多个事务在同一个资源上相互占用，并请求锁定对方占用的资源，从而导致恶性循环的现象  示例先用一个示例来演示一下数据库死锁的情况。本示例基于 MySQL 的 InnoDB 存储引擎。 表结构我们先建一个 wallet 表，表结构如下 12345678mysql&gt; DESC wallet;+---------+---------------------+------+-----+">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-11-15T06:05:13.000Z">
-<meta property="article:modified_time" content="2025-10-25T03:37:02.852Z">
+<meta property="article:modified_time" content="2025-11-01T12:36:23.467Z">
 <meta property="article:author" content="傅永德">
 <meta property="article:tag" content="数据库">
 <meta property="article:tag" content="MySQL">
@@ -141,7 +141,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B"><span class="nav-number">1.</span> <span class="nav-text">示例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A1%A8%E7%BB%93%E6%9E%84"><span class="nav-number">1.1.</span> <span class="nav-text">表结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E5%90%AF%E4%BA%8B%E5%8A%A1-A%EF%BC%8C%E5%B9%B6%E4%BF%AE%E6%94%B9-id-%E4%B8%BA-1-%E7%9A%84%E8%AE%B0%E5%BD%95"><span class="nav-number">1.2.</span> <span class="nav-text">开启事务 A，并修改 id 为 1 的记录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E5%90%AF%E4%BA%8B%E5%8A%A1-B%EF%BC%8C%E5%B9%B6%E4%BF%AE%E6%94%B9-id-%E4%B8%BA-2-%E7%9A%84%E8%AE%B0%E5%BD%95"><span class="nav-number">1.3.</span> <span class="nav-text">开启事务 B，并修改 id 为 2 的记录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8B%E5%8A%A1-A-%E4%BF%AE%E6%94%B9-id-%E4%B8%BA-2-%E7%9A%84%E8%AE%B0%E5%BD%95"><span class="nav-number">1.4.</span> <span class="nav-text">事务 A 修改 id 为 2 的记录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8B%E5%8A%A1-B-%E4%BF%AE%E6%94%B9-id-%E4%B8%BA-3-%E7%9A%84%E8%AE%B0%E5%BD%95"><span class="nav-number">1.5.</span> <span class="nav-text">事务 B 修改 id 为 3 的记录</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E6%AD%BB%E9%94%81%E9%97%AE%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text">如何解决死锁问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%BB%E9%94%81%E4%BA%A7%E7%94%9F%E7%9A%84%E5%8E%9F%E5%9B%A0"><span class="nav-number">2.1.</span> <span class="nav-text">死锁产生的原因</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%AD%BB%E9%94%81%E9%97%AE%E9%A2%98"><span class="nav-number">2.2.</span> <span class="nav-text">解决死锁问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#InnoDB-%E6%98%BE%E5%BC%8F%E5%92%8C%E9%9A%90%E5%BC%8F%E9%94%81%E5%AE%9A"><span class="nav-number">2.3.</span> <span class="nav-text">InnoDB 显式和隐式锁定</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B"><span class="nav-number">1.</span> <span class="nav-text">示例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A1%A8%E7%BB%93%E6%9E%84"><span class="nav-number">1.1.</span> <span class="nav-text">表结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E5%90%AF%E4%BA%8B%E5%8A%A1-A%EF%BC%8C%E5%B9%B6%E4%BF%AE%E6%94%B9-id-%E4%B8%BA-1-%E7%9A%84%E8%AE%B0%E5%BD%95"><span class="nav-number">1.2.</span> <span class="nav-text">开启事务 A，并修改 id 为 1 的记录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E5%90%AF%E4%BA%8B%E5%8A%A1-B%EF%BC%8C%E5%B9%B6%E4%BF%AE%E6%94%B9-id-%E4%B8%BA-2-%E7%9A%84%E8%AE%B0%E5%BD%95"><span class="nav-number">1.3.</span> <span class="nav-text">开启事务 B，并修改 id 为 2 的记录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8B%E5%8A%A1-A-%E4%BF%AE%E6%94%B9-id-%E4%B8%BA-2-%E7%9A%84%E8%AE%B0%E5%BD%95"><span class="nav-number">1.4.</span> <span class="nav-text">事务 A 修改 id 为 2 的记录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8B%E5%8A%A1-B-%E4%BF%AE%E6%94%B9-id-%E4%B8%BA-1-%E7%9A%84%E8%AE%B0%E5%BD%95"><span class="nav-number">1.5.</span> <span class="nav-text">事务 B 修改 id 为 1 的记录</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E6%AD%BB%E9%94%81%E9%97%AE%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text">如何解决死锁问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%BB%E9%94%81%E4%BA%A7%E7%94%9F%E7%9A%84%E5%8E%9F%E5%9B%A0"><span class="nav-number">2.1.</span> <span class="nav-text">死锁产生的原因</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%AD%BB%E9%94%81%E9%97%AE%E9%A2%98"><span class="nav-number">2.2.</span> <span class="nav-text">解决死锁问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#InnoDB-%E6%98%BE%E5%BC%8F%E5%92%8C%E9%9A%90%E5%BC%8F%E9%94%81%E5%AE%9A"><span class="nav-number">2.3.</span> <span class="nav-text">InnoDB 显式和隐式锁定</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -257,7 +257,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-10-25 11:37:02" itemprop="dateModified" datetime="2025-10-25T11:37:02+08:00">2025-10-25</time>
+      <time title="修改时间：2025-11-01 20:36:23" itemprop="dateModified" datetime="2025-11-01T20:36:23+08:00">2025-11-01</time>
     </span>
 
   
@@ -270,7 +270,7 @@
     
     
     <div class="post-body" itemprop="articleBody"><blockquote>
-<p>死锁是指两个或者多个事务在同一个资源上相互占用，并请求锁定对方占用的资源，从而导致恶性循环的现象</p>
+<p>死锁是指两个或多个事务在同一个资源上相互占用，并请求锁定对方占用的资源，从而导致恶性循环的现象</p>
 </blockquote>
 <h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><p>先用一个示例来演示一下数据库死锁的情况。本示例基于 <code>MySQL</code> 的 <code>InnoDB</code> 存储引擎。</p>
 <h3 id="表结构"><a href="#表结构" class="headerlink" title="表结构"></a>表结构</h3><p>我们先建一个 wallet 表，表结构如下</p>
@@ -282,22 +282,22 @@
 
 <h3 id="事务-A-修改-id-为-2-的记录"><a href="#事务-A-修改-id-为-2-的记录" class="headerlink" title="事务 A 修改 id 为 2 的记录"></a>事务 A 修改 id 为 2 的记录</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; UPDATE wallet SET balance = balance + 100 WHERE id = 2;</span><br></pre></td></tr></table></figure>
 
-<p>此时发现该修改并未马上成功，而是陷入的等待状态，原因是事务 A 此时要锁定 id 为 2 的记录，但该记录已经被事务 B 锁定了。</p>
-<h3 id="事务-B-修改-id-为-3-的记录"><a href="#事务-B-修改-id-为-3-的记录" class="headerlink" title="事务 B 修改 id 为 3 的记录"></a>事务 B 修改 id 为 3 的记录</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; UPDATE wallet SET balance = balance + 100 WHERE id = 1;</span><br><span class="line">ERROR 1213 (40001): Deadlock found when trying to get lock; try restarting transaction</span><br></pre></td></tr></table></figure>
+<p>此时发现该修改并未马上成功，而是陷入等待状态，原因是事务 A 此时要锁定 id 为 2 的记录，但该记录已经被事务 B 锁定了。</p>
+<h3 id="事务-B-修改-id-为-1-的记录"><a href="#事务-B-修改-id-为-1-的记录" class="headerlink" title="事务 B 修改 id 为 1 的记录"></a>事务 B 修改 id 为 1 的记录</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; UPDATE wallet SET balance = balance + 100 WHERE id = 1;</span><br><span class="line">ERROR 1213 (40001): Deadlock found when trying to get lock; try restarting transaction</span><br></pre></td></tr></table></figure>
 
-<p>此时事务 B 报错，错误原因很明确是发生了死锁问题，通过查询操作也可以发现事务 B 的操作已经回滚，于此同时事务 A 对 id 为 2 的记录的修改已经成功，后续的 <code>COMMIT</code> 操作就不展示了。</p>
-<h2 id="如何解决死锁问题"><a href="#如何解决死锁问题" class="headerlink" title="如何解决死锁问题"></a>如何解决死锁问题</h2><h3 id="死锁产生的原因"><a href="#死锁产生的原因" class="headerlink" title="死锁产生的原因"></a>死锁产生的原因</h3><p>锁的行为和顺序是和存储引擎相关的，同样的顺序执行语句，有些存储引擎会产生死锁，有的则不会。故死锁的产生有两重原因：有些是因为真正的数据冲突，有些则完全是由于存储引擎的实现方式导致的。</p>
-<p>死锁发生以后，只有部分或者完全回滚其中一个事务，才能打破死锁。对于事务性的系统，死锁问题是无法避免的，设计对应的应用程序时必须考虑如何处理死锁。大部分情况只需要重新执行因死锁导致回滚的事务即可。</p>
-<h3 id="解决死锁问题"><a href="#解决死锁问题" class="headerlink" title="解决死锁问题"></a>解决死锁问题</h3><p>常见的数据库都实现了个中死锁检测和死锁超时机制。</p>
+<p>此时事务 B 报错，错误原因很明确是发生了死锁问题，通过查询操作也可以发现事务 B 的操作已经回滚，与此同时事务 A 对 id 为 2 的记录的修改已经成功，后续的 <code>COMMIT</code> 操作就不展示了。</p>
+<h2 id="如何解决死锁问题"><a href="#如何解决死锁问题" class="headerlink" title="如何解决死锁问题"></a>如何解决死锁问题</h2><h3 id="死锁产生的原因"><a href="#死锁产生的原因" class="headerlink" title="死锁产生的原因"></a>死锁产生的原因</h3><p>锁的行为和顺序是和存储引擎相关的，同样的顺序执行语句，有些存储引擎会产生死锁，有的则不会。因此死锁的产生有两种原因：有些是因为真正的数据冲突，有些则完全是由于存储引擎的实现方式导致的。</p>
+<p>死锁发生以后，只有部分或者完全回滚其中一个事务，才能打破死锁。对于事务性系统，死锁问题是无法完全避免的，在设计应用程序时必须考虑如何处理死锁。大部分情况下只需要重新执行因死锁回滚的事务即可。</p>
+<h3 id="解决死锁问题"><a href="#解决死锁问题" class="headerlink" title="解决死锁问题"></a>解决死锁问题</h3><p>常见的数据库都实现了各种死锁检测和死锁超时机制。</p>
 <ul>
 <li><p>死锁检测：比如上述例子中，检测到死锁问题，数据库立马报错，这种解决方式非常有效，否则死锁会导致非常慢的查询。</p>
 </li>
 <li><p>超时机制：超时机制就是当查询时间达到锁等待超时的设定后放弃锁的请求。</p>
 </li>
 </ul>
-<p><code>InnoDB</code> 目前处理死锁的方式是将最少行级排他锁的事务进行回滚。</p>
-<h3 id="InnoDB-显式和隐式锁定"><a href="#InnoDB-显式和隐式锁定" class="headerlink" title="InnoDB 显式和隐式锁定"></a>InnoDB 显式和隐式锁定</h3><p><code>InnoDB</code> 采用的时两端锁定协议（two-phase locking protocol）。在事务执行过程中，随时都可以执行锁定，锁只有在执行 <code>COMMIT</code> 或者 <code>ROLLBACK</code> 的时候才会被释放，并且所有的锁是在同一时刻被释放。<code>InnoDB</code> 会根据隔离级别在需要的的时候自动加锁。</p>
-<p><code>InnoDB</code> 也支持通过特定的语句进行显式的锁定，这些语句不属于 <code>SQL</code> 规范。</p>
+<p><code>InnoDB</code> 目前处理死锁的方式是选择代价较小的事务进行回滚，这个代价基于多种因素计算，包括事务已经锁定了多少行数据、事务的权重等因素。</p>
+<h3 id="InnoDB-显式和隐式锁定"><a href="#InnoDB-显式和隐式锁定" class="headerlink" title="InnoDB 显式和隐式锁定"></a>InnoDB 显式和隐式锁定</h3><p><code>InnoDB</code> 采用的是两阶段锁定协议（two-phase locking protocol）。在事务执行过程中，随时都可以执行锁定，锁只有在执行 <code>COMMIT</code> 或者 <code>ROLLBACK</code> 的时候才会被释放，并且所有的锁是在同一时刻被释放。<code>InnoDB</code> 会根据隔离级别在需要的时候自动加锁。</p>
+<p><code>InnoDB</code> 也支持通过特定的语句进行显式的锁定，这些语句不属于标准 <code>SQL</code> 规范。</p>
 <ul>
 <li><code>SELECT ... LOCK IN SHARE MODE</code></li>
 <li><code>SELECT ... FOR UPDATE</code></li>
