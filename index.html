@@ -151,18 +151,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-count">38</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-count">49</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -206,6 +206,107 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://fuyongde.github.io/2026/01/18/JaCoCo-%E4%BA%8C%E6%AC%A1%E5%BC%80%E5%8F%91%E8%A7%A3%E5%86%B3%E3%80%8C%E7%B1%BB%E5%B1%80%E9%83%A8%E4%BF%AE%E6%94%B9%E4%B8%A2%E5%A4%B1%E5%8E%86%E5%8F%B2%E8%A6%86%E7%9B%96%E7%8E%87%E3%80%8D%E5%AE%8C%E6%95%B4%E6%96%B9%E6%A1%88/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/header.jpg">
+      <meta itemprop="name" content="傅永德">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="傅永德 | 个人博客">
+      <meta itemprop="description" content="苟利国家生死以，岂因祸福避趋之">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 傅永德 | 个人博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2026/01/18/JaCoCo-%E4%BA%8C%E6%AC%A1%E5%BC%80%E5%8F%91%E8%A7%A3%E5%86%B3%E3%80%8C%E7%B1%BB%E5%B1%80%E9%83%A8%E4%BF%AE%E6%94%B9%E4%B8%A2%E5%A4%B1%E5%8E%86%E5%8F%B2%E8%A6%86%E7%9B%96%E7%8E%87%E3%80%8D%E5%AE%8C%E6%95%B4%E6%96%B9%E6%A1%88/" class="post-title-link" itemprop="url">JaCoCo 二次开发解决「类局部修改丢失历史覆盖率」完整方案</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2026-01-18 21:48:10 / 修改时间：21:49:13" itemprop="dateCreated datePublished" datetime="2026-01-18T21:48:10+08:00">2026-01-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" itemprop="url" rel="index"><span itemprop="name">解决方案</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>本文为基于 JaCoCo 源码二次开发的全流程方案，旨在实现类局部修改后保留未改动方法历史覆盖率，仅失效改动方法覆盖率的核心诉求，兼顾 JaCoCo 原生正确性原则与业务实用性。</p>
+<h2 id="一、核心目标与不可突破原则"><a href="#一、核心目标与不可突破原则" class="headerlink" title="一、核心目标与不可突破原则"></a>一、核心目标与不可突破原则</h2><h3 id="1-1-核心开发目标"><a href="#1-1-核心开发目标" class="headerlink" title="1.1 核心开发目标"></a>1.1 核心开发目标</h3><ul>
+<li>类局部修改（方法 &#x2F; 代码块修改）时，未改动方法的历史覆盖率完全复用，改动方法覆盖率清零并重新统计；</li>
+<li>完全兼容 JaCoCo 原生能力：插桩方式（动态 &#x2F; 离线）、覆盖率维度、dump 文件格式、构建插件（Maven&#x2F;Gradle）；</li>
+<li>坚守正确性底线：仅当方法字节码逻辑完全未变时才复用覆盖率，杜绝错误数据。</li>
+</ul>
+<h3 id="1-2-不可突破原则"><a href="#1-2-不可突破原则" class="headerlink" title="1.2 不可突破原则"></a>1.2 不可突破原则</h3><ul>
+<li>正确性原则：复用数据必须基于方法逻辑一致性，方法体改动则覆盖率强制失效；</li>
+<li>向下兼容原则：改造后 JaCoCo 可解析原生 dump 文件，原生 JaCoCo 可解析改造后文件（降级兼容）；</li>
+<li>无侵入原则：业务侧无感知，使用方式与原生 JaCoCo 一致，新增开关控制功能。</li>
+</ul>
+<h3 id="1-3-核心改造思想"><a href="#1-3-核心改造思想" class="headerlink" title="1.3 核心改造思想"></a>1.3 核心改造思想</h3><p>原生 JaCoCo 以 类级别 ClassID 绑定覆盖率数据，类变更则全量失效；改造后下沉为 方法级别 MethodID 绑定，实现方法级粒度的失效与复用，核心逻辑如下：</p>
+<ul>
+<li>覆盖率数据存储结构从 ClassID + 全局探针ID → ClassID + MethodID + 方法内局部探针ID</li>
+</ul>
+<h2 id="二、前置准备"><a href="#二、前置准备" class="headerlink" title="二、前置准备"></a>二、前置准备</h2>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2026/01/18/JaCoCo-%E4%BA%8C%E6%AC%A1%E5%BC%80%E5%8F%91%E8%A7%A3%E5%86%B3%E3%80%8C%E7%B1%BB%E5%B1%80%E9%83%A8%E4%BF%AE%E6%94%B9%E4%B8%A2%E5%A4%B1%E5%8E%86%E5%8F%B2%E8%A6%86%E7%9B%96%E7%8E%87%E3%80%8D%E5%AE%8C%E6%95%B4%E6%96%B9%E6%A1%88/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1096,91 +1197,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://fuyongde.github.io/2020/03/24/android-command-line-%E5%AE%89%E8%A3%85%E6%97%B6%E7%9A%84%E5%9D%91/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/header.jpg">
-      <meta itemprop="name" content="傅永德">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="傅永德 | 个人博客">
-      <meta itemprop="description" content="苟利国家生死以，岂因祸福避趋之">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 傅永德 | 个人博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2020/03/24/android-command-line-%E5%AE%89%E8%A3%85%E6%97%B6%E7%9A%84%E5%9D%91/" class="post-title-link" itemprop="url">android command line 安装时的坑</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2020-03-24 11:38:28" itemprop="dateCreated datePublished" datetime="2020-03-24T11:38:28+08:00">2020-03-24</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-10-25 11:37:02" itemprop="dateModified" datetime="2025-10-25T11:37:02+08:00">2025-10-25</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>很久没有搞过 Android 开发了，Android 的命令行安装方式相比之前发生了一些变化，这里针对安装最新的 Android 命令行时遇到的一些问题，记录一下解决方法。</p>
-<p><em>问题：下载最新的 commandlinetools 在自己指定的目录安装之后，无法使用</em></p>
-<p><strong>原因：最新版本的 commandlinetools 对安装的目录是有要求的</strong></p>
-<ol>
-<li>Download latest Command line tools from android i.e. commandlinetools-win-6200805_latest.zip</li>
-<li>Unzip the downloaded file</li>
-<li>Create directory for storing commandline tools somewhere on your disk, with following path included: android&#x2F;cmdline-tools&#x2F;latest Basically when You unzip this Cmd line tools, just rename tools directory to latest and make sure You put this latest folder in android&#x2F;cmdline-tools directory somewhere on your disk</li>
-<li>Create ANDROID_HOME environment variable for directory that stores the cmdline tools directory location like: <code>C:\YourLocationWhereYouStoreTheDirectory\android\cmdline-tools\latest</code></li>
-<li>Create new entry in Path environment variable as %ANDROID_HOME%\bin</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
@@ -1193,7 +1209,7 @@
 
   <div class="copyright">
     &copy; 2018 – 
-    <span itemprop="copyrightYear">2025</span>
+    <span itemprop="copyrightYear">2026</span>
     <span class="with-love">
       <i class="fa fa-heart"></i>
     </span>
