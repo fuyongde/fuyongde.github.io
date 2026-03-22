@@ -151,18 +151,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">38</span>
+          <span class="site-state-item-count">41</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">49</span>
+        <span class="site-state-item-count">53</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -215,6 +215,414 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://fuyongde.github.io/2026/03/22/Claude-Code-Agent-Teams-%E6%8C%87%E5%8D%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/header.jpg">
+      <meta itemprop="name" content="傅永德">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="傅永德 | 个人博客">
+      <meta itemprop="description" content="苟利国家生死以，岂因祸福避趋之">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 傅永德 | 个人博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2026/03/22/Claude-Code-Agent-Teams-%E6%8C%87%E5%8D%97/" class="post-title-link" itemprop="url">Claude Code Agent Teams 指南</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2026-03-22 11:00:00 / 修改时间：20:14:38" itemprop="dateCreated datePublished" datetime="2026-03-22T11:00:00+08:00">2026-03-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/AI/Claude-Code/" itemprop="url" rel="index"><span itemprop="name">Claude Code</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>Agent Teams 让多个 Claude Code 实例并行工作并通过共享任务列表相互协调。与 subagents 不同，agent teams 中的队友可以直接相互通信、协作和分享发现，适合需要团队协作的复杂任务。</p>
+<p>本文将详细介绍 Agent Teams 的启用方式、使用方法、最佳实践以及与 Subagents 的区别。</p>
+<h2 id="一、Agent-Teams-概述"><a href="#一、Agent-Teams-概述" class="headerlink" title="一、Agent Teams 概述"></a>一、Agent Teams 概述</h2><h3 id="1-1-什么是-Agent-Teams"><a href="#1-1-什么是-Agent-Teams" class="headerlink" title="1.1 什么是 Agent Teams"></a>1.1 什么是 Agent Teams</h3><p>Agent Teams 是一组并行工作的 Claude Code 实例，通过共享任务列表协调工作。每个队友都是完整的、独立的 Claude Code 会话，拥有自己的 context window。</p>
+<p><strong>核心组件：</strong></p>
+<table>
+<thead>
+<tr>
+<th>组件</th>
+<th>角色</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Team Lead</td>
+<td>创建团队、生成队友并协调工作的主 Claude Code 会话</td>
+</tr>
+<tr>
+<td>Teammates</td>
+<td>各自处理分配任务的独立 Claude Code 实例</td>
+</tr>
+<tr>
+<td>Task List</td>
+<td>队友认领和完成的共享工作项列表</td>
+</tr>
+<tr>
+<td>Mailbox</td>
+<td>代理之间通信的消息系统</td>
+</tr>
+</tbody></table>
+<h3 id="1-2-与-Subagents-的区别"><a href="#1-2-与-Subagents-的区别" class="headerlink" title="1.2 与 Subagents 的区别"></a>1.2 与 Subagents 的区别</h3><p>Agent Teams 和 Subagents 都支持并行工作，但运作方式不同：</p>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>Subagents</th>
+<th>Agent Teams</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Context</td>
+<td>自己的 context window；结果返回给调用者</td>
+<td>自己的 context window；完全独立</td>
+</tr>
+<tr>
+<td>通信</td>
+<td>仅向主代理报告结果</td>
+<td>队友直接相互发送消息</td>
+</tr>
+<tr>
+<td>协调</td>
+<td>主代理管理所有工作</td>
+<td>共享任务列表，自我协调</td>
+</tr>
+<tr>
+<td>最适合</td>
+<td>只有结果重要的专注任务</td>
+<td>需要讨论和协作的复杂工作</td>
+</tr>
+<tr>
+<td>令牌成本</td>
+<td>较低：结果汇总回主 context</td>
+<td>较高：每个队友是独立的 Claude 实例</td>
+</tr>
+</tbody></table>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2026/03/22/Claude-Code-Agent-Teams-%E6%8C%87%E5%8D%97/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://fuyongde.github.io/2026/03/22/Claude-Code-Sub-Agents-%E6%8C%87%E5%8D%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/header.jpg">
+      <meta itemprop="name" content="傅永德">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="傅永德 | 个人博客">
+      <meta itemprop="description" content="苟利国家生死以，岂因祸福避趋之">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 傅永德 | 个人博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2026/03/22/Claude-Code-Sub-Agents-%E6%8C%87%E5%8D%97/" class="post-title-link" itemprop="url">Claude Code Sub-Agents 指南</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2026-03-22 10:00:00 / 修改时间：19:59:50" itemprop="dateCreated datePublished" datetime="2026-03-22T10:00:00+08:00">2026-03-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/AI/Claude-Code/" itemprop="url" rel="index"><span itemprop="name">Claude Code</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>Subagents 是 Claude Code 中处理特定类型任务的专门 AI 助手。每个 subagent 在自己独立的 context window 中运行，具有自定义系统提示、特定的工具访问权限和独立的权限控制。当 Claude 遇到与 subagent 描述相匹配的任务时，它会委托给该 subagent，subagent 独立工作后返回结果。</p>
+<p>本文将从创建方法、使用场景和最佳实践三个维度，全面介绍 Claude Code Sub-Agents 的使用。</p>
+<h2 id="一、如何创建-Sub-Agent"><a href="#一、如何创建-Sub-Agent" class="headerlink" title="一、如何创建 Sub-Agent"></a>一、如何创建 Sub-Agent</h2><h3 id="1-1-使用-agents-命令（推荐方式）"><a href="#1-1-使用-agents-命令（推荐方式）" class="headerlink" title="1.1 使用 /agents 命令（推荐方式）"></a>1.1 使用 <code>/agents</code> 命令（推荐方式）</h3><p><code>/agents</code> 命令提供了交互式界面来管理 subagents，这是推荐的创建方式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/agents</span><br></pre></td></tr></table></figure>
+
+<p>在交互界面中可以：</p>
+<ul>
+<li>查看所有可用的 subagents（内置、用户、项目和插件）</li>
+<li>使用引导式设置或 Claude 生成创建新的 subagents</li>
+<li>编辑现有 subagent 配置和工具访问权限</li>
+<li>删除自定义 subagents</li>
+</ul>
+<p>创建步骤示例：</p>
+<ol>
+<li><p>选择 <strong>Create new agent</strong></p>
+</li>
+<li><p>选择范围：<strong>User-level</strong>（用户级）或 <strong>Project-level</strong>（项目级）</p>
+</li>
+<li><p>选择 <strong>Generate with Claude</strong> 让 Claude 自动生成配置</p>
+</li>
+<li><p>描述你的 subagent，例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">A code improvement agent that scans files and suggests improvements</span><br><span class="line">for readability, performance, and best practices.</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>选择工具权限（只读审查者只需选择 Read-only tools）</p>
+</li>
+<li><p>选择模型（Sonnet 平衡能力和速度，Haiku 更快更便宜）</p>
+</li>
+<li><p>保存后立即可用，无需重启</p>
+</li>
+</ol>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2026/03/22/Claude-Code-Sub-Agents-%E6%8C%87%E5%8D%97/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://fuyongde.github.io/2026/03/12/Claude-Code-Skills-%E6%8C%87%E5%8D%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/header.jpg">
+      <meta itemprop="name" content="傅永德">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="傅永德 | 个人博客">
+      <meta itemprop="description" content="苟利国家生死以，岂因祸福避趋之">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 傅永德 | 个人博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2026/03/12/Claude-Code-Skills-%E6%8C%87%E5%8D%97/" class="post-title-link" itemprop="url">Claude Code Skills 完整指南</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-03-12 22:27:52" itemprop="dateCreated datePublished" datetime="2026-03-12T22:27:52+08:00">2026-03-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-03-22 19:53:26" itemprop="dateModified" datetime="2026-03-22T19:53:26+08:00">2026-03-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/AI/Claude-Code/" itemprop="url" rel="index"><span itemprop="name">Claude Code</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="一、基础概念"><a href="#一、基础概念" class="headerlink" title="一、基础概念"></a>一、基础概念</h2><p><strong>什么是 Skills？</strong><br>Skills 是 Claude Code 的扩展机制，让你可以创建、管理和分享自定义能力。每个 Skill 是一个包含 <code>SKILL.md</code> 文件的目录，Claude 会将其添加到工具箱中。</p>
+<p><strong>核心价值：</strong></p>
+<ul>
+<li>自动化重复任务</li>
+<li>添加领域专业知识</li>
+<li>强制执行代码标准和最佳实践</li>
+<li>加速项目脚手架和代码生成</li>
+</ul>
+<hr>
+<h2 id="二、文件结构"><a href="#二、文件结构" class="headerlink" title="二、文件结构"></a>二、文件结构</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">~/.claude/skills/&lt;skill-name&gt;/</span><br><span class="line">├── SKILL.md          # 必需，主指令文件</span><br><span class="line">├── templates/        # 可选，模板文件</span><br><span class="line">├── examples/         # 可选，示例输出</span><br><span class="line">├── scripts/          # 可选，脚本文件</span><br><span class="line">└── docs/             # 可选，详细参考文档</span><br></pre></td></tr></table></figure>
+
+<p><strong>Skills 存储位置：</strong></p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>路径</th>
+<th>适用范围</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Enterprise</td>
+<td>托管设置</td>
+<td>组织内所有用户</td>
+</tr>
+<tr>
+<td>Personal</td>
+<td><code>~/.claude/skills/</code></td>
+<td>所有项目</td>
+</tr>
+<tr>
+<td>Project</td>
+<td><code>.claude/skills/</code></td>
+<td>当前项目</td>
+</tr>
+<tr>
+<td>Plugin</td>
+<td><code>&lt;plugin&gt;/skills/</code></td>
+<td>插件启用范围</td>
+</tr>
+</tbody></table>
+<hr>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2026/03/12/Claude-Code-Skills-%E6%8C%87%E5%8D%97/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://fuyongde.github.io/2026/01/18/JaCoCo-%E4%BA%8C%E6%AC%A1%E5%BC%80%E5%8F%91%E8%A7%A3%E5%86%B3%E3%80%8C%E7%B1%BB%E5%B1%80%E9%83%A8%E4%BF%AE%E6%94%B9%E4%B8%A2%E5%A4%B1%E5%8E%86%E5%8F%B2%E8%A6%86%E7%9B%96%E7%8E%87%E3%80%8D%E5%AE%8C%E6%95%B4%E6%96%B9%E6%A1%88/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -243,9 +651,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2026-01-18 21:48:10 / 修改时间：21:49:13" itemprop="dateCreated datePublished" datetime="2026-01-18T21:48:10+08:00">2026-01-18</time>
+      <time title="创建时间：2026-01-18 21:48:10" itemprop="dateCreated datePublished" datetime="2026-01-18T21:48:10+08:00">2026-01-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-03-22 19:53:26" itemprop="dateModified" datetime="2026-03-22T19:53:26+08:00">2026-03-22</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -282,7 +696,7 @@
 <ul>
 <li>覆盖率数据存储结构从 ClassID + 全局探针ID → ClassID + MethodID + 方法内局部探针ID</li>
 </ul>
-<h2 id="二、前置准备"><a href="#二、前置准备" class="headerlink" title="二、前置准备"></a>二、前置准备</h2>
+<hr>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2026/01/18/JaCoCo-%E4%BA%8C%E6%AC%A1%E5%BC%80%E5%8F%91%E8%A7%A3%E5%86%B3%E3%80%8C%E7%B1%BB%E5%B1%80%E9%83%A8%E4%BF%AE%E6%94%B9%E4%B8%A2%E5%A4%B1%E5%8E%86%E5%8F%B2%E8%A6%86%E7%9B%96%E7%8E%87%E3%80%8D%E5%AE%8C%E6%95%B4%E6%96%B9%E6%A1%88/#more" rel="contents">
@@ -637,7 +1051,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-10-25 20:50:12" itemprop="dateModified" datetime="2025-10-25T20:50:12+08:00">2025-10-25</time>
+      <time title="修改时间：2026-03-22 19:53:26" itemprop="dateModified" datetime="2026-03-22T19:53:26+08:00">2026-03-22</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -734,7 +1148,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-11-01 10:42:15" itemprop="dateModified" datetime="2025-11-01T10:42:15+08:00">2025-11-01</time>
+      <time title="修改时间：2026-03-22 19:53:26" itemprop="dateModified" datetime="2026-03-22T19:53:26+08:00">2026-03-22</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -837,7 +1251,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-02-06 07:22:24" itemprop="dateModified" datetime="2026-02-06T07:22:24+08:00">2026-02-06</time>
+      <time title="修改时间：2026-03-22 19:53:26" itemprop="dateModified" datetime="2026-03-22T19:53:26+08:00">2026-03-22</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -872,11 +1286,8 @@
 <li>构造 HTTP 请求调用 <code>/testLimit</code> 7 次，保证 7 次请求均在 1 秒内接收，发现前 6 次请求接口均返回 SUCCESS，第 7 次请求接口返回 FAIL，说明前 6 次请求均未触发限流，第 7 次请求触发限流。</li>
 </ol>
 <p>至此，我们模拟的现象与线上一致。步骤 3 是我们预期的结果，步骤 2 中在未超过限流配置的情况下触发了限流，步骤 4、5 中的第 6 次请求在超过了限流配置的情况下，仍然允许通过，我们直观上认为这些是不合理的。</p>
+<hr>
 <h2 id="排查与分析"><a href="#排查与分析" class="headerlink" title="排查与分析"></a>排查与分析</h2><p>Guava 中 RateLimiter 提供了两种令牌桶的算法实现：</p>
-<ul>
-<li>平滑突发限流（SmoothBursty）</li>
-<li>平滑预热限流（SmoothWarmingUp）</li>
-</ul>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2021/06/26/%E4%BD%BF%E7%94%A8Guava%E4%B8%ADRateLimiter%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%B8%AA%E9%97%AE%E9%A2%98/#more" rel="contents">
@@ -902,303 +1313,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://fuyongde.github.io/2020/12/10/how-use-httpclient-over-https/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/header.jpg">
-      <meta itemprop="name" content="傅永德">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="傅永德 | 个人博客">
-      <meta itemprop="description" content="苟利国家生死以，岂因祸福避趋之">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 傅永德 | 个人博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2020/12/10/how-use-httpclient-over-https/" class="post-title-link" itemprop="url">如何使用 Java 的 HttpClient 请求 Https 服务</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2020-12-10 22:04:59" itemprop="dateCreated datePublished" datetime="2020-12-10T22:04:59+08:00">2020-12-10</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-02-06 07:22:46" itemprop="dateModified" datetime="2026-02-06T07:22:46+08:00">2026-02-06</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>近期收到一些小伙伴问 Java 中如何调用 https 中双向认证的接口的问题，本文采用 okhttp 以及 Java11 中的 httpclient 来介绍如何使用 Java 代码调用 https 双向认证的接口。</p>
-<h2 id="前置工作"><a href="#前置工作" class="headerlink" title="前置工作"></a>前置工作</h2><ol>
-<li>生成服务端、客户端证书，并将各自的公钥加入到对方的信任链中以供后续的使用；</li>
-<li>搭建一个 https 协议的服务以供客户端调用。</li>
-</ol>
-<h3 id="制作证书"><a href="#制作证书" class="headerlink" title="制作证书"></a>制作证书</h3><p>这里我们采用 jdk 提供的 keytool 命令来生成我们所需要的服务端、客户端证书，并且可以使用 keytool 命令来将各自的公钥加入到对方的信任链中。</p>
-<h4 id="生成服务端、客户端密钥库以及证书"><a href="#生成服务端、客户端密钥库以及证书" class="headerlink" title="生成服务端、客户端密钥库以及证书"></a>生成服务端、客户端密钥库以及证书</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">生成服务端keystore，这里加拓展项的目的是为了说明域名验证的问题</span></span><br><span class="line">keytool -genkey -validity 3650 -alias server -keyalg RSA -keystore server.keystore -ext san=dns:www.goku.edu,ip:127.0.0.1</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">生成客户端keystore，这里针对客户端的密钥库我们采用 PKCS12 的格式</span></span><br><span class="line">keytool -genkey -validity 3650 -alias client -keyalg RSA -storetype PKCS12 -keystore client.p12</span><br></pre></td></tr></table></figure>
-
-<h4 id="导出服务端、客户端证书中的公钥"><a href="#导出服务端、客户端证书中的公钥" class="headerlink" title="导出服务端、客户端证书中的公钥"></a>导出服务端、客户端证书中的公钥</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">导出服务端证书的公钥</span></span><br><span class="line">keytool -export -keystore server.keystore -alias server -file server.cer -rfc</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">导出客户端证书的公钥</span></span><br><span class="line">keytool -export -keystore client.p12 -storetype PKCS12 -alias client -file client.cer</span><br></pre></td></tr></table></figure>
-
-<h4 id="将各自的公钥加入到对方的密钥库中"><a href="#将各自的公钥加入到对方的密钥库中" class="headerlink" title="将各自的公钥加入到对方的密钥库中"></a>将各自的公钥加入到对方的密钥库中</h4>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/12/10/how-use-httpclient-over-https/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://fuyongde.github.io/2020/07/19/npm-%E6%89%8B%E5%86%8C/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/header.jpg">
-      <meta itemprop="name" content="傅永德">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="傅永德 | 个人博客">
-      <meta itemprop="description" content="苟利国家生死以，岂因祸福避趋之">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 傅永德 | 个人博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2020/07/19/npm-%E6%89%8B%E5%86%8C/" class="post-title-link" itemprop="url">npm 手册</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2020-07-19 18:46:48" itemprop="dateCreated datePublished" datetime="2020-07-19T18:46:48+08:00">2020-07-19</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-10-25 20:44:43" itemprop="dateModified" datetime="2025-10-25T20:44:43+08:00">2025-10-25</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%89%8B%E5%86%8C/" itemprop="url" rel="index"><span itemprop="name">手册</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="配置-npmmirror-镜像"><a href="#配置-npmmirror-镜像" class="headerlink" title="配置 npmmirror 镜像"></a>配置 npmmirror 镜像</h2><h3 id="1-备份旧镜像"><a href="#1-备份旧镜像" class="headerlink" title="1. 备份旧镜像"></a>1. 备份旧镜像</h3><p>在替换 npmmirror 镜像之前，我们先查看一下原有的镜像</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm get registry</span><br></pre></td></tr></table></figure>
-
-<p>结果为 <code>https://registry.npmjs.org/</code></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn get registry</span><br></pre></td></tr></table></figure>
-
-<p>结果为 <code>https://registry.yarnpkg.com</code></p>
-<h3 id="2-替换为-npmmirror-镜像"><a href="#2-替换为-npmmirror-镜像" class="headerlink" title="2. 替换为 npmmirror 镜像"></a>2. 替换为 npmmirror 镜像</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">设置 npm 的源为 npmmirror</span></span><br><span class="line">npm config set registry https://registry.npmmirror.com</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">设置 yarn 的源为 npmmirror</span></span><br><span class="line">yarn config set registry https://registry.npmmirror.com</span><br></pre></td></tr></table></figure>
-
-<h2 id="升级版本"><a href="#升级版本" class="headerlink" title="升级版本"></a>升级版本</h2>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/07/19/npm-%E6%89%8B%E5%86%8C/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://fuyongde.github.io/2020/03/26/git-%E6%81%A2%E5%A4%8D%E5%B7%B2%E5%88%A0%E9%99%A4%E7%9A%84%E5%88%86%E6%94%AF/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/header.jpg">
-      <meta itemprop="name" content="傅永德">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="傅永德 | 个人博客">
-      <meta itemprop="description" content="苟利国家生死以，岂因祸福避趋之">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 傅永德 | 个人博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2020/03/26/git-%E6%81%A2%E5%A4%8D%E5%B7%B2%E5%88%A0%E9%99%A4%E7%9A%84%E5%88%86%E6%94%AF/" class="post-title-link" itemprop="url">git 恢复已删除的分支</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2020-03-26 17:52:01" itemprop="dateCreated datePublished" datetime="2020-03-26T17:52:01+08:00">2020-03-26</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-11-01 10:04:43" itemprop="dateModified" datetime="2025-11-01T10:04:43+08:00">2025-11-01</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>在日常开发中，如果我们一不小心删除了某个分支，又想重新使用这个分支，该怎么找回该分支上的代码呢？</p>
-<h2 id="场景还原"><a href="#场景还原" class="headerlink" title="场景还原"></a>场景还原</h2><ol>
-<li>有一个 git 仓库，从 <code>master</code> 分支新建 <code>feature/delete_branch</code> 分支，并进行一次提交，如下：</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">新建一个 feature/delete_branch 分支</span></span><br><span class="line">git branch feature/delete_branch</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">切换到 feature/delete_branch 分支</span></span><br><span class="line">git checkout feature/delete_branch</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">新建一个文件，进行一次提交并推送至远程分支</span></span><br><span class="line">git add delete-file.md</span><br><span class="line">git commit -m &#x27;:sparkles: add a delete-file.md file&#x27;</span><br><span class="line">git push origin feature/delete_branch:feature/delete_branch</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看当前分支图</span></span><br><span class="line">git log --all --decorate --oneline --graph</span><br><span class="line">* 88ac246 (HEAD -&gt; feature/delete_branch, origin/feature/delete_branch) :sparkles: add a delete-file.md file</span><br><span class="line">* 8693480 (origin/master, master) :sparkles: add a hello-git.md file</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>切换到 <code>master</code> 分支，并删除 <code>feature/delete_branch</code> 分支</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">切换到 master 分支</span></span><br><span class="line">git checkout master</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">删除 feature/delete_branch 分支</span></span><br><span class="line">git branch -d feature/delete_branch</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">将删除操作同步至远程</span></span><br><span class="line">git push origin --delete feature/delete_branch</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">此时无论是本地还是远程都已经删除了 feature/delete_branch</span></span><br><span class="line">git log --all --decorate --oneline --graph</span><br><span class="line">* 8693480 (HEAD -&gt; master, origin/master) :sparkles: add a hello-git.md file</span><br></pre></td></tr></table></figure>
-
-<h2 id="还原删除的分支"><a href="#还原删除的分支" class="headerlink" title="还原删除的分支"></a>还原删除的分支</h2><ol>
-<li>通过 <code>git reflog</code> 或 <code>git log -g</code> 命令找到我们需要恢复的 <code>commit id</code></li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">这里演示 git reflog 命令展示出来的提交</span></span><br><span class="line">git reflog</span><br><span class="line">8693480 (HEAD -&gt; master, origin/master) HEAD@&#123;0&#125;: checkout: moving from feature/delete_branch to master</span><br><span class="line">88ac246 (feature/delete_branch) HEAD@&#123;1&#125;: commit: :sparkles: add a delete-file.md file</span><br><span class="line">8693480 (HEAD -&gt; master, origin/master) HEAD@&#123;2&#125;: checkout: moving from master to feature/delete_branch</span><br><span class="line">8693480 (HEAD -&gt; master, origin/master) HEAD@&#123;3&#125;: commit (initial): :sparkles: add a hello-git.md file</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">这里演示 git <span class="built_in">log</span> -g 命令展示出来的提交</span></span><br><span class="line">git log -g</span><br><span class="line">commit 86934803092ae7ae7266f9ebff3429437e423b80 (HEAD -&gt; master, origin/master)</span><br><span class="line">Reflog: HEAD@&#123;0&#125; (fuyongde &lt;fuyongde@foxmail.com&gt;)</span><br><span class="line">Reflog message: checkout: moving from feature/delete_branch to master</span><br><span class="line">Author: fuyongde &lt;fuyongde@foxmail.com&gt;</span><br><span class="line">Date:   Thu Mar 26 18:36:35 2020 +0800</span><br><span class="line"></span><br><span class="line">    :sparkles: add a hello-git.md file</span><br><span class="line"></span><br><span class="line">commit 88ac246020a0cc25071fb7fd3ac88363f4bf2beb (feature/delete_branch)</span><br><span class="line">Reflog: HEAD@&#123;1&#125; (fuyongde &lt;fuyongde@foxmail.com&gt;)</span><br><span class="line">Reflog message: commit: :sparkles: add a delete-file.md file</span><br><span class="line">Author: fuyongde &lt;fuyongde@foxmail.com&gt;</span><br><span class="line">Date:   Thu Mar 26 18:44:01 2020 +0800</span><br><span class="line"></span><br><span class="line">    :sparkles: add a delete-file.md file</span><br><span class="line"></span><br><span class="line">commit 86934803092ae7ae7266f9ebff3429437e423b80 (HEAD -&gt; master, origin/master)</span><br><span class="line">Reflog: HEAD@&#123;2&#125; (fuyongde &lt;fuyongde@foxmail.com&gt;)</span><br><span class="line">Reflog message: checkout: moving from master to feature/delete_branch</span><br><span class="line">Author: fuyongde &lt;fuyongde@foxmail.com&gt;</span><br><span class="line">Date:   Thu Mar 26 18:36:35 2020 +0800</span><br><span class="line"></span><br><span class="line">    :sparkles: add a hello-git.md file</span><br><span class="line"></span><br><span class="line">commit 86934803092ae7ae7266f9ebff3429437e423b80 (HEAD -&gt; master, origin/master)</span><br><span class="line">Reflog: HEAD@&#123;3&#125; (fuyongde &lt;fuyongde@foxmail.com&gt;)</span><br><span class="line">Reflog message: commit (initial): :sparkles: add a hello-git.md file</span><br><span class="line">Author: fuyongde &lt;fuyongde@foxmail.com&gt;</span><br><span class="line">Date:   Thu Mar 26 18:36:35 2020 +0800</span><br><span class="line"></span><br><span class="line">    :sparkles: add a hello-git.md file</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>通过 <code>git branch [branch name] [commit id]</code> 命令来恢复删除的分支</li>
-</ol>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/03/26/git-%E6%81%A2%E5%A4%8D%E5%B7%B2%E5%88%A0%E9%99%A4%E7%9A%84%E5%88%86%E6%94%AF/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>

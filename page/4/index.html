@@ -151,18 +151,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">38</span>
+          <span class="site-state-item-count">41</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">49</span>
+        <span class="site-state-item-count">53</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -215,6 +215,312 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://fuyongde.github.io/2019/10/01/daylight-saving-time/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/header.jpg">
+      <meta itemprop="name" content="傅永德">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="傅永德 | 个人博客">
+      <meta itemprop="description" content="苟利国家生死以，岂因祸福避趋之">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 傅永德 | 个人博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/10/01/daylight-saving-time/" class="post-title-link" itemprop="url">夏令时问题</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-10-01 16:30:30" itemprop="dateCreated datePublished" datetime="2019-10-01T16:30:30+08:00">2019-10-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-03-22 19:53:26" itemprop="dateModified" datetime="2026-03-22T19:53:26+08:00">2026-03-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5/" itemprop="url" rel="index"><span itemprop="name">问题排查</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>在工作中，遇到一个很有意思的关于时间的问题，这里跟大家分享一下。</p>
+<h2 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h2><p>从数据库里取出用户的生日<code>1990-05-22</code>，接口返回时发现返回值变成了<code>1990-05-21</code>，而对于<code>1992-05-22</code>这样的日期却能正确返回。</p>
+<p>网上很多对于相关问题的分析都是简单粗暴的认为是时区的问题，却没有讲明白问题出现的根本原因。</p>
+<hr>
+<h2 id="排查过程"><a href="#排查过程" class="headerlink" title="排查过程"></a>排查过程</h2><h3 id="问题复现"><a href="#问题复现" class="headerlink" title="问题复现"></a>问题复现</h3><p>为了复现问题现象，我们先快速搭建一个 Spring Boot Application。</p>
+<p>先将配置文件中对日期类型的格式化配置为 <code>yyyy-MM-dd</code>，如下所示：</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring.jackson.time-zone</span>=<span class="string">GMT+8</span></span><br><span class="line"><span class="attr">spring.jackson.date-format</span>=<span class="string">yyyy-MM-dd</span></span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/10/01/daylight-saving-time/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://fuyongde.github.io/2019/09/27/powershell-%E6%89%8B%E5%86%8C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/header.jpg">
+      <meta itemprop="name" content="傅永德">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="傅永德 | 个人博客">
+      <meta itemprop="description" content="苟利国家生死以，岂因祸福避趋之">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 傅永德 | 个人博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/09/27/powershell-%E6%89%8B%E5%86%8C/" class="post-title-link" itemprop="url">PowerShell 手册</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-09-27 11:24:44" itemprop="dateCreated datePublished" datetime="2019-09-27T11:24:44+08:00">2019-09-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-03-22 19:53:26" itemprop="dateModified" datetime="2026-03-22T19:53:26+08:00">2026-03-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%89%8B%E5%86%8C/" itemprop="url" rel="index"><span itemprop="name">手册</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>记录一些常见的 <code>PowerShell</code> 的使用问题</p>
+<h2 id="别名命令"><a href="#别名命令" class="headerlink" title="别名命令"></a>别名命令</h2><p>在使用 Linux 系统时，我喜欢使用 <code>ll</code> 命令来查看当前目录的文件，但是 Windows 系统的 PowerShell 没有这个命令，所以每次用的时候就很不习惯。我们可以通过对命令设置别名来让 PowerShell 支持我们的使用习惯。</p>
+<h3 id="查看别名"><a href="#查看别名" class="headerlink" title="查看别名"></a>查看别名</h3><p><code>Get-Alias</code> 或者 <code>gal</code> 命令来查看我们系统命令的别名，如下</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">PS</span> C:\Users\fuyongde&gt; <span class="built_in">get-alias</span></span><br><span class="line"></span><br><span class="line">CommandType     Name                         Version    Source</span><br><span class="line"><span class="literal">-----------</span>     <span class="literal">----</span>                         <span class="literal">-------</span>    <span class="literal">------</span></span><br><span class="line">Alias           % -&gt; <span class="built_in">ForEach-Object</span></span><br><span class="line">Alias           ? -&gt; <span class="built_in">Where-Object</span></span><br><span class="line">Alias           <span class="built_in">ac</span> -&gt; <span class="built_in">Add-Content</span></span><br><span class="line">Alias           <span class="built_in">cat</span> -&gt; <span class="built_in">Get-Content</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>查看某别名的原命令，如 <code>ls</code> 的原命令：<code>Get-Alias ls</code></li>
+<li>查看某原命令的别名，如 <code>Get-ChildItem</code> 的别名：<code>Get-Alias -Definition Get-ChildItem</code></li>
+</ul>
+<h3 id="临时创建或更改别名"><a href="#临时创建或更改别名" class="headerlink" title="临时创建或更改别名"></a>临时创建或更改别名</h3><p>使用 <code>Set-Alias</code> 命令来创建或更改别名，但是该命令只在当前的 PowerShell Session 中生效。另外还有一个 <code>New-Alias</code> 命令用法类似。</p>
+<h4 id="创建不带参数的别名"><a href="#创建不带参数的别名" class="headerlink" title="创建不带参数的别名"></a>创建不带参数的别名</h4>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/09/27/powershell-%E6%89%8B%E5%86%8C/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://fuyongde.github.io/2019/09/24/linux-%E6%89%8B%E5%86%8C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/header.jpg">
+      <meta itemprop="name" content="傅永德">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="傅永德 | 个人博客">
+      <meta itemprop="description" content="苟利国家生死以，岂因祸福避趋之">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 傅永德 | 个人博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/09/24/linux-%E6%89%8B%E5%86%8C/" class="post-title-link" itemprop="url">Linux 手册</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-09-24 10:40:15" itemprop="dateCreated datePublished" datetime="2019-09-24T10:40:15+08:00">2019-09-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-10-25 20:55:08" itemprop="dateModified" datetime="2025-10-25T20:55:08+08:00">2025-10-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%89%8B%E5%86%8C/" itemprop="url" rel="index"><span itemprop="name">手册</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>记录一些常用的 Linux 操作，持续更新 …</p>
+<h3 id="查看系统版本"><a href="#查看系统版本" class="headerlink" title="查看系统版本"></a>查看系统版本</h3><p>常用的查看系统版本有以下命令</p>
+<ul>
+<li><code>cat /etc/os-release</code></li>
+<li><code>uname -a</code></li>
+<li><code>cat /proc/version</code></li>
+<li><code>cat /etc/issue</code></li>
+</ul>
+<p>下面演示一下 <code>cat /etc/os-release</code>，其他不详细说明。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /etc/os-release</span><br></pre></td></tr></table></figure>
+
+<p>输出如下</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">PRETTY_NAME=&quot;Debian GNU/Linux 9 (stretch)&quot;</span><br><span class="line">NAME=&quot;Debian GNU/Linux&quot;</span><br><span class="line">VERSION_ID=&quot;9&quot;</span><br><span class="line">VERSION=&quot;9 (stretch)&quot;</span><br><span class="line">ID=debian</span><br><span class="line">HOME_URL=&quot;https://www.debian.org/&quot;</span><br><span class="line">SUPPORT_URL=&quot;https://www.debian.org/support&quot;</span><br><span class="line">BUG_REPORT_URL=&quot;https://bugs.debian.org/&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="替换源"><a href="#替换源" class="headerlink" title="替换源"></a>替换源</h3><p>由于网络的原因，国内部分 Linux 在安装软件时非常缓慢，将源替换为国内的镜像可以方便很多。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/09/24/linux-%E6%89%8B%E5%86%8C/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://fuyongde.github.io/2019/07/16/edith-with-thread-pool/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -251,7 +557,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-02-06 07:22:05" itemprop="dateModified" datetime="2026-02-06T07:22:05+08:00">2026-02-06</time>
+      <time title="修改时间：2026-03-22 19:53:26" itemprop="dateModified" datetime="2026-03-22T19:53:26+08:00">2026-03-22</time>
     </span>
 
   
@@ -267,10 +573,10 @@
           <p>在 <a href="https://fuyongde.github.io/2019/07/11/rpc-introduction/">Rpc Introduction</a> 中简单写了一个 <code>RPC Framework</code>。在本节中，对 <code>Edith</code> 新增采用线程池支持多线程的特性。</p>
 <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>实际开发中，我们的应用程序是不能盲目的开辟线程的，这样会造成资源的极大浪费。若采用线程池，可以减少创建和销毁线程的次数，让每个线程可以多次使用，并且可以根据系统的承受能力，调整线程池中工作线程的数量，防止消耗过多的内存。</p>
 <p>如有需要可以阅读 <code>Dubbo</code> 中关于线程池的设计（位于 <code>org.apache.dubbo.common.threadpool</code> 包）。</p>
+<hr>
 <h2 id="开发"><a href="#开发" class="headerlink" title="开发"></a>开发</h2><h3 id="依赖"><a href="#依赖" class="headerlink" title="依赖"></a>依赖</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;com.google.guava&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;guava&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
 
 <h3 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h3><p>本文代码可以从<a target="_blank" rel="noopener" href="https://github.com/fuyongde/edith/releases/tag/0.1.1">这里</a>获取。</p>
-<h4 id="新增-ThreadUtils-java"><a href="#新增-ThreadUtils-java" class="headerlink" title="新增 ThreadUtils.java"></a>新增 ThreadUtils.java</h4>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2019/07/16/edith-with-thread-pool/#more" rel="contents">
@@ -340,7 +646,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-02-06 07:21:59" itemprop="dateModified" datetime="2026-02-06T07:21:59+08:00">2026-02-06</time>
+      <time title="修改时间：2026-03-22 19:53:26" itemprop="dateModified" datetime="2026-03-22T19:53:26+08:00">2026-03-22</time>
     </span>
 
   
@@ -357,6 +663,7 @@
 <p>Remote Procedure Call (RPC) is a protocol that one program can use to request a service from a program located in another computer on a network without having to understand the network’s details. A procedure call is also sometimes known as a function call or a subroutine call. A procedure call is also sometimes known as a function call or a subroutine call.</p>
 </blockquote>
 <p><code>RPC</code> 是一种远程过程调用协议，一个程序可以使用该协议从位于网络上另一台计算机中的程序请求服务，而无需了解网络的详细信息。<code>RPC</code> 有时也称为函数调用或子程序调用。<code>RPC</code> 是进程间通信的一种方式。</p>
+<hr>
 <h2 id="Why-is-RPC"><a href="#Why-is-RPC" class="headerlink" title="Why is RPC"></a>Why is RPC</h2><p>网上很多关于 <code>RPC</code> 的优点，笔者都不太赞同。不能将那些成熟的 <code>RPC</code> 框架解决的问题全部归结为 <code>RPC</code> 的优点。比如 <code>RPC</code> 的概念中并没有提到服务治理等问题，但是常见的 <code>RPC</code> 框架（如 <a target="_blank" rel="noopener" href="http://dubbo.apache.org/">DUBBO</a>）均解决了服务治理的相关问题，这显然不能作为 <code>RPC</code> 的优点。要解释“Why is RPC?”的问题，还是要回归到 <code>RPC</code> 的概念上来。</p>
 <ul>
 <li><code>RPC</code> 可以使<em>远程过程调用</em>变得像本地调用一样简单。</li>
@@ -364,7 +671,6 @@
 </ul>
 <p>有兴趣可以阅读 <a target="_blank" rel="noopener" href="http://dubbo.apache.org/zh-cn/docs/user/preface/background.html">dubbo 诞生的背景</a> 以及<a target="_blank" rel="noopener" href="http://dubbo.apache.org/zh-cn/docs/user/preface/requirements.html">dubbo 解决了哪些需求</a>。</p>
 <h3 id="RPC-vs-HTTP"><a href="#RPC-vs-HTTP" class="headerlink" title="RPC vs HTTP"></a>RPC vs HTTP</h3><p>其实这两者不是同一个维度的概念。从 <code>RPC</code> 的概念上来讲，<code>HTTP</code> 其实就是 <code>RPC</code> 的一种实现。</p>
-<h3 id="RPC-vs-RMI"><a href="#RPC-vs-RMI" class="headerlink" title="RPC vs RMI"></a>RPC vs RMI</h3>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2019/07/11/rpc-introduction/#more" rel="contents">
@@ -434,7 +740,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-10-25 11:37:02" itemprop="dateModified" datetime="2025-10-25T11:37:02+08:00">2025-10-25</time>
+      <time title="修改时间：2026-03-22 19:53:26" itemprop="dateModified" datetime="2026-03-22T19:53:26+08:00">2026-03-22</time>
     </span>
 
   
@@ -458,7 +764,8 @@
 <p>再看 <code>Jib</code> 构建容器镜像流程</p>
 <img src="/2019/06/26/jib-make-docker-simple-again/jib_process.jpg" class title="Jib 构建容器镜像的流程">
 
-<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>下面来介绍以下如何使用 <code>Jib</code></p>
+<hr>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2019/06/26/jib-make-docker-simple-again/#more" rel="contents">
@@ -528,7 +835,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-02-06 07:21:58" itemprop="dateModified" datetime="2026-02-06T07:21:58+08:00">2026-02-06</time>
+      <time title="修改时间：2026-03-22 19:53:26" itemprop="dateModified" datetime="2026-03-22T19:53:26+08:00">2026-03-22</time>
     </span>
 
   
@@ -544,9 +851,10 @@
           <h2 id="Docker-Spring-Boot"><a href="#Docker-Spring-Boot" class="headerlink" title="Docker &amp; Spring Boot"></a>Docker &amp; Spring Boot</h2><p><code>Docker</code> 是一种 <code>Linux</code> 容器的实现，具有进程的轻量级资源隔离的特点，每一个容器对应操作系统中的一个进程，但是它又会有自己的网络空间、文件系统、PID 等。<code>Docker</code> 除了实现 <code>Linux</code> 容器，还使得容器具有“社会化”的属性，用户可以将容器镜像发布在 <code>Docker Hub</code> 与其他开发者共享、协作，类似于 <code>Maven</code>。</p>
 <p><code>Spring Boot</code> 简化了 Spring 应用程序的开发过程，遵循约定优先配置的原则提供了各类 <em>开箱即用（out-of-the-box）</em> 的框架配置。另一方面，<code>Spring Boot</code> 还具备将代码直接构建为可执行 jar 包的能力，这个 jar 包是一个可以独立运行的部署单元。基于以上特性，现在普遍认为 <code>Spring Boot</code> 提供了一种快速构造<strong>微服务（Micro-Service）</strong>的能力。</p>
 <p><code>Spring Boot</code> 的运行环境非常简单，将 Spring Boot Application 打包为 <code>Docker</code> 镜像，对于自动化部署、运维都非常方便。</p>
+<hr>
 <h2 id="Dockerizing-Spring-Boot-Application"><a href="#Dockerizing-Spring-Boot-Application" class="headerlink" title="Dockerizing Spring Boot Application"></a>Dockerizing Spring Boot Application</h2><p>使用 Docker 发布 Spring Boot Application，需要经历简单的几步，即可实现。</p>
 <p>如有需要，可参考本文所涉及 <a target="_blank" rel="noopener" href="https://github.com/fuyongde/marvel/tree/master/thanos">Demo</a>。</p>
-<h3 id="常规操作"><a href="#常规操作" class="headerlink" title="常规操作"></a>常规操作</h3><h4 id="编写-Spring-Boot-Application"><a href="#编写-Spring-Boot-Application" class="headerlink" title="编写 Spring Boot Application"></a>编写 Spring Boot Application</h4><p>本文不是为了讲解如何编写 Spring Boot Application，故建议读者直接采用脚手架快速构建出一个 Spring Boot Application。</p>
+<h3 id="常规操作"><a href="#常规操作" class="headerlink" title="常规操作"></a>常规操作</h3><h4 id="编写-Spring-Boot-Application"><a href="#编写-Spring-Boot-Application" class="headerlink" title="编写 Spring Boot Application"></a>编写 Spring Boot Application</h4>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2019/06/25/dockerizing-spring-boot-application/#more" rel="contents">
@@ -616,7 +924,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-11-01 10:21:48" itemprop="dateModified" datetime="2025-11-01T10:21:48+08:00">2025-11-01</time>
+      <time title="修改时间：2026-03-22 19:53:26" itemprop="dateModified" datetime="2026-03-22T19:53:26+08:00">2026-03-22</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -718,7 +1026,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-10-25 20:41:38" itemprop="dateModified" datetime="2025-10-25T20:41:38+08:00">2025-10-25</time>
+      <time title="修改时间：2026-03-22 19:53:26" itemprop="dateModified" datetime="2026-03-22T19:53:26+08:00">2026-03-22</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -753,10 +1061,10 @@
 <li>Releases</li>
 <li>Distribution</li>
 </ul>
+<hr>
 <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>从<a target="_blank" rel="noopener" href="http://maven.apache.org/download.cgi">官网</a>下载安装包。</p>
 <h3 id="基础环境"><a href="#基础环境" class="headerlink" title="基础环境"></a>基础环境</h3><p>Maven 依赖 <code>Java</code> 环境，所以要先确保已经正确安装 <code>JDK</code>。</p>
 <p>通过 <code>java -version</code> 命令来查看是否正确安装了 <code>JDK</code></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">PS C:\Users\fuyon&gt; java -version</span><br><span class="line">java version &quot;11.0.1&quot; 2018-10-16 LTS</span><br><span class="line">Java(TM) SE Runtime Environment 18.9 (build 11.0.1+13-LTS)</span><br><span class="line">Java HotSpot(TM) 64-Bit Server VM 18.9 (build 11.0.1+13-LTS, mixed mode)</span><br></pre></td></tr></table></figure>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2019/06/22/maven-%E6%89%8B%E5%86%8C/#more" rel="contents">
@@ -826,7 +1134,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-10-25 20:57:49" itemprop="dateModified" datetime="2025-10-25T20:57:49+08:00">2025-10-25</time>
+      <time title="修改时间：2026-03-22 19:53:26" itemprop="dateModified" datetime="2026-03-22T19:53:26+08:00">2026-03-22</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -895,98 +1203,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://fuyongde.github.io/2010/05/24/hexo/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/header.jpg">
-      <meta itemprop="name" content="傅永德">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="傅永德 | 个人博客">
-      <meta itemprop="description" content="苟利国家生死以，岂因祸福避趋之">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 傅永德 | 个人博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2010/05/24/hexo/" class="post-title-link" itemprop="url">如何使用Hexo？</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2010-05-24 21:20:27" itemprop="dateCreated datePublished" datetime="2010-05-24T21:20:27+08:00">2010-05-24</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-10-25 11:37:02" itemprop="dateModified" datetime="2025-10-25T11:37:02+08:00">2025-10-25</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo generate</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2010/05/24/hexo/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span>
+    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/5/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>

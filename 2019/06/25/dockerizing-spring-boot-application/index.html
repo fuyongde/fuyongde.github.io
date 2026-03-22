@@ -28,7 +28,7 @@
 <meta property="og:description" content="Docker &amp; Spring BootDocker 是一种 Linux 容器的实现，具有进程的轻量级资源隔离的特点，每一个容器对应操作系统中的一个进程，但是它又会有自己的网络空间、文件系统、PID 等。Docker 除了实现 Linux 容器，还使得容器具有“社会化”的属性，用户可以将容器镜像发布在 Docker Hub 与其他开发者共享、协作，类似于 Maven。 Spring Boo">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-06-25T09:39:17.000Z">
-<meta property="article:modified_time" content="2026-02-05T23:21:58.931Z">
+<meta property="article:modified_time" content="2026-03-22T11:53:26.033Z">
 <meta property="article:author" content="傅永德">
 <meta property="article:tag" content="Docker">
 <meta property="article:tag" content="Spring Boot">
@@ -156,18 +156,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">38</span>
+          <span class="site-state-item-count">41</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">49</span>
+        <span class="site-state-item-count">53</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -257,7 +257,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-02-06 07:21:58" itemprop="dateModified" datetime="2026-02-06T07:21:58+08:00">2026-02-06</time>
+      <time title="修改时间：2026-03-22 19:53:26" itemprop="dateModified" datetime="2026-03-22T19:53:26+08:00">2026-03-22</time>
     </span>
 
   
@@ -272,6 +272,7 @@
     <div class="post-body" itemprop="articleBody"><h2 id="Docker-Spring-Boot"><a href="#Docker-Spring-Boot" class="headerlink" title="Docker &amp; Spring Boot"></a>Docker &amp; Spring Boot</h2><p><code>Docker</code> 是一种 <code>Linux</code> 容器的实现，具有进程的轻量级资源隔离的特点，每一个容器对应操作系统中的一个进程，但是它又会有自己的网络空间、文件系统、PID 等。<code>Docker</code> 除了实现 <code>Linux</code> 容器，还使得容器具有“社会化”的属性，用户可以将容器镜像发布在 <code>Docker Hub</code> 与其他开发者共享、协作，类似于 <code>Maven</code>。</p>
 <p><code>Spring Boot</code> 简化了 Spring 应用程序的开发过程，遵循约定优先配置的原则提供了各类 <em>开箱即用（out-of-the-box）</em> 的框架配置。另一方面，<code>Spring Boot</code> 还具备将代码直接构建为可执行 jar 包的能力，这个 jar 包是一个可以独立运行的部署单元。基于以上特性，现在普遍认为 <code>Spring Boot</code> 提供了一种快速构造<strong>微服务（Micro-Service）</strong>的能力。</p>
 <p><code>Spring Boot</code> 的运行环境非常简单，将 Spring Boot Application 打包为 <code>Docker</code> 镜像，对于自动化部署、运维都非常方便。</p>
+<hr>
 <h2 id="Dockerizing-Spring-Boot-Application"><a href="#Dockerizing-Spring-Boot-Application" class="headerlink" title="Dockerizing Spring Boot Application"></a>Dockerizing Spring Boot Application</h2><p>使用 Docker 发布 Spring Boot Application，需要经历简单的几步，即可实现。</p>
 <p>如有需要，可参考本文所涉及 <a target="_blank" rel="noopener" href="https://github.com/fuyongde/marvel/tree/master/thanos">Demo</a>。</p>
 <h3 id="常规操作"><a href="#常规操作" class="headerlink" title="常规操作"></a>常规操作</h3><h4 id="编写-Spring-Boot-Application"><a href="#编写-Spring-Boot-Application" class="headerlink" title="编写 Spring Boot Application"></a>编写 Spring Boot Application</h4><p>本文不是为了讲解如何编写 Spring Boot Application，故建议读者直接采用脚手架快速构建出一个 Spring Boot Application。</p>
@@ -333,6 +334,7 @@
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">servers</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">server</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">id</span>&gt;</span>registry.cn-hangzhou.aliyuncs.com<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">username</span>&gt;</span>username<span class="tag">&lt;/<span class="name">username</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">password</span>&gt;</span>password<span class="tag">&lt;/<span class="name">password</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">server</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servers</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <h4 id="构建"><a href="#构建" class="headerlink" title="构建"></a>构建</h4><p>执行 <code>mvn install</code> 命令，<code>Docker</code> 镜像就打包并上传好了 ✌。</p>
+<hr>
 <h2 id="One-more-thing"><a href="#One-more-thing" class="headerlink" title="One more thing"></a>One more thing</h2><p>你以为上述构建 <code>Docker</code> 镜像方法就非常方便了吗？</p>
 <p>Too young!</p>
 <p><a href="https://fuyongde.github.io/2019/06/26/jib-make-docker-simple-again/">下一篇</a>，带你了解 <code>Jib</code>，Make docker simple again✨!</p>
