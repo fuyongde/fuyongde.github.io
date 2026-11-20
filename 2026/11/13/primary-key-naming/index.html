@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/7.3.1/css/all.min.css">
+  <link rel="stylesheet" href="https://lib.baomitu.com/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"fuyongde.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":"auto","version":"8.29.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="问题的由来设计后台服务绕不开建表，表和表之间又互相关联：user、order，order 要引用 user。于是一个不起眼但天天要面对的问题冒出来：主键怎么命名？ 我倾向过 user_id 这种带表名的命名——user 表的主键就叫 user_id，order 表引用它的列也叫 user_id。理由很朴素：每个字段一眼可辨，order.user_id 指向谁不用翻表结构。 但”一眼可辨”这四个字经">
+<meta property="og:type" content="article">
+<meta property="og:title" content="业务表主键：从纠结到想清楚">
+<meta property="og:url" content="https://fuyongde.github.io/2026/11/13/primary-key-naming/index.html">
+<meta property="og:site_name" content="傅永德 | 个人博客">
+<meta property="og:description" content="问题的由来设计后台服务绕不开建表，表和表之间又互相关联：user、order，order 要引用 user。于是一个不起眼但天天要面对的问题冒出来：主键怎么命名？ 我倾向过 user_id 这种带表名的命名——user 表的主键就叫 user_id，order 表引用它的列也叫 user_id。理由很朴素：每个字段一眼可辨，order.user_id 指向谁不用翻表结构。 但”一眼可辨”这四个字经">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-11-13T02:00:00.000Z">
+<meta property="article:modified_time" content="2026-11-16T02:08:45.330Z">
+<meta property="article:author" content="傅永德">
+<meta property="article:tag" content="MySQL">
+<meta property="article:tag" content="数据库">
+<meta property="article:tag" content="表设计">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://fuyongde.github.io/2026/11/13/primary-key-naming/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://fuyongde.github.io/2026/11/13/primary-key-naming/","path":"2026/11/13/primary-key-naming/","title":"业务表主键：从纠结到想清楚"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>业务表主键：从纠结到想清楚 | 傅永德 | 个人博客</title>
+  
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script><script src="/js/bookmark.js" defer></script>
+
+  <script src="https://lib.baomitu.com/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://lib.baomitu.com/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="/js/third-party/tags/mermaid.js" defer></script>
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="傅永德 | 个人博客" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-search popup-trigger" aria-label="搜索" role="button">
+      <i class="fa fa-search fa-fw fa-lg"></i>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">傅永德 | 个人博客</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-toggle" aria-label="切换导航栏" role="button">
+      <i class="fa fa-ellipsis fa-fw fa-lg"></i>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  
+  <template id="search-popup-template"><div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div></template>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E7%9A%84%E7%94%B1%E6%9D%A5"><span class="nav-number">1.</span> <span class="nav-text">问题的由来</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%88%E6%8A%8A%E4%B8%A4%E7%A7%8D%E5%81%9A%E6%B3%95%E6%91%86%E6%B8%85%E6%A5%9A"><span class="nav-number">2.</span> <span class="nav-text">先把两种做法摆清楚</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8C%E4%B8%80%E5%BC%A0%E8%A1%A8%E5%BC%95%E7%94%A8%E4%B8%A4%E6%AC%A1%E7%9A%84%E6%97%B6%E5%80%99"><span class="nav-number">3.</span> <span class="nav-text">同一张表引用两次的时候</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%BB%E5%88%AB%E4%BA%BA%E7%9A%84-SQL-%E7%9A%84%E6%97%B6%E5%80%99"><span class="nav-number">4.</span> <span class="nav-text">读别人的 SQL 的时候</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%81%87%E5%A6%82%E8%A1%A8%E8%A6%81%E6%94%B9%E5%90%8D"><span class="nav-number">5.</span> <span class="nav-text">假如表要改名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BD%93%E5%80%BC%E7%A6%BB%E5%BC%80%E8%A1%A8%E4%BB%A5%E5%90%8E"><span class="nav-number">6.</span> <span class="nav-text">当值离开表以后</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%99%E9%80%9A%E7%94%A8%E4%BB%A3%E7%A0%81%E7%9A%84%E6%97%B6%E5%80%99"><span class="nav-number">7.</span> <span class="nav-text">写通用代码的时候</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%9D%83%E8%A1%A1%E6%B1%87%E6%80%BB"><span class="nav-number">8.</span> <span class="nav-text">我的权衡汇总</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E4%BC%9A%E8%AE%A9%E6%88%91%E6%94%B9%E5%8F%98%E4%B8%BB%E6%84%8F"><span class="nav-number">9.</span> <span class="nav-text">什么会让我改变主意</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="傅永德"
+      src="/images/header.jpg">
+  <p class="site-author-name" itemprop="name">傅永德</p>
+  <div class="site-description" itemprop="description">苟利国家生死以，岂因祸福避趋之</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">57</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/fuyongde" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;fuyongde" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:fuyongde@foxmail.com" title="E-Mail → mailto:fuyongde@foxmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml" rel="noopener me"><i class="fa fa-rss fa-fw"></i>RSS</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          友链
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://www.xiaokunli.com/" title="https:&#x2F;&#x2F;www.xiaokunli.com&#x2F;" rel="noopener" target="_blank">xiaokun</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://konekos.github.io/" title="https:&#x2F;&#x2F;konekos.github.io&#x2F;" rel="noopener" target="_blank">Tree</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://fuyongde.github.io/2026/11/13/primary-key-naming/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/header.jpg">
+      <meta itemprop="name" content="傅永德">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="傅永德 | 个人博客">
+      <meta itemprop="description" content="苟利国家生死以，岂因祸福避趋之">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="业务表主键：从纠结到想清楚 | 傅永德 | 个人博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          业务表主键：从纠结到想清楚
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-11-13 10:00:00" itemprop="dateCreated datePublished" datetime="2026-11-13T10:00:00+08:00">2026-11-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-11-16 10:08:45" itemprop="dateModified" datetime="2026-11-16T10:08:45+08:00">2026-11-16</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-lines"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.4k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>8 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="问题的由来"><a href="#问题的由来" class="headerlink" title="问题的由来"></a>问题的由来</h2><p>设计后台服务绕不开建表，表和表之间又互相关联：user、order，order 要引用 user。于是一个不起眼但天天要面对的问题冒出来：<strong>主键怎么命名？</strong></p>
+<p>我倾向过 <code>user_id</code> 这种带表名的命名——user 表的主键就叫 <code>user_id</code>，order 表引用它的列也叫 <code>user_id</code>。理由很朴素：每个字段一眼可辨，<code>order.user_id</code> 指向谁不用翻表结构。</p>
+<p>但”一眼可辨”这四个字经得起推敲吗？我把这个问题拆开来想了一遍。先把结论交底：<strong>表名冻结、术语稳定的系统——金融核心、内部管理系统这类——我会选带表名的主键；业务词汇三年一换的互联网产品，我会选 <code>id</code>。</strong>为什么，一个维度一个维度说。</p>
+<h2 id="先把两种做法摆清楚"><a href="#先把两种做法摆清楚" class="headerlink" title="先把两种做法摆清楚"></a>先把两种做法摆清楚</h2><p>两种做法分别长这样：</p>
+<ul>
+<li><strong>id 命名</strong>：<code>user</code> 表主键叫 <code>id</code>，<code>order</code> 表引用列叫 <code>user_id</code>——两边不对称。Rails、Django、MyBatis-Plus 的约定生态都是这么默认的。</li>
+<li><strong>表名命名</strong>：<code>user</code> 表主键就叫 <code>user_id</code>，<code>order</code> 表引用列也叫 <code>user_id</code>——同名对称。金融、电信这类传统企业系统里很常见。</li>
+</ul>
+<p>顺带消个歧：这是主键列的<strong>命名</strong>问题，不是”代理键 vs 自然键”（用自增 <code>id</code> 还是用身份证号当主键）之争——那是另一个话题。它比看上去微妙的地方在于，<code>user_id</code> 这个词在两种做法里含义不同：一边是 user 表的主键，一边是引用列的通用名字。很多人在这个话题里吵的其实是两件不同的事。</p>
+<h2 id="同一张表引用两次的时候"><a href="#同一张表引用两次的时候" class="headerlink" title="同一张表引用两次的时候"></a>同一张表引用两次的时候</h2><p>想清楚的第一步，是撞上一个现实场景：同一张表引用同一张表两次。订单有买家和卖家，审批流有创建人和审批人，转账有付款方和收款方——全都指向 user 表。</p>
+<p>这时候表名命名撞墙了：一张表里两列没法都叫 <code>user_id</code>，只能加角色前缀：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 表名命名，多角色场景：同名规则破例，被迫加角色前缀</span></span><br><span class="line"><span class="keyword">ON</span> o.buyer_user_id <span class="operator">=</span> u.user_id</span><br><span class="line"></span><br><span class="line"><span class="comment">-- id 命名，同一场景：本来就是这形态</span></span><br><span class="line"><span class="keyword">ON</span> o.buyer_user_id <span class="operator">=</span> u.id</span><br></pre></td></tr></table></figure>
+
+<p>两条 JOIN 已经是同一种形态：引用列带角色名，和主键列名不再对称。Java 侧同理，<code>getBuyerUserId()</code> 谁来写都是这一个名字。</p>
+<p>所以”永远不会有歧义”其实是一句说过头的话，准确的说法是”一条规则 + 一个例外条款”：一表一引用时用同名规则，一表多引用时改角色规则。而 id 命名从第一天起就只有一条规则：主键永远叫 <code>id</code>，外键叫 <code>[角色_]目标_id</code>，规则的简洁性上反而是后者占优。值得注意的是，这里丢的还不是自明性——<code>buyer_user_id</code> 照样一眼看出指向 user 表——丢的是规则本身的统一性。</p>
+<h2 id="读别人的-SQL-的时候"><a href="#读别人的-SQL-的时候" class="headerlink" title="读别人的 SQL 的时候"></a>读别人的 SQL 的时候</h2><p>第二个维度是 JOIN 的可读性。读别人的长 SQL，JOIN 条件躺在第 30 行：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- id 命名</span></span><br><span class="line"><span class="keyword">SELECT</span> o.order_no, u.name <span class="keyword">FROM</span> `<span class="keyword">order</span>` o <span class="keyword">JOIN</span> <span class="keyword">user</span> u <span class="keyword">ON</span> o.user_id <span class="operator">=</span> u.id;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 表名命名</span></span><br><span class="line"><span class="keyword">SELECT</span> o.order_no, u.name <span class="keyword">FROM</span> `<span class="keyword">order</span>` o <span class="keyword">JOIN</span> <span class="keyword">user</span> u <span class="keyword">USING</span> (user_id);</span><br></pre></td></tr></table></figure>
+
+<p><code>u.id</code> 要求你滚回顶部确认 <code>u</code> 是谁；<code>u.user_id</code> 自己就把话说完了，别名乱成 <code>t3</code> 也无妨。这在维护期最明显：写 SQL 的人不总是读 SQL 的人——半年后的 code review、线上排障、接手离职同事的报表，读者都要重建上下文，自包含的列名替他省一步。</p>
+<p>但我后来意识到别高估这条：id 命名把语义信息存在”别名 → 表”那一层，而读写 SQL 本来就得背着这层映射——SELECT 列、WHERE 条件全靠它限定。表名命名做的事，本质是把这层语义冗余编码进每一个列名：<code>FROM user u ... u.user_id</code>，”user”在一条 SQL 里出现两遍。这条我承认表名命名更舒服，但舒服得有限。</p>
+<h2 id="假如表要改名"><a href="#假如表要改名" class="headerlink" title="假如表要改名"></a>假如表要改名</h2><p>第三个维度让我纠结最久：业务语言演化，<code>user</code> 表要改名 <code>customer</code> 怎么办？表名命名立刻陷入两难：</p>
+<ul>
+<li><strong>改列名</strong>：<code>user_id</code> → <code>customer_id</code>，所有引用表的列、所有 JOIN、所有 Java 实体、所有日志埋点全要联动——一次大手术；</li>
+<li><strong>不改</strong>：从此名实分离：</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 十年后：业务早就叫客户，表还叫 user</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> <span class="keyword">user</span> <span class="keyword">WHERE</span> user_id <span class="operator">=</span> <span class="number">123</span>;</span><br></pre></td></tr></table></figure>
+
+<p>十年后入职的人对着这段 schema，第一件事是问老人：为什么客户存在 user 表里？</p>
+<p>暴露面也不一样：表名命名把表名编进了列名，改名时受牵连的是主键加全部外键；id 命名的主键不承诺任何表名，受牵连的只有外键。多表合并同理：user 和 member 并成一张表，表名命名的主键留谁的名字都是错，id 一个就收编两侧。</p>
+<p>但我自己的经验里，表改名这种事从来没真正发生过——多数长命系统选择”沿用以前的命名”，表名是冻结的。这条顾虑在冻结的系统里不会兑现，在词汇漂移的系统里则是真实的债。</p>
+<h2 id="当值离开表以后"><a href="#当值离开表以后" class="headerlink" title="当值离开表以后"></a>当值离开表以后</h2><p>第四个维度，是我想明白自己为什么那么在意”自明”的关键：值离开 schema 之后。导出的 CSV、同步进数仓的宽表、DBA 拿裸 SQL 排障、数据订正脚本——这些地方没有实体类帮你补语义，列名是唯一的语义来源：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 排障时看到的数据（id 命名）</span><br><span class="line">order done. id=123</span><br><span class="line"></span><br><span class="line"># 排障时看到的数据（表名命名）</span><br><span class="line">order done. user_id=123</span><br></pre></td></tr></table></figure>
+
+<p>半夜排障时，前者要先弄清 <code>id=123</code> 是哪张表的 id，后者一眼可辨。数仓场景尤其典型：宽表汇聚几十张表的列，全库主键同名 <code>id</code>，同名列冲突逼着数仓同学逐个起别名，而全局唯一列名在数仓里本来就是通行做法——带表名的命名天然合规。</p>
+<p>有一个常见的反驳要处理掉：日志里打 <code>id=123</code>，其实在 log 语句层顺手写 <code>userId=</code> 就能补救，schema 不必出手。这话对——但 log 层救不了 CSV、数仓、DBA 的裸 SQL。这是表名命名真正占便宜的一个维度，也是它最该占便宜的。</p>
+<h2 id="写通用代码的时候"><a href="#写通用代码的时候" class="headerlink" title="写通用代码的时候"></a>写通用代码的时候</h2><p>最后一个维度在 Java 这边。两种做法都有”一致性”，但不是同一种：表名命名是规则一致——主键 &#x3D; 表名_id，规则统一但名字各异；id 命名是名字一致——所有主键都叫 <code>id</code>，不光规则统一，名字本身也统一。</p>
+<p>名字一致是更强的一致性，它兑换成”面向主键编程免元数据”：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// id 命名：名字一致，一个字段通吃所有实体</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">BaseEntity</span> &#123; <span class="keyword">private</span> Long id; &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 表名命名：规则一致，名字各异，通用代码走注解元数据</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">User</span>  &#123; <span class="keyword">private</span> Long userId; &#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Order</span> &#123; <span class="keyword">private</span> Long orderId; &#125;</span><br></pre></td></tr></table></figure>
+
+<p>差距要到自研基建才真正显出来：缓存组件按主键拼 key，数据同步按主键取值，通用订正工具按主键定位行——id 命名一句 <code>entity.getId()</code> 通吃所有实体；表名命名的每张表都要过一遍注解元数据。</p>
+<p>但 MyBatis-Plus 的 <code>IService.getById()</code> 之所以能对所有实体工作，内部就是靠 <code>@TableId(value = &quot;user_id&quot;)</code> 这类注解把差异抹平的——框架替你把摩擦吃掉了大半，每个实体多一行注解而已。JPA、代码生成器同理。有差距，但被框架付掉了大半。</p>
+<h2 id="我的权衡汇总"><a href="#我的权衡汇总" class="headerlink" title="我的权衡汇总"></a>我的权衡汇总</h2><p>五个维度想完，汇总成一张表：</p>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>我的判断</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>同表引用两次</td>
+<td>打平——表名命名的同名规则在这里天然破例</td>
+</tr>
+<tr>
+<td>JOIN 可读性</td>
+<td>表名命名略占优——列名自包含，不依赖别名</td>
+</tr>
+<tr>
+<td>假如表改名</td>
+<td>看系统——表名冻结的库里这条不兑现</td>
+</tr>
+<tr>
+<td>值离开表以后</td>
+<td>表名命名胜——数仓、导出、裸 SQL 的唯一语义来源</td>
+</tr>
+<tr>
+<td>写通用代码</td>
+<td>接近——摩擦可被框架吸收</td>
+</tr>
+</tbody></table>
+<p>表名冻结、术语稳定的系统里，带表名的主键自洽且略占优——这大概也是金融、电信核心系统常见 <code>表名_id</code>、互联网常见 <code>id</code> 的原因：不是谁更先进，是各自的域把账算对了。</p>
+<h2 id="什么会让我改变主意"><a href="#什么会让我改变主意" class="headerlink" title="什么会让我改变主意"></a>什么会让我改变主意</h2><p>结论不是终点，有三个信号会让我重新掂量：</p>
+<ol>
+<li><strong>业务词汇开始漂移</strong>：产品三年换血、领域术语跟着业务跑，表名命名的”名字承诺”开始欠债；</li>
+<li><strong>重度自研泛型基建</strong>：公司框架、缓存组件、数据同步工具全要面向主键编程，表名命名的摩擦从”每实体一行注解”放大到每个基建组件；</li>
+<li><strong>多角色引用成为高频形态</strong>：此时两种做法趋同，选谁都一样，不必再为对称性付成本。</li>
+</ol>
+<p>新项目起手，我会先问自己三个问题再落键盘：表改名、领域术语换血发生过吗？数据会流到库外面去吗——数仓、报表、导出、别的团队直接查？同一张表引用同一目标两次常见吗？答案决定了主键叫什么——别让别人的结论替你的域做决定，包括我的。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="傅永德 微信">
+        <span>微信</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag"><i class="fa fa-tag"></i> 数据库</a>
+              <a href="/tags/MySQL/" rel="tag"><i class="fa fa-tag"></i> MySQL</a>
+              <a href="/tags/%E8%A1%A8%E8%AE%BE%E8%AE%A1/" rel="tag"><i class="fa fa-tag"></i> 表设计</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/07/10/2026-%E6%B7%B1%E5%9C%B3%E6%9A%91%E5%81%87%E6%BA%9C%E5%A8%83%E6%94%BB%E7%95%A5/" rel="prev" title="2026 深圳暑假溜娃攻略">
+                  <i class="fa fa-angle-left"></i> 2026 深圳暑假溜娃攻略
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2026/11/20/%E4%BB%8E-nvm-%E8%BF%81%E7%A7%BB%E5%88%B0-fnm/" rel="next" title="从 nvm 迁移到 fnm">
+                  从 nvm 迁移到 fnm <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2018 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">傅永德</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">57k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">3:11</span>
+  </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/fuyongde" class="github-corner" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/7.3.1/css/all.min.css">
+  <link rel="stylesheet" href="https://lib.baomitu.com/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"fuyongde.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":"auto","version":"8.29.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="场景：个人 PC 双系统（Windows 11 原生 + Debian），原先都用 nvm 管理 Node.js，现在统一换成 fnm。  一、为什么更换？2026 年个人机器上 fnm 是更推荐的默认选择，但它不是”必须换”——nvm 依然能用。判断标准是你在意什么：  你在意终端启动速度和切换速度 → 换 fnm（nvm 是 shell 脚本，每个新终端都要 source 一遍；fnm 是">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从 nvm 迁移到 fnm">
+<meta property="og:url" content="https://fuyongde.github.io/2026/11/20/%E4%BB%8E-nvm-%E8%BF%81%E7%A7%BB%E5%88%B0-fnm/index.html">
+<meta property="og:site_name" content="傅永德 | 个人博客">
+<meta property="og:description" content="场景：个人 PC 双系统（Windows 11 原生 + Debian），原先都用 nvm 管理 Node.js，现在统一换成 fnm。  一、为什么更换？2026 年个人机器上 fnm 是更推荐的默认选择，但它不是”必须换”——nvm 依然能用。判断标准是你在意什么：  你在意终端启动速度和切换速度 → 换 fnm（nvm 是 shell 脚本，每个新终端都要 source 一遍；fnm 是">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-11-20T09:08:03.000Z">
+<meta property="article:modified_time" content="2026-11-20T09:11:10.441Z">
+<meta property="article:author" content="傅永德">
+<meta property="article:tag" content="fnm">
+<meta property="article:tag" content="nodejs">
+<meta property="article:tag" content="nvm">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://fuyongde.github.io/2026/11/20/%E4%BB%8E-nvm-%E8%BF%81%E7%A7%BB%E5%88%B0-fnm/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://fuyongde.github.io/2026/11/20/%E4%BB%8E-nvm-%E8%BF%81%E7%A7%BB%E5%88%B0-fnm/","path":"2026/11/20/从-nvm-迁移到-fnm/","title":"从 nvm 迁移到 fnm"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>从 nvm 迁移到 fnm | 傅永德 | 个人博客</title>
+  
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script><script src="/js/bookmark.js" defer></script>
+
+  <script src="https://lib.baomitu.com/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://lib.baomitu.com/mermaid/11.10.1/mermaid.min.js","integrity":"sha256-BmQmdWDS8X2OTbrwELWK366LV6escyWhHHe0XCTU/Hk="}}</script>
+  <script src="/js/third-party/tags/mermaid.js" defer></script>
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="傅永德 | 个人博客" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-search popup-trigger" aria-label="搜索" role="button">
+      <i class="fa fa-search fa-fw fa-lg"></i>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">傅永德 | 个人博客</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-toggle" aria-label="切换导航栏" role="button">
+      <i class="fa fa-ellipsis fa-fw fa-lg"></i>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  
+  <template id="search-popup-template"><div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div></template>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E4%B8%BA%E4%BB%80%E4%B9%88%E6%9B%B4%E6%8D%A2%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">一、为什么更换？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#nvm-vs-fnm-%E5%AF%B9%E7%85%A7"><span class="nav-number">1.1.</span> <span class="nav-text">nvm vs fnm 对照</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E8%BF%81%E7%A7%BB%E5%89%8D%E5%BF%85%E5%81%9A%EF%BC%9A%E5%85%88%E8%AE%B0%E8%B4%A6%EF%BC%88%E4%B8%A4%E4%B8%AA%E7%B3%BB%E7%BB%9F%E9%83%BD%E8%A6%81%E5%81%9A%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">二、迁移前必做：先记账（两个系统都要做）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81Windows-11%EF%BC%9A%E5%8D%B8%E8%BD%BD-nvm-windows"><span class="nav-number">3.</span> <span class="nav-text">三、Windows 11：卸载 nvm-windows</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%89%A7%E8%A1%8C%E5%AE%98%E6%96%B9%E5%8D%B8%E8%BD%BD%E7%A8%8B%E5%BA%8F"><span class="nav-number">3.1.</span> <span class="nav-text">1. 执行官方卸载程序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%88%A0%E6%AE%8B%E7%95%99%E7%9B%AE%E5%BD%95"><span class="nav-number">3.2.</span> <span class="nav-text">2. 删残留目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E6%B8%85%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-number">3.3.</span> <span class="nav-text">3. 清环境变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E9%AA%8C%E8%AF%81%E5%8D%B8%E8%BD%BD%E5%B9%B2%E5%87%80"><span class="nav-number">3.4.</span> <span class="nav-text">4. 验证卸载干净</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81Windows-11%EF%BC%9A%E5%AE%89%E8%A3%85-fnm"><span class="nav-number">4.</span> <span class="nav-text">四、Windows 11：安装 fnm</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%AE%89%E8%A3%85"><span class="nav-number">4.1.</span> <span class="nav-text">1. 安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%8E%A5%E8%BF%9B-PowerShell"><span class="nav-number">4.2.</span> <span class="nav-text">2. 接进 PowerShell</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E9%87%8D%E5%90%AF%E7%BB%88%E7%AB%AF%E5%B9%B6%E9%AA%8C%E8%AF%81"><span class="nav-number">4.3.</span> <span class="nav-text">3. 重启终端并验证</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81Debian%EF%BC%9A%E5%8D%B8%E8%BD%BD-nvm%EF%BC%88nvm-sh%EF%BC%89"><span class="nav-number">5.</span> <span class="nav-text">五、Debian：卸载 nvm（nvm-sh）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E8%AE%B0%E5%BD%95-%E5%81%9C%E7%94%A8"><span class="nav-number">5.1.</span> <span class="nav-text">1. 记录 + 停用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%B8%85-shell-%E9%85%8D%E7%BD%AE%E9%87%8C%E7%9A%84-nvm-%E8%A1%8C"><span class="nav-number">5.2.</span> <span class="nav-text">2. 清 shell 配置里的 nvm 行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%88%A0%E7%9B%AE%E5%BD%95"><span class="nav-number">5.3.</span> <span class="nav-text">3. 删目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E6%A3%80%E6%9F%A5%E6%98%AF%E5%90%A6%E8%BF%98%E6%9C%89%E7%B3%BB%E7%BB%9F%E7%BA%A7-node-%E6%AE%8B%E7%95%99"><span class="nav-number">5.4.</span> <span class="nav-text">4. 检查是否还有系统级 node 残留</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E9%AA%8C%E8%AF%81"><span class="nav-number">5.5.</span> <span class="nav-text">5. 验证</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81Debian%EF%BC%9A%E5%AE%89%E8%A3%85-fnm"><span class="nav-number">6.</span> <span class="nav-text">六、Debian：安装 fnm</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%AE%89%E8%A3%85%EF%BC%88%E5%AE%98%E6%96%B9%E8%84%9A%E6%9C%AC%EF%BC%8C%E6%8E%A8%E8%8D%90%EF%BC%89"><span class="nav-number">6.1.</span> <span class="nav-text">1. 安装（官方脚本，推荐）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%8E%A5%E8%BF%9B-shell"><span class="nav-number">6.2.</span> <span class="nav-text">2. 接进 shell</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E7%94%A8-fnm-%E8%A3%85-Node%EF%BC%88%E4%B8%A4%E4%B8%AA%E7%B3%BB%E7%BB%9F%E5%91%BD%E4%BB%A4%E5%AE%8C%E5%85%A8%E4%B8%80%E8%87%B4%EF%BC%89"><span class="nav-number">7.</span> <span class="nav-text">七、用 fnm 装 Node（两个系统命令完全一致）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A3%85%E5%93%AA%E4%B8%AA%E7%89%88%E6%9C%AC"><span class="nav-number">7.1.</span> <span class="nav-text">装哪个版本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-%E5%88%87%E6%8D%A2-%E8%AE%BE%E9%BB%98%E8%AE%A4"><span class="nav-number">7.2.</span> <span class="nav-text">安装 &#x2F; 切换 &#x2F; 设默认</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E6%AC%A1%E9%87%8D%E5%BB%BA%E4%BD%A0%E5%9C%A8-nvm-%E9%87%8C%E7%94%A8%E8%BF%87%E7%9A%84%E7%89%88%E6%9C%AC"><span class="nav-number">7.3.</span> <span class="nav-text">一次重建你在 nvm 里用过的版本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E7%BA%A7%E7%89%88%E6%9C%AC%E5%9B%BA%E5%AE%9A%EF%BC%88%E8%BF%81%E7%A7%BB%E7%9A%84%E6%A0%B8%E5%BF%83%E4%BB%B7%E5%80%BC%EF%BC%89"><span class="nav-number">7.4.</span> <span class="nav-text">项目级版本固定（迁移的核心价值）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%AB%E5%90%8D%E4%B8%8E%E5%8D%B8%E8%BD%BD"><span class="nav-number">7.5.</span> <span class="nav-text">别名与卸载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A1%BA%E6%89%8B%E6%8A%8A-pnpm-yarn-%E7%AE%A1%E8%B5%B7%E6%9D%A5"><span class="nav-number">7.6.</span> <span class="nav-text">顺手把 pnpm &#x2F; yarn 管起来</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AB%E3%80%81%E5%9B%BD%E5%86%85%E7%BD%91%E7%BB%9C%EF%BC%9A%E6%8D%A2-node-%E4%B8%8B%E8%BD%BD%E9%95%9C%E5%83%8F"><span class="nav-number">8.</span> <span class="nav-text">八、国内网络：换 node 下载镜像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B9%9D%E3%80%81%E8%B8%A9%E5%9D%91%E6%B8%85%E5%8D%95"><span class="nav-number">9.</span> <span class="nav-text">九、踩坑清单</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%81%E3%80%81%E9%80%9F%E6%9F%A5%E8%A1%A8"><span class="nav-number">10.</span> <span class="nav-text">十、速查表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">10.1.</span> <span class="nav-text">参考资料</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="傅永德"
+      src="/images/header.jpg">
+  <p class="site-author-name" itemprop="name">傅永德</p>
+  <div class="site-description" itemprop="description">苟利国家生死以，岂因祸福避趋之</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">57</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/fuyongde" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;fuyongde" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:fuyongde@foxmail.com" title="E-Mail → mailto:fuyongde@foxmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml" rel="noopener me"><i class="fa fa-rss fa-fw"></i>RSS</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          友链
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://www.xiaokunli.com/" title="https:&#x2F;&#x2F;www.xiaokunli.com&#x2F;" rel="noopener" target="_blank">xiaokun</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://konekos.github.io/" title="https:&#x2F;&#x2F;konekos.github.io&#x2F;" rel="noopener" target="_blank">Tree</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://fuyongde.github.io/2026/11/20/%E4%BB%8E-nvm-%E8%BF%81%E7%A7%BB%E5%88%B0-fnm/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/header.jpg">
+      <meta itemprop="name" content="傅永德">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="傅永德 | 个人博客">
+      <meta itemprop="description" content="苟利国家生死以，岂因祸福避趋之">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="从 nvm 迁移到 fnm | 傅永德 | 个人博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          从 nvm 迁移到 fnm
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2026-11-20 17:08:03 / 修改时间：17:11:10" itemprop="dateCreated datePublished" datetime="2026-11-20T17:08:03+08:00">2026-11-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/nodejs/" itemprop="url" rel="index"><span itemprop="name">nodejs</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-lines"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.6k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>9 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p>场景：个人 PC 双系统（Windows 11 原生 + Debian），原先都用 nvm 管理 Node.js，现在统一换成 fnm。</p>
+</blockquote>
+<h2 id="一、为什么更换？"><a href="#一、为什么更换？" class="headerlink" title="一、为什么更换？"></a>一、为什么更换？</h2><p><strong>2026 年个人机器上 fnm 是更推荐的默认选择</strong>，但它不是”必须换”——nvm 依然能用。判断标准是你在意什么：</p>
+<ul>
+<li>你在意<strong>终端启动速度和切换速度</strong> → 换 fnm（nvm 是 shell 脚本，每个新终端都要 source 一遍；fnm 是 Rust 编译的单文件二进制，启动开销接近 0）。</li>
+<li>你在意<strong>Windows 原生支持</strong> → 必须换 fnm。nvm 官方不支持 Windows，你现在 Windows 上用的其实是<strong>另一个项目</strong> nvm-windows（作者 Corey Butler），它连 <code>.nvmrc</code> 都不读，<code>nvm use</code> 必须手打版本号。这本身就是两套东西、两套行为，长期维护很别扭。</li>
+<li>fnm 一个工具同时跑 Windows &#x2F; Linux &#x2F; macOS，配置语法一致，<strong>这是你双系统最实际的收益</strong>。</li>
+<li>你已经有大量 <code>.nvmrc</code> → 无损迁移，fnm 原生读 <code>.nvmrc</code> 和 <code>.node-version</code>。</li>
+<li>如果你需要”跟着 <code>package.json</code> 把 node 和包管理器版本一起钉死给团队” → 那不是 fnm 的活，看 Volta 或 mise。fnm 只管 node 版本。</li>
+</ul>
+<h3 id="nvm-vs-fnm-对照"><a href="#nvm-vs-fnm-对照" class="headerlink" title="nvm vs fnm 对照"></a>nvm vs fnm 对照</h3><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>nvm（POSIX）&#x2F; nvm-windows</th>
+<th>fnm</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>实现</td>
+<td>Shell 脚本 &#x2F; Go</td>
+<td>Rust 单文件二进制</td>
+</tr>
+<tr>
+<td>终端启动开销</td>
+<td>数十~上百 ms</td>
+<td>&lt; 5 ms</td>
+</tr>
+<tr>
+<td>Windows 原生</td>
+<td>否（要装另一个项目）</td>
+<td>是，同一套命令</td>
+</tr>
+<tr>
+<td>读 <code>.nvmrc</code></td>
+<td>是 &#x2F; Windows 版<strong>否</strong></td>
+<td>是</td>
+</tr>
+<tr>
+<td>读 <code>.node-version</code></td>
+<td>否</td>
+<td>是</td>
+</tr>
+<tr>
+<td>cd 进目录自动切换</td>
+<td>需手写 hook</td>
+<td><code>--use-on-cd</code> 内置</td>
+</tr>
+<tr>
+<td>支持的 shell</td>
+<td>bash&#x2F;zsh&#x2F;sh</td>
+<td>bash&#x2F;zsh&#x2F;fish&#x2F;PowerShell</td>
+</tr>
+<tr>
+<td>管 npm&#x2F;pnpm 版本</td>
+<td>否</td>
+<td>否（交给 corepack）</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>一句话取舍：nvm 是”最多教程、最广认知”的老牌方案；fnm 是它的事实标准替代品（同命令、同 <code>.nvmrc</code>、更快、跨平台）。只有”团队级可复现构建”才需要考虑 Volta&#x2F;mise。</p>
+</blockquote>
+<hr>
+<h2 id="二、迁移前必做：先记账（两个系统都要做）"><a href="#二、迁移前必做：先记账（两个系统都要做）" class="headerlink" title="二、迁移前必做：先记账（两个系统都要做）"></a>二、迁移前必做：先记账（两个系统都要做）</h2><p>fnm 不会接管 nvm 已装的 node，<strong>版本要重建，全局包要重装</strong>。先记下来，否则删完就查不到了。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 当前装了哪些 node 版本</span></span><br><span class="line">nvm <span class="built_in">ls</span>                 <span class="comment"># nvm-windows 用 nvm list</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 每个版本下装了哪些全局包（关键，容易漏）</span></span><br><span class="line">npm <span class="built_in">ls</span> -g --depth=0</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 当前在用的版本，先记下来当默认版本</span></span><br><span class="line">node -v</span><br></pre></td></tr></table></figure>
+
+<p>Windows 上如果多个 node 版本各有一套全局包，逐版本切换后各跑一次 <code>npm ls -g --depth=0</code>。</p>
+<hr>
+<h2 id="三、Windows-11：卸载-nvm-windows"><a href="#三、Windows-11：卸载-nvm-windows" class="headerlink" title="三、Windows 11：卸载 nvm-windows"></a>三、Windows 11：卸载 nvm-windows</h2><p>nvm-windows 是用符号链接（<code>C:\Program Files\nodejs</code>）指到当前版本目录的方式工作的，卸载不干净就会残留一个假的 <code>node</code> 命令，装完 fnm 后到处报错。按顺序做：</p>
+<h3 id="1-执行官方卸载程序"><a href="#1-执行官方卸载程序" class="headerlink" title="1. 执行官方卸载程序"></a>1. 执行官方卸载程序</h3><ul>
+<li>打开「设置 → 应用 → 已安装的应用」，搜 <code>NVM for Windows</code>，点卸载；</li>
+<li>或直接运行 <code>%APPDATA%\nvm\unins000.exe</code>。</li>
+</ul>
+<h3 id="2-删残留目录"><a href="#2-删残留目录" class="headerlink" title="2. 删残留目录"></a>2. 删残留目录</h3><table>
+<thead>
+<tr>
+<th>路径</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>%APPDATA%\nvm</code>（即 <code>C:\Users\&lt;你&gt;\AppData\Roaming\nvm</code>）</td>
+<td>nvm 本体 + 所有 node 版本</td>
+</tr>
+<tr>
+<td><code>C:\Program Files\nodejs</code></td>
+<td>nvm 建的符号链接目录，<strong>必须删</strong></td>
+</tr>
+<tr>
+<td><code>C:\Users\&lt;你&gt;\AppData\Roaming\npm</code></td>
+<td>旧全局包的 bin 目录（可选清）</td>
+</tr>
+</tbody></table>
+<p>PowerShell 里可以先确认再删：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Test-Path</span> <span class="string">&quot;<span class="variable">$env:APPDATA</span>\nvm&quot;</span></span><br><span class="line"><span class="built_in">Test-Path</span> <span class="string">&quot;C:\Program Files\nodejs&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>删除时注意：<code>C:\Program Files\nodejs</code> 如果是符号链接，删的是链接本身；如果提示占用，说明还有 node 进程在跑，先关掉终端&#x2F;编辑器。</p>
+<h3 id="3-清环境变量"><a href="#3-清环境变量" class="headerlink" title="3. 清环境变量"></a>3. 清环境变量</h3><p>「Win + R → <code>sysdm.cpl</code> → 高级 → 环境变量」，在<strong>用户变量</strong>里：</p>
+<ul>
+<li>删除 <code>NVM_HOME</code>、<code>NVM_SYMLINK</code> 两条；</li>
+<li>编辑 <code>Path</code>，删掉 <code>%NVM_HOME%</code>、<code>%NVM_SYMLINK%</code> 及任何 <code>...\nvm</code>、<code>...\nodejs</code> 条目；</li>
+<li>系统变量里如果有同名条目一并删。</li>
+</ul>
+<h3 id="4-验证卸载干净"><a href="#4-验证卸载干净" class="headerlink" title="4. 验证卸载干净"></a>4. 验证卸载干净</h3><p><strong>必须新开一个终端</strong>（环境变量改动不会继承到已开的终端）：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">where.exe nvm      <span class="comment"># 期望：找不到（报 INFO: Could not find files）</span></span><br><span class="line">where.exe node     <span class="comment"># 期望：找不到</span></span><br><span class="line">where.exe npm</span><br></pre></td></tr></table></figure>
+
+<p>三条都找不到，才算干净。这一步不做，后面 fnm 装的 node 会和残留打架。</p>
+<hr>
+<h2 id="四、Windows-11：安装-fnm"><a href="#四、Windows-11：安装-fnm" class="headerlink" title="四、Windows 11：安装 fnm"></a>四、Windows 11：安装 fnm</h2><h3 id="1-安装"><a href="#1-安装" class="headerlink" title="1. 安装"></a>1. 安装</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">winget install Schniz.fnm</span><br></pre></td></tr></table></figure>
+
+<p>备选：<code>scoop install fnm</code> &#x2F; <code>choco install fnm</code> &#x2F; <code>cargo install fnm</code>。</p>
+<h3 id="2-接进-PowerShell"><a href="#2-接进-PowerShell" class="headerlink" title="2. 接进 PowerShell"></a>2. 接进 PowerShell</h3><p>fnm 需要往当前 shell 注入环境变量，这行必须写进 profile，否则每个新终端都得手动 eval。</p>
+<p>先确认 profile 文件存在（PowerShell 7 和 Windows PowerShell 的 profile 路径不同，别写错文件）：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="operator">-not</span> (<span class="built_in">Test-Path</span> <span class="variable">$profile</span>)) &#123; <span class="built_in">New-Item</span> <span class="variable">$profile</span> <span class="literal">-Force</span> &#125;</span><br><span class="line"><span class="built_in">Invoke-Item</span> <span class="variable">$profile</span></span><br></pre></td></tr></table></figure>
+
+<p>在打开的 profile 里加一行：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fnm env <span class="literal">--use-on-cd</span> <span class="literal">--shell</span> powershell | <span class="built_in">Out-String</span> | <span class="built_in">Invoke-Expression</span></span><br></pre></td></tr></table></figure>
+
+<p>说明：</p>
+<ul>
+<li><code>--use-on-cd</code>：<code>cd</code> 进入带 <code>.nvmrc</code> &#x2F; <code>.node-version</code> 的目录时自动切版本（这是 fnm 相对 nvm 最舒服的地方）；</li>
+<li>仓库是 monorepo 时加 <code>--version-file-strategy=recursive</code>，让 fnm 往上找最近的版本文件，否则进到子包目录就不切了。</li>
+</ul>
+<h3 id="3-重启终端并验证"><a href="#3-重启终端并验证" class="headerlink" title="3. 重启终端并验证"></a>3. 重启终端并验证</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fnm <span class="literal">--version</span></span><br><span class="line">fnm list          <span class="comment"># 应该是空的</span></span><br><span class="line">node <span class="literal">-v</span>           <span class="comment"># 报错才是正常，说明还没有 node</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意：如果用 VS Code &#x2F; Windows Terminal，父进程是旧终端时新开的标签页可能继承旧环境变量，<strong>完全退出应用再开</strong>。</p>
+</blockquote>
+<hr>
+<h2 id="五、Debian：卸载-nvm（nvm-sh）"><a href="#五、Debian：卸载-nvm（nvm-sh）" class="headerlink" title="五、Debian：卸载 nvm（nvm-sh）"></a>五、Debian：卸载 nvm（nvm-sh）</h2><p>Debian 上装的是官方 nvm-sh（bash 脚本版）。卸载本质就是”删目录 + 删 shell 里的 source 行”。</p>
+<h3 id="1-记录-停用"><a href="#1-记录-停用" class="headerlink" title="1. 记录 + 停用"></a>1. 记录 + 停用</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">nvm <span class="built_in">ls</span></span><br><span class="line">npm <span class="built_in">ls</span> -g --depth=0</span><br><span class="line">nvm deactivate       <span class="comment"># 从当前 shell 摘掉 node 路径</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-清-shell-配置里的-nvm-行"><a href="#2-清-shell-配置里的-nvm-行" class="headerlink" title="2. 清 shell 配置里的 nvm 行"></a>2. 清 shell 配置里的 nvm 行</h3><p>编辑 <code>~/.bashrc</code>、<code>~/.zshrc</code>（如果你用 zsh 就两个都看）、<code>~/.profile</code>，删掉类似这几行（不同版本略有差异）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> NVM_DIR=<span class="string">&quot;<span class="variable">$HOME</span>/.nvm&quot;</span></span><br><span class="line">[ -s <span class="string">&quot;<span class="variable">$NVM_DIR</span>/nvm.sh&quot;</span> ] &amp;&amp; \. <span class="string">&quot;<span class="variable">$NVM_DIR</span>/nvm.sh&quot;</span></span><br><span class="line">[ -s <span class="string">&quot;<span class="variable">$NVM_DIR</span>/bash_completion&quot;</span> ] &amp;&amp; \. <span class="string">&quot;<span class="variable">$NVM_DIR</span>/bash_completion&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>zsh 用户还可能有 <code>nvm_load_nvmrc</code> 之类的自定义 hook，一并删。</p>
+<h3 id="3-删目录"><a href="#3-删目录" class="headerlink" title="3. 删目录"></a>3. 删目录</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">rm</span> -rf <span class="string">&quot;<span class="variable">$HOME</span>/.nvm&quot;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>这个目录里装着 nvm 自己以及<strong>所有 node 版本</strong>，<code>rm -rf</code> 不可恢复。执行前确认上面第二步的记录还在。</p>
+</blockquote>
+<h3 id="4-检查是否还有系统级-node-残留"><a href="#4-检查是否还有系统级-node-残留" class="headerlink" title="4. 检查是否还有系统级 node 残留"></a>4. 检查是否还有系统级 node 残留</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">which</span> node npm       <span class="comment"># 期望：无输出</span></span><br><span class="line">dpkg -l | grep -i nodejs</span><br></pre></td></tr></table></figure>
+
+<p>如果之前用 apt 装过（<code>sudo apt install nodejs</code>），那是独立于 nvm 的一套，需要另外处理：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt purge nodejs npm</span><br><span class="line"><span class="built_in">sudo</span> apt autoremove</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-验证"><a href="#5-验证" class="headerlink" title="5. 验证"></a>5. 验证</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">exec</span> bash            <span class="comment"># 或退出重开终端</span></span><br><span class="line"><span class="built_in">command</span> -v nvm       <span class="comment"># 无输出即成功</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="六、Debian：安装-fnm"><a href="#六、Debian：安装-fnm" class="headerlink" title="六、Debian：安装 fnm"></a>六、Debian：安装 fnm</h2><h3 id="1-安装（官方脚本，推荐）"><a href="#1-安装（官方脚本，推荐）" class="headerlink" title="1. 安装（官方脚本，推荐）"></a>1. 安装（官方脚本，推荐）</h3><p>先确保有 curl 和 unzip：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt update &amp;&amp; <span class="built_in">sudo</span> apt install -y curl unzip</span><br><span class="line">curl -fsSL https://fnm.vercel.app/install | bash</span><br></pre></td></tr></table></figure>
+
+<p>其他方式：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">brew install fnm                     <span class="comment"># 有 Homebrew 的话</span></span><br><span class="line">cargo install fnm                    <span class="comment"># 有 Rust</span></span><br><span class="line"><span class="comment"># 或从 GitHub Releases 下 fnm-linux.zip 手动放进 PATH</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-接进-shell"><a href="#2-接进-shell" class="headerlink" title="2. 接进 shell"></a>2. 接进 shell</h3><p>Debian 默认 bash，写进 <code>~/.bashrc</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">eval</span> <span class="string">&quot;<span class="subst">$(fnm env --use-on-cd --shell bash)</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>zsh 用户写进 <code>~/.zshrc</code>，并把 <code>--shell bash</code> 换成 <code>--shell zsh</code>。<br>用 fish 的，安装脚本会自动写 <code>~/.config/fish/conf.d/fnm.fish</code>，一般不用管。</p>
+<p>然后：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br><span class="line">fnm --version</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>小坑：官方脚本默认会把 eval 行追加到 <code>~/.bashrc</code>；如果你已经手动加过，会出现两行重复 —— 保留一行即可。另外，Debian 上 <code>~/.bashrc</code> 只对交互式 shell 生效，脚本里用 node 记得显式 <code>fnm use</code> 或用 <code>#!/usr/bin/env -S bash -i</code>。</p>
+</blockquote>
+<hr>
+<h2 id="七、用-fnm-装-Node（两个系统命令完全一致）"><a href="#七、用-fnm-装-Node（两个系统命令完全一致）" class="headerlink" title="七、用 fnm 装 Node（两个系统命令完全一致）"></a>七、用 fnm 装 Node（两个系统命令完全一致）</h2><h3 id="装哪个版本"><a href="#装哪个版本" class="headerlink" title="装哪个版本"></a>装哪个版本</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">fnm list-remote              <span class="comment"># 看远端可装版本</span></span><br><span class="line">fnm list-remote --lts        <span class="comment"># 只看 LTS</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="安装-切换-设默认"><a href="#安装-切换-设默认" class="headerlink" title="安装 &#x2F; 切换 &#x2F; 设默认"></a>安装 &#x2F; 切换 &#x2F; 设默认</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">fnm install --lts            <span class="comment"># 装最新 LTS</span></span><br><span class="line">fnm install 22               <span class="comment"># 装指定大版本（会装该大版本最新小版本）</span></span><br><span class="line">fnm install 20.11.1          <span class="comment"># 装精确版本</span></span><br><span class="line"></span><br><span class="line">fnm use 22                   <span class="comment"># 当前 shell 临时切到 22</span></span><br><span class="line">fnm default 22               <span class="comment"># 设为全局默认（新终端默认用这个）</span></span><br><span class="line">fnm current                  <span class="comment"># 看当前用的是哪个</span></span><br><span class="line">fnm list                     <span class="comment"># 看已装列表</span></span><br><span class="line">node -v &amp;&amp; npm -v            <span class="comment"># 验证</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="一次重建你在-nvm-里用过的版本"><a href="#一次重建你在-nvm-里用过的版本" class="headerlink" title="一次重建你在 nvm 里用过的版本"></a>一次重建你在 nvm 里用过的版本</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">fnm install 18 &amp;&amp; fnm install 20 &amp;&amp; fnm install 22</span><br><span class="line">fnm default 22</span><br></pre></td></tr></table></figure>
+
+<h3 id="项目级版本固定（迁移的核心价值）"><a href="#项目级版本固定（迁移的核心价值）" class="headerlink" title="项目级版本固定（迁移的核心价值）"></a>项目级版本固定（迁移的核心价值）</h3><p>任选一种写进仓库根目录：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;22&quot;</span> &gt; .node-version      <span class="comment"># fnm 优先读这个</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;22&quot;</span> &gt; .nvmrc             <span class="comment"># 老项目已有，fnm 直接兼容</span></span><br></pre></td></tr></table></figure>
+
+<p>之后 <code>cd</code> 进目录会<strong>自动切换</strong>（前提是 shell 里带 <code>--use-on-cd</code>）。手动也行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">fnm use                <span class="comment"># 不带参数 = 读当前目录的 .node-version / .nvmrc</span></span><br><span class="line">fnm use --silent-if-unchanged</span><br></pre></td></tr></table></figure>
+
+<h3 id="别名与卸载"><a href="#别名与卸载" class="headerlink" title="别名与卸载"></a>别名与卸载</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fnm <span class="built_in">alias</span> 22 default         <span class="comment"># 给版本起别名</span></span><br><span class="line">fnm uninstall 18             <span class="comment"># 删掉某个版本</span></span><br><span class="line">fnm uninstall 18 --keep-version-file   <span class="comment"># 保留版本文件引用</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="顺手把-pnpm-yarn-管起来"><a href="#顺手把-pnpm-yarn-管起来" class="headerlink" title="顺手把 pnpm &#x2F; yarn 管起来"></a>顺手把 pnpm &#x2F; yarn 管起来</h3><p>fnm 不管包管理器版本，交给 corepack（Node 16.9+ 自带）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">corepack <span class="built_in">enable</span></span><br><span class="line">corepack prepare pnpm@latest --activate</span><br></pre></td></tr></table></figure>
+
+<p>或用 fnm 的开关（装 node 时一起开）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fnm install --lts --corepack-enabled</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="八、国内网络：换-node-下载镜像"><a href="#八、国内网络：换-node-下载镜像" class="headerlink" title="八、国内网络：换 node 下载镜像"></a>八、国内网络：换 node 下载镜像</h2><p>fnm 通过环境变量 <code>FNM_NODE_DIST_MIRROR</code> 指定下载源，官方默认 <code>https://nodejs.org/dist</code> 在国内经常慢&#x2F;断。</p>
+<p><strong>Debian（写进 <code>~/.bashrc</code>，放在 fnm eval 行之前）</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> FNM_NODE_DIST_MIRROR=<span class="string">&quot;https://npmmirror.com/mirrors/node/&quot;</span></span><br><span class="line"><span class="built_in">eval</span> <span class="string">&quot;<span class="subst">$(fnm env --use-on-cd --shell bash)</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>Windows 11（PowerShell profile 或用户环境变量）</strong></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$env:FNM_NODE_DIST_MIRROR</span> = <span class="string">&quot;https://npmmirror.com/mirrors/node/&quot;</span></span><br><span class="line">fnm env <span class="literal">--use-on-cd</span> <span class="literal">--shell</span> powershell | <span class="built_in">Out-String</span> | <span class="built_in">Invoke-Expression</span></span><br></pre></td></tr></table></figure>
+
+<p>要永久生效就在「环境变量」里新建用户变量 <code>FNM_NODE_DIST_MIRROR</code>。<br>npm 本身的 registry 另配：<code>npm config set registry https://registry.npmmirror.com</code>。</p>
+<hr>
+<h2 id="九、踩坑清单"><a href="#九、踩坑清单" class="headerlink" title="九、踩坑清单"></a>九、踩坑清单</h2><ol>
+<li><strong>Windows 上没删 <code>C:\Program Files\nodejs</code></strong> → <code>node</code> 命令仍指向旧版本或直接损坏。装 fnm 前必须 <code>where.exe node</code> 无输出。</li>
+<li><strong>改了环境变量不重开终端</strong> → 看起来”装成功但命令找不到”。winget 装完、改完 Path，全部重开终端，必要时重启。</li>
+<li><strong>PowerShell profile 写错文件</strong> → PowerShell 7 的 <code>$profile</code> 是 <code>...\Documents\PowerShell\Microsoft.PowerShell_profile.ps1</code>，Windows PowerShell 5.1 是 <code>...\Documents\WindowsPowerShell\...</code>。你在 pwsh 里配的，cmd&#x2F;旧 PS 里不生效，属正常。</li>
+<li><strong>全局包全部消失</strong> → 正常现象。全局包按 node 版本隔离存放，<code>fnm use</code> 到新版本后要重新 <code>npm i -g</code>。迁移前用 <code>npm ls -g --depth=0</code> 记好清单。</li>
+<li><strong><code>.nvmrc</code> 读到了但不切换</strong> → 检查 eval 行有没有 <code>--use-on-cd</code>；monorepo 再加 <code>--version-file-strategy=recursive</code>。</li>
+<li><strong>两个系统共用一份 dotfiles 仓库</strong> → 用 <code>--shell bash</code> &#x2F; <code>--shell powershell</code> 区分，别把 PowerShell 那行塞进 <code>.bashrc</code>。</li>
+<li><strong>想同时管 Python&#x2F;Go</strong> → fnm 只管 node，这类需求看 mise，别硬塞给 fnm。</li>
+<li><strong>别用 <code>sudo npm install -g</code></strong> → 一旦用 root 装全局包，node 在用户目录的权限模型会被破坏，后续 fnm 切换版本会出现奇怪报错。</li>
+</ol>
+<hr>
+<h2 id="十、速查表"><a href="#十、速查表" class="headerlink" title="十、速查表"></a>十、速查表</h2><table>
+<thead>
+<tr>
+<th>目的</th>
+<th>nvm（旧）</th>
+<th>fnm（新）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>装 LTS</td>
+<td><code>nvm install --lts</code></td>
+<td><code>fnm install --lts</code></td>
+</tr>
+<tr>
+<td>装指定版本</td>
+<td><code>nvm install 22</code></td>
+<td><code>fnm install 22</code></td>
+</tr>
+<tr>
+<td>切版本</td>
+<td><code>nvm use 22</code></td>
+<td><code>fnm use 22</code></td>
+</tr>
+<tr>
+<td>读目录版本文件</td>
+<td><code>nvm use</code></td>
+<td><code>fnm use</code></td>
+</tr>
+<tr>
+<td>设默认</td>
+<td><code>nvm alias default 22</code></td>
+<td><code>fnm default 22</code></td>
+</tr>
+<tr>
+<td>列已装</td>
+<td><code>nvm ls</code></td>
+<td><code>fnm list</code></td>
+</tr>
+<tr>
+<td>列可装</td>
+<td><code>nvm ls-remote</code></td>
+<td><code>fnm list-remote</code></td>
+</tr>
+<tr>
+<td>删版本</td>
+<td><code>nvm uninstall 22</code></td>
+<td><code>fnm uninstall 22</code></td>
+</tr>
+<tr>
+<td>当前版本</td>
+<td><code>nvm current</code></td>
+<td><code>fnm current</code></td>
+</tr>
+<tr>
+<td>自动切换</td>
+<td>手写 hook</td>
+<td><code>--use-on-cd</code> 内置</td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
+<li>fnm 官网安装页：<a target="_blank" rel="noopener" href="https://fnm.vercel.app/install">https://fnm.vercel.app/install</a></li>
+<li>fnm 仓库（Schniz&#x2F;fnm）：<a target="_blank" rel="noopener" href="https://github.com/Schniz/fnm">https://github.com/Schniz/fnm</a></li>
+<li>nvm-windows：<a target="_blank" rel="noopener" href="https://github.com/coreybutler/nvm-windows">https://github.com/coreybutler/nvm-windows</a></li>
+<li>nvm-sh：<a target="_blank" rel="noopener" href="https://github.com/nvm-sh/nvm">https://github.com/nvm-sh/nvm</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="傅永德 微信">
+        <span>微信</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/nodejs/" rel="tag"><i class="fa fa-tag"></i> nodejs</a>
+              <a href="/tags/nvm/" rel="tag"><i class="fa fa-tag"></i> nvm</a>
+              <a href="/tags/fnm/" rel="tag"><i class="fa fa-tag"></i> fnm</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/11/13/primary-key-naming/" rel="prev" title="业务表主键：从纠结到想清楚">
+                  <i class="fa fa-angle-left"></i> 业务表主键：从纠结到想清楚
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2018 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">傅永德</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">57k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">3:11</span>
+  </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/fuyongde" class="github-corner" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
