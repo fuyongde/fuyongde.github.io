@@ -10,7 +10,7 @@
   <rights>All rights reserved 2026, 傅永德</rights>
   <subtitle>苟利国家生死以，岂因祸福避趋之</subtitle>
   <title>傅永德 | 个人博客</title>
-  <updated>2026-11-20T09:11:10.441Z</updated>
+  <updated>2026-11-20T13:27:19.128Z</updated>
   <entry>
     <author>
       <name>傅永德</name>
@@ -93,7 +93,7 @@
 <h2 id="二、迁移前必做：先记账（两个系统都要做）"><a href="#二、迁移前必做：先记账（两个系统都要做）" class="headerlink" title="二、迁移前必做：先记账（两个系统都要做）"></a>二、迁移前必做：先记账（两个系统都要做）</h2><p>fnm 不会接管 nvm 已装的 node，<strong>版本要重建，全局包要重装</strong>。先记下来，否则删完就查不到了。</p>]]>
     </summary>
     <title>从 nvm 迁移到 fnm</title>
-    <updated>2026-11-20T09:11:10.441Z</updated>
+    <updated>2026-11-20T13:27:19.128Z</updated>
   </entry>
   <entry>
     <author>
